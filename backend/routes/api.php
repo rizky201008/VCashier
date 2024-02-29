@@ -4,8 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VariationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -28,6 +30,17 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('categories', [CategoryController::class, 'createCategory']);
     Route::put('categories', [CategoryController::class, 'updateCategory']);
     Route::delete('categories/{id}', [CategoryController::class, 'deleteCategory']);
+    Route::post('products', [ProductController::class, 'createProduct']);
+    Route::put('products/{id}', [ProductController::class, 'updateProduct']);
+    Route::delete('products/{id}', [ProductController::class, 'deleteProduct']);
+    Route::get('products/{slug}', [ProductController::class, 'getProduct']);
+    Route::get('products', [ProductController::class, 'getProducts']);
+    // Route::group(['prefix' => 'product-images'], function () {
+    //     Route::post('create', [ProductImageController::class, 'createImages']);
+    //     Route::post('update', [ProductImageController::class, 'updateImages']);
+    //     Route::delete('delete-all', [ProductImageController::class, 'deleteImages']);
+    //     Route::delete('delete-one', [ProductImageController::class, 'deleteImage']);
+    // });
 });
 
 Route::prefix('auth')->group(function () {

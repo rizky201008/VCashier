@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\ResetPassword;
-use App\Mail\ResetPasswordCode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use \Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-    function login(Request $req)
+    function login(Request $req): JsonResponse
     {
         $req->validate([
             'email' => 'required|email',
@@ -39,7 +37,7 @@ class AuthController extends Controller
         }
     }
 
-    function register(Request $req)
+    function register(Request $req) : JsonResponse
     {
         $req->validate([
             'email' => 'required|email|unique:users,email',
@@ -62,7 +60,7 @@ class AuthController extends Controller
         ], 200);
     }
 
-    function logout(Request $req)
+    function logout(Request $req): JsonResponse
     {
         // Revoke the token that was used to authenticate the current request...
         $req->user()->currentAccessToken()->delete();
@@ -72,7 +70,7 @@ class AuthController extends Controller
         ], 200);
     }
 
-    function changePassword(Request $req)
+    function changePassword(Request $req): JsonResponse
     {
         $req->validate([
             'current_password' => 'required',
@@ -95,7 +93,7 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function generateCode()
+    public function generateCode(): string
     {
         // Mendapatkan tanggal saat ini
         $dateTime = Carbon::now();

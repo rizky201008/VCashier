@@ -53,15 +53,13 @@ class AuthController extends Controller
             'name' => $req->name
         ]);
 
-        if ($created) {
-            return response()->json([
-                'message' => 'Successfuly register!'
-            ], 201);
-        } else {
-            return response()->json([
-                'message' => 'Server error'
-            ], 500);
-        }
+        $ability = ($created->role == 'admin') ? 'admin' : 'password';
+        $token = $created->createToken('access-token', [$ability]);
+
+        return response()->json([
+            'message' => 'Create account success 🎉🎉🎉',
+            'token' => $token->plainTextToken
+        ], 200);
     }
 
     function logout(Request $req)

@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('products', [ProductController::class, 'createProduct']);
     Route::put('products/{id}', [ProductController::class, 'updateProduct']);
     Route::delete('products/{id}', [ProductController::class, 'deleteProduct']);
-    Route::get('products/{slug}', [ProductController::class, 'getProduct']);
+    Route::get('products/{id}', [ProductController::class, 'getProduct']);
     Route::get('products', [ProductController::class, 'getProducts']);
     // Route::group(['prefix' => 'product-images'], function () {
     //     Route::post('create', [ProductImageController::class, 'createImages']);

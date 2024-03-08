@@ -11,9 +11,9 @@ class CustomerController extends Controller
 {
     private CustomerRepository $customerRepository;
 
-    public function __construct(CustomerRepository $customerRepository)
+    public function __construct()
     {
-        $this->customerRepository = $customerRepository;
+        $this->customerRepository = new CustomerRepository();
     }
 
     public function getCustomers(): JsonResponse

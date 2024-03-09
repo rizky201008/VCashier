@@ -2,15 +2,14 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VariationController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +40,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete('delete-all', [ProductImageController::class, 'deleteImages']);
         Route::delete('delete-one', [ProductImageController::class, 'deleteImage']);
     });
+    Route::post('customers', [CustomerController::class, 'createCustomer']);
+    Route::put('customers/{id}', [CustomerController::class, 'updateCustomer']);
+    Route::delete('customers/{id}', [CustomerController::class, 'deleteCustomer']);
+    Route::get('customers/{id}', [CustomerController::class, 'getCustomer']);
+    Route::get('customers', [CustomerController::class, 'getCustomers']);
 });
 
 Route::prefix('auth')->group(function () {

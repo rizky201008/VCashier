@@ -31,8 +31,8 @@ class CustomerRepository
 
     public function updateCustomer($id, $data)
     {
-        $product = $this->customer->find($id)->update($data);
-        return $product;
+        $this->customer->find($id)->update($data);
+        return ["message" => "product updated!"];
     }
 
     public function deleteCustomer($id)

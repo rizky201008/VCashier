@@ -3,12 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VariationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,13 +18,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return response()->json(['status' => 'ok']);
+});
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('categories', [CategoryController::class, 'getCategories']);
-    Route::get('categories/{slug}', [CategoryController::class, 'getCategory']);
-    Route::post('categories', [CategoryController::class, 'createCategory']);
-    Route::post('categories', [CategoryController::class, 'createCategory']);
-    Route::put('categories', [CategoryController::class, 'updateCategory']);
-    Route::delete('categories/{id}', [CategoryController::class, 'deleteCategory']);
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'getCategories']);
+        Route::get('{slug}', [CategoryController::class, 'getCategory']);
+        Route::post('create', [CategoryController::class, 'createCategory']);
+        Route::put('update', [CategoryController::class, 'updateCategory']);
+        Route::delete('{id}', [CategoryController::class, 'deleteCategory']);
+    });
     Route::post('products', [ProductController::class, 'createProduct']);
     Route::put('products/{id}', [ProductController::class, 'updateProduct']);
     Route::delete('products/{id}', [ProductController::class, 'deleteProduct']);

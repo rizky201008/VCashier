@@ -23,9 +23,9 @@ class CategoryController extends Controller
         return $this->category->all();
     }
 
-    public function getCategory($slug)
+    public function getCategory($id)
     {
-        return $this->category->where('slug', $slug)->first();
+        return $this->category->where('id', $id)->first();
     }
 
     public function createCategory(Request $request)

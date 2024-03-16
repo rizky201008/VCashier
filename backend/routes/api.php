@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'getCategories']);
-        Route::get('{slug}', [CategoryController::class, 'getCategory']);
+        Route::get('{id}', [CategoryController::class, 'getCategory']);
         Route::post('create', [CategoryController::class, 'createCategory']);
         Route::put('update', [CategoryController::class, 'updateCategory']);
         Route::delete('{id}', [CategoryController::class, 'deleteCategory']);

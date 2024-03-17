@@ -30,22 +30,26 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::put('update', [CategoryController::class, 'updateCategory']);
         Route::delete('{id}', [CategoryController::class, 'deleteCategory']);
     });
-    Route::post('products', [ProductController::class, 'createProduct']);
-    Route::put('products/{id}', [ProductController::class, 'updateProduct']);
-    Route::delete('products/{id}', [ProductController::class, 'deleteProduct']);
-    Route::get('products/{id}', [ProductController::class, 'getProduct']);
-    Route::get('products', [ProductController::class, 'getProducts']);
-    Route::group(['prefix' => 'product-images'], function () {
+    Route::prefix('products')->group(function () {
+        Route::get('/', [ProductController::class, 'getProducts']);
+        Route::get('{id}', [ProductController::class, 'getProduct']);
+        Route::post('/', [ProductController::class, 'createProduct']);
+        Route::put('{id}', [ProductController::class, 'updateProduct']);
+        Route::delete('{id}', [ProductController::class, 'deleteProduct']);
+    });
+    Route::prefix('product-images')->group(function () {
         Route::post('create', [ProductImageController::class, 'createImages']);
         Route::post('update', [ProductImageController::class, 'updateImages']);
         Route::delete('delete-all', [ProductImageController::class, 'deleteImages']);
         Route::delete('delete-one', [ProductImageController::class, 'deleteImage']);
     });
-    Route::post('customers', [CustomerController::class, 'createCustomer']);
-    Route::put('customers/{id}', [CustomerController::class, 'updateCustomer']);
-    Route::delete('customers/{id}', [CustomerController::class, 'deleteCustomer']);
-    Route::get('customers/{id}', [CustomerController::class, 'getCustomer']);
-    Route::get('customers', [CustomerController::class, 'getCustomers']);
+    Route::prefix('customers')->group(function () {
+        Route::get('/', [CustomerController::class, 'getCustomers']);
+        Route::post('/', [CustomerController::class, 'createCustomer']);
+        Route::get('{id}', [CustomerController::class, 'getCustomer']);
+        Route::delete('{id}', [CustomerController::class, 'deleteCustomer']);
+        Route::put('{id}', [CustomerController::class, 'updateCustomer']);
+    });
 });
 
 Route::prefix('auth')->group(function () {

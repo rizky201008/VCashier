@@ -2,30 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Data\CategoryRepository;
 use Illuminate\Http\Request;
-use App\Logic\App as AppLogic;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    protected $category;
-    protected $appLogic;
+    protected CategoryRepository $categoryRepository;
 
-    public function __construct(Category $category = new Category(), AppLogic $appLogic = new AppLogic())
+    public function __construct()
     {
-        $this->category = $category;
-        $this->appLogic = $appLogic;
+        $this->categoryRepository = new CategoryRepository();
     }
 
     public function getCategories()
     {
-        return $this->category->all();
+        return $this->categoryRepository->getAllCategories();
     }
 
     public function getCategory($id)
     {
-        return $this->category->where('id', $id)->first();
+        return $this->categoryRepository->getCategory($id);
     }
 
     public function createCategory(Request $request)
@@ -34,11 +31,7 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $category = $this->category->create([
-            'name' => $request->name,
-            'slug' => $this->appLogic->createSlug($request->name),
-        ]);
-
+        $category = $this->categoryRepository->createCategory($request->name);
         return response()->json(['message' => 'Category created successfully', 'category' => $category], 201);
     }
 
@@ -49,18 +42,10 @@ class CategoryController extends Controller
             'id' => 'required|integer|exists:categories,id',
         ]);
 
-        $id = $request->id;
-        // Mengambil kategori yang akan diperbarui
-        $category = $this->category->find($id);
-
-        // Memperbarui kategori
-        $category->update([
-            'name' => $request->name,
-            'slug' => $this->appLogic->createSlug($request->name),
-        ]);
+        $this->categoryRepository->updateCategory($request->id, $request);
 
         // Mengembalikan kategori yang telah diperbarui sebagai respons
-        return response()->json(['message' => 'Category updated successfully', 'category' => $category], 200);
+        return response()->json(['message' => 'Category updated successfully'], 200);
     }
 
     public function deleteCategory($id)
@@ -73,7 +58,7 @@ class CategoryController extends Controller
             return response()->json(['message' => "Err : " . $validated->errors()->first()], 404);
         }
 
-        $this->category->find($id)->delete();
+        $this->categoryRepository->deleteCategory($id);
         return response()->json(['message' => 'Category deleted successfully'], 200);
     }
 }

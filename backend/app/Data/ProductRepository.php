@@ -38,7 +38,6 @@ class ProductRepository
                 [
                     'name' => $data->name,
                     'description' => $data->description,
-                    'slug' => $this->createSlug($data->name),
                     'category_id' => $data->category_id
                 ]
             );
@@ -68,10 +67,6 @@ class ProductRepository
     function updateProduct($data, $productId)
     {
         $product = Product::find($productId);
-
-        if ($data->name !== $product->name) {
-            $product->slug = $this->createSlug($data->name);
-        }
 
         DB::beginTransaction();
 
@@ -126,11 +121,6 @@ class ProductRepository
 
             throw new \Exception($th->getMessage());
         }
-    }
-
-    public function createSlug($name)
-    {
-        return Str::slug(round(microtime(true) * 1000) . '-' . $name, '-');
     }
 
 }

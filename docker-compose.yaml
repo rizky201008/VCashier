@@ -5,7 +5,7 @@ networks:
     driver: bridge
 
 volumes:
-    mysql:
+  mysql:
 
 services:
   nginx:
@@ -41,6 +41,17 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_DB_ROOT_PASSWORD}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    networks:
+      - laravel
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: unless-stopped
+    container_name: phpmyadmin
+    ports:
+      - "8002:80"
+    environment:
+      - PMA_ARBITRARY=1
     networks:
       - laravel
 

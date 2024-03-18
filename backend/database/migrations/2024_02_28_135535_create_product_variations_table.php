@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('product_variations', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Product::class);
-            $table->string('name');
+            $table->string('unit');
             $table->integer('stock');
             $table->double('price');
             $table->double('price_grocery')->nullable();

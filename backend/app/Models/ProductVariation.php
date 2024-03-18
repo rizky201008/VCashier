@@ -12,7 +12,7 @@ class ProductVariation extends Model
 
     protected $fillable = [
         'product_id',
-        'name',
+        'unit',
         'stock',
         'price',
         'price_grocery'

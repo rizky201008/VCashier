@@ -22,11 +22,10 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'category_id' => 'required|exists:categories,id',
             'variations' => 'required|array|min:1',
         ]);
 
-        return response()->json($this->productRepository->createProduct($request));
+        return response()->json($this->productRepository->createProduct($request),201);
     }
 
     public function updateProduct(Request $request, $id)

@@ -22,7 +22,7 @@ class ProductRepository
 
     function getProducts()
     {
-        return $this->product->with(['images', 'variations'])->get();
+        return $this->product->with(['variations'])->get();
     }
 
     function getProduct($id)
@@ -38,7 +38,7 @@ class ProductRepository
                 [
                     'name' => $data->name,
                     'description' => $data->description,
-                    'category_id' => $data->category_id
+                    'category_id' => $data->category_id ?? 1
                 ]
             );
 
@@ -46,7 +46,7 @@ class ProductRepository
 
             foreach ($productVariations as $variation) {
                 $this->variation->create([
-                    'name' => $variation['name'],
+                    'unit' => $variation['unit'],
                     'stock' => $variation['stock'],
                     'price' => $variation['price'],
                     'price_grocery' => $variation['price_grocery'],
@@ -56,7 +56,7 @@ class ProductRepository
 
             DB::commit();
 
-            return $createdProduct;
+            return ['message' => 'Product created successfully', 'id' => $createdProduct->id];
         } catch (\Throwable $throwable) {
             DB::rollBack();
 

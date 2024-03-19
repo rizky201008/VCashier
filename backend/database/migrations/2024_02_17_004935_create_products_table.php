@@ -15,8 +15,9 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->foreignIdFor(Category::class);
+            $table->foreignIdFor(Category::class)->default(1);
             $table->text('image_path')->nullable();
+            $table->text('image_url')->nullable();
             $table->timestamps();
         });
     }

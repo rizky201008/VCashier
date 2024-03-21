@@ -16,22 +16,11 @@ class ProductImageController extends Controller
         $this->productImageRepository = new ProductImageRepository();
     }
 
-    public function createImages(Request $request): JsonResponse
-    {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'image' => 'required|mimes:jpeg,png,jpg|max:2048'
-        ]);
-
-        return response()->json($this->productImageRepository->createImage($request));
-
-    }
-
     public function updateImages(Request $request): JsonResponse
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'new_image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'new_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         return response()->json($this->productImageRepository->updateImage($request));

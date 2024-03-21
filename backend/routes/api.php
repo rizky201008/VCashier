@@ -38,7 +38,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete('{id}', [ProductController::class, 'deleteProduct']);
     });
     Route::prefix('product-images')->group(function () {
-        Route::post('create', [ProductImageController::class, 'createImages']);
         Route::post('update', [ProductImageController::class, 'updateImages']);
     });
     Route::prefix('customers')->group(function () {

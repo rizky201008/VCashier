@@ -40,8 +40,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::prefix('product-images')->group(function () {
         Route::post('create', [ProductImageController::class, 'createImages']);
         Route::post('update', [ProductImageController::class, 'updateImages']);
-        Route::delete('delete-all', [ProductImageController::class, 'deleteImages']);
-        Route::delete('delete-one', [ProductImageController::class, 'deleteImage']);
     });
     Route::prefix('customers')->group(function () {
         Route::get('/', [CustomerController::class, 'getCustomers']);

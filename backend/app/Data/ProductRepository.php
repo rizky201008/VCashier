@@ -4,6 +4,7 @@ namespace App\Data;
 
 use App\Models\Product;
 use App\Models\ProductVariation;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\MockObject\Exception;
@@ -20,17 +21,17 @@ class ProductRepository
         $this->variation = new ProductVariation();
     }
 
-    function getProducts()
+    function getProducts() : Collection
     {
         return $this->product->with(['variations'])->get();
     }
 
-    function getProduct($id)
+    function getProduct($id) : Collection
     {
-        return $this->product->with(['images', 'variations'])->where('id', $id)->first();
+        return $this->product->with([ 'variations'])->where('id', $id)->get();
     }
 
-    function createProduct($data)
+    function createProduct($data): array
     {
         DB::beginTransaction();
         try {
@@ -64,7 +65,7 @@ class ProductRepository
         }
     }
 
-    function updateProduct($data, $productId)
+    function updateProduct($data, $productId): array
     {
         $product = Product::find($productId);
 
@@ -102,7 +103,7 @@ class ProductRepository
         }
     }
 
-    function deleteProduct($id)
+    function deleteProduct($id) : array
     {
         DB::beginTransaction();
 

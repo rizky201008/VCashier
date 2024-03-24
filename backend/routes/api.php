@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('{id}', [CustomerController::class, 'getCustomer']);
         Route::delete('{id}', [CustomerController::class, 'deleteCustomer']);
         Route::put('{id}', [CustomerController::class, 'updateCustomer']);
+    });
+    Route::prefix('transactions')->group(function () {
+        Route::get('/', [TransactionController::class, 'getTransactions']);
+        Route::get('{id}', [TransactionController::class, 'getTransaction']);
+        Route::post('/', [TransactionController::class, 'createTransaction']);
     });
 });
 

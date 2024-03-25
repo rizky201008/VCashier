@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/', [TransactionController::class, 'getTransactions']);
         Route::get('{id}', [TransactionController::class, 'getTransaction']);
         Route::post('/', [TransactionController::class, 'createTransaction']);
+    });
+    Route::prefix('users')->middleware(['auth:sanctum'])->group(function () {
+        Route::get('role', [UserController::class, 'getRole']);
+        Route::get('validate', [UserController::class, 'validateToken']);
     });
 });
 

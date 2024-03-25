@@ -92,30 +92,4 @@ class AuthController extends Controller
             'message' => 'Password successfully updated'
         ], 200);
     }
-
-    public function generateCode(): string
-    {
-        // Mendapatkan tanggal saat ini
-        $dateTime = Carbon::now();
-
-        $currentDate = date_format($dateTime, "d");
-
-        // Mendapatkan jam saat ini
-        $currentHour = str_pad($dateTime->hour, 2, '0', STR_PAD_LEFT);
-
-        // Mendapatkan menit saat ini
-        $currentMinute = str_pad($dateTime->minute, 2, '0', STR_PAD_LEFT);
-
-        // Angka random 3 digit
-        $randomDigits = str_pad(mt_rand(0, 999), 3, '0', STR_PAD_LEFT);
-
-        // Menggabungkan semua komponen untuk mendapatkan kode 9 digit
-        $generatedCode = $currentDate . $currentHour . $currentMinute . $randomDigits;
-
-        // Simpan kode ke database atau lakukan operasi lain sesuai kebutuhan
-        // DB::table('your_table')->insert(['code' => $generatedCode]);
-
-        // Tampilkan atau kembalikan kode yang dihasilkan
-        return $generatedCode;
-    }
 }

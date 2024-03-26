@@ -3,7 +3,6 @@ package com.vixiloc.vcashiermobile.presentation.screens.welcome
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -18,8 +17,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalLogo
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VButton
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
 @Composable
 fun WelcomeScreen() {

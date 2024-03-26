@@ -15,24 +15,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-    surface = Color(0xFFEFEFEF),
-    background = Color(0xFFEFEFEF),
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
+import com.materialkolor.PaletteStyle
+import com.materialkolor.dynamicColorScheme
+import com.materialkolor.rememberDynamicColorScheme
 
 @Composable
 fun VcashierMobileTheme(
@@ -40,7 +25,11 @@ fun VcashierMobileTheme(
     // Dynamic color is available on Android 12+
     content: @Composable () -> Unit
 ) {
-    val colorScheme =LightColorScheme
+    val colorScheme = dynamicColorScheme(
+        seedColor = Color(0xFF5356FF),
+        isDark = false,
+        style = PaletteStyle.Vibrant,
+    )
 
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -53,7 +42,7 @@ fun VcashierMobileTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
-        content = content
+        content = content,
+        typography = Type
     )
 }

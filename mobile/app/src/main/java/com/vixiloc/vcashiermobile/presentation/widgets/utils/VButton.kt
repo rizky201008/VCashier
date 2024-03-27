@@ -14,8 +14,8 @@ fun VButton(text: String, onClick: () -> Unit, modifier: Modifier) {
     Button(
         onClick = onClick,
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .fillMaxWidth(),
+        shape = MaterialTheme.shapes.extraLarge
     ) {
         Text(
             text = text,

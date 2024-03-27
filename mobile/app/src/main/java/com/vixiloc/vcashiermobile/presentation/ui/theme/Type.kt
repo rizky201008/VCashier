@@ -26,4 +26,19 @@ val Type = Typography(
         fontSize = 24.sp,
         fontWeight = FontWeight.Normal
     ),
+    titleSmall = TextStyle(
+        fontFamily = FontFamily(RegularPtSans),
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold
+    ),
+    titleMedium = TextStyle(
+        fontFamily = FontFamily(RegularPtSans),
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold
+    ),
+    titleLarge = TextStyle(
+        fontFamily = FontFamily(RegularPtSans),
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold
+    )
 )

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,8 +25,22 @@ class ProductVariation extends Model
         'updated_at'
     ];
 
-    public function product() : BelongsTo
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    protected function price(): Attribute
+    {
+        return Attribute::make(
+            get: fn(string $value) => "Rp" . number_format($value, 0, ',', '.'),
+        );
+    }
+
+    protected function priceGrocery(): Attribute
+    {
+        return Attribute::make(
+            get: fn(string $value) => "Rp" . number_format($value, 0, ',', '.'),
+        );
     }
 }

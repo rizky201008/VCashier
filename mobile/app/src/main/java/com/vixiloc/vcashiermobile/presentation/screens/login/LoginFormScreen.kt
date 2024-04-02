@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.BackButton
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.TextField
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
@@ -31,7 +31,7 @@ fun LoginFormScreen(role: String) {
                 )
             )
         }, navigationIcon = {
-            BackButton(
+            IconButton(
                 onClick = { /*TODO*/ },
                 icon = Icons.Outlined.ArrowBackIosNew
             )

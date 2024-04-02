@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BackButton(onClick: () -> Unit, icon: ImageVector) {
+fun IconButton(onClick: () -> Unit, icon: ImageVector) {
     Box(
         modifier = Modifier
             .background(
@@ -34,5 +34,5 @@ fun BackButton(onClick: () -> Unit, icon: ImageVector) {
 @Preview
 @Composable
 private fun ButtonPrev() {
-    BackButton(onClick = { /*TODO*/ }, icon = Icons.Default.ArrowBackIosNew)
+    IconButton(onClick = { /*TODO*/ }, icon = Icons.Default.ArrowBackIosNew)
 }

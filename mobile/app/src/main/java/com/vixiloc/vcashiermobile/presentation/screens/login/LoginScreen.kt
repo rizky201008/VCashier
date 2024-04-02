@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.vixiloc.vcashiermobile.R
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.BackButton
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalLogo
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
@@ -40,7 +40,7 @@ fun LoginScreen() {
                 )
             },
                 navigationIcon = {
-                    BackButton(onClick = { /*TODO*/ }, icon = Icons.Outlined.ArrowBackIosNew)
+                    IconButton(onClick = { /*TODO*/ }, icon = Icons.Outlined.ArrowBackIosNew)
                 })
         },
 

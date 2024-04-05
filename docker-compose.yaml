@@ -10,7 +10,7 @@ volumes:
 services:
   nginx:
     image: nginx:alpine
-    container_name: nginx
+    container_name: nginx_vcashier
     restart: unless-stopped
     tty: true
     ports:
@@ -27,7 +27,7 @@ services:
   mysql:
     platform: linux/amd64
     image: mysql
-    container_name: mysql
+    container_name: mysql_vcashier
     restart: unless-stopped
     tty: true
     ports:
@@ -47,7 +47,7 @@ services:
   phpmyadmin:
     image: phpmyadmin
     restart: unless-stopped
-    container_name: phpmyadmin
+    container_name: phpmyadmin_vcashier
     ports:
       - "8002:80"
     environment:
@@ -59,7 +59,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: php
+    container_name: php_vcashier
     restart: unless-stopped
     tty: true
     working_dir: /var/www/app

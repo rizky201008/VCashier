@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['unpaid', 'completed'])->default('unpaid');
+            $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Customer::class);
             $table->timestamps();

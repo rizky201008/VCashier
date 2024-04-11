@@ -3,9 +3,7 @@ package com.vixiloc.vcashiermobile.presentation.screens.home
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,8 +15,6 @@ import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,8 +34,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.ramcosta.composedestinations.annotation.Destination
 import com.vixiloc.vcashiermobile.presentation.widgets.home.DropdownMenu
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.ProductItem
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.ProductItem
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
 @Destination
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,42 +45,15 @@ import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
 fun HomeScreen() {
     Scaffold(
         topBar = {
-                TopAppBar(title = {
-                    Text(
-                        text = "VCashier",
-                        style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary)
-                    )
-                }, navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }, icon = Icons.Outlined.Menu)
-                })
+            TopAppBar(title = {
+                Text(
+                    text = "VCashier",
+                    style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary)
+                )
+            }, navigationIcon = {
+                IconButton(onClick = { /*TODO*/ }, icon = Icons.Outlined.Menu)
+            })
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /*TODO*/ }, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.spacedBy(7.dp)
-                    ) {
-                        Icon(imageVector = Icons.Outlined.ShoppingCart, contentDescription = null)
-                        Text(text = "2 Item", style = MaterialTheme.typography.titleSmall)
-                    }
-                    Text(
-                        text = "Total: Rp200.000",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(horizontal = 10.dp)
-                    )
-                }
-            }
-        },
-        floatingActionButtonPosition = FabPosition.Center
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -95,7 +66,7 @@ fun HomeScreen() {
                     .fillMaxWidth()
                     .border(width = 1.dp, color = Color.Black.copy(alpha = 0.05f))
             ) {
-                val (dropDown, searchButton) = createRefs()
+                val (dropDown, searchButton, buttonBottom) = createRefs()
                 val context = LocalContext.current
                 val dropDownData =
                     arrayOf("Semua", "Cappuccino", "Espresso", "Latte", "Mocha")
@@ -138,10 +109,38 @@ fun HomeScreen() {
                     )
                 }
             }
-            LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-                items(10) {
-                    ProductItem(price = "Rp1000.000", name = "Cappuccino")
+            ConstraintLayout(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                val (buttonBottom, lazyVerticalGrid) = createRefs()
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier
+                        .constrainAs(lazyVerticalGrid) {
+                            top.linkTo(parent.top)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }) {
+                    items(10) {
+                        ProductItem(price = "Rp1000.000", name = "Cappuccino")
+                    }
+                    item {
+                        VerticalSpacer(height = 100.dp)
+                    }
                 }
+                FloatingTransactionButton(
+                    onClick = { /*TODO*/ }, modifier = Modifier
+                        .constrainAs(buttonBottom) {
+                            bottom.linkTo(lazyVerticalGrid.bottom)
+                            start.linkTo(lazyVerticalGrid.start)
+                            end.linkTo(lazyVerticalGrid.end)
+                        },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    icon = Icons.Outlined.ShoppingCart,
+                    textStart = "2 Item",
+                    textEnd = "Rp100.000"
+                )
             }
         }
     }

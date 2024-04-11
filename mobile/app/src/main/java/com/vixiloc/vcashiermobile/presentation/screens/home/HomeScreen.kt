@@ -36,16 +36,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.ramcosta.composedestinations.annotation.Destination
 import com.vixiloc.vcashiermobile.presentation.widgets.home.DropdownMenu
-import com.vixiloc.vcashiermobile.presentation.widgets.products.ProductItem
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.ProductItem
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
 
+@Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
     Scaffold(
         topBar = {
-            Column {
                 TopAppBar(title = {
                     Text(
                         text = "VCashier",
@@ -54,55 +55,6 @@ fun HomeScreen() {
                 }, navigationIcon = {
                     IconButton(onClick = { /*TODO*/ }, icon = Icons.Outlined.Menu)
                 })
-                ConstraintLayout(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .border(width = 1.dp, color = Color.Black.copy(alpha = 0.05f))
-                ) {
-                    val (dropDown, searchButton) = createRefs()
-                    val context = LocalContext.current
-                    val dropDownData =
-                        arrayOf("Semua", "Cappuccino", "Espresso", "Latte", "Mocha")
-                    var expanded by remember { mutableStateOf(false) }
-                    var selectedText by remember { mutableStateOf(dropDownData[0]) }
-
-
-                    DropdownMenu(modifier = Modifier.constrainAs(dropDown) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        bottom.linkTo(parent.bottom)
-                        width = Dimension.matchParent
-                    },
-                        data = dropDownData,
-                        onItemSelected = {
-                            selectedText = it
-                            Toast.makeText(context, "Selected: $it", Toast.LENGTH_SHORT).show()
-                        },
-                        selectedText = selectedText,
-                        expanded = expanded,
-                        onExpandedChange = { expanded = it }
-                    )
-
-                    IconButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .border(width = 1.dp, color = Color.Black.copy(alpha = 0.05f))
-                            .constrainAs(searchButton) {
-                                top.linkTo(parent.top)
-                                end.linkTo(parent.end)
-                                bottom.linkTo(parent.bottom)
-                                height = Dimension.fillToConstraints
-                                width = Dimension.wrapContent
-                            }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Search,
-                            contentDescription = null,
-                            Modifier.size(30.dp)
-                        )
-                    }
-                }
-            }
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -138,6 +90,54 @@ fun HomeScreen() {
                 .fillMaxSize()
                 .background(color = Color(0xFFF6F5F5))
         ) {
+            ConstraintLayout(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(width = 1.dp, color = Color.Black.copy(alpha = 0.05f))
+            ) {
+                val (dropDown, searchButton) = createRefs()
+                val context = LocalContext.current
+                val dropDownData =
+                    arrayOf("Semua", "Cappuccino", "Espresso", "Latte", "Mocha")
+                var expanded by remember { mutableStateOf(false) }
+                var selectedText by remember { mutableStateOf(dropDownData[0]) }
+
+
+                DropdownMenu(modifier = Modifier.constrainAs(dropDown) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.matchParent
+                },
+                    data = dropDownData,
+                    onItemSelected = {
+                        selectedText = it
+                        Toast.makeText(context, "Selected: $it", Toast.LENGTH_SHORT).show()
+                    },
+                    selectedText = selectedText,
+                    expanded = expanded,
+                    onExpandedChange = { expanded = it }
+                )
+
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .border(width = 1.dp, color = Color.Black.copy(alpha = 0.05f))
+                        .constrainAs(searchButton) {
+                            top.linkTo(parent.top)
+                            end.linkTo(parent.end)
+                            bottom.linkTo(parent.bottom)
+                            height = Dimension.fillToConstraints
+                            width = Dimension.wrapContent
+                        }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Search,
+                        contentDescription = null,
+                        Modifier.size(30.dp)
+                    )
+                }
+            }
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
                 items(10) {
                     ProductItem(price = "Rp1000.000", name = "Cappuccino")

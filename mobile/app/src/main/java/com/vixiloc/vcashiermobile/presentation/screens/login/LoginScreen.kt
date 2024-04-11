@@ -20,15 +20,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.R
+import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginFormScreenDestination
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalLogo
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
+@Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navigator: DestinationsNavigator
+) {
     Scaffold(
         topBar = {
             TopAppBar(title = {
@@ -40,7 +46,9 @@ fun LoginScreen() {
                 )
             },
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }, icon = Icons.Outlined.ArrowBackIosNew)
+                    IconButton(onClick = {
+                        navigator.navigateUp()
+                    }, icon = Icons.Outlined.ArrowBackIosNew)
                 })
         },
 
@@ -65,23 +73,29 @@ fun LoginScreen() {
             VerticalSpacer(height = 29.dp)
             Text(text = "Masuk akun VCashier", style = MaterialTheme.typography.bodyMedium)
             VerticalSpacer(height = 29.dp)
-            VButton(
+            FilledButton(
                 text = "Admin",
-                onClick = { /*TODO*/ },
+                onClick = {
+                    navigator.navigate(LoginFormScreenDestination("Admin"))
+                },
                 modifier = Modifier
                     .padding(vertical = 5.5.dp)
                     .padding(horizontal = 20.dp)
             )
-            VButton(
+            FilledButton(
                 text = "Cashier",
-                onClick = { /*TODO*/ },
+                onClick = {
+                    navigator.navigate(LoginFormScreenDestination("Cashier"))
+                },
                 modifier = Modifier
                     .padding(vertical = 5.5.dp)
                     .padding(horizontal = 20.dp)
             )
-            VButton(
+            FilledButton(
                 text = "Warehouse",
-                onClick = { /*TODO*/ },
+                onClick = {
+                    navigator.navigate(LoginFormScreenDestination("Warehouse"))
+                },
                 modifier = Modifier
                     .padding(vertical = 5.5.dp)
                     .padding(horizontal = 20.dp)

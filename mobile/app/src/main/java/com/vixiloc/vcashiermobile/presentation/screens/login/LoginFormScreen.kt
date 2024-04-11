@@ -14,14 +14,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.vixiloc.vcashiermobile.presentation.screens.destinations.HomeScreenDestination
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.TextField
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
+@Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginFormScreen(role: String) {
+fun LoginFormScreen(role: String, navigator: DestinationsNavigator) {
     Scaffold(topBar = {
         TopAppBar(title = {
             Text(
@@ -32,7 +36,7 @@ fun LoginFormScreen(role: String) {
             )
         }, navigationIcon = {
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = { navigator.navigateUp() },
                 icon = Icons.Outlined.ArrowBackIosNew
             )
         })
@@ -56,9 +60,11 @@ fun LoginFormScreen(role: String) {
                 visualTransformation = PasswordVisualTransformation()
             )
             VerticalSpacer(height = 28.dp)
-            VButton(
+            FilledButton(
                 text = "Login",
-                onClick = { /*TODO*/ },
+                onClick = {
+                    navigator.navigate(HomeScreenDestination)
+                },
                 modifier = Modifier.padding(horizontal = 10.dp)
             )
         }

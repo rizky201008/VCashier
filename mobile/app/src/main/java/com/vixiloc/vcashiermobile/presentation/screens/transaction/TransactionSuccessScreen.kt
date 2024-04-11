@@ -17,11 +17,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.annotation.Destination
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.OutlinedButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
+@Destination
 @Composable
 fun TransactionSuccessScreen() {
     Column(

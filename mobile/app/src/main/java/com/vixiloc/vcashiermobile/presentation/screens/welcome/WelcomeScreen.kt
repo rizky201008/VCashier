@@ -16,13 +16,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.R
+import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginScreenDestination
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalLogo
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
+@RootNavGraph(start = true)
+@Destination
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    navigator: DestinationsNavigator
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,6 +50,12 @@ fun WelcomeScreen() {
         VerticalSpacer(height = 99.dp)
         Text(text = "Selamat datang", style = MaterialTheme.typography.bodyMedium)
         VerticalSpacer(height = 10.dp)
-        VButton(text = "Login", onClick = { /*TODO*/ }, modifier = Modifier.padding(horizontal = 20.dp))
+        FilledButton(
+            text = "Login",
+            onClick = {
+                navigator.navigate(LoginScreenDestination)
+            },
+            modifier = Modifier.padding(horizontal = 20.dp)
+        )
     }
 }

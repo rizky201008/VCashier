@@ -27,10 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.annotation.Destination
 import com.vixiloc.vcashiermobile.presentation.widgets.transaction.CashPayment
 import com.vixiloc.vcashiermobile.presentation.widgets.transaction.CashlessPayment
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
 
+@Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransactionPaymentScreen() {

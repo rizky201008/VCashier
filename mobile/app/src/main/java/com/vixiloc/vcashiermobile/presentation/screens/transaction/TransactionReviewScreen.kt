@@ -1,9 +1,7 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,8 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -21,14 +17,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalProductItem
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
+import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
 @Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransactionReviewScreen() {
+fun TransactionReviewScreen(
+    navigator: DestinationsNavigator
+) {
     Scaffold(
         topBar = {
             TopAppBar(title = {
@@ -37,35 +39,14 @@ fun TransactionReviewScreen() {
                     style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary)
                 )
             }, navigationIcon = {
-                IconButton(onClick = { /*TODO*/ }, icon = Icons.Outlined.ArrowBackIosNew)
+                IconButton(
+                    onClick = {
+                        navigator.navigateUp()
+                    },
+                    icon = Icons.Outlined.ArrowBackIosNew
+                )
             })
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /*TODO*/ }, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.spacedBy(7.dp)
-                    ) {
-                        Text(text = "Bayar", style = MaterialTheme.typography.titleSmall)
-                    }
-                    Text(
-                        text = "Total: Rp200.000",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(horizontal = 10.dp)
-                    )
-                }
-            }
-        },
-        floatingActionButtonPosition = FabPosition.Center
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -73,10 +54,37 @@ fun TransactionReviewScreen() {
                 .padding(paddingValues)
                 .background(color = Color(0xFFF6F5F5))
         ) {
-            LazyColumn {
-                items(20){
-                    HorizontalProductItem(price = "Rp10.000", name = "Joko Kripto")
+            ConstraintLayout(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                val (lazyColumn, buttonBottom) = createRefs()
+                LazyColumn(
+                    modifier = Modifier.constrainAs(lazyColumn) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    }
+                ) {
+                    items(20) {
+                        HorizontalProductItem(price = "Rp10.000", name = "Joko Kripto")
+                    }
+                    item { 
+                        VerticalSpacer(height = 100.dp)
+                    }
                 }
+                FloatingTransactionButton(
+                    onClick = { /*TODO*/ }, modifier = Modifier
+                        .constrainAs(buttonBottom) {
+                            bottom.linkTo(lazyColumn.bottom)
+                            start.linkTo(lazyColumn.start)
+                            end.linkTo(lazyColumn.end)
+                        },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    icon = null,
+                    textStart = "2 Item",
+                    textEnd = "Rp100.000"
+                )
             }
         }
     }

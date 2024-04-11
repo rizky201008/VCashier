@@ -99,7 +99,8 @@ fun FloatingTransactionButton(
     contentColor: Color = MaterialTheme.colorScheme.onPrimary
 ) {
     Box(modifier = modifier
-        .background(color = containerColor)
+        .padding(10.dp)
+        .background(color = containerColor, shape = MaterialTheme.shapes.large)
         .clickable { onClick() }) {
         Row(
             modifier = Modifier

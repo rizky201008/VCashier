@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +24,8 @@ fun TextField(
     onValueChanged: (String) -> Unit,
     modifier: Modifier,
     title: String,
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     Column(
         modifier = modifier
@@ -50,7 +52,8 @@ fun TextField(
                     .padding(10.dp),
                 singleLine = true,
                 textStyle = MaterialTheme.typography.bodySmall,
-                visualTransformation = visualTransformation
+                visualTransformation = visualTransformation,
+                keyboardOptions = keyboardOptions
             )
         }
     }

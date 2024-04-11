@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.vixiloc.vcashiermobile.presentation.screens.destinations.TransactionReviewScreenDestination
 import com.vixiloc.vcashiermobile.presentation.widgets.home.DropdownMenu
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
@@ -42,7 +44,9 @@ import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 @Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigator: DestinationsNavigator
+) {
     Scaffold(
         topBar = {
             TopAppBar(title = {
@@ -130,7 +134,9 @@ fun HomeScreen() {
                     }
                 }
                 FloatingTransactionButton(
-                    onClick = { /*TODO*/ }, modifier = Modifier
+                    onClick = {
+                        navigator.navigate(TransactionReviewScreenDestination)
+                    }, modifier = Modifier
                         .constrainAs(buttonBottom) {
                             bottom.linkTo(lazyVerticalGrid.bottom)
                             start.linkTo(lazyVerticalGrid.start)

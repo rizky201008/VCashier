@@ -12,6 +12,8 @@ activityCompose = "1.8.2"
 composeBom = "2023.08.00"
 materialIconsExtendedAndroid = "1.7.0-alpha03"
 materialKolor = "1.4.4"
+ksp = "1.9.0-1.0.13"
+composeDestinationKsp = "1.9.63"
 
 [libraries]
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
@@ -32,8 +34,10 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
+compose-destination-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "composeDestinationKsp" }
+compose-destination-core = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "composeDestinationKsp" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
+kspAndroid = { id = "com.google.devtools.ksp", version.ref = "ksp" }

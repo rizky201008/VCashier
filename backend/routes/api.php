@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\TransactionController;
@@ -54,9 +55,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('{id}', [TransactionController::class, 'getTransaction']);
         Route::post('/', [TransactionController::class, 'createTransaction']);
     });
-    Route::prefix('users')->middleware(['auth:sanctum'])->group(function () {
+    Route::prefix('users')->group(function () {
         Route::get('role', [UserController::class, 'getRole']);
         Route::get('validate', [UserController::class, 'validateToken']);
+    });
+    Route::prefix('payment-method')->group(function () {
+        Route::get('/', [PaymentMethodController::class, 'getAllPaymentMethods']);
     });
 });
 

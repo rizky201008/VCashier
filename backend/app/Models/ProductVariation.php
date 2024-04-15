@@ -29,17 +29,17 @@ class ProductVariation extends Model
         return $this->belongsTo(Product::class);
     }
 
-    protected function price(): Attribute
-    {
-        return Attribute::make(
-            get: fn(string $value) => "Rp" . number_format($value, 0, ',', '.'),
-        );
-    }
-
-    protected function priceGrocery(): Attribute
-    {
-        return Attribute::make(
-            get: fn(string $value) => "Rp" . number_format($value, 0, ',', '.'),
-        );
-    }
+//    protected function price(): Attribute
+//    {
+//        return Attribute::make(
+//            get: fn(string $value) => "Rp" . number_format($value, 0, ',', '.'),
+//        );
+//    }
+//
+//    protected function priceGrocery(): Attribute
+//    {
+//        return Attribute::make(
+//            get: fn(string $value) => "Rp" . number_format($value, 0, ',', '.'),
+//        );
+//    }
 }

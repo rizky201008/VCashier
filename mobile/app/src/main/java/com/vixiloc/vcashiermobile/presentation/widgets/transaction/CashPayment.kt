@@ -14,8 +14,8 @@ import com.vixiloc.vcashiermobile.presentation.widgets.utils.TextField
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
 @Composable
-fun CashPayment() {
-    Column(modifier = Modifier.fillMaxSize()) {
+fun CashPayment(modifier: Modifier) {
+    Column(modifier = modifier) {
         TextField(
             value = "",
             onValueChanged = {},

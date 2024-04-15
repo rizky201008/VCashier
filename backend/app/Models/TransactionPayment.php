@@ -16,6 +16,8 @@ class TransactionPayment extends Model
         'payment_method_id',
         'amount',
         'status',
+        'token',
+        'change',
     ];
 
     public function transaction(): BelongsTo

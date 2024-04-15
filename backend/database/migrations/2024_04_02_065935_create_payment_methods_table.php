@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->enum('type', ['cash', 'cashless']);
+            $table->enum('type', ['cash', 'non-cash']);
             $table->timestamps();
         });
     }

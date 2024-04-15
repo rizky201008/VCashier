@@ -14,10 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('transaction_id');
             $table->foreignId('payment_method_id');
-            $table->string('amount');
-            $table->uuid('order_id');
-            $table->enum('status', ['success', 'canceled', 'unpaid'])->default('unpaid');
-            $table->string('change')->nullable();
+            $table->double('amount');
+            $table->double('change')->default(0.0);
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }

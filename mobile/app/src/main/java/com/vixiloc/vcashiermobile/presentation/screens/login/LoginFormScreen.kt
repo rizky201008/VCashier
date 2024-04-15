@@ -63,6 +63,7 @@ fun LoginFormScreen(role: String, navigator: DestinationsNavigator) {
             FilledButton(
                 text = "Login",
                 onClick = {
+                    navigator.popBackStack()
                     navigator.navigate(HomeScreenDestination)
                 },
                 modifier = Modifier.padding(horizontal = 10.dp)

@@ -24,6 +24,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginFormScreenDestination
+import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginScreenDestination
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalLogo
@@ -44,12 +45,7 @@ fun LoginScreen(
                         color = MaterialTheme.colorScheme.primary
                     )
                 )
-            },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        navigator.navigateUp()
-                    }, icon = Icons.Outlined.ArrowBackIosNew)
-                })
+            })
         },
 
         ) { paddingValues ->
@@ -76,6 +72,7 @@ fun LoginScreen(
             FilledButton(
                 text = "Admin",
                 onClick = {
+                    navigator.popBackStack()
                     navigator.navigate(LoginFormScreenDestination("Admin"))
                 },
                 modifier = Modifier
@@ -94,6 +91,7 @@ fun LoginScreen(
             FilledButton(
                 text = "Warehouse",
                 onClick = {
+                    navigator.popBackStack()
                     navigator.navigate(LoginFormScreenDestination("Warehouse"))
                 },
                 modifier = Modifier

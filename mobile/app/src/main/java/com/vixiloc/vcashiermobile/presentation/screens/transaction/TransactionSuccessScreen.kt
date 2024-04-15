@@ -18,14 +18,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.R
+import com.vixiloc.vcashiermobile.presentation.screens.destinations.HomeScreenDestination
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.OutlinedButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
 @Destination
 @Composable
-fun TransactionSuccessScreen() {
+fun TransactionSuccessScreen(navigator: DestinationsNavigator) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,7 +61,9 @@ fun TransactionSuccessScreen() {
         )
         VerticalSpacer(height = 19.dp)
         FilledButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navigator.navigateUp()
+            },
             text = "Beranda",
             modifier = Modifier.padding(horizontal = 10.dp)
         )

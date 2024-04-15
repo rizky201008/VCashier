@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.vixiloc.vcashiermobile.presentation.screens.destinations.TransactionPaymentScreenDestination
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalProductItem
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
@@ -69,12 +70,15 @@ fun TransactionReviewScreen(
                     items(20) {
                         HorizontalProductItem(price = "Rp10.000", name = "Joko Kripto")
                     }
-                    item { 
+                    item {
                         VerticalSpacer(height = 100.dp)
                     }
                 }
                 FloatingTransactionButton(
-                    onClick = { /*TODO*/ }, modifier = Modifier
+                    onClick = {
+                        navigator.popBackStack()
+                        navigator.navigate(TransactionPaymentScreenDestination)
+                    }, modifier = Modifier
                         .constrainAs(buttonBottom) {
                             bottom.linkTo(lazyColumn.bottom)
                             start.linkTo(lazyColumn.start)

@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,6 +25,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginScreenD
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalLogo
 import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
+import kotlinx.coroutines.delay
 
 @RootNavGraph(start = true)
 @Destination
@@ -31,6 +33,11 @@ import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 fun WelcomeScreen(
     navigator: DestinationsNavigator
 ) {
+    LaunchedEffect(key1 = true) {
+        delay(3000)
+        navigator.popBackStack()
+        navigator.navigate(LoginScreenDestination)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,12 +57,5 @@ fun WelcomeScreen(
         VerticalSpacer(height = 99.dp)
         Text(text = "Selamat datang", style = MaterialTheme.typography.bodyMedium)
         VerticalSpacer(height = 10.dp)
-        FilledButton(
-            text = "Login",
-            onClick = {
-                navigator.navigate(LoginScreenDestination)
-            },
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
     }
 }

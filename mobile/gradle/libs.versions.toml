@@ -14,6 +14,8 @@ materialIconsExtendedAndroid = "1.7.0-alpha03"
 materialKolor = "1.4.4"
 ksp = "1.9.0-1.0.13"
 composeDestinationKsp = "1.9.63"
+ktor = "2.3.10"
+koin-compose = "3.5.6"
 
 [libraries]
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
@@ -36,6 +38,12 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 compose-destination-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "composeDestinationKsp" }
 compose-destination-core = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "composeDestinationKsp" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json= { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-compose" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

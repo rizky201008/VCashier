@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\PaymentMethodRepository;
+use App\Data\PaymentRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,7 @@ class PaymentMethodController extends Controller
 
     public function __construct()
     {
-        $this->paymentMethodRepository = new PaymentMethodRepository();
+        $this->paymentMethodRepository = new PaymentRepository();
     }
 
     public function getAllPaymentMethods(Request $request): JsonResponse

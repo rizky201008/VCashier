@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.widgets.utils
+package com.vixiloc.vcashiermobile.presentation.widgets.commons
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

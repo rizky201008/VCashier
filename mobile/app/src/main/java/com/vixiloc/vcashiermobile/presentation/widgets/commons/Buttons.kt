@@ -25,9 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.OutlinedButton as OutlinedButtonCompose
 
 @Composable
-fun IconButton(onClick: () -> Unit, icon: ImageVector) {
+fun IconButton(onClick: () -> Unit, icon: ImageVector, modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.primary,
                 shape = MaterialTheme.shapes.small

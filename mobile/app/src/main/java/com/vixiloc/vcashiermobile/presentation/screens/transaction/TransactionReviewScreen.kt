@@ -21,10 +21,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.presentation.screens.destinations.TransactionPaymentScreenDestination
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.FloatingTransactionButton
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalProductItem
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.HorizontalProductItem
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 
 @Destination
 @OptIn(ExperimentalMaterial3Api::class)

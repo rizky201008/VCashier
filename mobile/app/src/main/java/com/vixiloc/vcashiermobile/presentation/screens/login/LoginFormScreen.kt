@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.presentation.screens.destinations.HomeScreenDestination
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.FilledButton
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.TextField
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 
 @Destination
 @OptIn(ExperimentalMaterial3Api::class)

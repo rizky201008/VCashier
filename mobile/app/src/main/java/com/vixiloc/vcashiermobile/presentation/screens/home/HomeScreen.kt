@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
@@ -15,8 +14,6 @@ import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,11 +32,11 @@ import androidx.constraintlayout.compose.Dimension
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.presentation.screens.destinations.TransactionReviewScreenDestination
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.ProductItem
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.widgets.home.DropdownMenu
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.FloatingTransactionButton
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.ProductItem
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
 
 @Destination
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,14 +101,9 @@ fun HomeScreen(
                             bottom.linkTo(parent.bottom)
                             height = Dimension.fillToConstraints
                             width = Dimension.wrapContent
-                        }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Search,
-                        contentDescription = null,
-                        Modifier.size(30.dp)
-                    )
-                }
+                        },
+                    icon = Icons.Outlined.Search
+                )
             }
             ConstraintLayout(
                 modifier = Modifier

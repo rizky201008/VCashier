@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -24,11 +22,9 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginFormScreenDestination
-import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginScreenDestination
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.FilledButton
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.IconButton
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.HorizontalLogo
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.HorizontalLogo
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 
 @Destination
 @OptIn(ExperimentalMaterial3Api::class)

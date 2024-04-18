@@ -33,7 +33,7 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'message' => 'Login failed please check your credential',
-            ], 401);
+            ], 400);
         }
     }
 

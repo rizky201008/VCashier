@@ -12,24 +12,36 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.presentation.screens.destinations.HomeScreenDestination
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
+import org.koin.androidx.compose.koinViewModel
 
 @Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginFormScreen(role: String, navigator: DestinationsNavigator) {
+fun LoginFormScreen(
+    navigator: DestinationsNavigator,
+    viewModel: LoginViewModel = koinViewModel()
+) {
+    val state = viewModel.state
+    val events = viewModel::onEvent
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val showErrorAlert: Boolean = state.errorMessage.isNotBlank()
     Scaffold(topBar = {
         TopAppBar(title = {
             Text(
-                text = "Login Sebagai $role",
+                text = "Login Sekarang",
                 style = MaterialTheme.typography.titleMedium.copy(
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -46,15 +58,34 @@ fun LoginFormScreen(role: String, navigator: DestinationsNavigator) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            Loading(modifier = Modifier, visible = state.isLoading)
+            if (state.isLoading) keyboardController?.hide()
+            if (state.loginSuccess) {
+                navigator.popBackStack()
+                navigator.navigate(HomeScreenDestination)
+            }
+            MessageAlert(
+                type = AlertType.ERROR,
+                message = state.errorMessage,
+                title = "Error",
+                modifier = Modifier,
+                visible = showErrorAlert,
+                onDismiss = { events(LoginEvent.DismissAlertMessage) }
+            )
+
             TextField(
-                value = "Apa Mungkin",
-                onValueChanged = {},
+                value = state.email,
+                onValueChanged = {
+                    events(LoginEvent.OnEmailChanged(it))
+                },
                 modifier = Modifier,
                 title = "Email"
             )
             TextField(
-                value = "Apa Mungkin",
-                onValueChanged = {},
+                value = state.password,
+                onValueChanged = {
+                    events(LoginEvent.OnPasswordChanged(it))
+                },
                 modifier = Modifier,
                 title = "Password",
                 visualTransformation = PasswordVisualTransformation()
@@ -63,8 +94,7 @@ fun LoginFormScreen(role: String, navigator: DestinationsNavigator) {
             FilledButton(
                 text = "Login",
                 onClick = {
-                    navigator.popBackStack()
-                    navigator.navigate(HomeScreenDestination)
+                    events(LoginEvent.Login)
                 },
                 modifier = Modifier.padding(horizontal = 10.dp)
             )

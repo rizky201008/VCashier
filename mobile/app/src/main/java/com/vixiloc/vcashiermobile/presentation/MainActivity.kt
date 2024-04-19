@@ -7,7 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeScreen
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.vixiloc.vcashiermobile.presentation.screens.NavGraphs
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    WelcomeScreen()
+                    DestinationsNavHost(navGraph = NavGraphs.root)
                 }
             }
         }

@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\User;
+use App\Data\AuthRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use \Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+
+    private AuthRepository $authRepository;
+
+    public function __construct()
+    {
+        $this->authRepository = new AuthRepository();
+    }
+
     function login(Request $req): JsonResponse
     {
         $req->validate([
@@ -18,46 +24,20 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt([
-            'email' => $req->email,
-            'password' => $req->password
-        ])) {
-            $user = User::where('email', $req->email)->first();
-            $ability = ($user->role == 'admin') ? 'admin' : 'password';
-            $token = $user->createToken('access-token', [$ability]);
-
-            return response()->json([
-                'message' => 'Login success 🎉🎉🎉',
-                'token' => $token->plainTextToken
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Login failed please check your credential',
-            ], 400);
-        }
+        return $this->authRepository->login($req->only('email', 'password'));
     }
 
-    function register(Request $req) : JsonResponse
+    function register(Request $req): JsonResponse
     {
         $req->validate([
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
-            'name' => 'required'
+            'name' => 'required',
+            'role' => 'required|in:cashier,warehouse'
         ]);
 
-        $created = User::create([
-            'email' => $req->email,
-            'password' => $req->password,
-            'name' => $req->name
-        ]);
-
-        $ability = ($created->role == 'admin') ? 'admin' : 'password';
-        $token = $created->createToken('access-token', [$ability]);
-
-        return response()->json([
-            'message' => 'Create account success 🎉🎉🎉',
-            'token' => $token->plainTextToken
-        ], 200);
+        $data  = $req->only('email', 'password', 'name', 'role');
+        return $this->authRepository->register($data);
     }
 
     function logout(Request $req): JsonResponse

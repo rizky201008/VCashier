@@ -20,7 +20,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.R
-import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginScreenDestination
+import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginFormScreenDestination
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.HorizontalLogo
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 import kotlinx.coroutines.delay
@@ -34,7 +34,7 @@ fun WelcomeScreen(
     LaunchedEffect(key1 = true) {
         delay(3000)
         navigator.popBackStack()
-        navigator.navigate(LoginScreenDestination)
+        navigator.navigate(LoginFormScreenDestination)
     }
     Column(
         modifier = Modifier

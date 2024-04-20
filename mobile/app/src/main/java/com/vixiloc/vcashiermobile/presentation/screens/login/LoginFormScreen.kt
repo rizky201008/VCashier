@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.vixiloc.vcashiermobile.presentation.screens.destinations.HomeScreenDestination
+import com.vixiloc.vcashiermobile.presentation.screens.destinations.MainScreenDestination
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
@@ -62,7 +62,7 @@ fun LoginFormScreen(
             if (state.isLoading) keyboardController?.hide()
             if (state.loginSuccess) {
                 navigator.popBackStack()
-                navigator.navigate(HomeScreenDestination)
+                navigator.navigate(MainScreenDestination)
             }
             MessageAlert(
                 type = AlertType.ERROR,

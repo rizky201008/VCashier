@@ -10,10 +10,15 @@ import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.model.LoginRequest
 import com.vixiloc.vcashiermobile.domain.use_case.Login
+import com.vixiloc.vcashiermobile.domain.use_case.SaveToken
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
-class LoginViewModel(private val login: Login) : ViewModel() {
+class LoginViewModel(
+    private val login: Login,
+    private val saveToken: SaveToken
+) : ViewModel() {
 
     var state by mutableStateOf(LoginState())
 
@@ -37,6 +42,16 @@ class LoginViewModel(private val login: Login) : ViewModel() {
         }
     }
 
+    private fun saveTokenKey(token: String) {
+        viewModelScope.launch {
+            saveToken(token)
+        }
+    }
+
+    private fun toggleLoading() {
+        state = state.copy(isLoading = !state.isLoading)
+    }
+
     private fun processLogin() {
         val data = LoginRequest(
             email = state.email,
@@ -46,16 +61,20 @@ class LoginViewModel(private val login: Login) : ViewModel() {
             Log.d(TAG, "processLogin: $resource")
             when (resource) {
                 is Resource.Loading -> {
-                    Log.d(TAG, "processLogin: Loading")
-                    state = state.copy(isLoading = true)
+                    toggleLoading()
                 }
+
                 is Resource.Success -> {
-                    Log.d(TAG, "processLogin: Success ${resource.data}")
-                    state = state.copy(isLoading = false, loginSuccess = true)
+                    state = state.copy(loginSuccess = true)
+                    toggleLoading()
+                    saveTokenKey(resource.data?.token ?: "")
                 }
+
                 is Resource.Error -> {
-                    Log.d(TAG, "processLogin: Error ${resource.message}")
-                    state = state.copy(isLoading = false, errorMessage = resource.message ?: "An unexpected error occurred")
+                    state = state.copy(
+                        errorMessage = resource.message ?: "An unexpected error occurred"
+                    )
+                    toggleLoading()
                 }
             }
         }.launchIn(viewModelScope)

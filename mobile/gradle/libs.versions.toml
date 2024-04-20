@@ -14,14 +14,16 @@ materialIconsExtendedAndroid = "1.7.0-alpha03"
 materialKolor = "1.4.4"
 ksp = "1.9.0-1.0.13"
 composeDestinationKsp = "1.9.63"
-ktor = "2.3.10"
 koin-compose = "3.5.6"
+okHttp = "5.0.0-alpha.2"
+retrofit = "2.9.0"
 
 [libraries]
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material-icons-extended-android = { module = "androidx.compose.material:material-icons-extended-android", version.ref = "materialIconsExtendedAndroid" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -35,15 +37,13 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okHttp" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 compose-destination-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "composeDestinationKsp" }
 compose-destination-core = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "composeDestinationKsp" }
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
-ktor-serialization-kotlinx-json= { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-compose" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okHttp" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

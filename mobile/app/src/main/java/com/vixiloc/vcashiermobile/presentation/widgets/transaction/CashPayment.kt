@@ -1,7 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.widgets.transaction
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
@@ -10,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.TextField
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 
 @Composable
 fun CashPayment(modifier: Modifier) {

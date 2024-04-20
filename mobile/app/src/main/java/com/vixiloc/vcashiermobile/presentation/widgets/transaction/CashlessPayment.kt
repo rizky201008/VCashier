@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.vixiloc.vcashiermobile.presentation.widgets.utils.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 
 @Composable
 fun CashlessPayment(modifier: Modifier) {

@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.ramcosta.composedestinations.DestinationsNavHost
+import com.vixiloc.vcashiermobile.presentation.screens.MainScreen
 import com.vixiloc.vcashiermobile.presentation.screens.NavGraphs
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 

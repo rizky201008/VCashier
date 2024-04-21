@@ -16,8 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val login: Login,
-    private val saveToken: SaveToken
+    private val login: Login
 ) : ViewModel() {
 
     var state by mutableStateOf(LoginState())
@@ -42,12 +41,6 @@ class LoginViewModel(
         }
     }
 
-    private fun saveTokenKey(token: String) {
-        viewModelScope.launch {
-            saveToken(token)
-        }
-    }
-
     private fun toggleLoading() {
         state = state.copy(isLoading = !state.isLoading)
     }
@@ -67,7 +60,6 @@ class LoginViewModel(
                 is Resource.Success -> {
                     state = state.copy(loginSuccess = true)
                     toggleLoading()
-                    saveTokenKey(resource.data?.token ?: "")
                 }
 
                 is Resource.Error -> {

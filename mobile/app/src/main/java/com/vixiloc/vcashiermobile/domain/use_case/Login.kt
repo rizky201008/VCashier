@@ -14,13 +14,18 @@ import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 
-class Login(private val repository: AuthRepository, private val httpHandler: HttpHandler) {
+class Login(
+    private val repository: AuthRepository,
+    private val httpHandler: HttpHandler,
+    private val saveToken: SaveToken
+) {
 
     operator fun invoke(data: LoginRequest): Flow<Resource<LoginResponse>> = flow {
         try {
             Log.d(TAG, "login invoke: called")
             emit(Resource.Loading())
             val response = repository.login(data = data.toLoginRequestDto())
+            response.token?.let { saveToken(it) }
             emit(Resource.Success(response.toLoginResponse()))
         } catch (e: HttpException) {
             val errorMessage = httpHandler.handleHttpException(e)

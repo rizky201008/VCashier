@@ -4,13 +4,16 @@ import com.vixiloc.vcashiermobile.data.local.UserPreference
 import com.vixiloc.vcashiermobile.data.remote.ApiService
 import com.vixiloc.vcashiermobile.data.repository.AuthRepositoryImpl
 import com.vixiloc.vcashiermobile.data.repository.DataStoreRepositoryImpl
+import com.vixiloc.vcashiermobile.data.repository.ProductsRepositoryImpl
 import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
+import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
     single { provideAuthRepository(get()) }
     single { provideDataStoreRepository(get()) }
+    single { provideProductsRepository(get()) }
 }
 
 fun provideAuthRepository(apiService: ApiService): AuthRepository {
@@ -19,4 +22,8 @@ fun provideAuthRepository(apiService: ApiService): AuthRepository {
 
 fun provideDataStoreRepository(userPreference: UserPreference): DataStoreRepository {
     return DataStoreRepositoryImpl(userPreference)
+}
+
+fun provideProductsRepository(apiService: ApiService): ProductsRepository {
+    return ProductsRepositoryImpl(apiService)
 }

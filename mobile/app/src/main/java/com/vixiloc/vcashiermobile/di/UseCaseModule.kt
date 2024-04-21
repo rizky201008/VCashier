@@ -3,6 +3,8 @@ package com.vixiloc.vcashiermobile.di
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
+import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
+import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
 import com.vixiloc.vcashiermobile.domain.use_case.Login
 import com.vixiloc.vcashiermobile.domain.use_case.SaveToken
@@ -13,6 +15,7 @@ val useCaseModule = module {
     single { provideLoginUseCase(get(), get(), get()) }
     single { provideGetTokenUseCase(get()) }
     single { provideSaveTokenUseCase(get()) }
+    single { provideGetProductsUseCase(get(), get()) }
 }
 
 fun provideHttpHandler(): HttpHandler {
@@ -33,4 +36,8 @@ fun provideGetTokenUseCase(repository: DataStoreRepository): GetToken {
 
 fun provideSaveTokenUseCase(repository: DataStoreRepository): SaveToken {
     return SaveToken(repository)
+}
+
+fun provideGetProductsUseCase(getToken: GetToken, repository: ProductsRepository): GetProducts {
+    return GetProducts(getToken = getToken, repository = repository)
 }

@@ -5,6 +5,7 @@ namespace App\Data;
 use App\Models\Product;
 use App\Models\ProductVariation;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\MockObject\Exception;
@@ -21,14 +22,14 @@ class ProductRepository
         $this->variation = new ProductVariation();
     }
 
-    function getProducts() : Collection
+    function getProducts(): JsonResponse
     {
-        return $this->product->with(['variations'])->get();
+        return response()->json(['data' => $this->variation->with(['product', 'product.category'])->get()], 200);
     }
 
-    function getProduct($id) : Collection
+    function getProduct($id): Collection
     {
-        return $this->product->with([ 'variations'])->where('id', $id)->get();
+        return $this->product->with(['variations'])->where('id', $id)->get();
     }
 
     function createProduct($data): array
@@ -103,7 +104,7 @@ class ProductRepository
         }
     }
 
-    function deleteProduct($id) : array
+    function deleteProduct($id): array
     {
         DB::beginTransaction();
 

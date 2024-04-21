@@ -1,5 +1,7 @@
 package com.vixiloc.vcashiermobile.presentation.widgets.commons
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,11 +30,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
+import com.vixiloc.vcashiermobile.commons.Strings.TAG
 
 @Composable
-fun ProductItem(price: String, name: String, image: String? = null, onAdd: () -> Unit = {}) {
+fun ProductItem(price: String, name: String, image: String? = null, onAdd: () -> Unit = {},context:Context) {
+    Log.d(TAG, "ProductItem: $image")
     val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
+        model = ImageRequest.Builder(context)
             .data(
                 image
                     ?: "https://cdn.pixabay.com/photo/2024/03/20/06/18/ai-generated-8644732_1280.jpg"
@@ -157,8 +161,5 @@ fun HorizontalProductItem(
 @Preview(showBackground = false)
 @Composable
 private fun ProductItemPreview() {
-    ProductItem(
-        price = "Rp 10.000",
-        name = "Cappuccino"
-    )
+
 }

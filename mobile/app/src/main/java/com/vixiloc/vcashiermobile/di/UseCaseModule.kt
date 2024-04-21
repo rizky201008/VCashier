@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
     single { provideHttpHandler() }
-    single { provideLoginUseCase(get(), get()) }
+    single { provideLoginUseCase(get(), get(), get()) }
     single { provideGetTokenUseCase(get()) }
     single { provideSaveTokenUseCase(get()) }
 }
@@ -19,8 +19,12 @@ fun provideHttpHandler(): HttpHandler {
     return HttpHandler()
 }
 
-fun provideLoginUseCase(repository: AuthRepository, httpHandler: HttpHandler): Login {
-    return Login(repository, httpHandler)
+fun provideLoginUseCase(
+    repository: AuthRepository,
+    httpHandler: HttpHandler,
+    saveToken: SaveToken
+): Login {
+    return Login(repository = repository, httpHandler = httpHandler, saveToken = saveToken)
 }
 
 fun provideGetTokenUseCase(repository: DataStoreRepository): GetToken {

@@ -10,12 +10,12 @@ import org.koin.dsl.module
 
 
 val viewModelModule = module {
-    viewModel { provideLoginViewModel(get(), get()) }
+    viewModel { provideLoginViewModel(get()) }
     viewModel { provideWelcomeViewModel(get()) }
 }
 
-fun provideLoginViewModel(login: Login, saveToken: SaveToken): LoginViewModel {
-    return LoginViewModel(login = login, saveToken = saveToken)
+fun provideLoginViewModel(login: Login): LoginViewModel {
+    return LoginViewModel(login = login)
 }
 
 fun provideWelcomeViewModel(getToken: GetToken): WelcomeViewModel {

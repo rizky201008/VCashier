@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Data\ProductRepository;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -60,8 +61,8 @@ class ProductController extends Controller
         return response()->json($this->productRepository->getProduct($id));
     }
 
-    public function getProducts()
+    public function getProducts() : JsonResponse
     {
-        return response()->json($this->productRepository->getProducts());
+        return $this->productRepository->getProducts();
     }
 }

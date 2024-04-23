@@ -17,7 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,14 +27,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.OutlinedButton as OutlinedButtonCompose
 
 @Composable
-fun IconButton(onClick: () -> Unit, icon: ImageVector, modifier: Modifier = Modifier) {
+fun IconButton(
+    onClick: () -> Unit,
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    shape: Shape = MaterialTheme.shapes.small,
+) {
     Box(
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.primary,
-                shape = MaterialTheme.shapes.small
+                shape = shape
             )
             .size(34.dp)
+            .clip(shape)
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {

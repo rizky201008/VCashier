@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,14 +26,15 @@ fun TextField(
     modifier: Modifier,
     title: String,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    textStyle: TextStyle = MaterialTheme.typography.bodySmall
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(10.dp)
     ) {
-        Text(text = title, style = MaterialTheme.typography.bodySmall)
+        Text(text = title, style = textStyle)
         VerticalSpacer(height = 9.dp)
         Box(
             modifier = Modifier

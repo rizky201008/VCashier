@@ -13,10 +13,10 @@ return new class extends Migration {
     {
         Schema::create('transaction_items', function (Blueprint $table) {
             $table->id();
-            $table->string('product');
+            $table->foreignIdFor(\App\Models\ProductVariation::class)->constrained()->onDelete('restrict');
             $table->bigInteger('price');
             $table->bigInteger('qty');
-            $table->foreignIdFor(Transaction::class);
+            $table->foreignIdFor(Transaction::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

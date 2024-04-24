@@ -12,11 +12,12 @@ return new class extends Migration {
     {
         Schema::create('transaction_payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_id');
-            $table->foreignId('payment_method_id');
+            $table->foreignIdFor(\App\Models\Transaction::class)->constrained()->onDelete('restrict');
+            $table->foreignIdFor(\App\Models\PaymentMethod::class)->constrained()->onDelete('restrict');
             $table->double('amount');
             $table->double('change')->default(0.0);
             $table->string('token')->nullable();
+            $table->enum('status',['completed','unpaid'])->default('pending');
             $table->timestamps();
         });
     }

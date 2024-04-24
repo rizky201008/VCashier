@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->foreignIdFor(Category::class)->default(1);
+            $table->foreignIdFor(Category::class)->default(1)->constrained()->onDelete('restrict');
             $table->text('image_path')->nullable();
             $table->text('image_url')->nullable();
             $table->timestamps();

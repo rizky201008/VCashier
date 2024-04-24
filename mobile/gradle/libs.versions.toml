@@ -18,6 +18,7 @@ koin-compose = "3.5.6"
 okHttp = "5.0.0-alpha.2"
 retrofit = "2.9.0"
 dataStore = "1.1.0"
+roomVersion = "2.6.1"
 
 [libraries]
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
@@ -46,6 +47,10 @@ koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = 
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okHttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 data-store = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+room-compiler-ksp = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

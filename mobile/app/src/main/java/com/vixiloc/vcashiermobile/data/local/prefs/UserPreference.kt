@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.data.local
+package com.vixiloc.vcashiermobile.data.local.prefs
 
 import android.content.Context
 import androidx.datastore.core.DataStore

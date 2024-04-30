@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.di
 
-import com.vixiloc.vcashiermobile.data.local.UserPreference
+import com.vixiloc.vcashiermobile.data.local.prefs.UserPreference
 import com.vixiloc.vcashiermobile.data.remote.ApiService
 import com.vixiloc.vcashiermobile.data.repository.AuthRepositoryImpl
 import com.vixiloc.vcashiermobile.data.repository.DataStoreRepositoryImpl

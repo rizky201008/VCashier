@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Transaction;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +12,11 @@ return new class extends Migration {
     {
         Schema::create('transaction_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\ProductVariation::class)->constrained()->onDelete('restrict');
+            $table->foreignIdFor(\App\Models\Transaction::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(\App\Models\ProductVariation::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('quantity');
             $table->bigInteger('price');
-            $table->bigInteger('qty');
-            $table->foreignIdFor(Transaction::class)->constrained()->onDelete('cascade');
+            $table->bigInteger('subtotal');
             $table->timestamps();
         });
     }

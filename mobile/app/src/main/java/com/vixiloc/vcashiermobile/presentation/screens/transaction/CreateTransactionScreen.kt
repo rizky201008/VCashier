@@ -2,19 +2,15 @@ package com.vixiloc.vcashiermobile.presentation.screens.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -24,7 +20,6 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.presentation.screens.destinations.TransactionReviewScreenDestination
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.ProductItem
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
@@ -41,10 +36,6 @@ fun CreateTransactionScreen(
     val state = viewModel.state
     val onEvent = viewModel::onEvent
     val context = LocalContext.current
-
-    LaunchedEffect(key1 = context) {
-        viewModel.getProducts()
-    }
 
     Column(
         modifier = modifier

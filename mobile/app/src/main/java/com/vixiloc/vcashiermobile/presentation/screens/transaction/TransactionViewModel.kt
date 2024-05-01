@@ -18,6 +18,10 @@ class TransactionViewModel(private val getProductsUseCase: GetProducts) : ViewMo
 
     var state by mutableStateOf(TransactionState())
 
+    init {
+        getProducts()
+    }
+
     fun onEvent(event: TransactionEvent) {
         when (event) {
             is TransactionEvent.ToggleError -> {
@@ -26,7 +30,7 @@ class TransactionViewModel(private val getProductsUseCase: GetProducts) : ViewMo
         }
     }
 
-    fun getProducts() {
+    private fun getProducts() {
         getProductsUseCase().onEach { resource ->
             when (resource) {
                 is Resource.Loading -> {

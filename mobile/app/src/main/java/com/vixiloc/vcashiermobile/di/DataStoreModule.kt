@@ -1,8 +1,8 @@
 package com.vixiloc.vcashiermobile.di
 
 import android.content.Context
-import com.vixiloc.vcashiermobile.data.local.UserPreference
-import com.vixiloc.vcashiermobile.data.local.dataStore
+import com.vixiloc.vcashiermobile.data.local.prefs.UserPreference
+import com.vixiloc.vcashiermobile.data.local.prefs.dataStore
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

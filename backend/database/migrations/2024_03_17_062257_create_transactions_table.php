@@ -14,9 +14,11 @@ return new class extends Migration {
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
-            $table->foreignIdFor(User::class)->constrained()->onDelete('restrict');
-            $table->foreignIdFor(Customer::class)->constrained()->onDelete('cascade');
+            $table->bigInteger('total_amount');
+            $table->enum('transaction_status', ['pending', 'shipping', 'canceled', 'completed', 'draft'])->default('pending');
+            $table->enum('payment_status', ['unpaid', 'paid', 'canceled', 'refunded'])->default('unpaid');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(Customer::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

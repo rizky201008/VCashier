@@ -24,12 +24,24 @@ class ProductRepository
 
     function getProducts(): JsonResponse
     {
-        return response()->json(['data' => $this->variation->with(['product', 'product.category'])->get()], 200);
+        return response()->json(['data' => $this->variation->with(['product', 'product.category'])->get()]);
     }
 
     function getProduct($id): Collection
     {
         return $this->product->with(['variations'])->where('id', $id)->get();
+    }
+
+    public function getProductVariation($id): ProductVariation
+    {
+        return $this->variation->where('id', $id)->first();
+    }
+
+    public function decreaseStock(int $productVariationId, int $quantity)
+    {
+        $productVariation = $this->getProductVariation($productVariationId);
+        $productVariation->stock -= $quantity;
+        $productVariation->save();
     }
 
     function createProduct($data): array

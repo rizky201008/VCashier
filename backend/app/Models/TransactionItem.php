@@ -14,9 +14,10 @@ class TransactionItem extends Model
 
     protected $fillable = [
         'transaction_id',
-        'product',
-        'qty',
-        'price'
+        'product_variation_id',
+        'quantity',
+        'price',
+        'subtotal',
     ];
 
     public function transaction(): BelongsTo

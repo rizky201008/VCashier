@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('product_variations', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Product::class)->constrained()->onDelete('restrict');
+            $table->foreignIdFor(Product::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('unit');
             $table->integer('stock');
             $table->double('price');

@@ -7,13 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.vixiloc.vcashiermobile.presentation.screens.destinations.CreateTransactionScreenDestination
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
+import androidx.navigation.NavHostController
 
 @Composable
 fun HomeScreen(
-    navigator: DestinationsNavigator,
+    navigator: NavHostController,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -22,6 +20,5 @@ fun HomeScreen(
             .background(color = Color(0xFFF6F5F5))
     ) {
         Text(text = "Halo Ges")
-        FilledButton(onClick = { navigator.navigate(CreateTransactionScreenDestination) }, text = "Buat Transaksi", modifier = Modifier)
     }
 }

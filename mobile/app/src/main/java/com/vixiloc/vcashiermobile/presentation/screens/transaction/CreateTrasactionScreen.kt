@@ -1,5 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,14 +12,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.vixiloc.vcashiermobile.presentation.screens.destinations.TransactionReviewScreenDestination
+import androidx.navigation.NavHostController
+import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.ProductItem
@@ -26,16 +27,19 @@ import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 import org.koin.androidx.compose.koinViewModel
 
-@Destination
 @Composable
 fun CreateTransactionScreen(
-    navigator: DestinationsNavigator,
+    navigator: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: TransactionViewModel = koinViewModel()
 ) {
     val state = viewModel.state
     val onEvent = viewModel::onEvent
+    LaunchedEffect(key1 = Unit) {
+        onEvent(TransactionEvent.Refresh)
+    }
     val context = LocalContext.current
+
 
     Column(
         modifier = modifier
@@ -67,29 +71,36 @@ fun CreateTransactionScreen(
                 items(state.products) { product ->
                     ProductItem(
                         price = product.price.toString(),
-                        name = product.product?.name ?: "",
+                        name = "${product.product?.name} ${product.unit}",
                         image = product.product?.imageUrl ?: "",
                         context = context,
+                        onAdd = {
+                            onEvent(TransactionEvent.SelectProduct(product))
+                        }
                     )
                 }
                 item {
                     VerticalSpacer(height = 100.dp)
                 }
             }
-            FloatingTransactionButton(
-                onClick = {
-                    navigator.navigate(TransactionReviewScreenDestination)
-                }, modifier = Modifier
+            this@Column.AnimatedVisibility(visible = state.selectedProduct.isNotEmpty(),
+                modifier = Modifier
                     .constrainAs(buttonBottom) {
                         bottom.linkTo(lazyVerticalGrid.bottom)
                         start.linkTo(lazyVerticalGrid.start)
                         end.linkTo(lazyVerticalGrid.end)
+                    }) {
+                FloatingTransactionButton(
+                    onClick = {
+                        navigator.navigate(Screens.TransactionReview.route)
                     },
-                containerColor = MaterialTheme.colorScheme.primary,
-                icon = Icons.Outlined.ShoppingCart,
-                textStart = "2 Item",
-                textEnd = "Rp100.000"
-            )
+                    modifier = Modifier,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    icon = Icons.Outlined.ShoppingCart,
+                    textStart = "2 Item",
+                    textEnd = "Rp100.000"
+                )
+            }
         }
     }
 }

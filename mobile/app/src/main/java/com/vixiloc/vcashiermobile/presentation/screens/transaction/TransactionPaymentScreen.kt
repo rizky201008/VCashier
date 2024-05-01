@@ -29,18 +29,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.vixiloc.vcashiermobile.presentation.screens.destinations.TransactionSuccessScreenDestination
+import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.transaction.CashPayment
 import com.vixiloc.vcashiermobile.presentation.widgets.transaction.CashlessPayment
 
-@Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransactionPaymentScreen(navigator: DestinationsNavigator) {
+fun TransactionPaymentScreen(navigator: NavHostController) {
     var tabState by remember { mutableStateOf(0) }
     val titles = listOf("Tunai", "Non Tunai")
     Scaffold(
@@ -136,7 +133,7 @@ fun TransactionPaymentScreen(navigator: DestinationsNavigator) {
                 FilledButton(
                     onClick = {
                         navigator.popBackStack()
-                        navigator.navigate(TransactionSuccessScreenDestination)
+//                        navigator.navigate(TransactionSuccessScreenDestination)
                     },
                     text = "Konfirmasi",
                     modifier = Modifier

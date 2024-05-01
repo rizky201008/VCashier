@@ -6,7 +6,6 @@
 
     <application
         android:name=".VcashierApp"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,11 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VcashierMobile"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.VcashierMobile" />
+        <activity
             android:name=".presentation.MainActivity"
+            android:exported="false"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/Theme.VcashierMobile" />
+        <activity
+            android:name=".presentation.WelcomeActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.VcashierMobile">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

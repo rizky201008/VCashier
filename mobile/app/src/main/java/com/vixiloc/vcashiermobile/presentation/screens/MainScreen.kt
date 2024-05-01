@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material.icons.outlined.Square
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,31 +21,28 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenu
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenuName
-import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
+import com.vixiloc.vcashiermobile.presentation.navigations.MainNavHost
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
 import kotlinx.coroutines.launch
 
+
 @OptIn(ExperimentalMaterial3Api::class)
-@Destination
 @Composable
-fun MainScreen(navigator: DestinationsNavigator) {
+fun MainScreen(navHostController: NavHostController) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val items =
-        listOf(
-            DrawerMenu(DrawerMenuName.HOME, Icons.Outlined.Home)
-        )
-    val selectedItem = remember { mutableStateOf(items[0]) }
+    val items = listOf(
+        DrawerMenu(DrawerMenuName.HOME, Icons.Outlined.Home),
+        DrawerMenu(DrawerMenuName.PRODUCTS, Icons.Outlined.Square)
+    )
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -52,17 +50,21 @@ fun MainScreen(navigator: DestinationsNavigator) {
                 IconButton(
                     onClick = { scope.launch { drawerState.close() } },
                     icon = Icons.Outlined.Close,
-                    modifier = Modifier.padding(10.dp).align(Alignment.End)
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.End)
                 )
                 Spacer(Modifier.height(12.dp))
                 items.forEach { item ->
                     NavigationDrawerItem(
                         icon = { Icon(item.icon, contentDescription = null) },
                         label = { Text(item.name.menuName) },
-                        selected = item == selectedItem.value,
+                        selected = false,
                         onClick = {
                             scope.launch { drawerState.close() }
-                            selectedItem.value = item
+                            navHostController.navigate(item.name.route) {
+                                popUpTo(0)
+                            }
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
@@ -84,13 +86,10 @@ fun MainScreen(navigator: DestinationsNavigator) {
                     })
                 }
             ) { paddingValues ->
-                val screenModifier = Modifier.padding(paddingValues)
-                when (selectedItem.value.name) {
-                    DrawerMenuName.HOME -> HomeScreen(
-                        navigator = navigator,
-                        modifier = screenModifier
-                    )
-                }
+                MainNavHost(
+                    navController = navHostController,
+                    modifier = Modifier.padding(paddingValues)
+                )
             }
         }
     )

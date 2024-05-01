@@ -5,5 +5,6 @@ import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
 data class TransactionState(
     val products: List<ProductResponseItems> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String = ""
+    val error: String = "",
+    val selectedProduct: List<ProductResponseItems> = emptyList()
 )

@@ -1,6 +1,8 @@
 package com.vixiloc.vcashiermobile.presentation.screens.welcome
 
-import android.util.Log
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,36 +17,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.vixiloc.vcashiermobile.R
-import com.vixiloc.vcashiermobile.commons.Strings.TAG
-import com.vixiloc.vcashiermobile.presentation.screens.destinations.LoginFormScreenDestination
-import com.vixiloc.vcashiermobile.presentation.screens.destinations.MainScreenDestination
+import com.vixiloc.vcashiermobile.presentation.LoginActivity
+import com.vixiloc.vcashiermobile.presentation.MainActivity
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.HorizontalLogo
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
-@RootNavGraph(start = true)
-@Destination
 @Composable
 fun WelcomeScreen(
-    navigator: DestinationsNavigator,
     viewModel: WelcomeViewModel = koinViewModel()
 ) {
     val state = viewModel.state
+    val context: Context = LocalContext.current
     LaunchedEffect(key1 = state.token) {
         delay(3000)
-        navigator.popBackStack()
         if (state.token.isNotEmpty()) {
-            navigator.navigate(MainScreenDestination)
+            context.startActivity(Intent(context, MainActivity::class.java))
         } else {
-            navigator.navigate(LoginFormScreenDestination)
+            context.startActivity(Intent(context, LoginActivity::class.java))
         }
+        (context as? Activity)?.finish()
     }
 
     Column(

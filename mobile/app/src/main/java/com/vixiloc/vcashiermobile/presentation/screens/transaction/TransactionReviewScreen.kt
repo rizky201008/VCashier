@@ -18,19 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.vixiloc.vcashiermobile.presentation.screens.destinations.TransactionPaymentScreenDestination
+import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.HorizontalProductItem
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 
-@Destination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransactionReviewScreen(
-    navigator: DestinationsNavigator
+    navigator: NavHostController
 ) {
     Scaffold(
         topBar = {
@@ -77,7 +74,7 @@ fun TransactionReviewScreen(
                 FloatingTransactionButton(
                     onClick = {
                         navigator.popBackStack()
-                        navigator.navigate(TransactionPaymentScreenDestination)
+//                        navigator.navigate(TransactionPaymentScreenDestination)
                     }, modifier = Modifier
                         .constrainAs(buttonBottom) {
                             bottom.linkTo(lazyColumn.bottom)

@@ -17,6 +17,7 @@ import kotlin.math.log
 class TransactionViewModel(private val getProductsUseCase: GetProducts) : ViewModel() {
 
     var state by mutableStateOf(TransactionState())
+    var pageShowedTime = 0
 
     init {
         getProducts()
@@ -26,6 +27,19 @@ class TransactionViewModel(private val getProductsUseCase: GetProducts) : ViewMo
         when (event) {
             is TransactionEvent.ToggleError -> {
                 toggleError(event.error)
+            }
+
+            is TransactionEvent.Refresh -> {
+                pageShowedTime++
+                if (pageShowedTime > 1) {
+                    getProducts()
+                }
+            }
+
+            is TransactionEvent.SelectProduct -> {
+                if (!state.selectedProduct.contains(event.product)) {
+                    state = state.copy(selectedProduct = state.selectedProduct.plus(event.product))
+                }
             }
         }
     }

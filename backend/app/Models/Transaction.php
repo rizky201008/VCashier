@@ -12,9 +12,11 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
+        'total_amount',
+        'transaction_status',
+        'payment_status',
         'user_id',
-        'customer_id',
-        'status',
+        'customer_id'
     ];
 
     public function items(): HasMany

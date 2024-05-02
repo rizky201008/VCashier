@@ -10,5 +10,6 @@ data class DrawerMenu(
 
 enum class DrawerMenuName(val menuName: String, val route: String) {
     HOME("Home", route = Screens.Home.route),
-    PRODUCTS("Transaksi", route = Screens.CreateTransaction.route),
+    CREATE_TRANSACTION("Transaksi", route = Screens.CreateTransaction.route),
+    CATEGORIES("Kategori", route = Screens.Categories.route)
 }

@@ -17,12 +17,12 @@ class CategoryController extends Controller
 
     public function getCategories()
     {
-        return $this->categoryRepository->getAllCategories();
+        return response()->json(['data' => $this->categoryRepository->getAllCategories()]);
     }
 
     public function getCategory($id)
     {
-        return $this->categoryRepository->getCategory($id);
+        return response()->json($this->categoryRepository->getCategory($id));
     }
 
     public function createCategory(Request $request)
@@ -42,7 +42,7 @@ class CategoryController extends Controller
             'id' => 'required|integer|exists:categories,id',
         ]);
 
-        $this->categoryRepository->updateCategory($request->id, $request);
+        $this->categoryRepository->updateCategory($request->id, $request->all());
 
         // Mengembalikan kategori yang telah diperbarui sebagai respons
         return response()->json(['message' => 'Category updated successfully'], 200);

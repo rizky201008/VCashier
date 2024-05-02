@@ -6,8 +6,6 @@ import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -19,11 +17,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.presentation.MainActivity
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField

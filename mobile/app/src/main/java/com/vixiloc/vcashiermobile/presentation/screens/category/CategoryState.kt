@@ -5,5 +5,7 @@ import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
 data class CategoryState(
     val isLoading: Boolean = false,
     val error: String = "",
-    val categories: List<CategoriesResponseItem> = emptyList()
+    val categories: List<CategoriesResponseItem> = emptyList(),
+    val categoryName: String = "",
+    val success: String = ""
 )

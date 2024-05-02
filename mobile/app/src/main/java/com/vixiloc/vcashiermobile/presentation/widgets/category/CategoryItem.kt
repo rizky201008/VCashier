@@ -21,7 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CategoryItem(modifier: Modifier = Modifier, headline: String, onDelete: () -> Unit) {
+fun CategoryItem(
+    modifier: Modifier = Modifier,
+    headline: String,
+    onDelete: () -> Unit,
+    onUpdate: () -> Unit
+) {
     ListItem(
         modifier = modifier
             .fillMaxWidth()
@@ -40,7 +45,7 @@ fun CategoryItem(modifier: Modifier = Modifier, headline: String, onDelete: () -
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
         trailingContent = {
             Row {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = { onUpdate() }) {
                     Icon(
                         imageVector = Icons.Outlined.Edit,
                         contentDescription = null,

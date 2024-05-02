@@ -7,12 +7,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
+import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.category.CategoryItem
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
@@ -30,6 +32,10 @@ fun CategoriesScreen(
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
+
+    LaunchedEffect(Unit) {
+        viewModel.getAllCategories()
+    }
 
     ConstraintLayout(modifier = modifier) {
         val (searchInput, categories, addButton) = createRefs()
@@ -67,7 +73,9 @@ fun CategoriesScreen(
         }
 
         FilledButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navController.navigate(Screens.Categories.CreateCategory.route)
+            },
             text = "Tambah Kategori",
             modifier = Modifier.constrainAs(addButton) {
                 top.linkTo(parent.bottom)

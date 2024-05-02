@@ -2,8 +2,11 @@ package com.vixiloc.vcashiermobile.di
 
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
+import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
+import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
+import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
 import com.vixiloc.vcashiermobile.domain.use_case.Login
@@ -16,6 +19,8 @@ val useCaseModule = module {
     single { provideGetTokenUseCase(get()) }
     single { provideSaveTokenUseCase(get()) }
     single { provideGetProductsUseCase(get(), get()) }
+    single { provideGetCategoriesUseCase(get(), get()) }
+    single { provideCreateCategoryUseCase(get(), get()) }
 }
 
 fun provideHttpHandler(): HttpHandler {
@@ -40,4 +45,15 @@ fun provideSaveTokenUseCase(repository: DataStoreRepository): SaveToken {
 
 fun provideGetProductsUseCase(getToken: GetToken, repository: ProductsRepository): GetProducts {
     return GetProducts(getToken = getToken, repository = repository)
+}
+
+fun provideGetCategoriesUseCase(repository: CategoryRepository, getToken: GetToken): GetCategories {
+    return GetCategories(repository, getToken = getToken)
+}
+
+fun provideCreateCategoryUseCase(
+    repository: CategoryRepository,
+    getToken: GetToken
+): CreateCategory {
+    return CreateCategory(repository, getToken = getToken)
 }

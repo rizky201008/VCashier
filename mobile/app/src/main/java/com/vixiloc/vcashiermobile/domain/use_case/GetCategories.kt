@@ -16,7 +16,7 @@ class GetCategories(private val repository: CategoryRepository, private val getT
             val token: String = getToken().first()
             try {
                 emit(Resource.Loading())
-                val categories = repository.getCategories("Bearer $token")
+                val categories = repository.getCategories(token)
                 emit(Resource.Success(categories.toCategoriesResponse().categoriesResponseDto))
             } catch (e: HttpException) {
                 emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

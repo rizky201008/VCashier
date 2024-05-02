@@ -6,4 +6,5 @@ object Routes {
     const val LOGIN = "auth/login"
     const val PRODUCTS = "products"
     const val CATEGORIES = "categories"
+    const val CATEGORIES_CREATE = "$CATEGORIES/create"
 }

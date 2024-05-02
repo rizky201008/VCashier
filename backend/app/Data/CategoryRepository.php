@@ -22,13 +22,11 @@ class CategoryRepository
         return $this->category->find($id);
     }
 
-    public function createCategory($name)
+    public function createCategory($name) : void
     {
-        $category = $this->category->create([
+        $this->category->create([
             'name' => $name,
         ]);
-
-        return $category;
     }
 
     public function updateCategory($id, $reqs): void

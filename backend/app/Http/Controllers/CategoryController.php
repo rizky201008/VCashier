@@ -31,8 +31,9 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $category = $this->categoryRepository->createCategory($request->name);
-        return response()->json(['message' => 'Category created successfully', 'category' => $category], 201);
+        $this->categoryRepository->createCategory($request->name);
+
+        return response()->json(['message' => 'Category created successfully'], 201);
     }
 
     public function updateCategory(Request $request)
@@ -44,7 +45,6 @@ class CategoryController extends Controller
 
         $this->categoryRepository->updateCategory($request->id, $request->all());
 
-        // Mengembalikan kategori yang telah diperbarui sebagai respons
         return response()->json(['message' => 'Category updated successfully'], 200);
     }
 

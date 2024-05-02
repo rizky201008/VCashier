@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
@@ -13,6 +14,7 @@ sealed class Screens(val route: String) {
     data object Home : Screens("home")
     data object CreateTransaction : Screens("transaction-create")
     data object TransactionReview : Screens("transaction-review")
+    data object Categories : Screens("categories")
 }
 
 @Composable
@@ -26,6 +28,9 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
         }
         composable(Screens.TransactionReview.route) {
             TransactionReviewScreen(navigator = navController)
+        }
+        composable(Screens.Categories.route) {
+            CategoriesScreen(navController = navController, modifier = modifier)
         }
     }
 }

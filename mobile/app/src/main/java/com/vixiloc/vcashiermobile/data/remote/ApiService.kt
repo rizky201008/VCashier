@@ -1,9 +1,12 @@
 package com.vixiloc.vcashiermobile.data.remote
 
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
+import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES_CREATE
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
 import com.vixiloc.vcashiermobile.data.remote.dto.CategoriesResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateCategoryRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateCategoryResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductsResponseDto
@@ -30,5 +33,12 @@ interface ApiService {
     suspend fun getCategories(
         @Header("Authorization") token: String,
     ): CategoriesResponseDto
+
+    @POST(CATEGORIES_CREATE)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun createCategory(
+        @Header("Authorization") token: String,
+        @Body data: CreateCategoryRequestDto
+    ): CreateCategoryResponseDto
 
 }

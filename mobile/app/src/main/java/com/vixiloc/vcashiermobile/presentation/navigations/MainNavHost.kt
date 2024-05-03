@@ -1,13 +1,19 @@
 package com.vixiloc.vcashiermobile.presentation.navigations
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.CreateCategoryScreen
+import com.vixiloc.vcashiermobile.presentation.screens.category.UpdateCategoryScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
@@ -19,11 +25,15 @@ sealed class Screens(val route: String) {
     data object Categories : Screens("category") {
         data object AllCategories : Screens("category-all")
         data object CreateCategory : Screens("category-create")
+        data object UpdateCategory : Screens("category-update")
     }
 }
 
 @Composable
 fun MainNavHost(navController: NavHostController, modifier: Modifier) {
+    var selectedCategory: CategoriesResponseItem? by remember {
+        mutableStateOf(null)
+    }
     NavHost(navController = navController, startDestination = Screens.Home.route) {
         composable(Screens.Home.route) {
             HomeScreen(navigator = navController, modifier = modifier)
@@ -39,10 +49,21 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
             route = Screens.Categories.route
         ) {
             composable(Screens.Categories.AllCategories.route) {
-                CategoriesScreen(navController = navController, modifier = modifier)
+                CategoriesScreen(
+                    navController = navController,
+                    modifier = modifier,
+                    onUpdateCategory = { selectedCategory = it }
+                )
             }
             composable(Screens.Categories.CreateCategory.route) {
                 CreateCategoryScreen(navController = navController, modifier = modifier)
+            }
+            composable(Screens.Categories.UpdateCategory.route) {
+                UpdateCategoryScreen(
+                    navHostController = navController,
+                    selectedCategory = selectedCategory,
+                    modifier = modifier
+                )
             }
         }
     }

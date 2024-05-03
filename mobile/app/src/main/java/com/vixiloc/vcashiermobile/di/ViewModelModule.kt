@@ -5,6 +5,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
 import com.vixiloc.vcashiermobile.domain.use_case.Login
+import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeViewModel
@@ -17,7 +18,7 @@ val viewModelModule = module {
     viewModel { provideLoginViewModel(get()) }
     viewModel { provideWelcomeViewModel(get()) }
     viewModel { provideTransactionViewModel(get()) }
-    viewModel { provideCategoryViewModel(get(), get()) }
+    viewModel { provideCategoryViewModel(get(), get(), get()) }
 }
 
 fun provideLoginViewModel(login: Login): LoginViewModel {
@@ -34,7 +35,12 @@ fun provideTransactionViewModel(getProducts: GetProducts): TransactionViewModel 
 
 fun provideCategoryViewModel(
     getCategories: GetCategories,
-    createCategory: CreateCategory
+    createCategory: CreateCategory,
+    updateCategory: UpdateCategory
 ): CategoryViewModel {
-    return CategoryViewModel(getCategories = getCategories, createCategory = createCategory)
+    return CategoryViewModel(
+        getCategories = getCategories,
+        createCategory = createCategory,
+        updateCategory = updateCategory
+    )
 }

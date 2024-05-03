@@ -1,8 +1,8 @@
 package com.vixiloc.vcashiermobile.domain.repository
 
 import com.vixiloc.vcashiermobile.data.remote.dto.CategoriesResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateCategoryRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateCategoryResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryResponseDto
 
 interface CategoryRepository {
 
@@ -10,6 +10,11 @@ interface CategoryRepository {
 
     suspend fun createCategory(
         token: String,
-        data: CreateCategoryRequestDto
-    ): CreateCategoryResponseDto
+        data: CreateUpdateCategoryRequestDto
+    ): CreateUpdateCategoryResponseDto
+
+    suspend fun updateCategory(
+        token: String,
+        data: CreateUpdateCategoryRequestDto
+    ): CreateUpdateCategoryResponseDto
 }

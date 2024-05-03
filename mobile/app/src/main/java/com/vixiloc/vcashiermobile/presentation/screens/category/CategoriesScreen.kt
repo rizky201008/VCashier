@@ -8,12 +8,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
+import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.category.CategoryItem
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
@@ -22,16 +24,19 @@ import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CategoriesScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    viewModel: CategoryViewModel = koinViewModel()
+    viewModel: CategoryViewModel = koinViewModel(),
+    onUpdateCategory: (CategoriesResponseItem) -> Unit
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.getAllCategories()
@@ -66,7 +71,12 @@ fun CategoriesScreen(
                     modifier = Modifier
                         .padding(10.dp),
                     onDelete = {},
-                    onUpdate = {}
+                    onUpdate = {
+                        onUpdateCategory(category)
+                        scope.launch {
+                            navController.navigate(Screens.Categories.UpdateCategory.route)
+                        }
+                    }
                 )
             }
             item { VerticalSpacer(height = 300.dp, modifier = Modifier) }

@@ -23,18 +23,7 @@ fun CreateCategoryScreen(
     val events = viewModel::onEvent
 
     Column(modifier = modifier) {
-        TextField(
-            value = state.categoryName,
-            onValueChanged = { events(CategoryEvent.InputCategoryName(it)) },
-            modifier = Modifier,
-            title = "Nama Kategori"
-        )
-
-        FilledButton(
-            onClick = { events(CategoryEvent.SubmitCreateCategory) },
-            text = "Submit",
-            modifier = Modifier.padding(horizontal = 10.dp)
-        )
+        CategoryForm(viewModel = viewModel, type = FormType.CREATE)
 
         MessageAlert(
             type = AlertType.SUCCESS,
@@ -45,6 +34,16 @@ fun CreateCategoryScreen(
             onDismiss = {
                 events(CategoryEvent.DismissAlertMessage)
                 navController.navigateUp()
+            }
+        )
+        MessageAlert(
+            type = AlertType.ERROR,
+            message = state.error,
+            title = "Error",
+            modifier = Modifier,
+            visible = state.error.isNotEmpty(),
+            onDismiss = {
+                events(CategoryEvent.DismissAlertMessage)
             }
         )
 

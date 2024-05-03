@@ -6,7 +6,7 @@ here is my todo's on this projects :
  - [x] Show Categories
  - [x] Create Category
  - [x] Update Category
- - [ ] Delete Category
+ - [x] Delete Category
  - [ ] Search Categories
  - [ ] Show Products
  - [ ] Create Product

@@ -106,14 +106,14 @@ enum class AlertType {
 
 @Preview
 @Composable
-private fun LoadingPreview() {
+private fun AlertPreview() {
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
         MessageAlert(
-            type = AlertType.ERROR,
             message = "Password Salah",
             title = "Error",
             modifier = Modifier,
             visible = true,
+            type = AlertType.ERROR,
         )
     }
 }

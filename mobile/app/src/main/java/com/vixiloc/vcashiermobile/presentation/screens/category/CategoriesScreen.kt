@@ -70,12 +70,12 @@ fun CategoriesScreen(
                     headline = category.name,
                     modifier = Modifier
                         .padding(10.dp),
-                    onDelete = {},
+                    onDelete = {
+                        events(CategoryEvent.DeleteCategory(category))
+                    },
                     onUpdate = {
                         onUpdateCategory(category)
-                        scope.launch {
-                            navController.navigate(Screens.Categories.UpdateCategory.route)
-                        }
+                        navController.navigate(Screens.Categories.UpdateCategory.route)
                     }
                 )
             }
@@ -104,5 +104,37 @@ fun CategoriesScreen(
             visible = state.error.isNotBlank(),
             onDismiss = { events(CategoryEvent.DismissAlertMessage) }
         )
+
+        MessageAlert(
+            type = AlertType.SUCCESS,
+            message = state.success,
+            title = "Success",
+            modifier = Modifier,
+            visible = state.success.isNotBlank(),
+            onDismiss = { events(CategoryEvent.DismissAlertMessage) }
+        )
+
+        MessageAlert(
+            type = AlertType.WARNING,
+            message = state.confirmationMessage,
+            title = "Hapus Kategori",
+            visible = state.confirmationMessage.isNotBlank(),
+            modifier = Modifier,
+            confirmButton = {
+                FilledButton(
+                    onClick = { events(CategoryEvent.ProcessDeleteCategory) },
+                    text = "Ya",
+                    modifier = Modifier
+                )
+            },
+            dismissButton = {
+                FilledButton(
+                    onClick = { events(CategoryEvent.DismissAlertMessage) },
+                    text = "Tidak",
+                    modifier = Modifier
+                )
+            }
+        )
+
     }
 }

@@ -12,11 +12,13 @@ import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductsResponseDto
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -48,6 +50,13 @@ interface ApiService {
     suspend fun updateCategory(
         @Header("Authorization") token: String,
         @Body data: CreateUpdateCategoryRequestDto
+    ): CreateUpdateCategoryResponseDto
+
+    @DELETE("$CATEGORIES/{id}")
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun deleteCategory(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
     ): CreateUpdateCategoryResponseDto
 
 }

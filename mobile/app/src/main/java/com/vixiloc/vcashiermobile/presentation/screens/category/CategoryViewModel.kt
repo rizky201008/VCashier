@@ -10,6 +10,7 @@ import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.model.CreateUpdateCategoryRequest
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
+import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import kotlinx.coroutines.flow.launchIn
@@ -19,6 +20,7 @@ class CategoryViewModel(
     private val getCategories: GetCategories,
     private val createCategory: CreateCategory,
     private val updateCategory: UpdateCategory,
+    private val deleteCategory: DeleteCategory,
 ) : ViewModel() {
 
     var state by mutableStateOf(CategoryState())
@@ -26,7 +28,12 @@ class CategoryViewModel(
     fun onEvent(e: CategoryEvent) {
         when (e) {
             is CategoryEvent.DismissAlertMessage -> {
-                state = state.copy(error = "", success = "")
+                state = state.copy(
+                    error = "",
+                    success = "",
+                    confirmationMessage = "",
+                    categoryId = null
+                )
             }
 
             is CategoryEvent.InputCategoryName -> {
@@ -43,6 +50,15 @@ class CategoryViewModel(
 
             is CategoryEvent.SubmitUpdateCategory -> {
                 submitUpdateCategory()
+            }
+
+            is CategoryEvent.DeleteCategory -> {
+                state = state.copy(categoryId = e.data.id)
+                showConfirmationDialog(name = e.data.name)
+            }
+
+            is CategoryEvent.ProcessDeleteCategory -> {
+                processDeleteCategory(state.categoryId.toString())
             }
         }
     }
@@ -119,6 +135,37 @@ class CategoryViewModel(
                     state = state.copy(isLoading = false, categories = resource.data ?: emptyList())
                 }
 
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun showConfirmationDialog(name: String) {
+        state = state.copy(confirmationMessage = "Anda ingin menghapus kategori $name?")
+    }
+
+    private fun processDeleteCategory(id: String) {
+        deleteCategory(id).onEach { res ->
+            when (res) {
+                is Resource.Loading -> {
+                    state = state.copy(confirmationMessage = "", isLoading = true)
+                }
+
+                is Resource.Error -> {
+                    state = state.copy(
+                        isLoading = false,
+                        error = res.message ?: "An error unexpected!",
+                        categoryId = null
+                    )
+                }
+
+                is Resource.Success -> {
+                    state = state.copy(
+                        isLoading = false,
+                        success = res.data?.message ?: "Success",
+                        categoryId = null,
+                    )
+                    getAllCategories()
+                }
             }
         }.launchIn(viewModelScope)
     }

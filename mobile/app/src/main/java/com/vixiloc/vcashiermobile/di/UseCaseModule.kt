@@ -6,6 +6,7 @@ import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
+import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
@@ -23,6 +24,7 @@ val useCaseModule = module {
     single { provideGetCategoriesUseCase(get(), get()) }
     single { provideCreateCategoryUseCase(get(), get()) }
     single { provideUpdateCategoryUseCase(get(), get()) }
+    single { provideDeleteCategoryUseCase(get(), get()) }
 }
 
 fun provideHttpHandler(): HttpHandler {
@@ -65,4 +67,11 @@ fun provideUpdateCategoryUseCase(
     getToken: GetToken
 ): UpdateCategory {
     return UpdateCategory(repository, getToken = getToken)
+}
+
+fun provideDeleteCategoryUseCase(
+    repository: CategoryRepository,
+    getToken: GetToken
+): DeleteCategory {
+    return DeleteCategory(repository, getToken = getToken)
 }

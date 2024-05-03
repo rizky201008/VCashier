@@ -7,7 +7,7 @@ here is my todo's on this projects :
  - [x] Create Category
  - [x] Update Category
  - [x] Delete Category
- - [ ] Search Categories
+ - [x] Search Categories
  - [ ] Show Products
  - [ ] Create Product
  - [ ] Create Product Variation
@@ -20,4 +20,4 @@ here is my todo's on this projects :
  - [ ] Show Transaction Payment
 
 
-![](https://geps.dev/progress/31)
+![](https://geps.dev/progress/37)

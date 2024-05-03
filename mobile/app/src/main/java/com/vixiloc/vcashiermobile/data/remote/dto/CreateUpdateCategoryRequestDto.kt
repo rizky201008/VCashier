@@ -2,7 +2,7 @@ package com.vixiloc.vcashiermobile.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class CreateCategoryRequestDto(
+data class CreateUpdateCategoryRequestDto(
     @SerializedName("name")
     val name: String,
 

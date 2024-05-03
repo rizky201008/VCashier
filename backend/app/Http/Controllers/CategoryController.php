@@ -51,7 +51,7 @@ class CategoryController extends Controller
     public function deleteCategory($id)
     {
         $validated = Validator::make(['id' => $id], [
-            'id' => 'required|integer|exists:categories,id',
+            'id' => 'required|integer|exists:categories,id|gt:1',
         ]);
 
         if ($validated->fails()) {

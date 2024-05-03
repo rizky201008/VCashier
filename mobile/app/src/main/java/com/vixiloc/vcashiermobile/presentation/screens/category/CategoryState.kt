@@ -9,5 +9,6 @@ data class CategoryState(
     val categoryName: String = "",
     val categoryId: Int? = null,
     val success: String = "",
-    val confirmationMessage: String = ""
+    val confirmationMessage: String = "",
+    val searchQuery: String = ""
 )

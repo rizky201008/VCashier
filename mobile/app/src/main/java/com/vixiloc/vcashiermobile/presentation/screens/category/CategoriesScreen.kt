@@ -15,7 +15,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
-import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.category.CategoryItem
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
@@ -24,7 +23,6 @@ import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -46,8 +44,10 @@ fun CategoriesScreen(
         val (searchInput, categories, addButton) = createRefs()
 
         TextField(
-            value = "Cari",
-            onValueChanged = {},
+            value = state.searchQuery,
+            onValueChanged = {
+                events(CategoryEvent.InputSearchValue(it))
+            },
             modifier = Modifier.constrainAs(searchInput) {
                 top.linkTo(parent.top)
                 start.linkTo(parent.start)

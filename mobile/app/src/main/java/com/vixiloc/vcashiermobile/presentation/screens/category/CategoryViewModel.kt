@@ -13,14 +13,18 @@ import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class CategoryViewModel(
     private val getCategories: GetCategories,
     private val createCategory: CreateCategory,
     private val updateCategory: UpdateCategory,
     private val deleteCategory: DeleteCategory,
+    private var searchJob: Job? = null
 ) : ViewModel() {
 
     var state by mutableStateOf(CategoryState())
@@ -60,6 +64,29 @@ class CategoryViewModel(
             is CategoryEvent.ProcessDeleteCategory -> {
                 processDeleteCategory(state.categoryId.toString())
             }
+
+            is CategoryEvent.InputSearchValue -> {
+                searchJob?.cancel()
+                state = state.copy(
+                    searchQuery = e.query
+                )
+                searchJob = viewModelScope.launch {
+                    delay(2000)
+                    searchCategories(e.query)
+                }
+            }
+        }
+    }
+
+    private fun searchCategories(query: String) {
+        if (query.isBlank()) {
+            getAllCategories()
+        } else {
+            state = state.copy(
+                categories = state.categories.filter {
+                    it.name.contains(query, ignoreCase = true)
+                }
+            )
         }
     }
 

@@ -8,15 +8,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
-import com.vixiloc.vcashiermobile.domain.model.CreateCategoryRequest
+import com.vixiloc.vcashiermobile.domain.model.CreateUpdateCategoryRequest
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
+import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class CategoryViewModel(
     private val getCategories: GetCategories,
-    private val createCategory: CreateCategory
+    private val createCategory: CreateCategory,
+    private val updateCategory: UpdateCategory,
 ) : ViewModel() {
 
     var state by mutableStateOf(CategoryState())
@@ -34,11 +36,48 @@ class CategoryViewModel(
             is CategoryEvent.SubmitCreateCategory -> {
                 submitCreateCategory()
             }
+
+            is CategoryEvent.PreFillFormData -> {
+                state = state.copy(categoryName = e.name, categoryId = e.id)
+            }
+
+            is CategoryEvent.SubmitUpdateCategory -> {
+                submitUpdateCategory()
+            }
         }
     }
 
+    private fun submitUpdateCategory() {
+        updateCategory(
+            data = CreateUpdateCategoryRequest(
+                name = state.categoryName,
+                id = state.categoryId
+            )
+        ).onEach { resource ->
+            when (resource) {
+                is Resource.Loading -> {
+                    state = state.copy(isLoading = true)
+                }
+
+                is Resource.Error -> {
+                    state = state.copy(
+                        isLoading = false,
+                        error = resource.message ?: "An error unexpected!"
+                    )
+                }
+
+                is Resource.Success -> {
+                    state = state.copy(
+                        isLoading = false,
+                        success = resource.data?.message ?: "Sukses menambahkan data"
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
     private fun submitCreateCategory() {
-        createCategory(data = CreateCategoryRequest(name = state.categoryName)).onEach { resource ->
+        createCategory(data = CreateUpdateCategoryRequest(name = state.categoryName)).onEach { resource ->
             when (resource) {
                 is Resource.Loading -> {
                     state = state.copy(isLoading = true)
@@ -65,7 +104,7 @@ class CategoryViewModel(
             Log.d(TAG, "getAllCategories: ${resource.data}")
             when (resource) {
                 is Resource.Loading -> {
-                    state = state.copy(isLoading = true)
+                    state = state.copy(isLoading = true, categories = emptyList())
                 }
 
                 is Resource.Error -> {

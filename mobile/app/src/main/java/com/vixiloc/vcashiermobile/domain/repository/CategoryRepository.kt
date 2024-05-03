@@ -17,4 +17,9 @@ interface CategoryRepository {
         token: String,
         data: CreateUpdateCategoryRequestDto
     ): CreateUpdateCategoryResponseDto
+
+    suspend fun deleteCategory(
+        token: String,
+        categoryId: String
+    ): CreateUpdateCategoryResponseDto
 }

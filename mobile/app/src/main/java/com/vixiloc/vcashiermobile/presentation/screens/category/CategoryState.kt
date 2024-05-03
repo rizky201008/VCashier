@@ -8,5 +8,6 @@ data class CategoryState(
     val categories: List<CategoriesResponseItem> = emptyList(),
     val categoryName: String = "",
     val categoryId: Int? = null,
-    val success: String = ""
+    val success: String = "",
+    val confirmationMessage: String = ""
 )

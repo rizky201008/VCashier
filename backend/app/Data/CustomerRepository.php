@@ -15,7 +15,7 @@ class CustomerRepository
 
     public function getCustomers()
     {
-        return $this->customer->all();
+        return response()->json(["data" => $this->customer->all()]);
     }
 
     public function getCustomer($id)

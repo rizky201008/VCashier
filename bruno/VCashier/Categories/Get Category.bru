@@ -1,0 +1,19 @@
+meta {
+  name: Get Category
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}categories/2
+  body: none
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}

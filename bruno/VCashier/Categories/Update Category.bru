@@ -1,0 +1,26 @@
+meta {
+  name: Update Category
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{BASE_URL}}categories/update
+  body: json
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+      "name": "Tidak Berkategori",
+      "id": 1
+  }
+}

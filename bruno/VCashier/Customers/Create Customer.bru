@@ -1,0 +1,25 @@
+meta {
+  name: Create Customer
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}customers
+  body: json
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+      "name":"Anonim"
+  }
+}

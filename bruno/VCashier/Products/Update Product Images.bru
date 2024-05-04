@@ -1,0 +1,24 @@
+meta {
+  name: Update Product Images
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{BASE_URL}}product-images/update
+  body: multipartForm
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:multipart-form {
+  product_id: 4
+  new_image: undefined
+}

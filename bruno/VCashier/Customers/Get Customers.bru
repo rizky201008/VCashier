@@ -1,0 +1,19 @@
+meta {
+  name: Get Customers
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BASE_URL}}customers
+  body: none
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}

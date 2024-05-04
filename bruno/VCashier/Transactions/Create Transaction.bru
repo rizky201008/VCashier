@@ -1,0 +1,31 @@
+meta {
+  name: Create Transaction
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}transactions
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+      "customer_id": 1,
+      "items": [
+          {
+              "id": 1,
+              "quantity": 1
+          },
+          {
+              "id": 2,
+              "quantity": 2
+          }
+      ]
+  }
+}

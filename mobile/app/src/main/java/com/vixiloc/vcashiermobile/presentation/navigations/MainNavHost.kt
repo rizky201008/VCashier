@@ -14,6 +14,7 @@ import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.CreateCategoryScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.UpdateCategoryScreen
+import com.vixiloc.vcashiermobile.presentation.screens.customer.CreateCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
@@ -83,7 +84,7 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
                 CustomersScreen(navController = navController, modifier = modifier)
             }
             composable(Screens.Customers.CreateCustomer.route) {
-                // CreateCustomerScreen(navController = navController, modifier = modifier)
+                CreateCustomerScreen(navController = navController, modifier = modifier)
             }
             composable(Screens.Customers.UpdateCustomer.route) {
                 // UpdateCustomerScreen(navController = navController, modifier = modifier)

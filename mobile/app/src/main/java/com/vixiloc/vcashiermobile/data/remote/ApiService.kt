@@ -9,6 +9,8 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
 import com.vixiloc.vcashiermobile.data.remote.dto.CategoriesResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCustomerRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginResponseDto
@@ -62,8 +64,16 @@ interface ApiService {
     ): CreateUpdateCategoryResponseDto
 
     @GET(CUSTOMERS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun getCustomers(
         @Header("Authorization") token: String,
     ): CustomerResponseDto
+
+    @POST(CUSTOMERS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun createCustomer(
+        @Header("Authorization") token: String,
+        @Body data: CreateUpdateCustomerRequestDto
+    ): CreateUpdateCustomerResponseDto
 
 }

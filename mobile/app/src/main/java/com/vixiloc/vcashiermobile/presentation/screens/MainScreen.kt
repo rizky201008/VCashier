@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AllInbox
 import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.ShoppingCart
@@ -42,7 +43,8 @@ fun MainScreen(navHostController: NavHostController) {
     val items = listOf(
         DrawerMenu(DrawerMenuName.HOME, Icons.Outlined.Home),
         DrawerMenu(DrawerMenuName.CREATE_TRANSACTION, Icons.Outlined.ShoppingCart),
-        DrawerMenu(DrawerMenuName.CATEGORIES, Icons.Outlined.AllInbox)
+        DrawerMenu(DrawerMenuName.CATEGORIES, Icons.Outlined.AllInbox),
+        DrawerMenu(DrawerMenuName.CUSTOMERS, Icons.Outlined.Group)
     )
 
     ModalNavigationDrawer(

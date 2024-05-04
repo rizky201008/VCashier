@@ -1,11 +1,11 @@
 version: '3'
 
 networks:
-  laravel:
+  vcashier:
     driver: bridge
 
 volumes:
-  mysql:
+  pgsql:
 
 services:
   nginx:
@@ -20,29 +20,25 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-      - mysql
+      - db
     networks:
-      - laravel
+      - vcashier
 
-  mysql:
-    platform: linux/amd64
-    image: mysql
-    container_name: mysql_vcashier
+  db:
+    image: postgres
+    container_name: pgsql_vcashier
     restart: unless-stopped
     tty: true
     ports:
-      - "${MYSQL_HOST_PORT}:${MYSQL_DOCKER_CONTAINER_PORT}"
+      - "${PGSQL_HOST_PORT}:${PGSQL_DOCKER_CONTAINER_PORT}"
     volumes:
-      - mysql:/var/lib/mysql
+      - pgsql:/var/lib/pgsql
     environment:
-      MYSQL_DATABASE: vcashier
-      MYSQL_USER: vcashier
-      MYSQL_PASSWORD: ${MYSQL_DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_DB_ROOT_PASSWORD}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      POSTGRES_DB: vcashier
+      POSTGRES_USER: vcashier
+      POSTGRES_PASSWORD: ${PGSQL_DB_PASSWORD}
     networks:
-      - laravel
+      - vcashier
 
   phpmyadmin:
     image: phpmyadmin
@@ -53,7 +49,7 @@ services:
     environment:
       - PMA_ARBITRARY=1
     networks:
-      - laravel
+      - vcashier
 
   php:
     build:
@@ -68,4 +64,4 @@ services:
     ports:
       - "${PHP_HOST_PORT}:${PHP_DOCKER_CONTAINER_PORT}"
     networks:
-      - laravel
+      - vcashier

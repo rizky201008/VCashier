@@ -8,4 +8,5 @@ object Routes {
     const val CATEGORIES = "categories"
     const val CATEGORIES_CREATE = "$CATEGORIES/create"
     const val CATEGORIES_UPDATE = "$CATEGORIES/update"
+    const val CUSTOMERS = "customers"
 }

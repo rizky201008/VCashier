@@ -6,11 +6,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.Resource
+import com.vixiloc.vcashiermobile.domain.model.CreateUpdateCustomerRequest
+import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class CustomerViewModel(private val getCustomers: GetCustomers) : ViewModel() {
+class CustomerViewModel(
+    private val getCustomers: GetCustomers,
+    private val createCustomer: CreateCustomer
+) : ViewModel() {
 
     var state by mutableStateOf(CustomerState())
 
@@ -21,11 +26,15 @@ class CustomerViewModel(private val getCustomers: GetCustomers) : ViewModel() {
             }
 
             is CustomerEvent.InputCustomerName -> {
+                state = state.copy(customerName = event.name)
+            }
 
+            is CustomerEvent.InputCustomerNumber -> {
+                state = state.copy(customerNumber = event.number)
             }
 
             is CustomerEvent.SubmitCreateCustomer -> {
-
+                proceessCreateCustomer()
             }
 
             is CustomerEvent.SubmitUpdateCustomer -> {
@@ -50,11 +59,36 @@ class CustomerViewModel(private val getCustomers: GetCustomers) : ViewModel() {
         }
     }
 
+    private fun proceessCreateCustomer() {
+        val data = CreateUpdateCustomerRequest(
+            name = state.customerName,
+            phoneNumber = state.customerNumber
+        )
+        createCustomer(data = data).onEach { res ->
+            when (res) {
+                is Resource.Loading -> {
+                    state = state.copy(isLoading = true)
+                }
+
+                is Resource.Success -> {
+                    state = state.copy(isLoading = false, success = "Customer created successfully")
+                }
+
+                is Resource.Error -> {
+                    state = state.copy(
+                        isLoading = false,
+                        error = res.message ?: "An unexpected error occurred"
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
     fun getAllCustomers() {
         getCustomers().onEach { res ->
             when (res) {
                 is Resource.Loading -> {
-                    state = state.copy(isLoading = true)
+                    state = state.copy(isLoading = true, customers = emptyList())
                 }
 
                 is Resource.Success -> {

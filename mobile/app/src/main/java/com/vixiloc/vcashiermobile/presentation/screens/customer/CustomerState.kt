@@ -7,5 +7,6 @@ data class CustomerState(
     val customers: List<CustomerResponseItem> = emptyList(),
     val error: String = "",
     val customerName: String = "",
-    val success: String = ""
+    val success: String = "",
+    val customerNumber: String = "",
 )

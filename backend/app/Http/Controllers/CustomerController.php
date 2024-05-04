@@ -18,7 +18,7 @@ class CustomerController extends Controller
 
     public function getCustomers(): JsonResponse
     {
-        return response()->json($this->customerRepository->getCustomers());
+        return $this->customerRepository->getCustomers();
     }
 
     public function getCustomer($id): JsonResponse

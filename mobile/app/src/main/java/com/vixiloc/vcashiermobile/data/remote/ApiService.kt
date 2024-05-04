@@ -3,11 +3,13 @@ package com.vixiloc.vcashiermobile.data.remote
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES_CREATE
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES_UPDATE
+import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
 import com.vixiloc.vcashiermobile.data.remote.dto.CategoriesResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductsResponseDto
@@ -58,5 +60,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): CreateUpdateCategoryResponseDto
+
+    @GET(CUSTOMERS)
+    suspend fun getCustomers(
+        @Header("Authorization") token: String,
+    ): CustomerResponseDto
 
 }

@@ -3,11 +3,13 @@ package com.vixiloc.vcashiermobile.di
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
+import com.vixiloc.vcashiermobile.domain.repository.CustomerRepository
 import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
+import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
 import com.vixiloc.vcashiermobile.domain.use_case.Login
@@ -25,6 +27,7 @@ val useCaseModule = module {
     single { provideCreateCategoryUseCase(get(), get()) }
     single { provideUpdateCategoryUseCase(get(), get()) }
     single { provideDeleteCategoryUseCase(get(), get()) }
+    single { provideGetCustomersUseCase(get(), get()) }
 }
 
 fun provideHttpHandler(): HttpHandler {
@@ -74,4 +77,8 @@ fun provideDeleteCategoryUseCase(
     getToken: GetToken
 ): DeleteCategory {
     return DeleteCategory(repository, getToken = getToken)
+}
+
+fun provideGetCustomersUseCase(repository: CustomerRepository, getToken: GetToken): GetCustomers {
+    return GetCustomers(repository, getToken = getToken)
 }

@@ -3,6 +3,7 @@ package com.vixiloc.vcashiermobile.di
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
+import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
 import com.vixiloc.vcashiermobile.domain.use_case.Login
@@ -11,6 +12,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,6 +22,7 @@ val viewModelModule = module {
     viewModel { provideWelcomeViewModel(get()) }
     viewModel { provideTransactionViewModel(get()) }
     viewModel { provideCategoryViewModel(get(), get(), get(), get()) }
+    viewModel { provideCustomerViewModel(get()) }
 }
 
 fun provideLoginViewModel(login: Login): LoginViewModel {
@@ -46,4 +49,8 @@ fun provideCategoryViewModel(
         updateCategory = updateCategory,
         deleteCategory = deleteCategory
     )
+}
+
+fun provideCustomerViewModel(getCustomers: GetCustomers): CustomerViewModel {
+    return CustomerViewModel(getCustomers = getCustomers)
 }

@@ -1,0 +1,27 @@
+meta {
+  name: Delete Product
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{BASE_URL}}products/1
+  body: json
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+      "name": "Marlboro Bolong",
+      "description": "Ini adalah rokok marlboro bolong",
+      "category_id" : 1
+  }
+}

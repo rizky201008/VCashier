@@ -1,0 +1,53 @@
+meta {
+  name: Update Product
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{BASE_URL}}products/3
+  body: json
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+      "name": "Marlboro Gak Bolong",
+      "description": "Ini adalah rokok marlboro bolong",
+      "category_id": 1,
+      "variations" : [
+          {
+              "unit": "packer",
+              "stock" :10,
+              "price" : 14000,
+              "price_grocery" : 13500
+          },
+          {
+              "unit": "pack",
+              "stock" :10,
+              "price" : 14000,
+              "price_grocery" : 13500
+          },
+          {
+              "unit": "pack",
+              "stock" :10,
+              "price" : 14000,
+              "price_grocery" : 13500
+          },
+          {
+              "unit": "pack",
+              "stock" :10,
+              "price" : 14000,
+              "price_grocery" : 13500
+          }
+      ]
+  }
+}

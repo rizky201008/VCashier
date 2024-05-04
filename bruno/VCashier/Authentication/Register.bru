@@ -1,0 +1,28 @@
+meta {
+  name: Register
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}auth/register
+  body: json
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+      "email":"{{EMAIL_TEST}}",
+      "password" :"{{PASSWORD_TEST}}",
+      "name" : "Tester Boss",
+      "role" : "cashier"
+  }
+}

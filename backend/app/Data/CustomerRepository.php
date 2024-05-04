@@ -25,8 +25,8 @@ class CustomerRepository
 
     public function createCustomer($data)
     {
-        $product = $this->customer->create($data);
-        return $product;
+        $this->customer->create($data);
+        return response()->json(["message" => "Customer created"], 201);
     }
 
     public function updateCustomer($id, $data)

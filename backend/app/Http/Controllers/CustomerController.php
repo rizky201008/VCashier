@@ -38,7 +38,7 @@ class CustomerController extends Controller
         $request->validate(
             ['name' => 'required|string|max:255']
         );
-        return response()->json($this->customerRepository->createCustomer($request->all()), 201);
+        return $this->customerRepository->createCustomer($request->all());
     }
 
     public function updateCustomer(Request $request, $id): JsonResponse

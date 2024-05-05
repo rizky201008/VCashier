@@ -76,4 +76,10 @@ interface ApiService {
         @Body data: CreateUpdateCustomerRequestDto
     ): CreateUpdateCustomerResponseDto
 
+    @PUT(CUSTOMERS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun updateCustomer(
+        @Header("Authorization") token: String,
+        @Body data: CreateUpdateCustomerRequestDto
+    ): CreateUpdateCustomerResponseDto
 }

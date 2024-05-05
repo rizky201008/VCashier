@@ -8,7 +8,7 @@ data class CreateUpdateCustomerRequestDto(
     val name: String,
 
     @field:SerializedName("phone_number")
-    val phoneNumber: String,
+    val phoneNumber: String? = null,
 
     @field:SerializedName("id")
     val id: Int? = null

@@ -11,11 +11,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
+import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.CreateCategoryScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.UpdateCategoryScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CreateCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
+import com.vixiloc.vcashiermobile.presentation.screens.customer.UpdateCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
@@ -43,6 +45,10 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
     var selectedCategory: CategoriesResponseItem? by remember {
         mutableStateOf(null)
     }
+    var selectedCustomer: CustomerResponseItem? by remember {
+        mutableStateOf(null)
+    }
+
     NavHost(navController = navController, startDestination = Screens.Home.route) {
         composable(Screens.Home.route) {
             HomeScreen(navigator = navController, modifier = modifier)
@@ -81,13 +87,20 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
             route = Screens.Customers.route
         ) {
             composable(Screens.Customers.AllCustomers.route) {
-                CustomersScreen(navController = navController, modifier = modifier)
+                CustomersScreen(
+                    navController = navController,
+                    modifier = modifier,
+                    onUpdateCustomer = { selectedCustomer = it })
             }
             composable(Screens.Customers.CreateCustomer.route) {
                 CreateCustomerScreen(navController = navController, modifier = modifier)
             }
             composable(Screens.Customers.UpdateCustomer.route) {
-                // UpdateCustomerScreen(navController = navController, modifier = modifier)
+                UpdateCustomerScreen(
+                    navHostController = navController,
+                    modifier = modifier,
+                    selectedCustomer = selectedCustomer
+                )
             }
         }
     }

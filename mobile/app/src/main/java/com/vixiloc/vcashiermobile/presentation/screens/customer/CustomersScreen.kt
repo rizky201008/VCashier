@@ -28,7 +28,8 @@ import org.koin.androidx.compose.koinViewModel
 fun CustomersScreen(
     modifier: Modifier = Modifier,
     viewModel: CustomerViewModel = koinViewModel(),
-    navController: NavHostController
+    navController: NavHostController,
+    onUpdateCustomer: (CustomerResponseItem?) -> Unit
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
@@ -63,14 +64,15 @@ fun CustomersScreen(
             }) {
             items(state.customers) { customer: CustomerResponseItem ->
                 CustomerItem(
-                    headlineText = customer.name ?: "Null",
+                    headlineText = customer.name,
                     supportingText = customer.phoneNumber ?: "-",
                     modifier = Modifier.padding(10.dp),
                     onDelete = {
 
                     },
                     onUpdate = {
-
+                        onUpdateCustomer(customer)
+                        navController.navigate(Screens.Customers.UpdateCustomer.route)
                     },
                     onClick = {
 

@@ -1,8 +1,6 @@
 package com.vixiloc.vcashiermobile.data.remote
 
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
-import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES_CREATE
-import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES_UPDATE
 import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
@@ -42,14 +40,14 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): CategoriesResponseDto
 
-    @POST(CATEGORIES_CREATE)
+    @POST(CATEGORIES)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun createCategory(
         @Header("Authorization") token: String,
         @Body data: CreateUpdateCategoryRequestDto
     ): CreateUpdateCategoryResponseDto
 
-    @PUT(CATEGORIES_UPDATE)
+    @PUT(CATEGORIES)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun updateCategory(
         @Header("Authorization") token: String,

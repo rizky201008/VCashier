@@ -5,7 +5,7 @@ import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCustomerRequestDto
 data class CreateUpdateCustomerRequest(
     val name: String,
     val id: Int? = null,
-    val phoneNumber: String
+    val phoneNumber: String? = null
 )
 
 fun CreateUpdateCustomerRequest.toCreateUpdateCustomerRequestDto() = CreateUpdateCustomerRequestDto(

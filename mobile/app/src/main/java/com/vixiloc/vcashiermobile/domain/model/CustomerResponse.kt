@@ -8,7 +8,7 @@ data class CustomerResponse(
 
 data class CustomerResponseItem(
     val updatedAt: String? = null,
-    val name: String? = null,
+    val name: String,
     val createdAt: String? = null,
     val phoneNumber: String? = null,
     val id: Int? = null

@@ -8,7 +8,7 @@ sealed class CustomerEvent {
     data class InputCustomerNumber(val number: String) : CustomerEvent()
     data object SubmitCreateCustomer : CustomerEvent()
     data object SubmitUpdateCustomer : CustomerEvent()
-    data class PreFillFormData(val id: Int, val name: String) : CustomerEvent()
+    data class PreFillFormData(val id: Int?, val name: String, val number: String?) : CustomerEvent()
     data class DeleteCustomer(val data: CustomerResponseItem) : CustomerEvent()
     data object ProcessDeleteCustomer : CustomerEvent()
     data class InputSearchValue(val query: String) : CustomerEvent()

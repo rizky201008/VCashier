@@ -1,5 +1,6 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
+import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.data.remote.dto.toOnlyResponseMessage
 import com.vixiloc.vcashiermobile.domain.model.OnlyResponseMessage
@@ -10,7 +11,11 @@ import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 
-class DeleteCategory(private val repository: CategoryRepository, private val getToken: GetToken) {
+class DeleteCategory(
+    private val repository: CategoryRepository,
+    private val getToken: GetToken,
+    private val httpHandler: HttpHandler
+) {
     operator fun invoke(categoryId: String): Flow<Resource<OnlyResponseMessage>> = flow {
         try {
             emit(Resource.Loading())
@@ -18,11 +23,13 @@ class DeleteCategory(private val repository: CategoryRepository, private val get
             val response = repository.deleteCategory(token, categoryId)
             emit(Resource.Success(response.toOnlyResponseMessage()))
         } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+            val errorMessage = httpHandler.handleHttpException(e)
+            emit(Resource.Error(errorMessage))
         } catch (e: IOException) {
             emit(
                 Resource.Error(
-                    e.localizedMessage ?: "Couldn't reach server. Check your internet connection."
+                    e.localizedMessage
+                        ?: "Couldn't reach server. Check your internet connection."
                 )
             )
         }

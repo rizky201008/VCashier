@@ -1,5 +1,6 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
+import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.data.remote.dto.toCategoriesResponse
 import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
@@ -10,7 +11,11 @@ import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 
-class GetCategories(private val repository: CategoryRepository, private val getToken: GetToken) {
+class GetCategories(
+    private val repository: CategoryRepository,
+    private val getToken: GetToken,
+    private val httpHandler: HttpHandler
+) {
     operator fun invoke(): Flow<Resource<List<CategoriesResponseItem>>> =
         flow {
             val token: String = getToken().first()
@@ -19,7 +24,8 @@ class GetCategories(private val repository: CategoryRepository, private val getT
                 val categories = repository.getCategories(token)
                 emit(Resource.Success(categories.toCategoriesResponse().categoriesResponseDto))
             } catch (e: HttpException) {
-                emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+                val errorMessage = httpHandler.handleHttpException(e)
+                emit(Resource.Error(errorMessage))
             } catch (e: IOException) {
                 emit(
                     Resource.Error(

@@ -71,14 +71,15 @@ class CategoryViewModel(
                     searchQuery = e.query
                 )
                 searchJob = viewModelScope.launch {
-                    delay(2000)
-                    searchCategories(e.query)
+                    delay(1000)
+                    searchCategories()
                 }
             }
         }
     }
 
-    private fun searchCategories(query: String) {
+    private fun searchCategories() {
+        val query = state.searchQuery
         if (query.isBlank()) {
             getAllCategories()
         } else {

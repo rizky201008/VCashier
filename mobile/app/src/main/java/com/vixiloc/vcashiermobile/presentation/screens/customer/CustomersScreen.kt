@@ -14,6 +14,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
+import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
@@ -81,9 +82,9 @@ fun CustomersScreen(
 
         FilledButton(
             onClick = {
-
+                navController.navigate(Screens.Customers.CreateCustomer.route)
             },
-            text = "Tambah Kategori",
+            text = "Tambah Pelanggan",
             modifier = Modifier.constrainAs(addButton) {
                 top.linkTo(parent.bottom)
                 start.linkTo(parent.start, margin = 10.dp)

@@ -24,12 +24,12 @@ val useCaseModule = module {
     single { provideLoginUseCase(get(), get(), get()) }
     single { provideGetTokenUseCase(get()) }
     single { provideSaveTokenUseCase(get()) }
-    single { provideGetProductsUseCase(get(), get()) }
-    single { provideGetCategoriesUseCase(get(), get()) }
-    single { provideCreateCategoryUseCase(get(), get()) }
-    single { provideUpdateCategoryUseCase(get(), get()) }
-    single { provideDeleteCategoryUseCase(get(), get()) }
-    single { provideGetCustomersUseCase(get(), get()) }
+    single { provideGetProductsUseCase(get(), get(), get()) }
+    single { provideGetCategoriesUseCase(get(), get(), get()) }
+    single { provideCreateCategoryUseCase(get(), get(), get()) }
+    single { provideUpdateCategoryUseCase(get(), get(), get()) }
+    single { provideDeleteCategoryUseCase(get(), get(), get()) }
+    single { provideGetCustomersUseCase(get(), get(), get()) }
     single { provideCreateCustomerUseCase(get(), get(), get()) }
     single { provideUpdateCustomerUseCase(get(), get(), get()) }
 }
@@ -54,37 +54,49 @@ fun provideSaveTokenUseCase(repository: DataStoreRepository): SaveToken {
     return SaveToken(repository)
 }
 
-fun provideGetProductsUseCase(getToken: GetToken, repository: ProductsRepository): GetProducts {
-    return GetProducts(getToken = getToken, repository = repository)
+fun provideGetProductsUseCase(
+    getToken: GetToken,
+    repository: ProductsRepository,
+    httpHandler: HttpHandler
+): GetProducts {
+    return GetProducts(getToken = getToken, repository = repository, httpHandler = httpHandler)
 }
 
-fun provideGetCategoriesUseCase(repository: CategoryRepository, getToken: GetToken): GetCategories {
-    return GetCategories(repository, getToken = getToken)
+fun provideGetCategoriesUseCase(
+    repository: CategoryRepository,
+    getToken: GetToken,
+    httpHandler: HttpHandler
+): GetCategories {
+    return GetCategories(repository, getToken = getToken, httpHandler = httpHandler)
 }
 
 fun provideCreateCategoryUseCase(
     repository: CategoryRepository,
-    getToken: GetToken
+    getToken: GetToken, httpHandler: HttpHandler
 ): CreateCategory {
-    return CreateCategory(repository, getToken = getToken)
+    return CreateCategory(repository, getToken = getToken, httpHandler = httpHandler)
 }
 
 fun provideUpdateCategoryUseCase(
     repository: CategoryRepository,
-    getToken: GetToken
+    getToken: GetToken, httpHandler: HttpHandler
 ): UpdateCategory {
-    return UpdateCategory(repository, getToken = getToken)
+    return UpdateCategory(repository, getToken = getToken, httpHandler = httpHandler)
 }
 
 fun provideDeleteCategoryUseCase(
     repository: CategoryRepository,
-    getToken: GetToken
+    getToken: GetToken, httpHandler: HttpHandler
 ): DeleteCategory {
-    return DeleteCategory(repository, getToken = getToken)
+    return DeleteCategory(repository, getToken = getToken, httpHandler = httpHandler)
 }
 
-fun provideGetCustomersUseCase(repository: CustomerRepository, getToken: GetToken): GetCustomers {
-    return GetCustomers(repository, getToken = getToken)
+fun provideGetCustomersUseCase(
+    repository: CustomerRepository,
+    getToken: GetToken,
+    httpHandler: HttpHandler
+): GetCustomers {
+    return GetCustomers(repository, getToken = getToken, httpHandler = httpHandler)
 }
 
 fun provideCreateCustomerUseCase(

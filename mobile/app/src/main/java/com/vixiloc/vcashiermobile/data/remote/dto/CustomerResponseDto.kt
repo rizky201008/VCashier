@@ -16,7 +16,7 @@ data class CustomerResponseDtoItem(
     val updatedAt: String? = null,
 
     @field:SerializedName("name")
-    val name: String? = null,
+    val name: String,
 
     @field:SerializedName("created_at")
     val createdAt: String? = null,

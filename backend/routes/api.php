@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/', [CustomerController::class, 'createCustomer']);
         Route::get('{id}', [CustomerController::class, 'getCustomer']);
         Route::delete('{id}', [CustomerController::class, 'deleteCustomer']);
-        Route::put('{id}', [CustomerController::class, 'updateCustomer']);
+        Route::put('/', [CustomerController::class, 'updateCustomer']);
     });
     Route::prefix('transactions')->group(function () {
         Route::get('/', [TransactionController::class, 'getTransactions']);

@@ -3,6 +3,7 @@ package com.vixiloc.vcashiermobile.di
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
+import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
@@ -24,7 +25,7 @@ val viewModelModule = module {
     viewModel { provideWelcomeViewModel(get()) }
     viewModel { provideTransactionViewModel(get()) }
     viewModel { provideCategoryViewModel(get(), get(), get(), get()) }
-    viewModel { provideCustomerViewModel(get(), get(), get()) }
+    viewModel { provideCustomerViewModel(get(), get(), get(), get()) }
 }
 
 fun provideLoginViewModel(login: Login): LoginViewModel {
@@ -56,11 +57,13 @@ fun provideCategoryViewModel(
 fun provideCustomerViewModel(
     getCustomers: GetCustomers,
     createCustomer: CreateCustomer,
-    updateCustomer: UpdateCustomer
+    updateCustomer: UpdateCustomer,
+    deleteCustomer: DeleteCustomer
 ): CustomerViewModel {
     return CustomerViewModel(
         getCustomers = getCustomers,
         createCustomer = createCustomer,
-        updateCustomer = updateCustomer
+        updateCustomer = updateCustomer,
+        deleteCustomer = deleteCustomer
     )
 }

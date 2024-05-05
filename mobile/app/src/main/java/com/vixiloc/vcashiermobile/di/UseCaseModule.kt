@@ -9,6 +9,7 @@ import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
+import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
@@ -17,6 +18,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.Login
 import com.vixiloc.vcashiermobile.domain.use_case.SaveToken
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
+import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerEvent
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -32,6 +34,7 @@ val useCaseModule = module {
     single { provideGetCustomersUseCase(get(), get(), get()) }
     single { provideCreateCustomerUseCase(get(), get(), get()) }
     single { provideUpdateCustomerUseCase(get(), get(), get()) }
+    single { provideDeleteCustomerUseCase(get(), get(), get()) }
 }
 
 fun provideHttpHandler(): HttpHandler {
@@ -113,4 +116,12 @@ fun provideUpdateCustomerUseCase(
     httpHandler: HttpHandler
 ): UpdateCustomer {
     return UpdateCustomer(repository, getToken = getToken, httpHandler = httpHandler)
+}
+
+fun provideDeleteCustomerUseCase(
+    repository: CustomerRepository,
+    getToken: GetToken,
+    httpHandler: HttpHandler
+): DeleteCustomer {
+    return DeleteCustomer(repository, getToken = getToken, httpHandler = httpHandler)
 }

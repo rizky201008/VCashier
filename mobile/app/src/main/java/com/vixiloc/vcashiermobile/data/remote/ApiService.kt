@@ -80,4 +80,11 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body data: CreateUpdateCustomerRequestDto
     ): CreateUpdateCustomerResponseDto
+
+    @DELETE("$CUSTOMERS/{id}")
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun deleteCustomer(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): CreateUpdateCustomerResponseDto
 }

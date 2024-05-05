@@ -56,6 +56,6 @@ class CustomerController extends Controller
 
     public function deleteCustomer($id): JsonResponse
     {
-        return response()->json($this->customerRepository->deleteCustomer($id));
+        return $this->customerRepository->deleteCustomer($id);
     }
 }

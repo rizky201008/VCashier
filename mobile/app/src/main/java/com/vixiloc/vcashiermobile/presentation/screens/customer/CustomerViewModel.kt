@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.domain.model.CreateUpdateCustomerRequest
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
+import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
 import kotlinx.coroutines.flow.launchIn
@@ -18,6 +19,7 @@ class CustomerViewModel(
     private val getCustomers: GetCustomers,
     private val createCustomer: CreateCustomer,
     private val updateCustomer: UpdateCustomer,
+    private val deleteCustomer: DeleteCustomer
 ) : ViewModel() {
 
     var state by mutableStateOf(CustomerState())
@@ -25,7 +27,12 @@ class CustomerViewModel(
     fun onEvent(event: CustomerEvent) {
         when (event) {
             is CustomerEvent.DismissAlertMessage -> {
-                state = state.copy(error = "", success = "")
+                state = state.copy(
+                    error = "",
+                    success = "",
+                    confirmationMessage = "",
+                    customerId = null
+                )
             }
 
             is CustomerEvent.InputCustomerName -> {
@@ -55,17 +62,50 @@ class CustomerViewModel(
             }
 
             is CustomerEvent.DeleteCustomer -> {
-
+                state = state.copy(customerId = event.data.id)
+                showConfirmationDialog(name = event.data.name)
             }
 
             is CustomerEvent.ProcessDeleteCustomer -> {
-
+                processDeleteCustomer()
             }
 
             is CustomerEvent.InputSearchValue -> {
 
             }
         }
+    }
+
+    private fun showConfirmationDialog(name: String) {
+        state = state.copy(confirmationMessage = "Anda ingin menghapus pelanggan $name?")
+    }
+
+    private fun processDeleteCustomer() {
+        val id = state.customerId.toString()
+        deleteCustomer(id).onEach { res ->
+            when (res) {
+                is Resource.Loading -> {
+                    state = state.copy(confirmationMessage = "", isLoading = true)
+                }
+
+                is Resource.Error -> {
+                    state = state.copy(
+                        isLoading = false,
+                        error = res.message ?: "An error unexpected!",
+                        customerId = null
+                    )
+                }
+
+                is Resource.Success -> {
+                    state = state.copy(
+                        isLoading = false,
+                        success = res.data?.message ?: "Success",
+                        customerId = null,
+                    )
+                    getAllCustomers()
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun processUpdateCustomer() {

@@ -41,9 +41,9 @@ class CustomerController extends Controller
         return $this->customerRepository->createCustomer($request->all());
     }
 
-    public function updateCustomer(Request $request, $id): JsonResponse
+    public function updateCustomer(Request $request): JsonResponse
     {
-        $validator = Validator::make(['id' => $id], [
+        $request->validate([
             'id' => 'required|integer|exists:customers,id',
         ]);
 
@@ -51,10 +51,7 @@ class CustomerController extends Controller
             $request->validate(['name' => 'required|string|max:255']);
         }
 
-        if ($validator->fails()) {
-            throw new \Exception($validator->errors()->first());
-        }
-        return response()->json($this->customerRepository->updateCustomer($id, $request->all()));
+        return $this->customerRepository->updateCustomer($request->id, $request->all());
     }
 
     public function deleteCustomer($id): JsonResponse

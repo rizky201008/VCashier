@@ -24,4 +24,11 @@ class CustomerRepositoryImpl(private val api: ApiService) : CustomerRepository {
     ): CreateUpdateCustomerResponseDto {
         return api.updateCustomer("Bearer $token", data)
     }
+
+    override suspend fun deleteCustomer(
+        token: String,
+        customerId: String
+    ): CreateUpdateCustomerResponseDto {
+        return api.deleteCustomer("Bearer $token", customerId)
+    }
 }

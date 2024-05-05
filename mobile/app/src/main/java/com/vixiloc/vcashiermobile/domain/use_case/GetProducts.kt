@@ -1,6 +1,7 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
 import android.util.Log
+import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
 import com.vixiloc.vcashiermobile.data.remote.dto.toProductResponseItems
@@ -12,7 +13,11 @@ import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 
-class GetProducts(private val repository: ProductsRepository, private val getToken: GetToken) {
+class GetProducts(
+    private val repository: ProductsRepository,
+    private val getToken: GetToken,
+    private val httpHandler: HttpHandler
+) {
 
     operator fun invoke(): Flow<Resource<List<ProductResponseItems>>> = flow {
         Log.d(TAG, "invoke: dipanggil")
@@ -27,11 +32,13 @@ class GetProducts(private val repository: ProductsRepository, private val getTok
 
             emit(Resource.Success(data))
         } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+            val errorMessage = httpHandler.handleHttpException(e)
+            emit(Resource.Error(errorMessage))
         } catch (e: IOException) {
             emit(
                 Resource.Error(
-                    e.localizedMessage ?: "Couldn't reach server. Check your internet connection."
+                    e.localizedMessage
+                        ?: "Couldn't reach server. Check your internet connection."
                 )
             )
         }

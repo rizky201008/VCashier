@@ -10,5 +10,6 @@ data class CustomerState(
     val success: String = "",
     val customerId: Int? = null,
     val customerNumber: String? = null,
-    val confirmationMessage: String = ""
+    val confirmationMessage: String = "",
+    val searchQuery: String = ""
 )

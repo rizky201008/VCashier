@@ -41,9 +41,9 @@ fun CustomersScreen(
         val (searchInput, categories, addButton) = createRefs()
 
         TextField(
-            value = "",
+            value = state.searchQuery,
             onValueChanged = {
-
+                events(CustomerEvent.InputSearchValue(it))
             },
             modifier = Modifier.constrainAs(searchInput) {
                 top.linkTo(parent.top)

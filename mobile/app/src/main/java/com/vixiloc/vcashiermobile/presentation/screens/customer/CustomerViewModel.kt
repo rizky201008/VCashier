@@ -12,14 +12,18 @@ import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class CustomerViewModel(
     private val getCustomers: GetCustomers,
     private val createCustomer: CreateCustomer,
     private val updateCustomer: UpdateCustomer,
-    private val deleteCustomer: DeleteCustomer
+    private val deleteCustomer: DeleteCustomer,
+    private var searchJob: Job? = null
 ) : ViewModel() {
 
     var state by mutableStateOf(CustomerState())
@@ -71,7 +75,14 @@ class CustomerViewModel(
             }
 
             is CustomerEvent.InputSearchValue -> {
-
+                searchJob?.cancel()
+                state = state.copy(
+                    searchQuery = event.query
+                )
+                searchJob = viewModelScope.launch {
+                    delay(1000)
+                    searchCaCustomers()
+                }
             }
         }
     }
@@ -133,6 +144,19 @@ class CustomerViewModel(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun searchCaCustomers() {
+        val query = state.searchQuery
+        if (query.isBlank()) {
+            getAllCustomers()
+        } else {
+            state = state.copy(
+                customers = state.customers.filter {
+                    it.name.contains(query, ignoreCase = true)
+                }
+            )
+        }
     }
 
     private fun proceessCreateCustomer() {

@@ -1,8 +1,10 @@
 package com.vixiloc.vcashiermobile.presentation.screens.customer
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
@@ -23,10 +25,11 @@ fun CustomerForm(modifier: Modifier = Modifier, viewModel: CustomerViewModel, ty
     )
 
     TextField(
-        value = state.customerNumber,
+        value = state.customerNumber ?: "",
         onValueChanged = { events(CustomerEvent.InputCustomerNumber(it)) },
         modifier = Modifier,
-        title = "No. Telp"
+        title = "No. Telp",
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
 
     FilledButton(

@@ -37,6 +37,7 @@ class CustomerRepository
 
     public function deleteCustomer($id)
     {
-        return $this->customer->find($id)->delete();
+        $this->customer->find($id)->delete();
+        return response()->json(["message" => "product deleted!"]);
     }
 }

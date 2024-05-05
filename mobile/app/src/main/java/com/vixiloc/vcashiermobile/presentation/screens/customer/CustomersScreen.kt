@@ -68,7 +68,7 @@ fun CustomersScreen(
                     supportingText = customer.phoneNumber ?: "-",
                     modifier = Modifier.padding(10.dp),
                     onDelete = {
-
+                        events(CustomerEvent.DeleteCustomer(customer))
                     },
                     onUpdate = {
                         onUpdateCustomer(customer)
@@ -114,27 +114,27 @@ fun CustomersScreen(
             onDismiss = { events(CustomerEvent.DismissAlertMessage) }
         )
 
-//        MessageAlert(
-//            type = AlertType.WARNING,
-//            message = state.confirmationMessage,
-//            title = "Hapus Pelanggan?",
-//            visible = state.confirmationMessage.isNotBlank(),
-//            modifier = Modifier,
-//            confirmButton = {
-//                FilledButton(
-//                    onClick = { events(CustomerEvent.ProcessDeleteCategory) },
-//                    text = "Ya",
-//                    modifier = Modifier
-//                )
-//            },
-//            dismissButton = {
-//                FilledButton(
-//                    onClick = { events(CustomerEvent.DismissAlertMessage) },
-//                    text = "Tidak",
-//                    modifier = Modifier
-//                )
-//            }
-//        )
+        MessageAlert(
+            type = AlertType.WARNING,
+            message = state.confirmationMessage,
+            title = "Hapus Pelanggan?",
+            visible = state.confirmationMessage.isNotBlank(),
+            modifier = Modifier,
+            confirmButton = {
+                FilledButton(
+                    onClick = { events(CustomerEvent.ProcessDeleteCustomer) },
+                    text = "Ya",
+                    modifier = Modifier
+                )
+            },
+            dismissButton = {
+                FilledButton(
+                    onClick = { events(CustomerEvent.DismissAlertMessage) },
+                    text = "Tidak",
+                    modifier = Modifier
+                )
+            }
+        )
 
     }
 }

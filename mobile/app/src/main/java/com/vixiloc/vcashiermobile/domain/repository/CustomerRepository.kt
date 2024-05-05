@@ -12,4 +12,9 @@ interface CustomerRepository {
         token: String,
         data: CreateUpdateCustomerRequestDto
     ): CreateUpdateCustomerResponseDto
+
+    suspend fun updateCustomer(
+        token: String,
+        data: CreateUpdateCustomerRequestDto
+    ): CreateUpdateCustomerResponseDto
 }

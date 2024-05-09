@@ -19,6 +19,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.customer.CreateCustomerSc
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.UpdateCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
+import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
 
@@ -36,6 +37,13 @@ sealed class Screens(val route: String) {
         data object AllCustomers : Screens("customers-all")
         data object CreateCustomer : Screens("customers-create")
         data object UpdateCustomer : Screens("customers-update")
+
+    }
+
+    data object Products : Screens("products") {
+        data object AllProducts : Screens("products-all")
+        data object CreateProduct : Screens("products-create")
+        data object UpdateProduct : Screens("products-update")
 
     }
 }
@@ -101,6 +109,21 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
                     modifier = modifier,
                     selectedCustomer = selectedCustomer
                 )
+            }
+        }
+
+        navigation(
+            startDestination = Screens.Products.AllProducts.route,
+            route = Screens.Products.route
+        ) {
+            composable(Screens.Products.AllProducts.route) {
+                ProductsScreen(modifier = modifier)
+            }
+            composable(Screens.Products.CreateProduct.route) {
+                // CreateProductScreen(navController = navController, modifier = modifier)
+            }
+            composable(Screens.Products.UpdateProduct.route) {
+                // UpdateProductScreen(navController = navController, modifier = modifier)
             }
         }
     }

@@ -44,7 +44,8 @@ fun MainScreen(navHostController: NavHostController) {
         DrawerMenu(DrawerMenuName.HOME, Icons.Outlined.Home),
         DrawerMenu(DrawerMenuName.CREATE_TRANSACTION, Icons.Outlined.ShoppingCart),
         DrawerMenu(DrawerMenuName.CATEGORIES, Icons.Outlined.AllInbox),
-        DrawerMenu(DrawerMenuName.CUSTOMERS, Icons.Outlined.Group)
+        DrawerMenu(DrawerMenuName.CUSTOMERS, Icons.Outlined.Group),
+        DrawerMenu(DrawerMenuName.PRODUCTS, Icons.Outlined.AllInbox)
     )
 
     ModalNavigationDrawer(

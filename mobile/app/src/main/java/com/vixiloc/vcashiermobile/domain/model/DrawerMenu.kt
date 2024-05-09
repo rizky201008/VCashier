@@ -13,4 +13,5 @@ enum class DrawerMenuName(val menuName: String, val route: String) {
     CREATE_TRANSACTION("Transaksi", route = Screens.CreateTransaction.route),
     CATEGORIES("Kategori", route = Screens.Categories.route),
     CUSTOMERS("Pelanggan", route = Screens.Customers.route),
+    PRODUCTS("Produk", route = Screens.Products.route),
 }

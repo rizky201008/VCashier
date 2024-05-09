@@ -13,7 +13,7 @@ here is my todo's on this projects :
  - [x] Update Customers
  - [x] Delete Customers
  - [x] Search Customers
- - [ ] Show Products
+ - [x] Show Products
  - [ ] Create Product
  - [ ] Create Product Variation
  - [ ] Update Product
@@ -25,4 +25,4 @@ here is my todo's on this projects :
  - [ ] Show Transaction Payment
 
 
-![](https://geps.dev/progress/52)
+![](https://geps.dev/progress/57)

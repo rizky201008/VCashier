@@ -15,16 +15,16 @@ data class ProductsResponseDto(
 data class CategoryDto(
 
     @field:SerializedName("name")
-    val name: String? = null,
+    val name: String,
 
     @field:SerializedName("id")
-    val id: Int? = null
+    val id: Int
 )
 
 data class ProductDto(
 
     @field:SerializedName("category_id")
-    val categoryId: Int? = null,
+    val categoryId: Int,
 
     @field:SerializedName("image_path")
     val imagePath: String? = null,
@@ -33,16 +33,16 @@ data class ProductDto(
     val imageUrl: String? = null,
 
     @field:SerializedName("name")
-    val name: String? = null,
+    val name: String,
 
     @field:SerializedName("description")
-    val description: String? = null,
+    val description: String,
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
 
     @field:SerializedName("category")
-    val category: CategoryDto? = null
+    val category: CategoryDto
 )
 
 data class ProductResponseItemsDto(
@@ -51,33 +51,31 @@ data class ProductResponseItemsDto(
     val priceGrocery: Int? = null,
 
     @field:SerializedName("unit")
-    val unit: String? = null,
+    val unit: String,
 
     @field:SerializedName("product")
-    val product: ProductDto? = null,
+    val product: ProductDto,
 
     @field:SerializedName("price")
-    val price: Int? = null,
+    val price: Int,
 
     @field:SerializedName("product_id")
-    val productId: Int? = null,
+    val productId: Int,
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
 
     @field:SerializedName("stock")
-    val stock: Int? = null
+    val stock: Int
 )
 
 fun ProductDto.toProduct(): Product {
     return Product(
-        categoryId = categoryId,
-        imagePath = imagePath,
         imageUrl = imageUrl,
         name = name,
         description = description,
         id = id,
-        category = category?.toCategory()
+        category = category.toCategory()
     )
 }
 
@@ -92,9 +90,8 @@ fun ProductResponseItemsDto.toProductResponseItems(): ProductResponseItems {
     return ProductResponseItems(
         priceGrocery = priceGrocery,
         unit = unit,
-        product = product?.toProduct(),
+        product = product.toProduct(),
         price = price,
-        productId = productId,
         id = id,
         stock = stock
     )
@@ -102,8 +99,8 @@ fun ProductResponseItemsDto.toProductResponseItems(): ProductResponseItems {
 
 fun ProductsResponseDto.toProductsResponse(): ProductsResponse {
     return ProductsResponse(
-        data = data?.map {
-            it?.toProductResponseItems()
+        data = data.map {
+            it.toProductResponseItems()
         }
     )
 }

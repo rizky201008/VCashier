@@ -1,25 +1,34 @@
 package com.vixiloc.vcashiermobile.data.remote
 
+import com.vixiloc.vcashiermobile.data.remote.Routes.ADD_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
 import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
+import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.dto.CategoriesResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCustomerRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCustomerResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateImageResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductsResponseDto
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
@@ -33,6 +42,29 @@ interface ApiService {
     suspend fun getProducts(
         @Header("Authorization") token: String,
     ): ProductsResponseDto
+
+    @POST(PRODUCTS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun createProduct(
+        @Header("Authorization") token: String,
+        @Body data: CreateUpdateProductRequestDto
+    ): CreateProductResponseDto
+
+    @Multipart
+    @POST(ADD_IMAGE)
+    @Headers("Accept: application/json")
+    suspend fun addImage(
+        @Header("Authorization") token: String,
+        @Part("product_id") productId: RequestBody,
+        @Part image: MultipartBody.Part,
+    ): CreateUpdateImageResponseDto
+
+    @Multipart
+    @POST(UPDATE_IMAGE)
+    suspend fun updateImage(
+        @Header("Authorization") token: String,
+        @Body data: RequestBody
+    ): CreateUpdateImageResponseDto
 
     @GET(CATEGORIES)
     @Headers("Content-Type: application/json", "Accept: application/json")

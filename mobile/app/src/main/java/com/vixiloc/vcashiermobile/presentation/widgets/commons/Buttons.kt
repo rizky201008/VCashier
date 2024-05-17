@@ -32,11 +32,12 @@ fun IconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.small,
+    filled: Boolean = false
 ) {
     Box(
         modifier = modifier
             .background(
-                color = MaterialTheme.colorScheme.primary,
+                color = if (filled) MaterialTheme.colorScheme.primary else Color.Transparent,
                 shape = shape
             )
             .size(34.dp)
@@ -47,8 +48,8 @@ fun IconButton(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            Modifier.size(15.dp),
-            tint = MaterialTheme.colorScheme.onPrimary
+            modifier = Modifier.size(25.dp),
+            tint = if (filled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -63,6 +64,7 @@ fun FilledButton(
     Button(
         onClick = onClick,
         modifier = modifier
+            .padding(10.dp)
             .fillMaxWidth(),
         shape = MaterialTheme.shapes.large
     ) {

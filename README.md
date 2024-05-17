@@ -14,8 +14,8 @@ here is my todo's on this projects :
  - [x] Delete Customers
  - [x] Search Customers
  - [x] Show Products
- - [ ] Create Product
- - [ ] Create Product Variation
+ - [x] Create Product
+ - [x] Create Product Variation
  - [ ] Update Product
  - [ ] Update Product Variation
  - [ ] Search Products
@@ -25,4 +25,4 @@ here is my todo's on this projects :
  - [ ] Show Transaction Payment
 
 
-![](https://geps.dev/progress/57)
+![](https://geps.dev/progress/66)

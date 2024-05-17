@@ -10,7 +10,7 @@ data class CreateUpdateProductRequestDto(
     @SerializedName("description")
     val description: String,
     @SerializedName("id")
-    val id: Int?,
+    val id: Int? = null,
     @SerializedName("name")
     val name: String,
     @SerializedName("category_id")

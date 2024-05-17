@@ -1,17 +1,12 @@
 package com.vixiloc.vcashiermobile.presentation.navigations
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
-import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
+import androidx.navigation.toRoute
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.CreateCategoryScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.UpdateCategoryScreen
@@ -23,107 +18,130 @@ import com.vixiloc.vcashiermobile.presentation.screens.products.CreateProductScr
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
+import kotlinx.serialization.Serializable
 
-sealed class Screens(val route: String) {
-    data object Home : Screens("home")
-    data object CreateTransaction : Screens("transaction-create")
-    data object TransactionReview : Screens("transaction-review")
-    data object Categories : Screens("category") {
-        data object AllCategories : Screens("category-all")
-        data object CreateCategory : Screens("category-create")
-        data object UpdateCategory : Screens("category-update")
+sealed interface Screens {
+    @Serializable
+    data object Home : Screens
+
+    @Serializable
+    data object CreateTransaction : Screens
+
+    @Serializable
+    data object TransactionReview : Screens
+
+    @Serializable
+    data object Categories : Screens {
+        @Serializable
+        data object AllCategories : Screens
+
+        @Serializable
+        data object CreateCategory : Screens
+
+        @Serializable
+        data class UpdateCategory(
+            val name: String,
+            val id: Int
+        ) : Screens
     }
 
-    data object Customers : Screens("customers") {
-        data object AllCustomers : Screens("customers-all")
-        data object CreateCustomer : Screens("customers-create")
-        data object UpdateCustomer : Screens("customers-update")
+    @Serializable
+    data object Customers : Screens {
+        @Serializable
+        data object AllCustomers : Screens
 
+        @Serializable
+        data object CreateCustomer : Screens
+
+        @Serializable
+        data class UpdateCustomer(
+            val name: String,
+            val phoneNumber: String? = null,
+            val id: Int
+        ) : Screens
     }
 
-    data object Products : Screens("products") {
-        data object AllProducts : Screens("products-all")
-        data object CreateProduct : Screens("products-create")
-        data object UpdateProduct : Screens("products-update")
+    @Serializable
+    data object Products : Screens {
+        @Serializable
+        data object AllProducts : Screens
 
+        @Serializable
+        data object CreateProduct : Screens
+
+        @Serializable
+        data object UpdateProduct : Screens
     }
+
 }
 
 @Composable
 fun MainNavHost(navController: NavHostController, modifier: Modifier) {
-    var selectedCategory: CategoriesResponseItem? by remember {
-        mutableStateOf(null)
-    }
-    var selectedCustomer: CustomerResponseItem? by remember {
-        mutableStateOf(null)
-    }
 
-    NavHost(navController = navController, startDestination = Screens.Home.route) {
-        composable(Screens.Home.route) {
+    NavHost(navController = navController, startDestination = Screens.Home) {
+        composable<Screens.Home> {
             HomeScreen(navigator = navController, modifier = modifier)
         }
-        composable(Screens.CreateTransaction.route) {
+        composable<Screens.CreateTransaction> {
             CreateTransactionScreen(navigator = navController, modifier = modifier)
         }
-        composable(Screens.TransactionReview.route) {
+        composable<Screens.TransactionReview> {
             TransactionReviewScreen(navigator = navController)
         }
-        navigation(
-            startDestination = Screens.Categories.AllCategories.route,
-            route = Screens.Categories.route
+        navigation<Screens.Categories>(
+            startDestination = Screens.Categories.AllCategories,
         ) {
-            composable(Screens.Categories.AllCategories.route) {
+            composable<Screens.Categories.AllCategories> {
                 CategoriesScreen(
                     navController = navController,
-                    modifier = modifier,
-                    onUpdateCategory = { selectedCategory = it }
-                )
-            }
-            composable(Screens.Categories.CreateCategory.route) {
-                CreateCategoryScreen(navController = navController, modifier = modifier)
-            }
-            composable(Screens.Categories.UpdateCategory.route) {
-                UpdateCategoryScreen(
-                    navHostController = navController,
-                    selectedCategory = selectedCategory,
                     modifier = modifier
                 )
             }
-        }
-
-        navigation(
-            startDestination = Screens.Customers.AllCustomers.route,
-            route = Screens.Customers.route
-        ) {
-            composable(Screens.Customers.AllCustomers.route) {
-                CustomersScreen(
-                    navController = navController,
-                    modifier = modifier,
-                    onUpdateCustomer = { selectedCustomer = it })
+            composable<Screens.Categories.CreateCategory> {
+                CreateCategoryScreen(navController = navController, modifier = modifier)
             }
-            composable(Screens.Customers.CreateCustomer.route) {
-                CreateCustomerScreen(navController = navController, modifier = modifier)
-            }
-            composable(Screens.Customers.UpdateCustomer.route) {
-                UpdateCustomerScreen(
+            composable<Screens.Categories.UpdateCategory> {
+                val args = it.toRoute<Screens.Categories.UpdateCategory>()
+                UpdateCategoryScreen(
                     navHostController = navController,
                     modifier = modifier,
-                    selectedCustomer = selectedCustomer
+                    navArgs = args
                 )
             }
         }
 
-        navigation(
-            startDestination = Screens.Products.AllProducts.route,
-            route = Screens.Products.route
+        navigation<Screens.Customers>(
+            startDestination = Screens.Customers.AllCustomers
         ) {
-            composable(Screens.Products.AllProducts.route) {
+            composable<Screens.Customers.AllCustomers> {
+                CustomersScreen(
+                    navController = navController,
+                    modifier = modifier
+                )
+            }
+            composable<Screens.Customers.CreateCustomer> {
+                CreateCustomerScreen(navController = navController, modifier = modifier)
+            }
+            composable<Screens.Customers.UpdateCustomer> {
+                val args = it.toRoute<Screens.Customers.UpdateCustomer>()
+                UpdateCustomerScreen(
+                    navHostController = navController,
+                    modifier = modifier,
+                    navArgs = args
+                )
+            }
+        }
+
+        navigation<Screens.Products>(
+            startDestination = Screens.Products.AllProducts,
+        ) {
+            composable<Screens.Products.AllProducts> {
                 ProductsScreen(modifier = modifier, navController = navController)
             }
-            composable(Screens.Products.CreateProduct.route) {
+            composable<Screens.Products.CreateProduct> {
                 CreateProductScreen(navController = navController, modifier = modifier)
             }
-            composable(Screens.Products.UpdateProduct.route) {
+            composable<Screens.Products.UpdateProduct> {
                 // UpdateProductScreen(navController = navController, modifier = modifier)
             }
         }

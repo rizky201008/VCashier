@@ -22,9 +22,39 @@ class ProductImageRepository
         $product = $this->product->find($request->product_id);
         $image_path = $product->image_path;
         $this->deleteImage($image_path);
-        $this->saveImage($request->file('new_image'), $request->product_id);
+        $save = $this->saveImage($request->file('new_image'), $request->product_id);
+
+        $this->replaceImage([
+            'product_id' => $save[2],
+            'new_path' => $save[0],
+            'new_url' => $save[1]
+        ]);
 
         return ['message' => 'product image updated'];
+    }
+
+    public function createNewImage($file, $product_id)
+    {
+        $save = $this->saveImage($file, $product_id);
+        $imageExists = $this->imageExists($product_id);
+
+        if ($imageExists) {
+            throw new \Exception('product image already exists, if you want to update use /update endpoint');
+        }
+
+        $this->replaceImage([
+            'product_id' => $save[2],
+            'new_path' => $save[0],
+            'new_url' => $save[1]
+        ]);
+
+        return ['message' => 'product image created'];
+    }
+
+    private function imageExists($product_id): bool
+    {
+        $product = $this->product->find($product_id);
+        return $product->image_path !== null;
     }
 
     private function replaceImage(array $data): void
@@ -36,16 +66,12 @@ class ProductImageRepository
         ]);
     }
 
-    private function saveImage(array|UploadedFile $file, int $id): void
+    private function saveImage(array|UploadedFile $file, int $id): array|string
     {
         $file->store('product');
         $path = Storage::path('product/' . $file->hashName());
-        $url = Storage::url('product/' . $file->hashName());
-        $this->replaceImage([
-            'product_id' => $id,
-            'new_path' => $path,
-            'new_url' => $url
-        ]);
+        $url = $file->hashName();
+        return [$path, $url, $id];
     }
 
     private function deleteImage($path): void

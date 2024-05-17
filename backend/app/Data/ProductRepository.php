@@ -13,8 +13,8 @@ use PHPUnit\Framework\MockObject\Exception;
 class ProductRepository
 {
 
-    private $product;
-    private $variation;
+    private Product $product;
+    private ProductVariation $variation;
 
     function __construct()
     {
@@ -44,7 +44,7 @@ class ProductRepository
         $productVariation->save();
     }
 
-    function createProduct($data): array
+    function createProduct($data): JsonResponse
     {
         DB::beginTransaction();
         try {
@@ -70,7 +70,7 @@ class ProductRepository
 
             DB::commit();
 
-            return ['message' => 'Product created successfully', 'id' => $createdProduct->id];
+            return response()->json(['message' => 'Product created successfully','id' => $createdProduct->id], 201);
         } catch (\Throwable $throwable) {
             DB::rollBack();
 

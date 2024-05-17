@@ -25,10 +25,10 @@ data class CustomerResponseDtoItem(
     val phoneNumber: String? = null,
 
     @field:SerializedName("id")
-    val id: Int? = null
+    val id: Int
 )
 
-fun CustomerResponseDtoItem.toCustomerResponseItem() = CustomerResponseItem(
+fun CustomerResponseDtoItem.toModel() = CustomerResponseItem(
     updatedAt = updatedAt,
     name = name,
     createdAt = createdAt,
@@ -37,5 +37,5 @@ fun CustomerResponseDtoItem.toCustomerResponseItem() = CustomerResponseItem(
 )
 
 fun CustomerResponseDto.toCustomerResponse() = CustomerResponse(
-    data = data.map { it.toCustomerResponseItem() }
+    data = data.map { it.toModel() }
 )

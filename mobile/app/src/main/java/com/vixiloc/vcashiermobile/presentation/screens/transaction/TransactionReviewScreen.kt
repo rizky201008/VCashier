@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.HorizontalProductItem
+import com.vixiloc.vcashiermobile.presentation.widgets.products.TransactionHorizontalProductItem
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 
@@ -65,7 +65,7 @@ fun TransactionReviewScreen(
                     }
                 ) {
                     items(20) {
-                        HorizontalProductItem(price = "Rp10.000", name = "Joko Kripto")
+                        TransactionHorizontalProductItem(price = "Rp10.000", name = "Joko Kripto")
                     }
                     item {
                         VerticalSpacer(height = 100.dp)

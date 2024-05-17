@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
+import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
@@ -16,20 +17,18 @@ fun UpdateCustomerScreen(
     modifier: Modifier = Modifier,
     viewModel: CustomerViewModel = koinViewModel(),
     navHostController: NavHostController,
-    selectedCustomer: CustomerResponseItem?
+    navArgs: Screens.Customers.UpdateCustomer
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
     LaunchedEffect(key1 = Unit) {
-        selectedCustomer?.let {
-            events(
-                CustomerEvent.PreFillFormData(
-                    id = selectedCustomer.id,
-                    name = selectedCustomer.name,
-                    number = selectedCustomer.phoneNumber,
-                )
+        events(
+            CustomerEvent.PreFillFormData(
+                id = navArgs.id,
+                name = navArgs.name,
+                number = navArgs.phoneNumber,
             )
-        }
+        )
     }
 
     Column(modifier = modifier) {

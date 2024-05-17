@@ -28,8 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 fun CustomersScreen(
     modifier: Modifier = Modifier,
     viewModel: CustomerViewModel = koinViewModel(),
-    navController: NavHostController,
-    onUpdateCustomer: (CustomerResponseItem?) -> Unit
+    navController: NavHostController
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
@@ -71,8 +70,11 @@ fun CustomersScreen(
                         events(CustomerEvent.DeleteCustomer(customer))
                     },
                     onUpdate = {
-                        onUpdateCustomer(customer)
-                        navController.navigate(Screens.Customers.UpdateCustomer.route)
+                        navController.navigate(Screens.Customers.UpdateCustomer(
+                            id = customer.id,
+                            name = customer.name,
+                            phoneNumber = customer.phoneNumber,
+                        ))
                     },
                     onClick = {
 
@@ -84,7 +86,7 @@ fun CustomersScreen(
 
         FilledButton(
             onClick = {
-                navController.navigate(Screens.Customers.CreateCustomer.route)
+                navController.navigate(Screens.Customers.CreateCustomer)
             },
             text = "Tambah Pelanggan",
             modifier = Modifier.constrainAs(addButton) {

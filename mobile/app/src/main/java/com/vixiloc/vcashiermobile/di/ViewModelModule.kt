@@ -1,7 +1,11 @@
 package com.vixiloc.vcashiermobile.di
 
+import android.content.Context
+import com.vixiloc.vcashiermobile.commons.FileConverter
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
+import com.vixiloc.vcashiermobile.domain.use_case.CreateImage
+import com.vixiloc.vcashiermobile.domain.use_case.CreateProduct
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
@@ -11,12 +15,14 @@ import com.vixiloc.vcashiermobile.domain.use_case.GetToken
 import com.vixiloc.vcashiermobile.domain.use_case.Login
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
+import com.vixiloc.vcashiermobile.domain.use_case.UpdateImage
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -27,7 +33,7 @@ val viewModelModule = module {
     viewModel { provideTransactionViewModel(get()) }
     viewModel { provideCategoryViewModel(get(), get(), get(), get()) }
     viewModel { provideCustomerViewModel(get(), get(), get(), get()) }
-    viewModel { provideProductViewModel(get()) }
+    viewModel { provideProductViewModel(get(), get(), get(), get(), androidContext(), get()) }
 }
 
 fun provideLoginViewModel(login: Login): LoginViewModel {
@@ -70,6 +76,20 @@ fun provideCustomerViewModel(
     )
 }
 
-fun provideProductViewModel(getProducts: GetProducts): ProductsViewModel {
-    return ProductsViewModel(getProducts = getProducts)
+fun provideProductViewModel(
+    getProducts: GetProducts,
+    createProduct: CreateProduct,
+    createImage: CreateImage,
+    updateImage: UpdateImage,
+    context: Context,
+    getCategories: GetCategories
+): ProductsViewModel {
+    return ProductsViewModel(
+        getProducts = getProducts,
+        createImage = createImage,
+        createProduct = createProduct,
+        updateImage = updateImage,
+        fileConverter = FileConverter(context = context),
+        getCategories = getCategories
+    )
 }

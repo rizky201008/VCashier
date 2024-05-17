@@ -13,8 +13,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavController
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
+import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
@@ -28,7 +30,8 @@ import org.koin.androidx.compose.koinViewModel
 fun ProductsScreen(
     modifier: Modifier = Modifier,
     viewModel: ProductsViewModel = koinViewModel(),
-    currencyFormatter: CurrencyFormatter = CurrencyFormatter()
+    currencyFormatter: CurrencyFormatter = CurrencyFormatter(),
+    navController: NavController
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
@@ -84,7 +87,7 @@ fun ProductsScreen(
 
         FilledButton(
             onClick = {
-
+                navController.navigate(Screens.Products.CreateProduct.route)
             },
             text = "Tambah Produk",
             modifier = Modifier.constrainAs(addButton) {

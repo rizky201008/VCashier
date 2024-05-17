@@ -87,7 +87,7 @@ fun ProductsScreen(
 
         FilledButton(
             onClick = {
-                navController.navigate(Screens.Products.CreateProduct.route)
+                navController.navigate(Screens.Products.CreateProduct)
             },
             text = "Tambah Produk",
             modifier = Modifier.constrainAs(addButton) {

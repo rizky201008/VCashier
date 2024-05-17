@@ -29,8 +29,7 @@ import org.koin.androidx.compose.koinViewModel
 fun CategoriesScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    viewModel: CategoryViewModel = koinViewModel(),
-    onUpdateCategory: (CategoriesResponseItem) -> Unit
+    viewModel: CategoryViewModel = koinViewModel()
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
@@ -74,8 +73,12 @@ fun CategoriesScreen(
                         events(CategoryEvent.DeleteCategory(category))
                     },
                     onUpdate = {
-                        onUpdateCategory(category)
-                        navController.navigate(Screens.Categories.UpdateCategory.route)
+                        navController.navigate(
+                            Screens.Categories.UpdateCategory(
+                                id = category.id,
+                                name = category.name
+                            )
+                        )
                     }
                 )
             }
@@ -84,7 +87,7 @@ fun CategoriesScreen(
 
         FilledButton(
             onClick = {
-                navController.navigate(Screens.Categories.CreateCategory.route)
+                navController.navigate(Screens.Categories.CreateCategory)
             },
             text = "Tambah Kategori",
             modifier = Modifier.constrainAs(addButton) {

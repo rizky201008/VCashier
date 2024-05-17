@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
+import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
@@ -16,19 +17,17 @@ fun UpdateCategoryScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryViewModel = koinViewModel(),
     navHostController: NavHostController,
-    selectedCategory: CategoriesResponseItem?
+    navArgs: Screens.Categories.UpdateCategory
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
-    selectedCategory?.let {
-        LaunchedEffect(key1 = Unit) {
-            events(
-                CategoryEvent.PreFillFormData(
-                    id = selectedCategory.id,
-                    name = selectedCategory.name
-                )
+    LaunchedEffect(key1 = Unit) {
+        events(
+            CategoryEvent.PreFillFormData(
+                id = navArgs.id,
+                name = navArgs.name
             )
-        }
+        )
     }
 
     Column(modifier = modifier) {

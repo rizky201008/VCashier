@@ -22,7 +22,7 @@ import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.ProductItem
+import com.vixiloc.vcashiermobile.presentation.widgets.products.TransactionProductItem
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
 import org.koin.androidx.compose.koinViewModel
@@ -69,7 +69,7 @@ fun CreateTransactionScreen(
                     end.linkTo(parent.end)
                 }) {
                 items(state.products) { product ->
-                    ProductItem(
+                    TransactionProductItem(
                         price = product.price.toString(),
                         name = "${product.product?.name} ${product.unit}",
                         image = product.product?.imageUrl ?: "",
@@ -92,7 +92,7 @@ fun CreateTransactionScreen(
                     }) {
                 FloatingTransactionButton(
                     onClick = {
-                        navigator.navigate(Screens.TransactionReview.route)
+                        navigator.navigate(Screens.TransactionReview)
                     },
                     modifier = Modifier,
                     containerColor = MaterialTheme.colorScheme.primary,

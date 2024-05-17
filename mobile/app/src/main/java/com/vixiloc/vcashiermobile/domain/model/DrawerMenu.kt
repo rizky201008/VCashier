@@ -8,10 +8,10 @@ data class DrawerMenu(
     val icon: ImageVector
 )
 
-enum class DrawerMenuName(val menuName: String, val route: String) {
-    HOME("Home", route = Screens.Home.route),
-    CREATE_TRANSACTION("Transaksi", route = Screens.CreateTransaction.route),
-    CATEGORIES("Kategori", route = Screens.Categories.route),
-    CUSTOMERS("Pelanggan", route = Screens.Customers.route),
-    PRODUCTS("Produk", route = Screens.Products.route),
+enum class DrawerMenuName(val menuName: String, val route: Any) {
+    HOME("Home", route = Screens.Home),
+    CREATE_TRANSACTION("Transaksi", route = Screens.CreateTransaction),
+    CATEGORIES("Kategori", route = Screens.Categories),
+    CUSTOMERS("Pelanggan", route = Screens.Customers),
+    PRODUCTS("Produk", route = Screens.Products),
 }

@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     Route::prefix('product-images')->group(function () {
         Route::post('update', [ProductImageController::class, 'updateImages']);
+        Route::post('add', [ProductImageController::class, 'addImage']);
     });
     Route::prefix('customers')->group(function () {
         Route::get('/', [CustomerController::class, 'getCustomers']);

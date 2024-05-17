@@ -24,9 +24,10 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'variations' => 'required|array|min:1',
+            'category_id' => 'exists:categories,id'
         ]);
 
-        return response()->json($this->productRepository->createProduct($request),201);
+        return $this->productRepository->createProduct($request);
     }
 
     public function updateProduct(Request $request, $id)

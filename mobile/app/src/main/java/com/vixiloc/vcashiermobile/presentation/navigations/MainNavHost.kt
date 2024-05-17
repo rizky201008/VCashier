@@ -19,6 +19,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.customer.CreateCustomerSc
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.UpdateCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
+import com.vixiloc.vcashiermobile.presentation.screens.products.CreateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
@@ -117,10 +118,10 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
             route = Screens.Products.route
         ) {
             composable(Screens.Products.AllProducts.route) {
-                ProductsScreen(modifier = modifier)
+                ProductsScreen(modifier = modifier, navController = navController)
             }
             composable(Screens.Products.CreateProduct.route) {
-                // CreateProductScreen(navController = navController, modifier = modifier)
+                CreateProductScreen(navController = navController, modifier = modifier)
             }
             composable(Screens.Products.UpdateProduct.route) {
                 // UpdateProductScreen(navController = navController, modifier = modifier)

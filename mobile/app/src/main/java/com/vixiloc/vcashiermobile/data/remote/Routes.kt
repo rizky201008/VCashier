@@ -7,4 +7,7 @@ object Routes {
     const val PRODUCTS = "products"
     const val CATEGORIES = "categories"
     const val CUSTOMERS = "customers"
+    private const val PRODUCT_IMAGES= "product-images"
+    const val ADD_IMAGE = "${PRODUCT_IMAGES}/add"
+    const val UPDATE_IMAGE = "${PRODUCT_IMAGES}/update"
 }

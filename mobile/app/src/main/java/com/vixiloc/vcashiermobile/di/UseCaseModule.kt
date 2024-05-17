@@ -8,6 +8,8 @@ import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
+import com.vixiloc.vcashiermobile.domain.use_case.CreateImage
+import com.vixiloc.vcashiermobile.domain.use_case.CreateProduct
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
@@ -18,7 +20,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.Login
 import com.vixiloc.vcashiermobile.domain.use_case.SaveToken
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
-import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerEvent
+import com.vixiloc.vcashiermobile.domain.use_case.UpdateImage
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -35,6 +37,9 @@ val useCaseModule = module {
     single { provideCreateCustomerUseCase(get(), get(), get()) }
     single { provideUpdateCustomerUseCase(get(), get(), get()) }
     single { provideDeleteCustomerUseCase(get(), get(), get()) }
+    single { provideCreateProductUseCase(get(), get(), get()) }
+    single { provideCreateImageUseCase(get(), get(), get()) }
+    single { provideUpdateImageUseCase(get(), get(), get()) }
 }
 
 fun provideHttpHandler(): HttpHandler {
@@ -124,4 +129,28 @@ fun provideDeleteCustomerUseCase(
     httpHandler: HttpHandler
 ): DeleteCustomer {
     return DeleteCustomer(repository, getToken = getToken, httpHandler = httpHandler)
+}
+
+fun provideCreateProductUseCase(
+    repository: ProductsRepository,
+    getToken: GetToken,
+    httpHandler: HttpHandler
+): CreateProduct {
+    return CreateProduct(repository, getToken = getToken, httpHandler = httpHandler)
+}
+
+fun provideCreateImageUseCase(
+    repository: ProductsRepository,
+    getToken: GetToken,
+    httpHandler: HttpHandler
+): CreateImage {
+    return CreateImage(repository, getToken = getToken, httpHandler = httpHandler)
+}
+
+fun provideUpdateImageUseCase(
+    repository: ProductsRepository,
+    getToken: GetToken,
+    httpHandler: HttpHandler
+): UpdateImage {
+    return UpdateImage(repository, getToken = getToken, httpHandler = httpHandler)
 }

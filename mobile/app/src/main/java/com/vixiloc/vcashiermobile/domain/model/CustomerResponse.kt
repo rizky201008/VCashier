@@ -11,5 +11,5 @@ data class CustomerResponseItem(
     val name: String,
     val createdAt: String? = null,
     val phoneNumber: String? = null,
-    val id: Int? = null
+    val id: Int
 )

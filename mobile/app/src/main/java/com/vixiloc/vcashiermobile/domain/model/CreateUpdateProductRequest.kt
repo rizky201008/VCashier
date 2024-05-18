@@ -15,7 +15,8 @@ data class Variation(
     val price: Int,
     val priceGrocery: Int,
     val stock: Int,
-    val unit: String
+    val unit: String,
+    val id: Int? = null
 )
 
 fun Variation.toDto(): VariationDto {

@@ -15,11 +15,13 @@ data class ProductState(
     val variations: List<Variation> = emptyList(),
     val image: Uri? = null,
     val categoryName: String = "",
-    val variationProductId: Int? = null,
+    val productId: Int? = null,
     val variationPrice: String = "",
     val variationPriceGrocery: String = "",
     val variationStock: String = "",
     val variationUnit: String = "",
+    val variationId: Int? = null,
     val showVariationDialog: Boolean = false,
-    val categories: List<Map<String, Int>> = emptyList()
+    val categories: List<Map<String, Int>> = emptyList(),
+    val alsoUpdateImage: Boolean = false
 )

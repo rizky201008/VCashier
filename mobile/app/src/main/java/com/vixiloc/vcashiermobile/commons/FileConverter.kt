@@ -7,7 +7,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 class FileConverter(private val context: Context) {
-    fun uriToMultipartBody(uri: Uri?): MultipartBody.Part? {
+    fun uriToMultipartBody(uri: Uri?, name: String?): MultipartBody.Part? {
         val filesDir = context.filesDir
         val file = File(filesDir, "gambar.png")
         uri?.let {
@@ -15,7 +15,7 @@ class FileConverter(private val context: Context) {
             val outputStream = file.outputStream()
             inputStream?.copyTo(outputStream)
             val requestBody = file.asRequestBody()
-            val part = MultipartBody.Part.createFormData("image", file.name, requestBody)
+            val part = MultipartBody.Part.createFormData(name ?: "image", file.name, requestBody)
             return part
         } ?: return null
     }

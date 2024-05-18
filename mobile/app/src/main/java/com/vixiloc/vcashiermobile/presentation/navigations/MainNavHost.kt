@@ -16,6 +16,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.customer.UpdateCustomerSc
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.CreateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
+import com.vixiloc.vcashiermobile.presentation.screens.products.UpdateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
 import kotlinx.serialization.Serializable
@@ -70,7 +71,7 @@ sealed interface Screens {
         data object CreateProduct : Screens
 
         @Serializable
-        data object UpdateProduct : Screens
+        data class UpdateProduct(val id: String) : Screens
     }
 
 }
@@ -142,7 +143,8 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
                 CreateProductScreen(navController = navController, modifier = modifier)
             }
             composable<Screens.Products.UpdateProduct> {
-                // UpdateProductScreen(navController = navController, modifier = modifier)
+                val args = it.toRoute<Screens.Products.UpdateProduct>()
+                UpdateProductScreen(navController = navController, modifier = modifier, args = args)
             }
         }
     }

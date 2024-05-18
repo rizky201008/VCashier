@@ -2,15 +2,13 @@ package com.vixiloc.vcashiermobile.data.remote.dto
 
 
 import com.google.gson.annotations.SerializedName
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.http.Part
+import com.vixiloc.vcashiermobile.domain.model.Variation
 
 data class CreateUpdateProductRequestDto(
     @SerializedName("description")
     val description: String,
     @SerializedName("id")
-    val id: Int?,
+    val id: Int? = null,
     @SerializedName("name")
     val name: String,
     @SerializedName("category_id")
@@ -27,5 +25,17 @@ data class VariationDto(
     @SerializedName("stock")
     val stock: Int,
     @SerializedName("unit")
-    val unit: String
+    val unit: String,
+    @SerializedName("id")
+    val id: Int? = null
 )
+
+fun VariationDto.toDomain(): Variation {
+    return Variation(
+        price = price,
+        priceGrocery = priceGrocery,
+        stock = stock,
+        unit = unit,
+        id = id
+    )
+}

@@ -27,9 +27,9 @@ class ProductRepository
         return response()->json(['data' => $this->variation->with(['product', 'product.category'])->get()]);
     }
 
-    function getProduct($id): Collection
+    function getProduct($id): JsonResponse
     {
-        return $this->product->with(['variations'])->where('id', $id)->get();
+        return response()->json($this->product->with(['variations', 'category'])->where('id', $id)->first());
     }
 
     public function getProductVariation($id): ProductVariation
@@ -70,7 +70,7 @@ class ProductRepository
 
             DB::commit();
 
-            return response()->json(['message' => 'Product created successfully','id' => $createdProduct->id], 201);
+            return response()->json(['message' => 'Product created successfully', 'id' => $createdProduct->id], 201);
         } catch (\Throwable $throwable) {
             DB::rollBack();
 
@@ -78,7 +78,7 @@ class ProductRepository
         }
     }
 
-    function updateProduct($data, $productId): array
+    function updateProduct($data, $productId): JsonResponse
     {
         $product = Product::find($productId);
 
@@ -95,7 +95,7 @@ class ProductRepository
                 foreach ($variations as $variation) {
                     $this->variation->create(
                         [
-                            'name' => $variation['name'],
+                            'unit' => $variation['unit'],
                             'stock' => $variation['stock'],
                             'price' => $variation['price'],
                             'price_grocery' => $variation['price_grocery'],
@@ -106,9 +106,9 @@ class ProductRepository
             }
 
             DB::commit();
-            return [
+            return response()->json([
                 'message' => 'Product updated successfully'
-            ];
+            ]);
         } catch (\Throwable $th) {
             DB::rollBack();
 

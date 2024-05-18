@@ -2,6 +2,7 @@ package com.vixiloc.vcashiermobile.presentation.widgets.commons
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ fun RowScope.TableCell(
         Modifier
             .border(1.dp, Color.Black)
             .weight(weight)
+            .fillMaxHeight()
             .padding(8.dp)
     )
 }

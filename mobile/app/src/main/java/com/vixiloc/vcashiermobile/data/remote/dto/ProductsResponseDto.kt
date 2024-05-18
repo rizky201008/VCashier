@@ -75,11 +75,11 @@ fun ProductDto.toProduct(): Product {
         name = name,
         description = description,
         id = id,
-        category = category.toCategory()
+        category = category.toDomain()
     )
 }
 
-fun CategoryDto.toCategory(): Category {
+fun CategoryDto.toDomain(): Category {
     return Category(
         name = name,
         id = id

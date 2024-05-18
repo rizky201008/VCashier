@@ -1,6 +1,7 @@
 package com.vixiloc.vcashiermobile.presentation.screens.products
 
 import android.net.Uri
+import com.vixiloc.vcashiermobile.domain.model.Variation
 
 
 sealed class ProductEvent {
@@ -19,7 +20,10 @@ sealed class ProductEvent {
     data object SubmitAddVariation : ProductEvent()
 
     data object SubmitCreateProduct : ProductEvent()
-//    data object SubmitUpdateProduct : ProductEvent()
+    data object SubmitUpdateProduct : ProductEvent()
+    data class DeleteVariation(val data: Variation) : ProductEvent()
+    data class UpdateVariation(val data: Variation) : ProductEvent()
+    data object SubmitUpdateVariation : ProductEvent()
 //    data class PreFillFormData(val id: Int?, val name: String, val number: String?) : ProductEvent()
 //    data class DeleteProduct(val data: ProductResponseItems) : ProductEvent()
 //    data object ProcessDeleteProduct : ProductEvent()

@@ -17,7 +17,9 @@ import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.UpdateProductResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -43,12 +45,26 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): ProductsResponseDto
 
+    @GET("$PRODUCTS/{id}")
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun getProduct(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): ProductResponseDto
+
     @POST(PRODUCTS)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun createProduct(
         @Header("Authorization") token: String,
         @Body data: CreateUpdateProductRequestDto
     ): CreateProductResponseDto
+
+    @PUT(PRODUCTS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun updateProduct(
+        @Header("Authorization") token: String,
+        @Body data: CreateUpdateProductRequestDto
+    ): UpdateProductResponseDto
 
     @Multipart
     @POST(ADD_IMAGE)
@@ -61,9 +77,11 @@ interface ApiService {
 
     @Multipart
     @POST(UPDATE_IMAGE)
+    @Headers("Accept: application/json")
     suspend fun updateImage(
         @Header("Authorization") token: String,
-        @Body data: RequestBody
+        @Part("product_id") productId: RequestBody,
+        @Part newImage: MultipartBody.Part,
     ): CreateUpdateImageResponseDto
 
     @GET(CATEGORIES)

@@ -10,12 +10,14 @@ import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
+import com.vixiloc.vcashiermobile.domain.use_case.GetProduct
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
 import com.vixiloc.vcashiermobile.domain.use_case.Login
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateImage
+import com.vixiloc.vcashiermobile.domain.use_case.UpdateProduct
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeViewModel
@@ -33,7 +35,18 @@ val viewModelModule = module {
     viewModel { provideTransactionViewModel(get()) }
     viewModel { provideCategoryViewModel(get(), get(), get(), get()) }
     viewModel { provideCustomerViewModel(get(), get(), get(), get()) }
-    viewModel { provideProductViewModel(get(), get(), get(), get(), androidContext(), get()) }
+    viewModel {
+        provideProductViewModel(
+            get(),
+            get(),
+            get(),
+            get(),
+            androidContext(),
+            get(),
+            get(),
+            get()
+        )
+    }
 }
 
 fun provideLoginViewModel(login: Login): LoginViewModel {
@@ -82,7 +95,9 @@ fun provideProductViewModel(
     createImage: CreateImage,
     updateImage: UpdateImage,
     context: Context,
-    getCategories: GetCategories
+    getCategories: GetCategories,
+    updateProduct: UpdateProduct,
+    getProduct: GetProduct
 ): ProductsViewModel {
     return ProductsViewModel(
         getProducts = getProducts,
@@ -90,6 +105,8 @@ fun provideProductViewModel(
         createProduct = createProduct,
         updateImage = updateImage,
         fileConverter = FileConverter(context = context),
-        getCategories = getCategories
+        getCategories = getCategories,
+        updateProduct = updateProduct,
+        getProduct = getProduct
     )
 }

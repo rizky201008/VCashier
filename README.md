@@ -16,7 +16,7 @@ here is my todo's on this projects :
  - [x] Show Products
  - [x] Create Product
  - [x] Create Product Variation
- - [ ] Update Product
+ - [x] Update Product
  - [ ] Update Product Variation
  - [ ] Search Products
  - [ ] Show Transactions
@@ -25,4 +25,4 @@ here is my todo's on this projects :
  - [ ] Show Transaction Payment
 
 
-![](https://geps.dev/progress/66)
+![](https://geps.dev/progress/71)

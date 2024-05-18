@@ -3,7 +3,9 @@ package com.vixiloc.vcashiermobile.domain.repository
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateImageResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateProductRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.UpdateProductResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -24,7 +26,18 @@ interface ProductsRepository {
 
     suspend fun updateImage(
         token: String,
-        data: RequestBody
+        productId: RequestBody,
+        newImage: MultipartBody.Part
     ): CreateUpdateImageResponseDto
+
+    suspend fun updateProduct(
+        token: String,
+        data: CreateUpdateProductRequestDto
+    ): UpdateProductResponseDto
+
+    suspend fun getProduct(
+        token: String,
+        id: String
+    ): ProductResponseDto
 
 }

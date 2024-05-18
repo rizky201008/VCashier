@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.text.isDigitsOnly
+import com.vixiloc.vcashiermobile.presentation.screens.products.FormType
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductEvent
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsViewModel
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
@@ -25,7 +26,8 @@ fun VariationDialog(
     modifier: Modifier = Modifier,
     visible: Boolean = false,
     onDismiss: () -> Unit = {},
-    viewModel: ProductsViewModel
+    viewModel: ProductsViewModel,
+    type: FormType
 ) {
     val state = viewModel.state
     val onEvent = viewModel::onEvent
@@ -51,7 +53,7 @@ fun VariationDialog(
                         },
                         modifier = Modifier,
                         title = "Nama Variasi",
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                     )
                     TextField(
                         value = state.variationPrice,
@@ -89,7 +91,11 @@ fun VariationDialog(
                     FilledButton(
                         onClick = {
                             onEvent(ProductEvent.ToggleVariationDialog)
-                            onEvent(ProductEvent.SubmitAddVariation)
+                            if (type == FormType.CREATE) {
+                                onEvent(ProductEvent.SubmitAddVariation)
+                            } else {
+                                onEvent(ProductEvent.SubmitUpdateVariation)
+                            }
                         },
                         text = "Simpan",
                         modifier = Modifier

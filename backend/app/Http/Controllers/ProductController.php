@@ -30,18 +30,14 @@ class ProductController extends Controller
         return $this->productRepository->createProduct($request);
     }
 
-    public function updateProduct(Request $request, $id)
+    public function updateProduct(Request $request)
     {
-        $validator = Validator::make(array_merge(['id' => $id], $request->all()), [
+        $request->validate([
             'id' => 'required|exists:products,id',
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        if ($validator->fails()) {
-            throw new Exception($validator->messages()->first());
-        }
-
-        return response()->json($this->productRepository->updateProduct($request, $id));
+        return $this->productRepository->updateProduct($request, $request->id);
     }
 
     public function deleteProduct($id)
@@ -59,10 +55,10 @@ class ProductController extends Controller
 
     public function getProduct($id)
     {
-        return response()->json($this->productRepository->getProduct($id));
+        return $this->productRepository->getProduct($id);
     }
 
-    public function getProducts() : JsonResponse
+    public function getProducts(): JsonResponse
     {
         return $this->productRepository->getProducts();
     }

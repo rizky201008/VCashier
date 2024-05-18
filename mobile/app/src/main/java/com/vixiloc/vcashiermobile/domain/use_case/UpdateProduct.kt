@@ -1,40 +1,30 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
 import com.vixiloc.vcashiermobile.commons.HttpHandler
-import com.vixiloc.vcashiermobile.commons.RequestBodyBuilder
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.data.remote.dto.toDomain
+import com.vixiloc.vcashiermobile.domain.model.CreateUpdateProductRequest
 import com.vixiloc.vcashiermobile.domain.model.OnlyResponseMessage
+import com.vixiloc.vcashiermobile.domain.model.toDto
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import okhttp3.MultipartBody
 import okio.IOException
 import retrofit2.HttpException
 
-class UpdateImage(
+class UpdateProduct(
     private val productRepository: ProductsRepository,
     private val getToken: GetToken,
     private val httpHandler: HttpHandler
 ) {
-    operator fun invoke(
-        productId: String,
-        image: MultipartBody.Part?
-    ): Flow<Resource<OnlyResponseMessage>> =
+    operator fun invoke(data: CreateUpdateProductRequest): Flow<Resource<OnlyResponseMessage>> =
         flow {
-            val token = getToken().first()
-            val productIdRequestBody = RequestBodyBuilder.createString(productId)
             try {
+                val token: String = getToken().first()
                 emit(Resource.Loading())
-                image?.let {
-                    val response = productRepository.updateImage(
-                        token = token,
-                        productId = productIdRequestBody,
-                        newImage = image
-                    )
-                    emit(Resource.Success(response.toDomain()))
-                } ?: emit(Resource.Error("Image is null"))
+                val response = productRepository.updateProduct(token, data.toDto())
+                emit(Resource.Success(response.toDomain()))
             } catch (e: HttpException) {
                 val errorMessage = httpHandler.handleHttpException(e)
                 emit(Resource.Error(errorMessage))

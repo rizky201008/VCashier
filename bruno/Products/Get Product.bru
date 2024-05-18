@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{BASE_URL}}products/3
+  url: {{BASE_URL}}products/12
   body: json
   auth: bearer
 }
@@ -16,12 +16,4 @@ headers {
 
 auth:bearer {
   token: {{TOKEN}}
-}
-
-body:json {
-  {
-      "name": "Marlboro Bolong",
-      "description": "Ini adalah rokok marlboro bolong",
-      "category_id" : 1
-  }
 }

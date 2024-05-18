@@ -8,22 +8,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CreateProductScreen(
+fun UpdateProductScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     viewModel: ProductsViewModel = koinViewModel(),
+    args: Screens.Products.UpdateProduct
 ) {
     val state = viewModel.state
     val onEvent = viewModel::onEvent
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.processGetCategories()
+        viewModel.processGetProduct(id = args.id)
     }
 
     Column(
@@ -34,7 +36,7 @@ fun CreateProductScreen(
 
         ProductForm(
             viewModel = viewModel,
-            type = FormType.CREATE
+            type = FormType.UPDATE
         )
         Loading(modifier = Modifier, visible = state.isLoading)
 

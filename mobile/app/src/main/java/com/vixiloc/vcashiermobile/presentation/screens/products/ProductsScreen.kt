@@ -76,12 +76,16 @@ fun ProductsScreen(
                     ProductItem(
                         price = currencyFormatter.formatCurrency(product.price),
                         context = context,
-                        name = product.product.name,
+                        name = "${product.product.name} - ${product.unit}",
                         category = product.product.category.name,
                         image = product.product.imageUrl,
+                        onClick = {
+                            navController.navigate(Screens.Products.UpdateProduct(product.product.id.toString()))
+                        }
                     )
                 }
-                item { VerticalSpacer(height = 300.dp, modifier = Modifier) }
+                item { VerticalSpacer(height = 200.dp, modifier = Modifier) }
+                item { VerticalSpacer(height = 200.dp, modifier = Modifier) }
             }
         }
 

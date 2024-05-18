@@ -14,6 +14,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
+import com.vixiloc.vcashiermobile.domain.use_case.GetProduct
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
 import com.vixiloc.vcashiermobile.domain.use_case.Login
@@ -21,6 +22,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.SaveToken
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateImage
+import com.vixiloc.vcashiermobile.domain.use_case.UpdateProduct
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -40,6 +42,8 @@ val useCaseModule = module {
     single { provideCreateProductUseCase(get(), get(), get()) }
     single { provideCreateImageUseCase(get(), get(), get()) }
     single { provideUpdateImageUseCase(get(), get(), get()) }
+    single { provideUpdateProductUseCase(get(), get(), get()) }
+    single { provideGetProductUseCase(get(), get(), get()) }
 }
 
 fun provideHttpHandler(): HttpHandler {
@@ -153,4 +157,20 @@ fun provideUpdateImageUseCase(
     httpHandler: HttpHandler
 ): UpdateImage {
     return UpdateImage(repository, getToken = getToken, httpHandler = httpHandler)
+}
+
+fun provideUpdateProductUseCase(
+    repository: ProductsRepository,
+    getToken: GetToken,
+    httpHandler: HttpHandler
+): UpdateProduct {
+    return UpdateProduct(repository, getToken = getToken, httpHandler = httpHandler)
+}
+
+fun provideGetProductUseCase(
+    getToken: GetToken,
+    repository: ProductsRepository,
+    httpHandler: HttpHandler
+): GetProduct {
+    return GetProduct(getToken = getToken, repository = repository, httpHandler = httpHandler)
 }

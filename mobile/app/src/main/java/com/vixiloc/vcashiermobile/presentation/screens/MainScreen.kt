@@ -23,13 +23,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenu
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenuName
+import com.vixiloc.vcashiermobile.domain.model.DrawerMenuRoute
 import com.vixiloc.vcashiermobile.presentation.navigations.MainNavHost
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
 import kotlinx.coroutines.launch
@@ -41,12 +45,35 @@ fun MainScreen(navHostController: NavHostController) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val items = listOf(
-        DrawerMenu(DrawerMenuName.HOME, Icons.Outlined.Home),
-        DrawerMenu(DrawerMenuName.CREATE_TRANSACTION, Icons.Outlined.ShoppingCart),
-        DrawerMenu(DrawerMenuName.CATEGORIES, Icons.Outlined.AllInbox),
-        DrawerMenu(DrawerMenuName.CUSTOMERS, Icons.Outlined.Group),
-        DrawerMenu(DrawerMenuName.PRODUCTS, Icons.Outlined.AllInbox)
+        DrawerMenu(
+            name = DrawerMenuName.HOME,
+            icon = Icons.Outlined.Home,
+            route = DrawerMenuRoute.HOME.route
+        ),
+        DrawerMenu(
+            name = DrawerMenuName.CREATE_TRANSACTION,
+            icon = Icons.Outlined.ShoppingCart,
+            route = DrawerMenuRoute.CREATE_TRANSACTION.route
+        ),
+        DrawerMenu(
+            name = DrawerMenuName.CATEGORIES,
+            icon = Icons.Outlined.AllInbox,
+            route = DrawerMenuRoute.CATEGORIES.route
+        ),
+        DrawerMenu(
+            name = DrawerMenuName.CUSTOMERS,
+            icon = Icons.Outlined.Group,
+            route = DrawerMenuRoute.CUSTOMERS.route
+        ),
+        DrawerMenu(
+            name = DrawerMenuName.PRODUCTS,
+            icon = Icons.Outlined.AllInbox,
+            route = DrawerMenuRoute.PRODUCTS.route
+        )
     )
+
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -67,8 +94,12 @@ fun MainScreen(navHostController: NavHostController) {
                         selected = false,
                         onClick = {
                             scope.launch { drawerState.close() }
-                            navHostController.navigate(item.name.route) {
-                                popUpTo(0)
+                            navHostController.navigate(item.route) {
+                                popUpTo(navHostController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)

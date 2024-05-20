@@ -2,11 +2,14 @@ package com.vixiloc.vcashiermobile.presentation.navigations
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
+import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
+import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.CreateCategoryScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.UpdateCategoryScreen
@@ -18,6 +21,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.products.CreateProductScr
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.UpdateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.SearchCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
 import kotlinx.serialization.Serializable
 
@@ -26,10 +30,16 @@ sealed interface Screens {
     data object Home : Screens
 
     @Serializable
-    data object CreateTransaction : Screens
+    data object Transactions : Screens {
+        @Serializable
+        data object CreateTransaction : Screens
 
-    @Serializable
-    data object TransactionReview : Screens
+        @Serializable
+        data object ReviewTransaction : Screens
+
+        @Serializable
+        data object SearchCustomer : Screens
+    }
 
     @Serializable
     data object Categories : Screens {
@@ -78,16 +88,35 @@ sealed interface Screens {
 
 @Composable
 fun MainNavHost(navController: NavHostController, modifier: Modifier) {
-
     NavHost(navController = navController, startDestination = Screens.Home) {
         composable<Screens.Home> {
             HomeScreen(navigator = navController, modifier = modifier)
         }
-        composable<Screens.CreateTransaction> {
-            CreateTransactionScreen(navigator = navController, modifier = modifier)
-        }
-        composable<Screens.TransactionReview> {
-            TransactionReviewScreen(navigator = navController)
+        navigation<Screens.Transactions>(startDestination = Screens.Transactions.CreateTransaction) {
+            composable<Screens.Transactions.CreateTransaction> {
+                CreateTransactionScreen(
+                    navigator = navController,
+                    modifier = modifier,
+                )
+            }
+            composable<Screens.Transactions.ReviewTransaction> { navBackStackEntry: NavBackStackEntry ->
+                val customer =
+                    navBackStackEntry.savedStateHandle.get<CustomerResponseItem>("customer")
+                val products =
+                    navBackStackEntry.savedStateHandle.get<List<Map<ProductResponseItems, Int>>>("products")
+                TransactionReviewScreen(
+                    navigator = navController,
+                    modifier = modifier,
+                    customer = customer,
+                    products = products ?: emptyList()
+                )
+            }
+            composable<Screens.Transactions.SearchCustomer> {
+                SearchCustomerScreen(
+                    navController = navController,
+                    modifier = modifier
+                )
+            }
         }
         navigation<Screens.Categories>(
             startDestination = Screens.Categories.AllCategories,

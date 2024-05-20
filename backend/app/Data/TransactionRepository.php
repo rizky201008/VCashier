@@ -4,6 +4,7 @@ namespace App\Data;
 
 use App\Models\Transaction;
 use App\Models\TransactionItem;
+use Illuminate\Support\Facades\Validator;
 
 class TransactionRepository
 {
@@ -12,6 +13,12 @@ class TransactionRepository
         $totalAmount = 0;
         $productRepository = new ProductRepository();
         foreach ($items as $item) {
+            $validator = Validator::make($item, [
+                'id' => 'required|exists:product_variations,id'
+            ]);
+            if ($validator->fails()) {
+                throw new \Exception($validator->messages()->first());
+            }
             $productVariation = $productRepository->getProductVariation($item['id']);
             if ($this->stockExists($item['quantity'], $productVariation->stock)) {
                 $totalAmount += $this->getPriceByQuantity($item['quantity'], $productVariation->price);

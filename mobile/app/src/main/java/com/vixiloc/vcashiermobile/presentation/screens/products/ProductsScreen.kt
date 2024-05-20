@@ -30,7 +30,6 @@ import org.koin.androidx.compose.koinViewModel
 fun ProductsScreen(
     modifier: Modifier = Modifier,
     viewModel: ProductsViewModel = koinViewModel(),
-    currencyFormatter: CurrencyFormatter = CurrencyFormatter(),
     navController: NavController
 ) {
     val state = viewModel.state
@@ -74,7 +73,7 @@ fun ProductsScreen(
             ) {
                 items(state.products) { product: ProductResponseItems ->
                     ProductItem(
-                        price = currencyFormatter.formatCurrency(product.price),
+                        price = CurrencyFormatter.formatCurrency(product.price),
                         context = context,
                         name = "${product.product.name} - ${product.unit}",
                         category = product.product.category.name,

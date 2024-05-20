@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Remove
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -38,12 +39,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
+import com.vixiloc.vcashiermobile.R
+import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
@@ -55,18 +60,9 @@ fun TransactionProductItem(
     name: String,
     image: String? = null,
     onAdd: () -> Unit = {},
-    context: Context
+    context: Context,
+    showAddButton: Boolean = true
 ) {
-    Log.d(TAG, "ProductItem: $image")
-    val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(context)
-            .data(
-                image
-                    ?: "https://cdn.pixabay.com/photo/2024/03/20/06/18/ai-generated-8644732_1280.jpg"
-            )
-            .size(Size.ORIGINAL) // Set the target size to load the image at.
-            .build()
-    )
 
     Card(
         modifier = Modifier
@@ -75,8 +71,14 @@ fun TransactionProductItem(
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
     ) {
-        Image(
-            painter = painter,
+        AsyncImage(
+            model = image,
+            error = painterResource(
+                id = R.drawable.gmbr_placeholder
+            ),
+            placeholder = painterResource(
+                id = R.drawable.gmbr_placeholder
+            ),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -102,7 +104,9 @@ fun TransactionProductItem(
                 style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.primary),
                 modifier = Modifier
             )
-            IconButton(onClick = onAdd, icon = Icons.Outlined.Add)
+            if (showAddButton) {
+                IconButton(onClick = onAdd, icon = Icons.Outlined.Add)
+            }
         }
         VerticalSpacer(height = 10.dp)
     }
@@ -110,23 +114,14 @@ fun TransactionProductItem(
 
 @Composable
 fun TransactionHorizontalProductItem(
-    price: String,
+    price: Int,
     name: String,
     image: String? = null,
     onAdd: () -> Unit = {},
     onRemove: () -> Unit = {},
-    onVariationClicked: () -> Unit = {}
+    amount: Int,
 ) {
-    val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(
-                image
-                    ?: "https://cdn.pixabay.com/photo/2024/03/20/06/18/ai-generated-8644732_1280.jpg"
-            )
-            .size(Size.ORIGINAL) // Set the target size to load the image at.
-            .build()
-    )
-
+    val priceTotal = price * amount
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -135,8 +130,14 @@ fun TransactionHorizontalProductItem(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
     ) {
         Row {
-            Image(
-                painter = painter,
+            AsyncImage(
+                model = image,
+                placeholder = painterResource(
+                    id = R.drawable.gmbr_placeholder
+                ),
+                error = painterResource(
+                    id = R.drawable.gmbr_placeholder
+                ),
                 contentDescription = null,
                 modifier = Modifier
                     .width(130.dp)
@@ -152,15 +153,10 @@ fun TransactionHorizontalProductItem(
                     style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.onBackground),
                 )
                 Text(
-                    text = price,
+                    text = CurrencyFormatter.formatCurrency(priceTotal),
                     style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.primary),
                 )
-                Badge(
-                    modifier = Modifier.clickable { onVariationClicked() },
-                    containerColor = MaterialTheme.colorScheme.primary
-                ) {
-                    Text(text = "Variasi : ABcSdas", style = MaterialTheme.typography.bodySmall)
-                }
+
                 VerticalSpacer(height = 11.dp)
                 Row(
                     horizontalArrangement = Arrangement.SpaceAround,
@@ -171,10 +167,10 @@ fun TransactionHorizontalProductItem(
                 ) {
                     IconButton(onClick = onAdd, icon = Icons.Outlined.Add)
                     Text(
-                        text = "1",
+                        text = amount.toString(),
                         style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.primary)
                     )
-                    IconButton(onClick = onRemove, icon = Icons.Outlined.Delete)
+                    IconButton(onClick = onRemove, icon = Icons.Outlined.Remove)
                 }
             }
         }

@@ -5,9 +5,12 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
 import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
+import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.dto.CategoriesResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCustomerRequestDto
@@ -137,4 +140,11 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): CreateUpdateCustomerResponseDto
+
+    @POST(TRANSACTIONS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun createTransaction(
+        @Header("Authorization") token: String,
+        @Body data: CreateTransactionRequestDto
+    ): CreateTransactionResponseDto
 }

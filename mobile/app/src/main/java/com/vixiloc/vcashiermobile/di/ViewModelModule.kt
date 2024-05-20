@@ -6,6 +6,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.CreateImage
 import com.vixiloc.vcashiermobile.domain.use_case.CreateProduct
+import com.vixiloc.vcashiermobile.domain.use_case.CreateTransaction
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
@@ -32,7 +33,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { provideLoginViewModel(get()) }
     viewModel { provideWelcomeViewModel(get()) }
-    viewModel { provideTransactionViewModel(get()) }
+    viewModel { provideTransactionViewModel(get(), get(), get()) }
     viewModel { provideCategoryViewModel(get(), get(), get(), get()) }
     viewModel { provideCustomerViewModel(get(), get(), get(), get()) }
     viewModel {
@@ -57,8 +58,16 @@ fun provideWelcomeViewModel(getToken: GetToken): WelcomeViewModel {
     return WelcomeViewModel(getToken = getToken)
 }
 
-fun provideTransactionViewModel(getProducts: GetProducts): TransactionViewModel {
-    return TransactionViewModel(getProductsUseCase = getProducts)
+fun provideTransactionViewModel(
+    getProducts: GetProducts,
+    createTransaction: CreateTransaction,
+    getCustomers: GetCustomers
+): TransactionViewModel {
+    return TransactionViewModel(
+        getProductsUseCase = getProducts,
+        createTransactionUseCase = createTransaction,
+        getCustomerUseCase = getCustomers
+    )
 }
 
 fun provideCategoryViewModel(

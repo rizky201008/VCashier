@@ -23,14 +23,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenu
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenuName
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenuRoute
@@ -71,9 +69,6 @@ fun MainScreen(navHostController: NavHostController) {
             route = DrawerMenuRoute.PRODUCTS.route
         )
     )
-
-    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination
 
     ModalNavigationDrawer(
         drawerState = drawerState,

@@ -43,7 +43,6 @@ enum class FormType {
 @Composable
 fun ProductForm(
     viewModel: ProductsViewModel,
-    currencyFormatter: CurrencyFormatter = CurrencyFormatter(),
     type: FormType
 ) {
     val state = viewModel.state
@@ -136,14 +135,14 @@ fun ProductForm(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(text = "Harga")
-                        Text(text = currencyFormatter.formatCurrency(variation.price))
+                        Text(text = CurrencyFormatter.formatCurrency(variation.price))
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(text = "Harga Grosir")
-                        Text(text = currencyFormatter.formatCurrency(variation.priceGrocery))
+                        Text(text = CurrencyFormatter.formatCurrency(variation.priceGrocery))
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),

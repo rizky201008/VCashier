@@ -5,13 +5,22 @@ import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 
 data class DrawerMenu(
     val name: DrawerMenuName,
-    val icon: ImageVector
+    val icon: ImageVector,
+    val route: Any
 )
 
-enum class DrawerMenuName(val menuName: String, val route: Any) {
-    HOME("Home", route = Screens.Home),
-    CREATE_TRANSACTION("Transaksi", route = Screens.CreateTransaction),
-    CATEGORIES("Kategori", route = Screens.Categories),
-    CUSTOMERS("Pelanggan", route = Screens.Customers),
-    PRODUCTS("Produk", route = Screens.Products),
+enum class DrawerMenuName(val menuName: String) {
+    HOME("Home"),
+    CREATE_TRANSACTION("Transaksi"),
+    CATEGORIES("Kategori"),
+    CUSTOMERS("Pelanggan"),
+    PRODUCTS("Produk"),
+}
+
+enum class DrawerMenuRoute(val route: Any) {
+    HOME(Screens.Home),
+    CREATE_TRANSACTION(Screens.Transactions),
+    CATEGORIES(Screens.Categories),
+    CUSTOMERS(Screens.Customers),
+    PRODUCTS(Screens.Products),
 }

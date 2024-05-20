@@ -19,12 +19,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
+import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
+import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerEvent
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.widgets.products.TransactionProductItem
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.widgets.products.TransactionProductItem
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -46,7 +50,6 @@ fun CreateTransactionScreen(
             .fillMaxSize()
             .background(color = Color(0xFFF6F5F5))
     ) {
-        Loading(modifier = Modifier, visible = state.isLoading)
 
         TextField(
             value = "Cari",
@@ -71,12 +74,13 @@ fun CreateTransactionScreen(
                 items(state.products) { product ->
                     TransactionProductItem(
                         price = product.price.toString(),
-                        name = "${product.product?.name} ${product.unit}",
-                        image = product.product?.imageUrl ?: "",
+                        name = "${product.product.name} - ${product.unit}",
+                        image = product.product.imageUrl ?: "",
                         context = context,
                         onAdd = {
                             onEvent(TransactionEvent.SelectProduct(product))
-                        }
+                        },
+                        showAddButton = !state.selectedProduct.any { it.containsKey(product) }
                     )
                 }
                 item {
@@ -92,15 +96,41 @@ fun CreateTransactionScreen(
                     }) {
                 FloatingTransactionButton(
                     onClick = {
-                        navigator.navigate(Screens.TransactionReview)
+                        navigator.navigate(Screens.Transactions.ReviewTransaction)
+                        navigator.currentBackStackEntry
+                            ?.savedStateHandle
+                            ?.set("products", state.selectedProduct)
                     },
                     modifier = Modifier,
                     containerColor = MaterialTheme.colorScheme.primary,
                     icon = Icons.Outlined.ShoppingCart,
-                    textStart = "2 Item",
-                    textEnd = "Rp100.000"
+                    textStart = "${state.selectedProduct.count()} Item",
+                    textEnd = CurrencyFormatter.formatCurrency(state.totalPrice)
                 )
             }
+
+            Loading(modifier = Modifier, visible = state.isLoading)
+
+            MessageAlert(
+                type = AlertType.SUCCESS,
+                message = state.success,
+                title = "Sukses",
+                modifier = Modifier,
+                visible = state.success.isNotEmpty(),
+                onDismiss = {
+                    onEvent(TransactionEvent.DismissAlertMessage)
+                }
+            )
+            MessageAlert(
+                type = AlertType.ERROR,
+                message = state.error,
+                title = "Error",
+                modifier = Modifier,
+                visible = state.error.isNotEmpty(),
+                onDismiss = {
+                    onEvent(TransactionEvent.DismissAlertMessage)
+                }
+            )
         }
     }
 }

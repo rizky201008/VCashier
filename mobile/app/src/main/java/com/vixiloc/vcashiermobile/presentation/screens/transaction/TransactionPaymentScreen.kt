@@ -40,110 +40,72 @@ import com.vixiloc.vcashiermobile.presentation.widgets.transaction.CashlessPayme
 fun TransactionPaymentScreen(navigator: NavHostController) {
     var tabState by remember { mutableStateOf(0) }
     val titles = listOf("Tunai", "Non Tunai")
-    Scaffold(
-        topBar = {
-            TopAppBar(title = {
-                Text(
-                    text = "Pembayaran",
-                    style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary)
-                )
-            }, navigationIcon = {
-                IconButton(onClick = {
-                    navigator.navigateUp()
-                }, icon = Icons.Outlined.ArrowBackIosNew)
-            })
-        }
-    ) { paddingValues ->
-        Column(
+    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+        val (content, bottomButton, topRow, tabRow) = createRefs()
+        Row(
             modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-                .background(color = Color(0xFFF6F5F5))
-                .verticalScroll(state = rememberScrollState())
+                .fillMaxWidth()
+                .constrainAs(topRow) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                .background(color = Color.White),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-                val (content, bottomButton, topRow, tabRow) = createRefs()
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .constrainAs(topRow) {
-                            top.linkTo(parent.top)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }
-                        .background(color = Color.White),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    val textModifier = Modifier.padding(10.dp)
-                    Text(
-                        text = "Total Pembayaran",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = textModifier
-                    )
-                    Text(
-                        text = "Rp200.000",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = textModifier
-                    )
-                }
-                PrimaryTabRow(
-                    modifier = Modifier.constrainAs(tabRow) {
-                        top.linkTo(topRow.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    },
-                    selectedTabIndex = tabState,
-                    containerColor = Color.White
-                ) {
-                    titles.forEachIndexed { index, title ->
-                        Tab(
-                            selected = tabState == index,
-                            onClick = { tabState = index },
-                            text = {
-                                Text(
-                                    text = title,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            },
+            val textModifier = Modifier.padding(10.dp)
+            Text(
+                text = "Total Pembayaran",
+                style = MaterialTheme.typography.titleSmall,
+                modifier = textModifier
+            )
+            Text(
+                text = "Rp200.000",
+                style = MaterialTheme.typography.titleSmall,
+                modifier = textModifier
+            )
+        }
+        PrimaryTabRow(
+            modifier = Modifier.constrainAs(tabRow) {
+                top.linkTo(topRow.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            selectedTabIndex = tabState,
+            containerColor = Color.White
+        ) {
+            titles.forEachIndexed { index, title ->
+                Tab(
+                    selected = tabState == index,
+                    onClick = { tabState = index },
+                    text = {
+                        Text(
+                            text = title,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
                         )
-                    }
-                }
-                val contentModifier = Modifier
-                    .constrainAs(content) {
-                        top.linkTo(tabRow.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    }
-                    .height(600.dp)
-                when (tabState) {
-                    0 -> {
-                        CashPayment(
-                            modifier = contentModifier
-
-                        )
-                    }
-
-                    1 -> {
-                        CashlessPayment(modifier = contentModifier)
-                    }
-                }
-
-                FilledButton(
-                    onClick = {
-                        navigator.popBackStack()
-//                        navigator.navigate(TransactionSuccessScreenDestination)
                     },
-                    text = "Konfirmasi",
-                    modifier = Modifier
-                        .constrainAs(bottomButton) {
-                            start.linkTo(content.start)
-                            end.linkTo(content.end)
-                            bottom.linkTo(parent.bottom)
-                        }
-                        .padding(10.dp)
                 )
+            }
+        }
+        val contentModifier = Modifier
+            .constrainAs(content) {
+                top.linkTo(tabRow.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom)
+            }
+            .height(300.dp)
+        when (tabState) {
+            0 -> {
+                CashPayment(
+                    modifier = contentModifier
+
+                )
+            }
+
+            1 -> {
+                CashlessPayment(modifier = contentModifier)
             }
         }
     }

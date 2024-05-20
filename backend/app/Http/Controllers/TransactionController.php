@@ -49,6 +49,12 @@ class TransactionController extends Controller
         $data['user_id'] = $request->user()->id;
         $data['total_amount'] = $this->transactionRepository->getTotalAmount($data['items']);
 
+        if ($data['status'] == null) {
+            $data['transaction_status'] = 'draft';
+        } else {
+            $data['transaction_status'] = $data['status'];
+        }
+
         DB::beginTransaction();
 
         try {

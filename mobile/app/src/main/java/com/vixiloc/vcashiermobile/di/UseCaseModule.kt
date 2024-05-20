@@ -6,10 +6,12 @@ import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 import com.vixiloc.vcashiermobile.domain.repository.CustomerRepository
 import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
+import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.CreateImage
 import com.vixiloc.vcashiermobile.domain.use_case.CreateProduct
+import com.vixiloc.vcashiermobile.domain.use_case.CreateTransaction
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
@@ -44,6 +46,7 @@ val useCaseModule = module {
     single { provideUpdateImageUseCase(get(), get(), get()) }
     single { provideUpdateProductUseCase(get(), get(), get()) }
     single { provideGetProductUseCase(get(), get(), get()) }
+    single { provideCreateTransactionUseCase(get(), get(), get()) }
 }
 
 fun provideHttpHandler(): HttpHandler {
@@ -173,4 +176,12 @@ fun provideGetProductUseCase(
     httpHandler: HttpHandler
 ): GetProduct {
     return GetProduct(getToken = getToken, repository = repository, httpHandler = httpHandler)
+}
+
+fun provideCreateTransactionUseCase(
+    repository: TransactionRepository,
+    getToken: GetToken,
+    httpHandler: HttpHandler
+): CreateTransaction {
+    return CreateTransaction(repository, getToken = getToken, httpHandler = httpHandler)
 }

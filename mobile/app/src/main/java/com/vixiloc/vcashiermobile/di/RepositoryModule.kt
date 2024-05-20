@@ -7,11 +7,13 @@ import com.vixiloc.vcashiermobile.data.repository.CategoryRepositoryImpl
 import com.vixiloc.vcashiermobile.data.repository.CustomerRepositoryImpl
 import com.vixiloc.vcashiermobile.data.repository.DataStoreRepositoryImpl
 import com.vixiloc.vcashiermobile.data.repository.ProductsRepositoryImpl
+import com.vixiloc.vcashiermobile.data.repository.TransactionRepositoryImpl
 import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 import com.vixiloc.vcashiermobile.domain.repository.CustomerRepository
 import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
+import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -20,6 +22,7 @@ val repositoryModule = module {
     single { provideProductsRepository(get()) }
     single { provideCategoryRepository(get()) }
     single { provideCustomerRepository(get()) }
+    single { provideTransactionRepository(get()) }
 }
 
 fun provideAuthRepository(apiService: ApiService): AuthRepository {
@@ -40,4 +43,8 @@ fun provideCategoryRepository(apiService: ApiService): CategoryRepository {
 
 fun provideCustomerRepository(apiService: ApiService): CustomerRepository {
     return CustomerRepositoryImpl(apiService)
+}
+
+fun provideTransactionRepository(apiService: ApiService): TransactionRepository {
+    return TransactionRepositoryImpl(apiService)
 }

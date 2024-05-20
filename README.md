@@ -20,9 +20,9 @@ here is my todo's on this projects :
  - [x] Update Product Variation
  - [ ] Search Products
  - [ ] Show Transactions
- - [ ] Create Transactions
+ - [x] Create Transactions
  - [ ] Create Transaction Payment
  - [ ] Show Transaction Payment
 
 
-![](https://geps.dev/progress/76)
+![](https://geps.dev/progress/80)

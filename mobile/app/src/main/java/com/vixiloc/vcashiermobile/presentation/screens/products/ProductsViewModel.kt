@@ -20,20 +20,22 @@ import com.vixiloc.vcashiermobile.domain.use_case.GetProduct
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateImage
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateProduct
+import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class ProductsViewModel(
-    private val getProducts: GetProducts,
-    private val createImage: CreateImage,
-    private val createProduct: CreateProduct,
-    private val updateImage: UpdateImage,
     private val fileConverter: FileConverter,
-    private val getCategories: GetCategories,
-    private val updateProduct: UpdateProduct,
-    private val getProduct: GetProduct
+    useCaseManager: UseCaseManager
 ) : ViewModel() {
     var state by mutableStateOf(ProductState())
+    private val getProducts: GetProducts = useCaseManager.getProductsUseCase()
+    private val createImage: CreateImage = useCaseManager.createImageUseCase()
+    private val createProduct: CreateProduct = useCaseManager.createProductUseCase()
+    private val updateImage: UpdateImage = useCaseManager.updateImageUseCase()
+    private val getCategories: GetCategories = useCaseManager.getCategoriesUseCase()
+    private val updateProduct: UpdateProduct = useCaseManager.updateProductUseCase()
+    private val getProduct: GetProduct = useCaseManager.getProductUseCase()
 
     fun onEvent(e: ProductEvent) {
         when (e) {

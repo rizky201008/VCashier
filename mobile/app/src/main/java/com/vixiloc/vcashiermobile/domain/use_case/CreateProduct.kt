@@ -14,7 +14,7 @@ import okio.IOException
 import retrofit2.HttpException
 
 class CreateProduct(
-    private val productRepository: ProductsRepository,
+    private val repository: ProductsRepository,
     private val getToken: GetToken,
     private val httpHandler: HttpHandler
 ) {
@@ -23,7 +23,7 @@ class CreateProduct(
             val token = getToken().first()
             try {
                 emit(Resource.Loading())
-                val response = productRepository.createProduct(token = token, data = data.toDto())
+                val response = repository.createProduct(token = token, data = data.toDto())
                 emit(Resource.Success(response.toDomain()))
             } catch (e: HttpException) {
                 val errorMessage = httpHandler.handleHttpException(e)

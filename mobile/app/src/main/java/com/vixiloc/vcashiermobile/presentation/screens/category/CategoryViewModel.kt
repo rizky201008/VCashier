@@ -13,6 +13,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
+import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -20,14 +21,15 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class CategoryViewModel(
-    private val getCategories: GetCategories,
-    private val createCategory: CreateCategory,
-    private val updateCategory: UpdateCategory,
-    private val deleteCategory: DeleteCategory,
+    useCaseManager: UseCaseManager,
     private var searchJob: Job? = null
 ) : ViewModel() {
 
     var state by mutableStateOf(CategoryState())
+    private val getCategories: GetCategories = useCaseManager.getCategoriesUseCase()
+    private val createCategory: CreateCategory = useCaseManager.createCategoryUseCase()
+    private val updateCategory: UpdateCategory = useCaseManager.updateCategoryUseCase()
+    private val deleteCategory: DeleteCategory = useCaseManager.deleteCategoryUseCase()
 
     fun onEvent(e: CategoryEvent) {
         when (e) {

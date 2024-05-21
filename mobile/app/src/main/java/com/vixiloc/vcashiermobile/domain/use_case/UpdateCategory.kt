@@ -14,7 +14,7 @@ import okio.IOException
 import retrofit2.HttpException
 
 class UpdateCategory(
-    private val categoryRepository: CategoryRepository,
+    private val repository: CategoryRepository,
     private val getToken: GetToken,
     private val httpHandler: HttpHandler
 ) {
@@ -23,7 +23,7 @@ class UpdateCategory(
             emit(Resource.Loading())
             try {
                 val token = getToken().first()
-                val response = categoryRepository.updateCategory(
+                val response = repository.updateCategory(
                     token,
                     data.toCreateUpdateCategoryRequestDto()
                 )

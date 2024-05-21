@@ -12,6 +12,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
+import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -19,14 +20,15 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class CustomerViewModel(
-    private val getCustomers: GetCustomers,
-    private val createCustomer: CreateCustomer,
-    private val updateCustomer: UpdateCustomer,
-    private val deleteCustomer: DeleteCustomer,
+    useCaseManager: UseCaseManager,
     private var searchJob: Job? = null
 ) : ViewModel() {
 
     var state by mutableStateOf(CustomerState())
+    private val getCustomers: GetCustomers = useCaseManager.getCustomersUseCase()
+    private val createCustomer: CreateCustomer = useCaseManager.createCustomerUseCase()
+    private val updateCustomer: UpdateCustomer = useCaseManager.updateCustomerUseCase()
+    private val deleteCustomer: DeleteCustomer = useCaseManager.deleteCustomerUseCase()
 
     fun onEvent(event: CustomerEvent) {
         when (event) {

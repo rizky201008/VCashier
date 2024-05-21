@@ -8,15 +8,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
+import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import kotlinx.coroutines.launch
 
-class WelcomeViewModel(private val getToken: GetToken) : ViewModel() {
+class WelcomeViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
     var state by mutableStateOf(WelcomeState())
+    private val getToken: GetToken = useCaseManager.getTokenUseCase()
 
     init {
         getTokenKey()
     }
+
     private fun getTokenKey() {
         viewModelScope.launch {
             getToken().collect { apiKey ->

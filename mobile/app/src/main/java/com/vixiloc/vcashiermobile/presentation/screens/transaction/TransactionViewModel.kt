@@ -12,16 +12,18 @@ import com.vixiloc.vcashiermobile.domain.model.Item
 import com.vixiloc.vcashiermobile.domain.use_case.CreateTransaction
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
+import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class TransactionViewModel(
-    private val getProductsUseCase: GetProducts,
-    private val createTransactionUseCase: CreateTransaction,
-    private val getCustomerUseCase: GetCustomers
+    useCaseManager: UseCaseManager
 ) : ViewModel() {
 
     var state by mutableStateOf(TransactionState())
+    private val getProductsUseCase: GetProducts = useCaseManager.getProductsUseCase()
+    private val createTransactionUseCase: CreateTransaction = useCaseManager.createTransactionUseCase()
+    private val getCustomersUseCase: GetCustomers = useCaseManager.getCustomersUseCase()
 
     fun onEvent(event: TransactionEvent) {
         when (event) {
@@ -109,7 +111,7 @@ class TransactionViewModel(
     }
 
     fun getCustomers() {
-        getCustomerUseCase().onEach { resource ->
+        getCustomersUseCase().onEach { resource ->
             when (resource) {
                 is Resource.Loading -> {
                     state = state.copy(isLoading = true)

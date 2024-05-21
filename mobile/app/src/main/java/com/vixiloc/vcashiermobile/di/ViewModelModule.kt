@@ -19,6 +19,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateImage
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateProduct
+import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeViewModel
@@ -33,89 +34,50 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { provideLoginViewModel(get()) }
     viewModel { provideWelcomeViewModel(get()) }
-    viewModel { provideTransactionViewModel(get(), get(), get()) }
-    viewModel { provideCategoryViewModel(get(), get(), get(), get()) }
-    viewModel { provideCustomerViewModel(get(), get(), get(), get()) }
-    viewModel {
-        provideProductViewModel(
-            get(),
-            get(),
-            get(),
-            get(),
-            androidContext(),
-            get(),
-            get(),
-            get()
-        )
-    }
+    viewModel { provideTransactionViewModel(get()) }
+    viewModel { provideCategoryViewModel(get()) }
+    viewModel { provideCustomerViewModel(get()) }
+    viewModel { provideProductViewModel(androidContext(), get()) }
 }
 
-fun provideLoginViewModel(login: Login): LoginViewModel {
-    return LoginViewModel(login = login)
+fun provideLoginViewModel(useCaseManager: UseCaseManager): LoginViewModel {
+    return LoginViewModel(useCaseManager = useCaseManager)
 }
 
-fun provideWelcomeViewModel(getToken: GetToken): WelcomeViewModel {
-    return WelcomeViewModel(getToken = getToken)
+fun provideWelcomeViewModel(useCaseManager: UseCaseManager): WelcomeViewModel {
+    return WelcomeViewModel(useCaseManager = useCaseManager)
 }
 
 fun provideTransactionViewModel(
-    getProducts: GetProducts,
-    createTransaction: CreateTransaction,
-    getCustomers: GetCustomers
+    useCaseManager: UseCaseManager
 ): TransactionViewModel {
     return TransactionViewModel(
-        getProductsUseCase = getProducts,
-        createTransactionUseCase = createTransaction,
-        getCustomerUseCase = getCustomers
+        useCaseManager = useCaseManager
     )
 }
 
 fun provideCategoryViewModel(
-    getCategories: GetCategories,
-    createCategory: CreateCategory,
-    updateCategory: UpdateCategory,
-    deleteCategory: DeleteCategory
+    useCaseManager: UseCaseManager
 ): CategoryViewModel {
     return CategoryViewModel(
-        getCategories = getCategories,
-        createCategory = createCategory,
-        updateCategory = updateCategory,
-        deleteCategory = deleteCategory
+        useCaseManager = useCaseManager
     )
 }
 
 fun provideCustomerViewModel(
-    getCustomers: GetCustomers,
-    createCustomer: CreateCustomer,
-    updateCustomer: UpdateCustomer,
-    deleteCustomer: DeleteCustomer
+    useCaseManager: UseCaseManager
 ): CustomerViewModel {
     return CustomerViewModel(
-        getCustomers = getCustomers,
-        createCustomer = createCustomer,
-        updateCustomer = updateCustomer,
-        deleteCustomer = deleteCustomer
+        useCaseManager = useCaseManager
     )
 }
 
 fun provideProductViewModel(
-    getProducts: GetProducts,
-    createProduct: CreateProduct,
-    createImage: CreateImage,
-    updateImage: UpdateImage,
     context: Context,
-    getCategories: GetCategories,
-    updateProduct: UpdateProduct,
-    getProduct: GetProduct
+    useCaseManager: UseCaseManager,
 ): ProductsViewModel {
     return ProductsViewModel(
-        getProducts = getProducts,
-        createImage = createImage,
-        createProduct = createProduct,
-        updateImage = updateImage,
         fileConverter = FileConverter(context = context),
-        getCategories = getCategories,
-        updateProduct = updateProduct,
-        getProduct = getProduct
+        useCaseManager = useCaseManager
     )
 }

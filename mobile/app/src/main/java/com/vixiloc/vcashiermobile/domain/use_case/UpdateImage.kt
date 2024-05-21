@@ -14,7 +14,7 @@ import okio.IOException
 import retrofit2.HttpException
 
 class UpdateImage(
-    private val productRepository: ProductsRepository,
+    private val repository: ProductsRepository,
     private val getToken: GetToken,
     private val httpHandler: HttpHandler
 ) {
@@ -28,7 +28,7 @@ class UpdateImage(
             try {
                 emit(Resource.Loading())
                 image?.let {
-                    val response = productRepository.updateImage(
+                    val response = repository.updateImage(
                         token = token,
                         productId = productIdRequestBody,
                         newImage = image

@@ -1,7 +1,5 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
-import android.net.Uri
-import android.util.Log
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.RequestBodyBuilder
 import com.vixiloc.vcashiermobile.commons.Resource
@@ -12,13 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okio.IOException
 import retrofit2.HttpException
-import java.io.File
 
 class CreateImage(
-    private val productRepository: ProductsRepository,
+    private val repository: ProductsRepository,
     private val getToken: GetToken,
     private val httpHandler: HttpHandler
 ) {
@@ -32,7 +28,7 @@ class CreateImage(
             try {
                 emit(Resource.Loading())
                 image?.let {
-                    val response = productRepository.addImage(
+                    val response = repository.addImage(
                         token,
                         productId = productIdRequestBody,
                         image = image

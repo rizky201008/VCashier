@@ -14,4 +14,6 @@ sealed class TransactionEvent {
     data object SubmitTransaction : TransactionEvent()
     data class InserSelectedProducts(val products: List<Map<ProductResponseItems, Int>>) :
         TransactionEvent()
+    data class SearchQueryChanged(val query: String) : TransactionEvent()
+    data class SearchStatusChanged(val status: Boolean) : TransactionEvent()
 }

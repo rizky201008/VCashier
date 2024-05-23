@@ -2,6 +2,7 @@ package com.vixiloc.vcashiermobile.domain.repository
 
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.TransactionsResponseDto
 
 interface TransactionRepository {
 
@@ -9,4 +10,6 @@ interface TransactionRepository {
         token: String,
         data: CreateTransactionRequestDto
     ): CreateTransactionResponseDto
+
+    suspend fun getTransactions(token: String): TransactionsResponseDto
 }

@@ -22,6 +22,7 @@ import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.UpdateProductResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -147,4 +148,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body data: CreateTransactionRequestDto
     ): CreateTransactionResponseDto
+
+    @GET(TRANSACTIONS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun getTransactions(
+        @Header("Authorization") token: String,
+    ): TransactionsResponseDto
 }

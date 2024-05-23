@@ -69,7 +69,7 @@ data class ProductResponseItemsDto(
     val stock: Int
 )
 
-fun ProductDto.toProduct(): Product {
+fun ProductDto.toDomain(): Product {
     return Product(
         imageUrl = imageUrl,
         name = name,
@@ -90,7 +90,7 @@ fun ProductResponseItemsDto.toProductResponseItems(): ProductResponseItems {
     return ProductResponseItems(
         priceGrocery = priceGrocery,
         unit = unit,
-        product = product.toProduct(),
+        product = product.toDomain(),
         price = price,
         id = id,
         stock = stock

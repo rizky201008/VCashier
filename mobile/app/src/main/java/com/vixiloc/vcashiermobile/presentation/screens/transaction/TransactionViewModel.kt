@@ -9,9 +9,11 @@ import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.domain.model.CreateTransactionRequest
 import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
 import com.vixiloc.vcashiermobile.domain.model.Item
+import com.vixiloc.vcashiermobile.domain.model.TransactionsData
 import com.vixiloc.vcashiermobile.domain.use_case.CreateTransaction
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
+import com.vixiloc.vcashiermobile.domain.use_case.GetTransactions
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -22,8 +24,10 @@ class TransactionViewModel(
 
     var state by mutableStateOf(TransactionState())
     private val getProductsUseCase: GetProducts = useCaseManager.getProductsUseCase()
-    private val createTransactionUseCase: CreateTransaction = useCaseManager.createTransactionUseCase()
+    private val createTransactionUseCase: CreateTransaction =
+        useCaseManager.createTransactionUseCase()
     private val getCustomersUseCase: GetCustomers = useCaseManager.getCustomersUseCase()
+    private val getTransactionUseCase: GetTransactions = useCaseManager.getTransactionUseCase()
 
     fun onEvent(event: TransactionEvent) {
         when (event) {
@@ -103,6 +107,18 @@ class TransactionViewModel(
             is TransactionEvent.InserSelectedProducts -> {
                 state = state.copy(selectedProduct = event.products)
             }
+
+            is TransactionEvent.SearchQueryChanged -> {
+                state = state.copy(
+                    searchQuery = event.query,
+                    searchResult = state.transactions.filter { transactionsData: TransactionsData ->
+                        transactionsData.customer?.name?.contains(event.query) ?: false
+                    })
+            }
+
+            is TransactionEvent.SearchStatusChanged -> {
+                state = state.copy(searchStatus = event.status)
+            }
         }
     }
 
@@ -175,6 +191,31 @@ class TransactionViewModel(
                 is Resource.Success -> {
                     state = state.copy(
                         success = resource.data?.message ?: "Transaction created successfully",
+                        isLoading = false
+                    )
+                }
+
+                is Resource.Error -> {
+                    state = state.copy(
+                        isLoading = false,
+                        error = resource.message ?: "An unexpected error occurred"
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getTransactions() {
+        getTransactionUseCase().onEach { resource ->
+            when (resource) {
+                is Resource.Loading -> {
+                    state = state.copy(isLoading = true)
+                }
+
+                is Resource.Success -> {
+                    state = state.copy(
+                        transactions = resource.data?.data ?: emptyList(),
+                        searchResult = resource.data?.data ?: emptyList(),
                         isLoading = false
                     )
                 }

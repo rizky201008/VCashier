@@ -2,6 +2,7 @@ package com.vixiloc.vcashiermobile.presentation.widgets.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -69,9 +70,10 @@ fun CustomerItem(
 @Composable
 fun TransactionItem(
     modifier: Modifier = Modifier,
-    headlineText: String,
-    supportingText: String,
-    overlineText: String,
+    transactionStatus: String,
+    transactionTotal: String,
+    transactionDate: String,
+    transactionCustomer: String,
     onClick: () -> Unit = {}
 ) {
     ListItem(
@@ -86,20 +88,26 @@ fun TransactionItem(
             .clickable { onClick() },
         headlineContent = {
             Text(
-                text = "Pelanggan : $headlineText",
+                text = transactionTotal,
                 style = MaterialTheme.typography.headlineSmall
             )
         },
         supportingContent = {
-            Text(
-                text = "Status : $supportingText",
-                style = MaterialTheme.typography.headlineSmall
-            )
+            Column {
+                Text(
+                    text = "Status : $transactionStatus",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = "Tanggal : $transactionDate",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         },
         overlineContent = {
             Text(
-                text = overlineText,
-                style = MaterialTheme.typography.headlineMedium
+                text = transactionCustomer,
+                style = MaterialTheme.typography.bodyMedium
             )
         },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),

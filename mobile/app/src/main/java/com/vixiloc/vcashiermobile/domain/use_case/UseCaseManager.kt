@@ -98,4 +98,9 @@ class UseCaseManager(
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+    fun getTransactionUseCase() = GetTransactions(
+        repository = transactionRepository,
+        token = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
 }

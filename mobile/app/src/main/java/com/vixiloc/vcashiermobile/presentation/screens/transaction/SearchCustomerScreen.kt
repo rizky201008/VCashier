@@ -1,11 +1,15 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,33 +43,56 @@ fun SearchCustomerScreen(
         it.name.contains(query, ignoreCase = true)
     }
 
-    SearchBar(
-        modifier = modifier
-            .padding(horizontal = if (searchStatus) 0.dp else 10.dp)
-            .fillMaxWidth(),
-        query = query,
-        onQueryChange = { query = it },
-        onSearch = {
+    LaunchedEffect(Unit) {
+        viewModel.getCustomers()
+    }
 
-        },
-        placeholder = { Text("Search Customer") },
-        active = searchStatus,
-        onActiveChange = {
-            searchStatus = it
-        }) {
-        customerFiltered.forEach { data ->
-            CustomerItem(
-                modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp),
-                headlineText = data.name,
-                supportingText = data.phoneNumber ?: "",
-                onClick = {
-                    navController.popBackStack()
-                    navController.currentBackStackEntry
-                        ?.savedStateHandle
-                        ?.set("customer", data)
-                },
-                showUpdateButton = false
-            )
+    Column(modifier = modifier) {
+        SearchBar(
+            modifier = Modifier
+                .padding(horizontal = if (searchStatus) 0.dp else 10.dp)
+                .fillMaxWidth(),
+            query = query,
+            onQueryChange = { query = it },
+            onSearch = {
+
+            },
+            placeholder = { Text("Search Customer") },
+            active = searchStatus,
+            onActiveChange = {
+                searchStatus = it
+            }) {
+            customerFiltered.forEach { data ->
+                CustomerItem(
+                    modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp),
+                    headlineText = data.name,
+                    supportingText = data.phoneNumber ?: "",
+                    onClick = {
+                        navController.popBackStack()
+                        navController.currentBackStackEntry
+                            ?.savedStateHandle
+                            ?.set("customer", data)
+                    },
+                    showUpdateButton = false
+                )
+            }
+        }
+
+        LazyColumn {
+            items(customerLists) { data ->
+                CustomerItem(
+                    modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp),
+                    headlineText = data.name,
+                    supportingText = data.phoneNumber ?: "",
+                    onClick = {
+                        navController.popBackStack()
+                        navController.currentBackStackEntry
+                            ?.savedStateHandle
+                            ?.set("customer", data)
+                    },
+                    showUpdateButton = false
+                )
+            }
         }
     }
 }

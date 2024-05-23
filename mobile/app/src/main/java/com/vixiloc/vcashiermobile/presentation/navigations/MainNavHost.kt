@@ -23,6 +23,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.products.UpdateProductScr
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.SearchCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionsScreen
 import kotlinx.serialization.Serializable
 
 sealed interface Screens {
@@ -39,6 +40,9 @@ sealed interface Screens {
 
         @Serializable
         data object SearchCustomer : Screens
+
+        @Serializable
+        data object AllTransactions : Screens
     }
 
     @Serializable
@@ -92,7 +96,7 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
         composable<Screens.Home> {
             HomeScreen(navigator = navController, modifier = modifier)
         }
-        navigation<Screens.Transactions>(startDestination = Screens.Transactions.CreateTransaction) {
+        navigation<Screens.Transactions>(startDestination = Screens.Transactions.AllTransactions) {
             composable<Screens.Transactions.CreateTransaction> {
                 CreateTransactionScreen(
                     navigator = navController,
@@ -116,6 +120,9 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
                     navController = navController,
                     modifier = modifier
                 )
+            }
+            composable<Screens.Transactions.AllTransactions> {
+                TransactionsScreen(navHostController = navController, modifier = modifier)
             }
         }
         navigation<Screens.Categories>(

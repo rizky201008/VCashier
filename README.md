@@ -19,10 +19,10 @@ here is my todo's on this projects :
  - [x] Update Product
  - [x] Update Product Variation
  - [ ] Search Products
- - [ ] Show Transactions
+ - [x] Show Transactions
  - [x] Create Transactions
  - [ ] Create Transaction Payment
  - [ ] Show Transaction Payment
 
 
-![](https://geps.dev/progress/80)
+![](https://geps.dev/progress/85)

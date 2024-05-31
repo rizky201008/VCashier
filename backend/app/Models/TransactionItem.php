@@ -32,4 +32,9 @@ class TransactionItem extends Model
             set: fn(string $value) => (int)preg_replace("/[^0-9]/", "", $value)
         );
     }
+
+    public function productVariation(): HasOne
+    {
+        return $this->hasOne(ProductVariation::class, 'id', 'product_variation_id');
+    }
 }

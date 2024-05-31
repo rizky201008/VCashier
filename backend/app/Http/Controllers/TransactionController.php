@@ -19,9 +19,7 @@ class TransactionController extends Controller
 
     public function getTransactions(): JsonResponse
     {
-        return response()->json(
-            $this->transactionRepository->getTransactions()
-        );
+        return $this->transactionRepository->getTransactions();
     }
 
     public function getTransaction(int $id): JsonResponse
@@ -48,12 +46,7 @@ class TransactionController extends Controller
         $data = $request->all();
         $data['user_id'] = $request->user()->id;
         $data['total_amount'] = $this->transactionRepository->getTotalAmount($data['items']);
-
-        if ($data['status'] == null) {
-            $data['transaction_status'] = 'draft';
-        } else {
-            $data['transaction_status'] = $data['status'];
-        }
+        $data['transaction_status'] = 'draft';
 
         DB::beginTransaction();
 

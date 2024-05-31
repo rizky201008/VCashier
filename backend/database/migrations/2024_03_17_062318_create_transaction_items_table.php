@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('transaction_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Transaction::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('transaction_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(\App\Models\ProductVariation::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('quantity');
             $table->bigInteger('price');

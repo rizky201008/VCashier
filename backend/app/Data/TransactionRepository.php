@@ -4,6 +4,7 @@ namespace App\Data;
 
 use App\Models\Transaction;
 use App\Models\TransactionItem;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 
 class TransactionRepository
@@ -40,7 +41,7 @@ class TransactionRepository
         return Transaction::create($data);
     }
 
-    public function saveTransactionItems(array $data, int $transactionId)
+    public function saveTransactionItems(array $data, string $transactionId)
     {
         $productRepository = new ProductRepository();
         $transactionItems = [];
@@ -59,14 +60,16 @@ class TransactionRepository
         return TransactionItem::insert($transactionItems);
     }
 
-    public function getTransactionById(int $id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
+    public function getTransactionById(string $id)
     {
-        return Transaction::with('items', 'payment')->find($id);
+        return Transaction::with('items')->find($id);
     }
 
-    public function getTransactions(): \Illuminate\Database\Eloquent\Collection
+    public function getTransactions(): JsonResponse
     {
-        return Transaction::with('items', 'payment')->orderBy('created_at', 'desc')->get();
+        return response()->json(
+            ['data' => Transaction::with('items', 'items.productVariation', 'items.productVariation.product', 'customer')->orderBy('created_at', 'desc')->get()]
+        );
     }
 
     public function stockExists(int $quantity, int $stock): bool

@@ -1,0 +1,19 @@
+meta {
+  name: Get Transaction
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{BASE_URL}}transactions/8f5fa17d-a6f5-4c7d-967c-0f2c1421658c
+  body: none
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}

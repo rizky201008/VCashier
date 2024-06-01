@@ -65,11 +65,9 @@ class TransactionRepository
         return Transaction::with('items')->find($id);
     }
 
-    public function getTransactions(): JsonResponse
+    public function getTransactions()
     {
-        return response()->json(
-            ['data' => Transaction::with('items', 'items.productVariation', 'items.productVariation.product', 'customer')->orderBy('created_at', 'desc')->get()]
-        );
+        return ['data' => Transaction::with('items', 'items.productVariation', 'items.productVariation.product', 'customer')->orderBy('created_at', 'desc')->get()];
     }
 
     public function stockExists(int $quantity, int $stock): bool

@@ -13,8 +13,9 @@ return new class extends Migration {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->enum('type', ['cash', 'non-cash']);
+            $table->boolean('cash')->default(false);
+            $table->string('code');
+            $table->bigInteger('fee')->default(0);
             $table->timestamps();
         });
     }

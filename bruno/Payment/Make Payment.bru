@@ -1,0 +1,23 @@
+meta {
+  name: Make Payment
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}payment/make-payment
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "transaction_id": "8f5fa17d-a6f5-4c7d-967c-0f2c1421658c",
+    "payment_method_id": 1,
+    "payment_amount": 450000
+  }
+}

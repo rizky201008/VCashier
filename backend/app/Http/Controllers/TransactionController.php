@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Data\TransactionRepository;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,21 +20,19 @@ class TransactionController extends Controller
 
     public function getTransactions(): JsonResponse
     {
-        return $this->transactionRepository->getTransactions();
+        return response()->json($this->transactionRepository->getTransactions());
     }
 
-    public function getTransaction(int $id): JsonResponse
+    public function getTransaction(string $id): JsonResponse
     {
         $validated = Validator::make(['id' => $id], [
             'id' => 'required|exists:transactions,id'
         ]);
         if ($validated->fails()) {
-            return response()->json($validated->messages()->first(), 400);
+            throw new Exception($validated->messages()->first());
         }
 
-        return response()->json(
-            $this->transactionRepository->getTransactionById($id)
-        );
+        return response()->json($this->transactionRepository->getTransactionById($id));
     }
 
     public function createTransaction(Request $request): JsonResponse
@@ -59,7 +58,7 @@ class TransactionController extends Controller
             return response()->json([
                 'message' => 'Transaction created'
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return response()->json([
                 'message' => $e->getMessage()

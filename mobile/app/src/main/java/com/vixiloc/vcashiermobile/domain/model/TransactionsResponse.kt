@@ -11,7 +11,7 @@ data class TransactionsResponse(
 data class TransactionsData(
     val createdAt: String?,
     val customerId: Int,
-    val id: Int,
+    val id: String,
     val items: List<TransactionsItem>?,
     val payment: Any?,
     val paymentStatus: String,
@@ -44,7 +44,7 @@ data class TransactionsItem(
     val productVariationId: Int,
     val quantity: Int,
     val subtotal: Int,
-    val transactionId: Int
+    val transactionId: String
 )
 
 data class ProductVariation(

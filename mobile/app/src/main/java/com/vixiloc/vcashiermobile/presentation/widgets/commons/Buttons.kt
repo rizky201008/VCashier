@@ -66,9 +66,7 @@ fun FilledButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .padding(10.dp)
-            .fillMaxWidth(),
+        modifier = modifier,
         shape = MaterialTheme.shapes.large,
         colors = colors
     ) {
@@ -89,8 +87,7 @@ fun OutlinedButton(
 ) {
     OutlinedButtonCompose(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier,
         shape = MaterialTheme.shapes.large,
     ) {
         Text(
@@ -113,7 +110,6 @@ fun FloatingTransactionButton(
     contentColor: Color = MaterialTheme.colorScheme.onPrimary
 ) {
     Box(modifier = modifier
-        .padding(10.dp)
         .background(color = containerColor, shape = MaterialTheme.shapes.large)
         .clickable { onClick() }) {
         Row(

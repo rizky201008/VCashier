@@ -18,7 +18,7 @@ fun CashPayment(modifier: Modifier) {
         TextField(
             value = "",
             onValueChanged = {},
-            modifier = Modifier,
+            modifier = modifier,
             title = "Pembayaran Pembeli",
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number

@@ -11,7 +11,8 @@ val useCaseModule = module {
             customerRepository = get(),
             dataStoreRepository = get(),
             productsRepository = get(),
-            authRepository = get()
+            authRepository = get(),
+            paymentsRepository = get()
         )
     }
 }

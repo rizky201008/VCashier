@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 
 @Composable
 fun CustomerItem(
@@ -89,27 +90,63 @@ fun TransactionItem(
         headlineContent = {
             Text(
                 text = transactionTotal,
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.primary)
             )
         },
         supportingContent = {
             Column {
                 Text(
                     text = "Status : $transactionStatus",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
                     text = "Tanggal : $transactionDate",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         },
         overlineContent = {
             Text(
-                text = transactionCustomer,
-                style = MaterialTheme.typography.bodyMedium
+                text = "Pelanggan : $transactionCustomer",
+                style = MaterialTheme.typography.headlineMedium
             )
         },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
     )
 }
+
+@Composable
+fun PaymentMethodItem(
+    modifier: Modifier = Modifier,
+    paymentMethodName: String,
+    fee: Int,
+    onClick: () -> Unit = {}
+) {
+    ListItem(
+        modifier = modifier
+            .fillMaxWidth()
+            .shadow(elevation = 3.dp, shape = MaterialTheme.shapes.large)
+            .background(
+                color = MaterialTheme.colorScheme.background,
+                shape = MaterialTheme.shapes.large
+            )
+            .clip(shape = MaterialTheme.shapes.large)
+            .clickable { onClick() },
+        headlineContent = {
+            Text(
+                text = paymentMethodName,
+                style = MaterialTheme.typography.headlineSmall
+            )
+        },
+        supportingContent = {
+            Column {
+                Text(
+                    text = "Biaya : ${CurrencyFormatter.formatCurrency(fee)}",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        },
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+    )
+}
+

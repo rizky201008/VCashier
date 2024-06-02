@@ -5,6 +5,7 @@ import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 import com.vixiloc.vcashiermobile.domain.repository.CustomerRepository
 import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
+import com.vixiloc.vcashiermobile.domain.repository.PaymentsRepository
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository
 
@@ -15,6 +16,7 @@ class UseCaseManager(
     private val dataStoreRepository: DataStoreRepository,
     private val productsRepository: ProductsRepository,
     private val authRepository: AuthRepository,
+    private val paymentsRepository: PaymentsRepository
 ) {
     fun httpHandler() = HttpHandler()
     fun saveToken() = SaveToken(repository = dataStoreRepository)
@@ -98,9 +100,22 @@ class UseCaseManager(
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
-    fun getTransactionUseCase() = GetTransactions(
+    fun getTransactionsUseCase() = GetTransactions(
         repository = transactionRepository,
         token = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
+    fun getTransactionUseCase() = GetTransaction(
+        repository = transactionRepository,
+        token = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
+
+    fun getPaymentMethodsUseCase() = GetPaymentMethods(
+        repository = paymentsRepository,
+        token = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
+
 }

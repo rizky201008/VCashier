@@ -1,7 +1,7 @@
 package com.vixiloc.vcashiermobile.domain.model
 
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.ItemDto
+import com.vixiloc.vcashiermobile.data.remote.dto.ItemRequestDto
 
 data class CreateTransactionRequest(
     val customerId: Int,
@@ -14,7 +14,7 @@ data class Item(
     val quantity: Int
 )
 
-fun Item.toDto() = ItemDto(
+fun Item.toDto() = ItemRequestDto(
     id = id,
     quantity = quantity
 )

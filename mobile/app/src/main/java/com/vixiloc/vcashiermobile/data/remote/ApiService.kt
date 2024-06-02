@@ -4,6 +4,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.ADD_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
 import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
+import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_METHODS
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
 import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
@@ -20,8 +21,10 @@ import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.LoginResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.PaymentMethodsDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.ProductsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.UpdateProductResponseDto
 import okhttp3.MultipartBody
@@ -154,4 +157,17 @@ interface ApiService {
     suspend fun getTransactions(
         @Header("Authorization") token: String,
     ): TransactionsResponseDto
+
+    @GET("$TRANSACTIONS/{id}")
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun getTransaction(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): TransactionResponseDto
+
+    @GET(PAYMENT_METHODS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun getPaymentMethods(
+        @Header("Authorization") token: String,
+    ): PaymentMethodsDto
 }

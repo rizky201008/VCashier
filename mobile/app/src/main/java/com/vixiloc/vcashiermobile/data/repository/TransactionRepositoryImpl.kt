@@ -3,6 +3,7 @@ package com.vixiloc.vcashiermobile.data.repository
 import com.vixiloc.vcashiermobile.data.remote.ApiService
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository
 
@@ -16,5 +17,9 @@ class TransactionRepositoryImpl(private val api: ApiService) : TransactionReposi
 
     override suspend fun getTransactions(token: String): TransactionsResponseDto {
         return api.getTransactions("Bearer $token")
+    }
+
+    override suspend fun getTransaction(token: String, id: String): TransactionResponseDto {
+        return api.getTransaction(token = "Bearer $token", id = id)
     }
 }

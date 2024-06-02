@@ -21,7 +21,7 @@ data class TransactionsDataDto(
     @SerializedName("customer_id")
     val customerId: Int,
     @SerializedName("id")
-    val id: Int,
+    val id: String,
     @SerializedName("items")
     val items: List<TransactionsItemDto>? = emptyList(),
     @SerializedName("payment")
@@ -69,7 +69,7 @@ data class TransactionsItemDto(
     @SerializedName("subtotal")
     val subtotal: Int,
     @SerializedName("transaction_id")
-    val transactionId: Int,
+    val transactionId: String,
     @SerializedName("updated_at")
     val updatedAt: String?
 )

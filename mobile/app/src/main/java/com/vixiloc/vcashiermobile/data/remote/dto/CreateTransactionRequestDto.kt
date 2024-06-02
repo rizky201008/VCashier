@@ -7,12 +7,12 @@ data class CreateTransactionRequestDto(
     @SerializedName("customer_id")
     val customerId: Int,
     @SerializedName("items")
-    val items: List<ItemDto>,
+    val items: List<ItemRequestDto>,
     @SerializedName("status")
     val status: String
 )
 
-data class ItemDto(
+data class ItemRequestDto(
     @SerializedName("id")
     val id: Int,
     @SerializedName("quantity")

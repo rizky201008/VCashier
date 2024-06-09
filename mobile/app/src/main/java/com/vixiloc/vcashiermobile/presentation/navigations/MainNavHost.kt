@@ -22,6 +22,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.UpdateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.SearchCustomerScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionsScreen
 import kotlinx.serialization.Serializable
@@ -43,6 +44,9 @@ sealed interface Screens {
 
         @Serializable
         data object AllTransactions : Screens
+
+        @Serializable
+        data class MakePayment(val transactionId: String) : Screens
     }
 
     @Serializable
@@ -108,11 +112,13 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
                     navBackStackEntry.savedStateHandle.get<CustomerResponseItem>("customer")
                 val products =
                     navBackStackEntry.savedStateHandle.get<List<Map<ProductResponseItems, Int>>>("products")
+                val total = navBackStackEntry.savedStateHandle.get<Int>("total")
                 TransactionReviewScreen(
                     navigator = navController,
                     modifier = modifier,
                     customer = customer,
-                    products = products ?: emptyList()
+                    products = products ?: emptyList(),
+                    total = total ?: 0
                 )
             }
             composable<Screens.Transactions.SearchCustomer> {
@@ -123,6 +129,14 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
             }
             composable<Screens.Transactions.AllTransactions> {
                 TransactionsScreen(navHostController = navController, modifier = modifier)
+            }
+            composable<Screens.Transactions.MakePayment> {
+                val args = it.toRoute<Screens.Transactions.MakePayment>()
+                TransactionPaymentScreen(
+                    navigator = navController,
+                    navArgs = args,
+                    modifier = modifier
+                )
             }
         }
         navigation<Screens.Categories>(

@@ -21,7 +21,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
-import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerEvent
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
@@ -40,6 +39,7 @@ fun CreateTransactionScreen(
     val state = viewModel.state
     val onEvent = viewModel::onEvent
     LaunchedEffect(key1 = Unit) {
+        onEvent(TransactionEvent.ClearCart)
         onEvent(TransactionEvent.Refresh)
     }
     val context = LocalContext.current
@@ -100,6 +100,10 @@ fun CreateTransactionScreen(
                         navigator.currentBackStackEntry
                             ?.savedStateHandle
                             ?.set("products", state.selectedProduct)
+                        navigator.currentBackStackEntry?.savedStateHandle?.set(
+                            "total",
+                            state.totalPrice
+                        )
                     },
                     modifier = Modifier,
                     containerColor = MaterialTheme.colorScheme.primary,

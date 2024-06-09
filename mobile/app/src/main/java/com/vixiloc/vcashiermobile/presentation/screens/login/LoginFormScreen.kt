@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -49,8 +50,9 @@ fun LoginFormScreen(
     }) { paddingValues ->
         Column(
             modifier = Modifier
-                .fillMaxSize()
                 .padding(paddingValues)
+                .fillMaxSize()
+                .padding(horizontal = 10.dp)
         ) {
             Loading(modifier = Modifier, visible = state.isLoading)
             if (state.isLoading) keyboardController?.hide()
@@ -90,7 +92,7 @@ fun LoginFormScreen(
                 onClick = {
                     events(LoginEvent.Login)
                 },
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -22,6 +23,7 @@ import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
 import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
+import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
@@ -36,14 +38,15 @@ fun TransactionReviewScreen(
     modifier: Modifier = Modifier,
     viewModel: TransactionViewModel = koinViewModel(),
     customer: CustomerResponseItem?,
-    products: List<Map<ProductResponseItems, Int>>
+    products: List<Map<ProductResponseItems, Int>>,
+    total: Int
 ) {
     val state = viewModel.state
     val onEvent = viewModel::onEvent
     LaunchedEffect(Unit) {
-        onEvent(TransactionEvent.ClearCart)
         onEvent(TransactionEvent.UpdateCustomer(customer))
-        onEvent(TransactionEvent.InserSelectedProducts(products))
+        onEvent(TransactionEvent.InsertSelectedProducts(products))
+        onEvent(TransactionEvent.InsertTransactionTotal(total))
     }
     Column(
         modifier = modifier
@@ -114,7 +117,7 @@ fun TransactionReviewScreen(
                     },
                 containerColor = MaterialTheme.colorScheme.primary,
                 icon = null,
-                textStart = "${state.selectedProduct.count()} Item",
+                textStart = "${state.selectedProduct.size} Item",
                 textEnd = CurrencyFormatter.formatCurrency(state.totalPrice)
             )
             Loading(modifier = Modifier, visible = state.isLoading)
@@ -127,6 +130,24 @@ fun TransactionReviewScreen(
                 visible = state.success.isNotEmpty(),
                 onDismiss = {
                     onEvent(TransactionEvent.DismissAlertMessage)
+                    navigator.popBackStack()
+                    navigator.navigate(Screens.Transactions.AllTransactions)
+                },
+                confirmButton = {
+                    FilledButton(
+                        onClick = { /*TODO*/ },
+                        text = "Lanjut Pembayaran",
+                        modifier = Modifier
+                    )
+                },
+                dismissButton = {
+                    TextButton(onClick = {
+                        onEvent(TransactionEvent.DismissAlertMessage)
+                        navigator.popBackStack()
+                        navigator.navigateUp()
+                    }, modifier = Modifier.padding(vertical = 5.dp)) {
+                        Text(text = "Nanti saja")
+                    }
                 }
             )
             MessageAlert(

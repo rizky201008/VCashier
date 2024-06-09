@@ -16,14 +16,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionEvent
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
@@ -37,17 +34,14 @@ fun TransactionPaymentScreen(
     navigator: NavHostController,
     navArgs: Screens.Transactions.MakePayment,
     modifier: Modifier,
-    viewModel: TransactionViewModel = koinViewModel()
+    viewModel: TransactionPaymentViewModel = koinViewModel()
 ) {
     val onEvent = viewModel::onEvent
-    val state = viewModel.state
+    val state = viewModel.state.value
     LaunchedEffect(Unit) {
         viewModel.getTransaction(navArgs.transactionId)
         viewModel.getPaymentMethods()
     }
-
-    val configuration = LocalConfiguration.current
-    val screenHeight = configuration.screenHeightDp.dp
 
     Column(
         modifier = modifier.padding(horizontal = 10.dp)
@@ -56,7 +50,7 @@ fun TransactionPaymentScreen(
             modifier = Modifier,
             value = state.paymentAmount.toString(),
             onValueChanged = {
-                onEvent(TransactionEvent.UpdatePaymentAmount(it))
+                onEvent(TransactionPaymentEvent.UpdatePaymentAmount(it))
             },
             title = "Nominal Pembayaran",
             textStyle = MaterialTheme.typography.titleMedium.copy(color = Color.Black),
@@ -68,7 +62,7 @@ fun TransactionPaymentScreen(
                 checked = state.paymentAmount == state.transactionTotal,
                 onCheckedChange = {
                     if (it) {
-                        onEvent(TransactionEvent.UpdatePaymentAmount((state.transactionTotal).toString()))
+                        onEvent(TransactionPaymentEvent.UpdatePaymentAmount((state.transactionTotal).toString()))
                     }
                 })
             Text(
@@ -78,7 +72,7 @@ fun TransactionPaymentScreen(
         }
 
         TextField(
-            value = (state.transactionTotal - state.paymentAmount).toString(),
+            value = if (state.paymentAmount > state.transactionTotal) (state.paymentAmount - state.transactionTotal).toString() else "0",
             onValueChanged = {},
             modifier = Modifier.fillMaxWidth(),
             title = "Kembalian",
@@ -96,7 +90,7 @@ fun TransactionPaymentScreen(
                     .selectable(
                         selected = (state.paymentMethod == paymentMethod),
                         onClick = {
-                            onEvent(TransactionEvent.SelectPaymentMethod(paymentMethod))
+                            onEvent(TransactionPaymentEvent.SelectPaymentMethod(paymentMethod))
                         },
                         role = Role.RadioButton
                     )
@@ -116,7 +110,9 @@ fun TransactionPaymentScreen(
         }
 
         FilledButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                onEvent(TransactionPaymentEvent.SubmitTransactionPayment)
+            },
             text = "Bayar Sekarang",
             modifier = Modifier.fillMaxWidth()
         )
@@ -130,7 +126,7 @@ fun TransactionPaymentScreen(
             modifier = Modifier,
             visible = state.success.isNotEmpty(),
             onDismiss = {
-                onEvent(TransactionEvent.DismissAlertMessage)
+                onEvent(TransactionPaymentEvent.DismissAlertMessage)
             }
         )
         MessageAlert(
@@ -140,7 +136,7 @@ fun TransactionPaymentScreen(
             modifier = Modifier,
             visible = state.error.isNotEmpty(),
             onDismiss = {
-                onEvent(TransactionEvent.DismissAlertMessage)
+                onEvent(TransactionPaymentEvent.DismissAlertMessage)
             }
         )
     }

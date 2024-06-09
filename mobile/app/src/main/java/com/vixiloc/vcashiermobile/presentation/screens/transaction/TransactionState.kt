@@ -1,6 +1,7 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction
 
 import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
+import com.vixiloc.vcashiermobile.domain.model.PaymentMethodData
 import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
 import com.vixiloc.vcashiermobile.domain.model.TransactionsData
 
@@ -17,8 +18,13 @@ data class TransactionState(
         name = "Tamu",
         phoneNumber = "-"
     ),
-    val transactions :List<TransactionsData> = emptyList(),
+    val transactions: List<TransactionsData> = emptyList(),
     val searchStatus: Boolean = false,
     val searchResult: List<TransactionsData> = emptyList(),
-    val searchQuery: String = ""
+    val searchQuery: String = "",
+    val transactionTotal: Int = 0,
+    val paymentAmount: Int = 0,
+    val paymentMethods: List<PaymentMethodData> = emptyList(),
+    val paymentMethod: PaymentMethodData? = null,
+    val selectedTransactionId: String = "",
 )

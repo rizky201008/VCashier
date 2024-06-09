@@ -35,71 +35,85 @@ class UseCaseManager(
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun createCategoryUseCase() = CreateCategory(
         repository = categoryRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun updateCategoryUseCase() = UpdateCategory(
         repository = categoryRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun deleteCategoryUseCase() = DeleteCategory(
         repository = categoryRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun getCustomersUseCase() = GetCustomers(
         repository = customerRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun createCustomerUseCase() = CreateCustomer(
         repository = customerRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun updateCustomerUseCase() = UpdateCustomer(
         repository = customerRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun deleteCustomerUseCase() = DeleteCustomer(
         repository = customerRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun createProductUseCase() = CreateProduct(
         repository = productsRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun updateProductUseCase() = UpdateProduct(
         repository = productsRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun createImageUseCase() = CreateImage(
         repository = productsRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun updateImageUseCase() = UpdateImage(
         repository = productsRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun getProductUseCase() = GetProduct(
         repository = productsRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun createTransactionUseCase() = CreateTransaction(
         repository = transactionRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
     fun getTransactionsUseCase() = GetTransactions(
         repository = transactionRepository,
         token = getTokenUseCase(),
@@ -113,6 +127,12 @@ class UseCaseManager(
     )
 
     fun getPaymentMethodsUseCase() = GetPaymentMethods(
+        repository = paymentsRepository,
+        token = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
+
+    fun makePaymentUseCase() = MakePayment(
         repository = paymentsRepository,
         token = getTokenUseCase(),
         httpHandler = httpHandler()

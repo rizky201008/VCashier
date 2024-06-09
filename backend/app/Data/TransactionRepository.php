@@ -4,6 +4,7 @@ namespace App\Data;
 
 use App\Models\Transaction;
 use App\Models\TransactionItem;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,13 +19,13 @@ class TransactionRepository
                 'id' => 'required|exists:product_variations,id'
             ]);
             if ($validator->fails()) {
-                throw new \Exception($validator->messages()->first());
+                throw new Exception($validator->messages()->first());
             }
             $productVariation = $productRepository->getProductVariation($item['id']);
             if ($this->stockExists($item['quantity'], $productVariation->stock)) {
                 $totalAmount += $this->getPriceByQuantity($item['quantity'], $productVariation->price);
             } else {
-                throw new \Exception('Stock is not enough');
+                throw new Exception('Stock is not enough');
             }
         }
 

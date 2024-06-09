@@ -4,10 +4,8 @@ namespace App\Data;
 
 use App\Models\PaymentMethod;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Midtrans\Config as MidtransConfig;
-use Midtrans\Snap as MidtransSnap;
+use \Midtrans\CoreApi as MidtransCoreApi;
 
 class PaymentRepository
 {
@@ -22,7 +20,7 @@ class PaymentRepository
         return PaymentMethod::find($id);
     }
 
-    public function createVa($transaction): string
+    public function createVa($transaction)
     {
         $data = [
             "transaction_details" => [
@@ -35,16 +33,21 @@ class PaymentRepository
                 "email" => "customer@gmail.com",
                 "phone" => $transaction->customer->phone_number
             ],
+            "payment_type" => "bank_transfer",
+            "bank_transfer" => [
+                "bank" => $transaction->paymentMethod->code
+            ]
         ];
 
         foreach ($transaction->items() as $data) {
             $data['item_details'][] = [
-                'id' => $data->id,
+                'id' => "$data->id",
                 'price' => $data->price,
                 'quantity' => $data->quantity,
                 'name' => $data->product->name . ' ' . $data->productVariation->name
             ];
         }
+
         try {
             // Set your Merchant Server Key
             MidtransConfig::$serverKey = env("MIDTRANS_SERVER_KEY");
@@ -55,11 +58,19 @@ class PaymentRepository
             // Set 3DS transaction for credit card to true
             MidtransConfig::$is3ds = true;
             MidtransConfig::$overrideNotifUrl = "https://example.com";
-            $token = MidtransSnap::createTransaction($data);
+            MidtransConfig::$curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;
+            MidtransConfig::$curlOptions[CURLOPT_SSL_VERIFYPEER] = 0;
+            MidtransConfig::$curlOptions[CURLOPT_HTTPHEADER] = [];
 
-            return $token->token;
+            $coreResponse = MidtransCoreApi::charge($data);
+
+            if ($transaction->paymentMethod->code == "permata") {
+                return $coreResponse->permata_va_number;
+            } else {
+                return $coreResponse->va_numbers[0]->va_number;
+            }
         } catch (\Exception $th) {
-            throw new \Exception("MIDTRANS Err :".$th->getMessage());
+            throw new \Exception("MIDTRANS Err :" . $th->getMessage());
         }
     }
 
@@ -71,30 +82,6 @@ class PaymentRepository
     private function amountMatch(int $userAmount, int $totalAmount)
     {
         return $userAmount == $totalAmount;
-    }
-
-    public function createTransactionPayment(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-            $data = $request->all();
-            $updateTransaction = $this->insertTransactionPayment($data);
-            $repo = new TransactionRepository();
-            $transaction = $repo->getTransactionById($data['transaction_id']);
-            $va = $this->createVa($transaction);
-            $transaction->update([
-                'va_number' => $va
-            ]);
-            DB::commit();
-            return response()->json([
-                'message' => 'Make payment success'
-            ]);
-        } catch (\Exception $th) {
-            DB::rollBack();
-            return response()->json([
-                'message' => $th->getMessage()
-            ], 500);
-        }
     }
 
     public function insertTransactionPayment(array $data)

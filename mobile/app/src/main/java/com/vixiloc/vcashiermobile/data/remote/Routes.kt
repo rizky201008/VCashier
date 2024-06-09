@@ -2,7 +2,7 @@ package com.vixiloc.vcashiermobile.data.remote
 
 object Routes {
 
-    const val BASE_URL = "http://192.168.1.16:8000/api/"
+    const val BASE_URL = "http://192.168.1.8:8000/api/"
     const val LOGIN = "auth/login"
     const val PRODUCTS = "products"
     const val CATEGORIES = "categories"

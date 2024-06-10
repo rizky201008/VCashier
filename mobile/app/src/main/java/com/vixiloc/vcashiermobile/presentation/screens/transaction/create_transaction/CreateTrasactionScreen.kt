@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.transaction
+package com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -34,13 +34,13 @@ import org.koin.androidx.compose.koinViewModel
 fun CreateTransactionScreen(
     navigator: NavHostController,
     modifier: Modifier = Modifier,
-    viewModel: TransactionViewModel = koinViewModel()
+    viewModel: CreateTransactionViewModel = koinViewModel()
 ) {
     val state = viewModel.state
     val onEvent = viewModel::onEvent
     LaunchedEffect(key1 = Unit) {
-        onEvent(TransactionEvent.ClearCart)
-        onEvent(TransactionEvent.Refresh)
+        onEvent(CreateTransactionEvent.ClearCart)
+        onEvent(CreateTransactionEvent.Refresh)
     }
     val context = LocalContext.current
 
@@ -78,7 +78,7 @@ fun CreateTransactionScreen(
                         image = product.product.imageUrl ?: "",
                         context = context,
                         onAdd = {
-                            onEvent(TransactionEvent.SelectProduct(product))
+                            onEvent(CreateTransactionEvent.SelectProduct(product))
                         },
                         showAddButton = !state.selectedProduct.any { it.containsKey(product) }
                     )
@@ -122,7 +122,7 @@ fun CreateTransactionScreen(
                 modifier = Modifier,
                 visible = state.success.isNotEmpty(),
                 onDismiss = {
-                    onEvent(TransactionEvent.DismissAlertMessage)
+                    onEvent(CreateTransactionEvent.DismissAlertMessage)
                 }
             )
             MessageAlert(
@@ -132,7 +132,7 @@ fun CreateTransactionScreen(
                 modifier = Modifier,
                 visible = state.error.isNotEmpty(),
                 onDismiss = {
-                    onEvent(TransactionEvent.DismissAlertMessage)
+                    onEvent(CreateTransactionEvent.DismissAlertMessage)
                 }
             )
         }

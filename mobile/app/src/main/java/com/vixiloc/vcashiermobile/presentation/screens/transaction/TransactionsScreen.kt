@@ -254,7 +254,7 @@ fun TransactionsScreen(
                     FilledButton(
                         modifier = Modifier.width(screenWidth / 2f),
                         onClick = { /*TODO*/ },
-                        text = "Status",
+                        text = "Batalkan",
                         textStyle = MaterialTheme.typography.bodySmall
                     )
                 }

@@ -2,32 +2,16 @@ package com.vixiloc.vcashiermobile.di
 
 import android.content.Context
 import com.vixiloc.vcashiermobile.commons.FileConverter
-import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
-import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
-import com.vixiloc.vcashiermobile.domain.use_case.CreateImage
-import com.vixiloc.vcashiermobile.domain.use_case.CreateProduct
-import com.vixiloc.vcashiermobile.domain.use_case.CreateTransaction
-import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
-import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
-import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
-import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
-import com.vixiloc.vcashiermobile.domain.use_case.GetProduct
-import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
-import com.vixiloc.vcashiermobile.domain.use_case.GetToken
-import com.vixiloc.vcashiermobile.domain.use_case.Login
-import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
-import com.vixiloc.vcashiermobile.domain.use_case.UpdateCustomer
-import com.vixiloc.vcashiermobile.domain.use_case.UpdateImage
-import com.vixiloc.vcashiermobile.domain.use_case.UpdateProduct
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
-import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionViewModel
-import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -42,6 +26,7 @@ val viewModelModule = module {
     viewModel { provideProductViewModel(androidContext(), get()) }
     viewModel { provideTransactionPaymentViewModel(get()) }
     viewModel { providePayTransactionViewModel(get()) }
+    viewModel { provideCreateTransactionViewModel(get()) }
 }
 
 fun provideLoginViewModel(useCaseManager: UseCaseManager): LoginViewModel {
@@ -91,3 +76,6 @@ fun provideTransactionPaymentViewModel(useCaseManager: UseCaseManager) =
 
 fun providePayTransactionViewModel(useCaseManager: UseCaseManager) =
     PayTransactionViewModel(useCaseManager = useCaseManager)
+
+fun provideCreateTransactionViewModel(useCaseManager: UseCaseManager) =
+    CreateTransactionViewModel(useCaseManager = useCaseManager)

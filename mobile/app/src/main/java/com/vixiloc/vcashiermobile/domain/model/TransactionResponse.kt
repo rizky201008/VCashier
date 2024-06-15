@@ -28,5 +28,5 @@ data class TransactionResponse(
     @SerializedName("user_id")
     val userId: Int,
     @SerializedName("va_number")
-    val vaNumber: Any?
+    val vaNumber: String?
 )

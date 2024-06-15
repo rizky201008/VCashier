@@ -1,7 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.widgets.products
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,9 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Remove
-import androidx.compose.material3.Badge
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -49,7 +46,6 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
-import com.vixiloc.vcashiermobile.commons.Strings.TAG
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
 import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
@@ -60,7 +56,6 @@ fun TransactionProductItem(
     name: String,
     image: String? = null,
     onAdd: () -> Unit = {},
-    context: Context,
     showAddButton: Boolean = true
 ) {
 
@@ -188,7 +183,6 @@ fun ProductItem(
     onClick: () -> Unit = {}
 ) {
     val configuration = LocalConfiguration.current
-    val screenHeight = configuration.screenHeightDp.dp
     val screenWidth = configuration.screenWidthDp.dp
     var size by remember { mutableStateOf(IntSize.Zero) }
     val elemetShape: Shape = MaterialTheme.shapes.large.copy(

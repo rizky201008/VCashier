@@ -76,7 +76,6 @@ fun CreateTransactionScreen(
                         price = product.price.toString(),
                         name = "${product.product.name} - ${product.unit}",
                         image = product.product.imageUrl ?: "",
-                        context = context,
                         onAdd = {
                             onEvent(CreateTransactionEvent.SelectProduct(product))
                         },

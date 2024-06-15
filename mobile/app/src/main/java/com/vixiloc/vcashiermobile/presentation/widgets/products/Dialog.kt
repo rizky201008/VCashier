@@ -10,9 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.text.isDigitsOnly
 import com.vixiloc.vcashiermobile.presentation.screens.products.FormType
@@ -31,7 +29,6 @@ fun VariationDialog(
 ) {
     val state = viewModel.state
     val onEvent = viewModel::onEvent
-    val configuration = LocalConfiguration.current
 
     AnimatedVisibility(visible = visible) {
         Dialog(

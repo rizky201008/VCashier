@@ -25,6 +25,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.transaction.SearchCustome
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionsScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionScreen
 import kotlinx.serialization.Serializable
 
 sealed interface Screens {
@@ -47,6 +48,9 @@ sealed interface Screens {
 
         @Serializable
         data class MakePayment(val transactionId: String) : Screens
+
+        @Serializable
+        data class PayTransaction(val id: String) : Screens
     }
 
     @Serializable
@@ -133,6 +137,14 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
             composable<Screens.Transactions.MakePayment> {
                 val args = it.toRoute<Screens.Transactions.MakePayment>()
                 TransactionPaymentScreen(
+                    navigator = navController,
+                    navArgs = args,
+                    modifier = modifier
+                )
+            }
+            composable<Screens.Transactions.PayTransaction> {
+                val args = it.toRoute<Screens.Transactions.PayTransaction>()
+                PayTransactionScreen(
                     navigator = navController,
                     navArgs = args,
                     modifier = modifier

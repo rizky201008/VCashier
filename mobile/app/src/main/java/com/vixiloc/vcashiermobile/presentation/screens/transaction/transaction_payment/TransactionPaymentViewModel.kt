@@ -116,7 +116,7 @@ class TransactionPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() 
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
                         paymentMethods = resource.data?.data ?: emptyList(),
-                        paymentMethod = resource.data?.data?.first(),
+                        paymentMethod = resource.data?.data?.firstOrNull(),
                         isLoading = false
                     )
                 }

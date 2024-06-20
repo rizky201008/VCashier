@@ -41,7 +41,10 @@ services:
   php:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: backend/Dockerfile
+      args:
+        user: vcashier
+        uid: 1001
     container_name: php_vcashier
     restart: unless-stopped
     tty: true

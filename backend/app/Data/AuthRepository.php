@@ -25,9 +25,9 @@ class AuthRepository
             $token = $this->createToken($user, $ability);
 
             return response()->json([
-                'message' => 'Login success 🎉🎉🎉',
+                'message' => 'Login success',
                 'token' => $token
-            ], 200);
+            ]);
         } else {
             return response()->json([
                 'message' => 'Login failed please check your credential',
@@ -43,7 +43,7 @@ class AuthRepository
         $token = $created->createToken('access-token', [$ability]);
 
         return response()->json([
-            'message' => 'Create account success 🎉🎉🎉',
+            'message' => 'Create account success',
             'token' => $token->plainTextToken
         ], 200);
     }

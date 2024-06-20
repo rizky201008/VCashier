@@ -24,7 +24,7 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        return $this->authRepository->login($req->only('email', 'password'));
+        return $this->authRepository->login($req->all());
     }
 
     function register(Request $req): JsonResponse
@@ -36,7 +36,7 @@ class AuthController extends Controller
             'role' => 'required|in:cashier,warehouse'
         ]);
 
-        $data  = $req->only('email', 'password', 'name', 'role');
+        $data  = $req->all();
         return $this->authRepository->register($data);
     }
 

@@ -1,16 +1,12 @@
 package com.vixiloc.vcashiermobile.presentation.screens.category
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
+import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
+import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

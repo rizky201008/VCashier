@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.widgets.products
+package com.vixiloc.vcashiermobile.presentation.components.products
 
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,7 +30,7 @@ fun DropdownMenu(
         },
         modifier = modifier
     ) {
-        com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField(
+        com.vixiloc.vcashiermobile.presentation.components.commons.TextField(
             value = selectedText,
             onValueChanged = {
                 onSelectedTextChange(it)

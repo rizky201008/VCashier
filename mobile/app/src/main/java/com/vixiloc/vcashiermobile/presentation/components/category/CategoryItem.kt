@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.widgets.category
+package com.vixiloc.vcashiermobile.presentation.components.category
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row

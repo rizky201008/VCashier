@@ -21,13 +21,13 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.FloatingTransactionButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
-import com.vixiloc.vcashiermobile.presentation.widgets.products.TransactionProductItem
+import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.commons.FloatingTransactionButton
+import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
+import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.components.commons.TextField
+import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.products.TransactionProductItem
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

@@ -25,12 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
+import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

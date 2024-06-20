@@ -45,11 +45,11 @@ import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.commons.DateFormatter
 import com.vixiloc.vcashiermobile.domain.model.TransactionsData
 import com.vixiloc.vcashiermobile.presentation.navigations.Screens
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.AlertType
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.MessageAlert
-import com.vixiloc.vcashiermobile.presentation.widgets.transaction.TransactionItem
+import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
+import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.components.transaction.TransactionItem
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 

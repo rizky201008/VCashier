@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.widgets.transaction
+package com.vixiloc.vcashiermobile.presentation.components.transaction
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.TextField
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.commons.TextField
+import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
 
 @Composable
 fun CashPayment(modifier: Modifier) {

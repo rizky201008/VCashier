@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.widgets.commons
+package com.vixiloc.vcashiermobile.presentation.components.commons
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState

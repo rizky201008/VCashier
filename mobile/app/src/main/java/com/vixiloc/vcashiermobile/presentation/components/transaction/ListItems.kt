@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.widgets.transaction
+package com.vixiloc.vcashiermobile.presentation.components.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

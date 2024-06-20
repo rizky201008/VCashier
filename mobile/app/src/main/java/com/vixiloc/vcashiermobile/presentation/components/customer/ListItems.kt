@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.widgets.customer
+package com.vixiloc.vcashiermobile.presentation.components.customer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

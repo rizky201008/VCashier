@@ -17,8 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
-import com.vixiloc.vcashiermobile.presentation.widgets.transaction.CustomerItem
+import com.vixiloc.vcashiermobile.presentation.components.transaction.CustomerItem
 import org.koin.androidx.compose.koinViewModel
 
 

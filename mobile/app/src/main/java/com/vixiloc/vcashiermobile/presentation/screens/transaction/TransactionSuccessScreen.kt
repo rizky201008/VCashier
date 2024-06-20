@@ -19,9 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.R
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.OutlinedButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.commons.OutlinedButton
+import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
 
 @Composable
 fun TransactionSuccessScreen(navigator: NavHostController) {

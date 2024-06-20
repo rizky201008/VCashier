@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.widgets.commons
+package com.vixiloc.vcashiermobile.presentation.components.commons
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.RowScope

@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.widgets.products
+package com.vixiloc.vcashiermobile.presentation.components.products
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -47,8 +47,8 @@ import coil.size.Size
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.IconButton
-import com.vixiloc.vcashiermobile.presentation.widgets.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
 
 @Composable
 fun TransactionProductItem(

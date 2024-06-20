@@ -26,7 +26,7 @@ fun VcashierMobileTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = dynamicColorScheme(
-        seedColor = Color(0xFF5356FF),
+        seedColor = Color(0xFF1A72DD),
         isDark = false,
         style = PaletteStyle.Vibrant,
     )

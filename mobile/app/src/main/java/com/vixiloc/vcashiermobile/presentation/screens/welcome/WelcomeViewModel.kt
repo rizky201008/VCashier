@@ -1,19 +1,18 @@
 package com.vixiloc.vcashiermobile.presentation.screens.welcome
 
-import android.util.Log
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vixiloc.vcashiermobile.commons.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.use_case.GetToken
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class WelcomeViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
-    var state by mutableStateOf(WelcomeState())
+    val _state = mutableStateOf(WelcomeState())
+    var state: State<WelcomeState> = _state
     private val getToken: GetToken = useCaseManager.getTokenUseCase()
 
     init {
@@ -22,9 +21,9 @@ class WelcomeViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
     private fun getTokenKey() {
         viewModelScope.launch {
+            delay(3000)
             getToken().collect { apiKey ->
-                state = state.copy(token = apiKey)
-                Log.d(TAG, "getTokenKey: $state")
+                _state.value = _state.value.copy(token = apiKey, screenReady = true)
             }
         }
     }

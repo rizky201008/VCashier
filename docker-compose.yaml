@@ -39,6 +39,7 @@ services:
       - vcashier
 
   php:
+    image: vixiloc/vcashier-php:1.0.1
     build:
       context: .
       dockerfile: backend/Dockerfile

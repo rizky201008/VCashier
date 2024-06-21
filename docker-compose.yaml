@@ -42,9 +42,6 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-      args:
-        user: vcashier
-        uid: 1001
     container_name: php_vcashier
     restart: unless-stopped
     tty: true

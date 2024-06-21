@@ -18,7 +18,9 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -74,14 +77,11 @@ fun MainScreen(navHostController: NavHostController) {
         )
     )
 
-    // MutableState to hold the current title
-    val currentTitle = remember { mutableStateOf("VCashier") }
+    val currentTitle = remember { mutableStateOf("Home") }
 
-    // Get the current back stack entry and the current route
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    // Find the matching DrawerMenu item based on the current route
     currentRoute?.let {
         val matchedItem = items.find { it.route == it }
         matchedItem?.let {
@@ -105,7 +105,7 @@ fun MainScreen(navHostController: NavHostController) {
                     NavigationDrawerItem(
                         icon = { Icon(item.icon, contentDescription = null) },
                         label = { Text(item.name.menuName) },
-                        selected = false,
+                        selected = item.name.menuName == currentTitle.value,
                         onClick = {
                             scope.launch { drawerState.close() }
                             currentTitle.value = item.name.menuName
@@ -129,7 +129,10 @@ fun MainScreen(navHostController: NavHostController) {
                         title = {
                             Text(
                                 text = currentTitle.value,
-                                style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight(600))
+                                style = MaterialTheme.typography.titleMedium.copy(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontWeight = FontWeight(600)
+                                )
                             )
                         }, navigationIcon = {
                             PainterIconButton(
@@ -138,13 +141,19 @@ fun MainScreen(navHostController: NavHostController) {
                                 },
                                 icon = painterResource(id = R.drawable.hamburger_icon)
                             )
-                        })
+                        },
+                        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                            containerColor = Color.White,
+                        )
+                    )
                 }
             ) { paddingValues ->
-                MainNavHost(
-                    navController = navHostController,
-                    modifier = Modifier.padding(paddingValues)
-                )
+                Surface {
+                    MainNavHost(
+                        navController = navHostController,
+                        modifier = Modifier.padding(paddingValues)
+                    )
+                }
             }
         }
     )

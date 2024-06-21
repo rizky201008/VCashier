@@ -1,35 +1,22 @@
-FROM php:8.3-fpm
+FROM php:8.2-fpm-alpine
 
-ARG user
-ARG uid
+WORKDIR /var/www/app
 
-RUN apt-get update && apt-get install -y \
+RUN apk update && apk add \
     curl \
     libpng-dev \
     libxml2-dev \
     zip \
     unzip \
     nano \
-    postgresql-common \
-    libpq-dev # Add this line
+    postgresql-dev # Install PostgreSQL development files
 
-RUN docker-php-ext-install pdo pdo_pgsql
+RUN docker-php-ext-install pdo pdo_pgsql # Install PDO extensions for MySQL and PostgreSQL
+
+RUN apk --no-cache add nodejs npm
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+USER root
 
-USER $user
-
-WORKDIR /var/www/app
-
-COPY . .
-
-# Ensure the storage directory exists
-RUN mkdir -p /var/www/app/storage
-
-# Change permissions
-RUN chmod -R 777 /var/www/app/storage
+RUN chmod -R 777 /var/www/app

@@ -1,13 +1,16 @@
 package com.vixiloc.vcashiermobile.presentation.components.commons
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Button
@@ -22,9 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.OutlinedButton as OutlinedButtonCompose
 
@@ -34,7 +39,8 @@ fun IconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.small,
-    filled: Boolean = false
+    filled: Boolean = false,
+    containerSize: Dp = 34.dp
 ) {
     Box(
         modifier = modifier
@@ -42,7 +48,7 @@ fun IconButton(
                 color = if (filled) MaterialTheme.colorScheme.primary else Color.Transparent,
                 shape = shape
             )
-            .size(34.dp)
+            .size(containerSize)
             .clip(shape)
             .clickable { onClick() },
         contentAlignment = Alignment.Center
@@ -50,7 +56,36 @@ fun IconButton(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            modifier = Modifier.size(25.dp),
+            modifier = Modifier.size(containerSize/2.5f),
+            tint = if (filled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
+@Composable
+fun PainterIconButton(
+    onClick: () -> Unit,
+    icon: Painter,
+    modifier: Modifier = Modifier,
+    shape: Shape = MaterialTheme.shapes.small,
+    filled: Boolean = false,
+    containerSize: Dp = 34.dp
+) {
+    Box(
+        modifier = modifier
+            .background(
+                color = if (filled) MaterialTheme.colorScheme.primary else Color.Transparent,
+                shape = shape
+            )
+            .size(containerSize)
+            .clip(shape)
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = icon,
+            contentDescription = null,
+            modifier = Modifier.size(containerSize/2.5f),
             tint = if (filled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
         )
     }
@@ -146,5 +181,12 @@ fun FloatingTransactionButton(
 @Preview
 @Composable
 private fun ButtonPrev() {
-    IconButton(onClick = { /*TODO*/ }, icon = Icons.Default.ArrowBackIosNew)
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        IconButton(
+            onClick = { /*TODO*/ },
+            icon = Icons.Default.ArrowBackIosNew,
+            modifier = Modifier.border(width = 0.5.dp, color = Color.LightGray, shape = CircleShape),
+            shape = CircleShape,
+        )
+    }
 }

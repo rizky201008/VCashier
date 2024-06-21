@@ -25,3 +25,11 @@ RUN mkdir -p /home/$user/.composer && \
 USER $user
 
 WORKDIR /var/www/app
+
+COPY . .
+
+# Ensure the storage directory exists
+RUN mkdir -p /var/www/app/storage
+
+# Change permissions
+RUN chmod -R 777 /var/www/app/storage

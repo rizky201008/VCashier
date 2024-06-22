@@ -39,10 +39,7 @@ services:
       - vcashier
 
   php:
-    image: vixiloc/vcashier-php:1.0.1
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
+    image: vixiloc/vcashier-php:1.0.2
     container_name: php_vcashier
     restart: unless-stopped
     tty: true

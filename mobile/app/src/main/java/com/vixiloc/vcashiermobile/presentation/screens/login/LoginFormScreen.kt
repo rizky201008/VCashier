@@ -7,17 +7,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.guru.fontawesomecomposelib.FaIcon
+import com.guru.fontawesomecomposelib.FaIcons
 import com.vixiloc.vcashiermobile.presentation.MainActivity
 import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
@@ -26,33 +28,51 @@ import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.commons.TextField
 import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
 import org.koin.androidx.compose.koinViewModel
+import androidx.compose.material3.IconButton as IconButtonCompose
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginFormScreen(
-    viewModel: LoginViewModel = koinViewModel()
-) {
+fun LoginFormScreen(modifier: Modifier = Modifier) {
+    val viewModel: LoginViewModel = koinViewModel()
     val state = viewModel.state
     val events = viewModel::onEvent
     val keyboardController = LocalSoftwareKeyboardController.current
     val showErrorAlert: Boolean = state.errorMessage.isNotBlank()
     val context: Context = LocalContext.current
 
-    Scaffold(topBar = {
-        TopAppBar(title = {
-            Text(
-                text = "Login Sekarang",
-                style = MaterialTheme.typography.titleMedium.copy(
-                    color = MaterialTheme.colorScheme.primary
-                )
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                modifier = modifier.padding(horizontal = 24.dp),
+                title = {
+                    Text(
+                        text = "Login",
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight(600)
+                        )
+                    )
+                },
+//                navigationIcon = {
+//                    IconButton(
+//                        onClick = { /*TODO*/ },
+//                        icon = Icons.Default.ArrowBackIosNew,
+//                        modifier = Modifier.border(
+//                            width = 0.5.dp,
+//                            color = Color.LightGray,
+//                            shape = CircleShape
+//                        ),
+//                        shape = CircleShape,
+//                    )
+//                }
             )
-        })
-    }) { paddingValues ->
+        }
+    ) { pValue ->
         Column(
             modifier = Modifier
-                .padding(paddingValues)
+                .padding(pValue)
                 .fillMaxSize()
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = 24.dp)
         ) {
             Loading(modifier = Modifier, visible = state.isLoading)
             if (state.isLoading) keyboardController?.hide()
@@ -68,15 +88,18 @@ fun LoginFormScreen(
                 visible = showErrorAlert,
                 onDismiss = { events(LoginEvent.DismissAlertMessage) }
             )
-
+            VerticalSpacer(height = 40.dp)
             TextField(
                 value = state.email,
                 onValueChanged = {
                     events(LoginEvent.OnEmailChanged(it))
                 },
                 modifier = Modifier,
-                title = "Email"
+                title = "Email",
+                placeHolder = "Masukkan email anda",
+                textStyle = MaterialTheme.typography.titleMedium
             )
+            VerticalSpacer(height = 12.dp)
             TextField(
                 value = state.password,
                 onValueChanged = {
@@ -84,15 +107,26 @@ fun LoginFormScreen(
                 },
                 modifier = Modifier,
                 title = "Password",
-                visualTransformation = PasswordVisualTransformation()
+                placeHolder = "Masukkan kata sandi anda",
+                textStyle = MaterialTheme.typography.titleMedium,
+                trailingIcon = {
+                    IconButtonCompose(onClick = { /*TODO*/ }) {
+                        FaIcon(
+                            faIcon = FaIcons.EyeSlash,
+                            tint = MaterialTheme.colorScheme.primary,
+                            size = 16.dp
+                        )
+                    }
+                }
             )
-            VerticalSpacer(height = 28.dp)
+            VerticalSpacer(height = 52.dp)
             FilledButton(
                 text = "Login",
                 onClick = {
                     events(LoginEvent.Login)
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight(600))
             )
         }
     }

@@ -41,7 +41,7 @@ fun VcashierMobileTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = colorScheme.copy(surface = Color(0xFFF7F8FA)),
         content = content,
         typography = Type
     )

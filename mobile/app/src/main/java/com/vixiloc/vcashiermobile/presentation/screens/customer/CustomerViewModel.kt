@@ -7,7 +7,7 @@ import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.Resource
-import com.vixiloc.vcashiermobile.domain.model.CreateUpdateCustomerRequest
+import com.vixiloc.vcashiermobile.domain.model.customers.CreateUpdateCustomerRequest
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCustomer
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers

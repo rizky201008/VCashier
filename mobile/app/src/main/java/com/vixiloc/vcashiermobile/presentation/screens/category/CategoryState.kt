@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.screens.category
 
-import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
+import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
 
 data class CategoryState(
     val isLoading: Boolean = false,

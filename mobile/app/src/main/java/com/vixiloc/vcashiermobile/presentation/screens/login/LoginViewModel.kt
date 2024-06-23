@@ -8,13 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
-import com.vixiloc.vcashiermobile.domain.model.LoginRequest
+import com.vixiloc.vcashiermobile.domain.model.auth.LoginRequest
 import com.vixiloc.vcashiermobile.domain.use_case.Login
-import com.vixiloc.vcashiermobile.domain.use_case.SaveToken
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class LoginViewModel(
     useCaseManager: UseCaseManager

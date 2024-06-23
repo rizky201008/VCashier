@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
-import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
+import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
+import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.CreateCategoryScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.UpdateCategoryScreen

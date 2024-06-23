@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
-import com.vixiloc.vcashiermobile.domain.model.CreateUpdateCategoryRequest
+import com.vixiloc.vcashiermobile.domain.model.categories.CreateUpdateCategoryRequest
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories

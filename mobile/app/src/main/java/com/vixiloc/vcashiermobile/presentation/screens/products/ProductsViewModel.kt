@@ -11,8 +11,8 @@ import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.FileConverter
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
-import com.vixiloc.vcashiermobile.domain.model.CreateUpdateProductRequest
-import com.vixiloc.vcashiermobile.domain.model.Variation
+import com.vixiloc.vcashiermobile.domain.model.products.CreateUpdateProductRequest
+import com.vixiloc.vcashiermobile.domain.model.products.Variation
 import com.vixiloc.vcashiermobile.domain.use_case.CreateImage
 import com.vixiloc.vcashiermobile.domain.use_case.CreateProduct
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories

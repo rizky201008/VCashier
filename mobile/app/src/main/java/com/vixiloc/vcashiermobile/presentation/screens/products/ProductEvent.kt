@@ -1,7 +1,7 @@
 package com.vixiloc.vcashiermobile.presentation.screens.products
 
 import android.net.Uri
-import com.vixiloc.vcashiermobile.domain.model.Variation
+import com.vixiloc.vcashiermobile.domain.model.products.Variation
 
 
 sealed class ProductEvent {

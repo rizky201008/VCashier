@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction
 
-import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
+import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
 
 data class CreateTransactionState(
     val products: List<ProductResponseItems> = emptyList(),

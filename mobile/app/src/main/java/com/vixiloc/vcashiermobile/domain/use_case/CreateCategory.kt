@@ -2,10 +2,10 @@ package com.vixiloc.vcashiermobile.domain.use_case
 
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.Resource
-import com.vixiloc.vcashiermobile.data.remote.dto.toOnlyResponseMessage
-import com.vixiloc.vcashiermobile.domain.model.CreateUpdateCategoryRequest
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.toOnlyResponseMessage
+import com.vixiloc.vcashiermobile.domain.model.categories.CreateUpdateCategoryRequest
 import com.vixiloc.vcashiermobile.domain.model.OnlyResponseMessage
-import com.vixiloc.vcashiermobile.domain.model.toCreateUpdateCategoryRequestDto
+import com.vixiloc.vcashiermobile.domain.model.categories.toCreateUpdateCategoryRequestDto
 import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first

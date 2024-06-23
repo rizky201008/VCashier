@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.screens.customer
 
-import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
+import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 
 data class CustomerState(
     val isLoading: Boolean = false,

@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
-import com.vixiloc.vcashiermobile.domain.model.CreateTransactionRequest
-import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
-import com.vixiloc.vcashiermobile.domain.model.Item
-import com.vixiloc.vcashiermobile.domain.model.TransactionsData
+import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionRequest
+import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
+import com.vixiloc.vcashiermobile.domain.model.transactions.Item
+import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
 import com.vixiloc.vcashiermobile.domain.use_case.CreateTransaction
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
 import com.vixiloc.vcashiermobile.domain.use_case.GetPaymentMethods

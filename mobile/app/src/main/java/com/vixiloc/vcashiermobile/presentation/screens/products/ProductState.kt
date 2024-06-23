@@ -1,8 +1,8 @@
 package com.vixiloc.vcashiermobile.presentation.screens.products
 
 import android.net.Uri
-import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
-import com.vixiloc.vcashiermobile.domain.model.Variation
+import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
+import com.vixiloc.vcashiermobile.domain.model.products.Variation
 
 data class ProductState(
     val products: List<ProductResponseItems> = emptyList(),

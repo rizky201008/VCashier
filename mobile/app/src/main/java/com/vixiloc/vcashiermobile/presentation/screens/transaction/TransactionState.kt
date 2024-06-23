@@ -1,9 +1,9 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction
 
-import com.vixiloc.vcashiermobile.domain.model.CustomerResponseItem
-import com.vixiloc.vcashiermobile.domain.model.PaymentMethodData
-import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
-import com.vixiloc.vcashiermobile.domain.model.TransactionsData
+import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
+import com.vixiloc.vcashiermobile.domain.model.payments.PaymentMethodData
+import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
+import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
 
 data class TransactionState(
     val products: List<ProductResponseItems> = emptyList(),

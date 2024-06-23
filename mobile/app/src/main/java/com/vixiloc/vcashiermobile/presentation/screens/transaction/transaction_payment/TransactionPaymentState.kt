@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment
 
-import com.vixiloc.vcashiermobile.domain.model.PaymentMethodData
+import com.vixiloc.vcashiermobile.domain.model.payments.PaymentMethodData
 
 data class TransactionPaymentState (
     val isLoading: Boolean = false,

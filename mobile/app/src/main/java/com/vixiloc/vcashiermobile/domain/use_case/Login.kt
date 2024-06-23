@@ -4,10 +4,10 @@ import android.util.Log
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
-import com.vixiloc.vcashiermobile.data.remote.dto.toLoginResponse
-import com.vixiloc.vcashiermobile.domain.model.LoginRequest
-import com.vixiloc.vcashiermobile.domain.model.LoginResponse
-import com.vixiloc.vcashiermobile.domain.model.toLoginRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.toLoginResponse
+import com.vixiloc.vcashiermobile.domain.model.auth.LoginRequest
+import com.vixiloc.vcashiermobile.domain.model.auth.LoginResponse
+import com.vixiloc.vcashiermobile.domain.model.auth.toLoginRequestDto
 import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

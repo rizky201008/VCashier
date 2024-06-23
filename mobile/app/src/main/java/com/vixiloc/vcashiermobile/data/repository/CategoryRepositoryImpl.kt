@@ -1,9 +1,9 @@
 package com.vixiloc.vcashiermobile.data.repository
 
 import com.vixiloc.vcashiermobile.data.remote.ApiService
-import com.vixiloc.vcashiermobile.data.remote.dto.CategoriesResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CategoriesResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryResponseDto
 import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 
 class CategoryRepositoryImpl(private val api: ApiService) : CategoryRepository {

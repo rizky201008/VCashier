@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.data.remote.dto
+package com.vixiloc.vcashiermobile.data.remote.dto.categories
 
 import com.google.gson.annotations.SerializedName
 import com.vixiloc.vcashiermobile.domain.model.CategoriesResponse

@@ -1,9 +1,9 @@
 package com.vixiloc.vcashiermobile.data.repository
 
 import com.vixiloc.vcashiermobile.data.remote.ApiService
-import com.vixiloc.vcashiermobile.data.remote.dto.MakePaymentRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.MakePaymentResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.PaymentMethodsDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.PaymentMethodsDto
 import com.vixiloc.vcashiermobile.domain.repository.PaymentsRepository
 
 class PaymentsRepositoryImpl(private val api: ApiService) : PaymentsRepository {

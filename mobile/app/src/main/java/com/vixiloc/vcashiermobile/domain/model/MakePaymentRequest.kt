@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.domain.model
 
-import com.vixiloc.vcashiermobile.data.remote.dto.MakePaymentRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentRequestDto
 
 data class MakePaymentRequest(
     val paymentAmount: Int,

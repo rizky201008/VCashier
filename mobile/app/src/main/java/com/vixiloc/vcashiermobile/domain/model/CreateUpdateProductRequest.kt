@@ -1,7 +1,7 @@
 package com.vixiloc.vcashiermobile.domain.model
 
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateProductRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.VariationDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.VariationDto
 
 data class CreateUpdateProductRequest(
     val description: String,

@@ -1,9 +1,5 @@
 package com.vixiloc.vcashiermobile.domain.model
 
-import com.google.gson.annotations.SerializedName
-import com.vixiloc.vcashiermobile.data.remote.dto.CategoryDto
-import com.vixiloc.vcashiermobile.data.remote.dto.ProductDto
-
 data class TransactionsResponse(
     val data: List<TransactionsData>
 )

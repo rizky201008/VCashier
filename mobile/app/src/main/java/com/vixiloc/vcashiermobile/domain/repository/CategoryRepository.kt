@@ -1,8 +1,8 @@
 package com.vixiloc.vcashiermobile.domain.repository
 
-import com.vixiloc.vcashiermobile.data.remote.dto.CategoriesResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CategoriesResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryResponseDto
 
 interface CategoryRepository {
 

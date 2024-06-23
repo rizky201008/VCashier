@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.data.remote.dto
+package com.vixiloc.vcashiermobile.data.remote.dto.transactions
 
 
 import com.google.gson.annotations.SerializedName

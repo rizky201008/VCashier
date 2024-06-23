@@ -1,7 +1,7 @@
 package com.vixiloc.vcashiermobile.domain.model
 
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.ItemRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.ItemRequestDto
 
 data class CreateTransactionRequest(
     val customerId: Int,

@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.domain.model
 
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCustomerRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.customers.CreateUpdateCustomerRequestDto
 
 data class CreateUpdateCustomerRequest(
     val name: String,

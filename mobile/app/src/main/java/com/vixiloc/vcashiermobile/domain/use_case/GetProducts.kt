@@ -4,7 +4,7 @@ import android.util.Log
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
-import com.vixiloc.vcashiermobile.data.remote.dto.toProductResponseItems
+import com.vixiloc.vcashiermobile.data.remote.dto.products.toProductResponseItems
 import com.vixiloc.vcashiermobile.domain.model.ProductResponseItems
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import kotlinx.coroutines.flow.Flow

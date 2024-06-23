@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.domain.model
 
-import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
 
 data class LoginRequest(
     val email: String,

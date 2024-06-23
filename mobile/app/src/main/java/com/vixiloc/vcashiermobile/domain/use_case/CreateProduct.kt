@@ -2,7 +2,7 @@ package com.vixiloc.vcashiermobile.domain.use_case
 
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.Resource
-import com.vixiloc.vcashiermobile.data.remote.dto.toDomain
+import com.vixiloc.vcashiermobile.data.remote.dto.products.toDomain
 import com.vixiloc.vcashiermobile.domain.model.CreateProductResponse
 import com.vixiloc.vcashiermobile.domain.model.CreateUpdateProductRequest
 import com.vixiloc.vcashiermobile.domain.model.toDto

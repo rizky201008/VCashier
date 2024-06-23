@@ -9,27 +9,27 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_METHODS
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
 import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
-import com.vixiloc.vcashiermobile.data.remote.dto.CategoriesResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateProductResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateTransactionResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCategoryResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCustomerRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateCustomerResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateImageResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CreateUpdateProductRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.CustomerResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.LoginRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.LoginResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.MakePaymentRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.MakePaymentResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.PaymentMethodsDto
-import com.vixiloc.vcashiermobile.data.remote.dto.ProductResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.ProductsResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.TransactionResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.TransactionsResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.UpdateProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CategoriesResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.customers.CreateUpdateCustomerRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.customers.CreateUpdateCustomerResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductImageResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.customers.CustomerResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.PaymentMethodsDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -83,7 +83,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Part("product_id") productId: RequestBody,
         @Part image: MultipartBody.Part,
-    ): CreateUpdateImageResponseDto
+    ): CreateUpdateProductImageResponseDto
 
     @Multipart
     @POST(UPDATE_IMAGE)
@@ -92,7 +92,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Part("product_id") productId: RequestBody,
         @Part newImage: MultipartBody.Part,
-    ): CreateUpdateImageResponseDto
+    ): CreateUpdateProductImageResponseDto
 
     @GET(CATEGORIES)
     @Headers("Content-Type: application/json", "Accept: application/json")

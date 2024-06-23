@@ -2,7 +2,8 @@ package com.vixiloc.vcashiermobile.domain.use_case
 
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.Resource
-import com.vixiloc.vcashiermobile.data.remote.dto.toDomain
+import com.vixiloc.vcashiermobile.data.remote.dto.products.toDomain
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.toDomain
 import com.vixiloc.vcashiermobile.domain.model.TransactionResponse
 import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository
 import kotlinx.coroutines.flow.Flow

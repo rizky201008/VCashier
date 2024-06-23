@@ -2,7 +2,7 @@ package com.vixiloc.vcashiermobile.domain.use_case
 
 import com.vixiloc.vcashiermobile.commons.HttpHandler
 import com.vixiloc.vcashiermobile.commons.Resource
-import com.vixiloc.vcashiermobile.data.remote.dto.toCategoriesResponse
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.toCategoriesResponse
 import com.vixiloc.vcashiermobile.domain.model.CategoriesResponseItem
 import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 import kotlinx.coroutines.flow.Flow

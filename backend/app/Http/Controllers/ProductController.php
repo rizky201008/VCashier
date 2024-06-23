@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\ProductRepository;
+use App\Repository\ProductRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

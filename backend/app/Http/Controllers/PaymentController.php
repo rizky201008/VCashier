@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Data\PaymentRepository;
+use App\Repository\PaymentRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Data\TransactionRepository;
+use App\Repository\TransactionRepository;
 
 class PaymentController extends Controller
 {

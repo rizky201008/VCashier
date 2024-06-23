@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\CustomerRepository;
+use App\Repository\CustomerRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

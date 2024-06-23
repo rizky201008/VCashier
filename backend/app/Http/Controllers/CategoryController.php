@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\CategoryRepository;
+use App\Repository\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\TransactionRepository;
+use App\Repository\TransactionRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\AuthRepository;
+use App\Repository\AuthRepository;
 use Illuminate\Http\Request;
 use \Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;

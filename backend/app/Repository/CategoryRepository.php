@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace App\Repository;
 use App\Models\Category;
 
 class CategoryRepository

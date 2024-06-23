@@ -31,6 +31,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.guru.fontawesomecomposelib.FaIcon
+import com.guru.fontawesomecomposelib.FaIconType
+import com.guru.fontawesomecomposelib.FaIcons
 import androidx.compose.material3.OutlinedButton as OutlinedButtonCompose
 
 @Composable
@@ -56,7 +59,7 @@ fun IconButton(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            modifier = Modifier.size(containerSize/2.5f),
+            modifier = Modifier.size(containerSize / 2.5f),
             tint = if (filled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
         )
     }
@@ -85,7 +88,7 @@ fun PainterIconButton(
         Icon(
             painter = icon,
             contentDescription = null,
-            modifier = Modifier.size(containerSize/2.5f),
+            modifier = Modifier.size(containerSize / 2.5f),
             tint = if (filled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
         )
     }
@@ -97,19 +100,34 @@ fun FilledButton(
     text: String,
     modifier: Modifier,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-    colors: ButtonColors = ButtonDefaults.buttonColors()
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    trailingIcon: Any? = null
 ) {
     Button(
         onClick = onClick,
         modifier = modifier,
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.small,
         colors = colors
     ) {
         Text(
             text = text,
             style = textStyle,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier
         )
+        trailingIcon?.let {
+            when (it) {
+                is FaIconType -> FaIcon(
+                    faIcon = it,
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+                is ImageVector -> Icon(
+                    imageVector = it,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+                // Add other cases if needed
+            }
+        }
     }
 }
 
@@ -182,11 +200,6 @@ fun FloatingTransactionButton(
 @Composable
 private fun ButtonPrev() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        IconButton(
-            onClick = { /*TODO*/ },
-            icon = Icons.Default.ArrowBackIosNew,
-            modifier = Modifier.border(width = 0.5.dp, color = Color.LightGray, shape = CircleShape),
-            shape = CircleShape,
-        )
+
     }
 }

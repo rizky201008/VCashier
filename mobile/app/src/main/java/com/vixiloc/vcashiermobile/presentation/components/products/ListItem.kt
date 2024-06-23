@@ -31,12 +31,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -46,25 +47,25 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
-import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 
 @Composable
 fun TransactionProductItem(
+    modifier: Modifier = Modifier,
     price: String,
     name: String,
     image: String? = null,
     onAdd: () -> Unit = {},
-    showAddButton: Boolean = true
+    selected: Boolean = false
 ) {
 
     Card(
-        modifier = Modifier
-            .width(160.dp)
-            .padding(10.dp),
+        modifier = modifier
+            .width(152.dp),
         shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         AsyncImage(
             model = image,
@@ -77,33 +78,47 @@ fun TransactionProductItem(
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(130.dp)
+                .height(94.dp)
                 .clip(MaterialTheme.shapes.large),
             contentScale = ContentScale.Crop
         )
-        Text(
-            text = name,
-            style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.onBackground),
-            modifier = Modifier.padding(horizontal = 10.dp)
-        )
-        VerticalSpacer(height = 12.dp)
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
+        VerticalSpacer(height = 7.dp)
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = 9.dp)
         ) {
             Text(
-                text = price,
-                style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.primary),
+                text = name,
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight(600),
+                    color = MaterialTheme.colorScheme.onBackground
+                ),
                 modifier = Modifier
             )
-            if (showAddButton) {
-                IconButton(onClick = onAdd, icon = Icons.Outlined.Add)
+            VerticalSpacer(height = 14.dp)
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = price,
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight(500)
+                    ),
+                    modifier = Modifier
+                )
+                IconButton(
+                    onClick = onAdd,
+                    icon = Icons.Outlined.Add,
+                    filled = true,
+                    containerSize = 30.dp
+                )
             }
         }
-        VerticalSpacer(height = 10.dp)
     }
 }
 
@@ -247,7 +262,6 @@ fun ProductItem(
 @Preview(showBackground = false)
 @Composable
 private fun ProductItemPreview() {
-    val context = LocalContext.current
     VcashierMobileTheme {
         Surface {
             Box(
@@ -256,11 +270,10 @@ private fun ProductItemPreview() {
                     .background(color = MaterialTheme.colorScheme.surface),
                 contentAlignment = Alignment.Center
             ) {
-                ProductItem(
-                    context = context,
-                    name = "Produk Conteoh",
+                TransactionProductItem(
+                    name = "Salad Tuna",
                     price = "Rp. 100.000",
-                    category = "Mainan"
+                    image = ""
                 )
             }
         }

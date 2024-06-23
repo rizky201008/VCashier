@@ -55,11 +55,11 @@ class ProductController extends Controller
 
     public function getProduct($id)
     {
-        return $this->productRepository->getProduct($id);
+        return response()->json($this->productRepository->getProduct($id));
     }
 
     public function getProducts(): JsonResponse
     {
-        return $this->productRepository->getProducts();
+        return response()->json($this->productRepository->getProducts());
     }
 }

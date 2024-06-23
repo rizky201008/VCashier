@@ -22,14 +22,14 @@ class ProductRepository
         $this->variation = new ProductVariation();
     }
 
-    function getProducts(): JsonResponse
+    function getProducts(): array
     {
-        return response()->json(['data' => $this->variation->with(['product', 'product.category'])->get()]);
+        return ['data' => Product::with(['variations', 'category'])->get()];
     }
 
-    function getProduct($id): JsonResponse
+    function getProduct($id): object
     {
-        return response()->json($this->product->with(['variations', 'category'])->where('id', $id)->first());
+        return $this->product->with(['variations', 'category'])->where('id', $id)->first();
     }
 
     public function getProductVariation($id): ProductVariation

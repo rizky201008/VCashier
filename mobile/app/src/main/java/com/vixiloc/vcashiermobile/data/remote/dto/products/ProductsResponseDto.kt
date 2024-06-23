@@ -5,6 +5,7 @@ import com.vixiloc.vcashiermobile.domain.model.products.Category
 import com.vixiloc.vcashiermobile.domain.model.products.Product
 import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsResponse
+import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
 
 data class ProductsResponseDto(
 
@@ -46,28 +47,46 @@ data class ProductDto(
 )
 
 data class ProductResponseItemsDto(
-
-    @field:SerializedName("price_grocery")
-    val priceGrocery: Int? = null,
-
-    @field:SerializedName("unit")
-    val unit: String,
-
-    @field:SerializedName("product")
-    val product: ProductDto,
-
-    @field:SerializedName("price")
-    val price: Int,
-
-    @field:SerializedName("product_id")
-    val productId: Int,
-
-    @field:SerializedName("id")
+    @SerializedName("category")
+    val category: CategoryDto,
+    @SerializedName("category_id")
+    val categoryId: Int,
+    @SerializedName("description")
+    val description: String,
+    @SerializedName("id")
     val id: Int,
-
-    @field:SerializedName("stock")
-    val stock: Int
+    @SerializedName("image_path")
+    val imagePath: String?,
+    @SerializedName("image_url")
+    val imageUrl: String?,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("variations")
+    val variations: List<ProductsVariationDto>
 )
+
+data class ProductsVariationDto(
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("price")
+    val price: Int,
+    @SerializedName("price_grocery")
+    val priceGrocery: Int,
+    @SerializedName("stock")
+    val stock: Int,
+    @SerializedName("unit")
+    val unit: String
+)
+
+fun ProductsVariationDto.toDomain(): ProductsVariation {
+    return ProductsVariation(
+        id = id,
+        price = price,
+        priceGrocery = priceGrocery,
+        stock = stock,
+        unit = unit
+    )
+}
 
 fun ProductDto.toDomain(): Product {
     return Product(
@@ -88,16 +107,18 @@ fun CategoryDto.toDomain(): Category {
 
 fun ProductResponseItemsDto.toProductResponseItems(): ProductResponseItems {
     return ProductResponseItems(
-        priceGrocery = priceGrocery,
-        unit = unit,
-        product = product.toDomain(),
-        price = price,
+        name = name,
+        imageUrl = imageUrl,
+        description = description,
         id = id,
-        stock = stock
+        category = category.toDomain(),
+        variations = variations.map {
+            it.toDomain()
+        }
     )
 }
 
-fun ProductsResponseDto.toProductsResponse(): ProductsResponse {
+fun ProductsResponseDto.toDomain(): ProductsResponse {
     return ProductsResponse(
         data = data.map {
             it.toProductResponseItems()

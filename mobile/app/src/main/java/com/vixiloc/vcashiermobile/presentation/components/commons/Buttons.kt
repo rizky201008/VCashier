@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +29,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -101,13 +103,15 @@ fun FilledButton(
     modifier: Modifier,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    trailingIcon: Any? = null
+    trailingIcon: Any? = null,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding
 ) {
     Button(
         onClick = onClick,
         modifier = modifier,
         shape = MaterialTheme.shapes.small,
-        colors = colors
+        colors = colors,
+        contentPadding = contentPadding
     ) {
         Text(
             text = text,
@@ -120,6 +124,7 @@ fun FilledButton(
                     faIcon = it,
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
+
                 is ImageVector -> Icon(
                     imageVector = it,
                     contentDescription = null,
@@ -136,18 +141,38 @@ fun OutlinedButton(
     onClick: () -> Unit,
     text: String,
     modifier: Modifier,
-    textStyle: TextStyle = MaterialTheme.typography.bodyMedium
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
+    colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
+    trailingIcon: Any? = null,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding
 ) {
     OutlinedButtonCompose(
         onClick = onClick,
         modifier = modifier,
         shape = MaterialTheme.shapes.large,
+        colors = colors,
+        contentPadding = contentPadding
     ) {
         Text(
             text = text,
             style = textStyle,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(10.dp),
+            overflow = TextOverflow.Ellipsis
         )
+        trailingIcon?.let {
+            when (it) {
+                is FaIconType -> FaIcon(
+                    faIcon = it,
+                    tint = ButtonDefaults.outlinedButtonColors().contentColor
+                )
+
+                is ImageVector -> Icon(
+                    imageVector = it,
+                    contentDescription = null,
+                    tint = ButtonDefaults.outlinedButtonColors().contentColor
+                )
+            }
+        }
     }
 
 }

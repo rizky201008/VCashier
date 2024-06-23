@@ -65,22 +65,22 @@ fun TransactionReviewScreen(
                     bottom.linkTo(parent.bottom)
                 }
             ) {
-                items(state.selectedProduct) {
-                    it.map { data: Map.Entry<ProductResponseItems, Int> ->
-                        TransactionHorizontalProductItem(
-                            price = data.key.price,
-                            name = "${data.key.product.name} - ${data.key.unit}",
-                            image = data.key.product.imageUrl,
-                            amount = data.value,
-                            onAdd = {
-                                viewModel.onEvent(TransactionEvent.IncreaseQty(data.key))
-                            },
-                            onRemove = {
-                                viewModel.onEvent(TransactionEvent.DecreaseQty(data.key))
-                            }
-                        )
-                    }
-                }
+//                items(state.selectedProduct) {
+//                    it.map { data: Map.Entry<ProductResponseItems, Int> ->
+//                        TransactionHorizontalProductItem(
+//                            price = data.key.variations[0].price,
+//                            name = "${data.key.name} - ${data.key.unit}",
+//                            image = data.key.product.imageUrl,
+//                            amount = data.value,
+//                            onAdd = {
+//                                viewModel.onEvent(TransactionEvent.IncreaseQty(data.key))
+//                            },
+//                            onRemove = {
+//                                viewModel.onEvent(TransactionEvent.DecreaseQty(data.key))
+//                            }
+//                        )
+//                    }
+//                }
                 item {
                     VerticalSpacer(height = 10.dp)
                 }

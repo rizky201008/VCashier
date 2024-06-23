@@ -2,7 +2,6 @@ package com.vixiloc.vcashiermobile.presentation.screens.transaction.create_trans
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -15,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.vixiloc.vcashiermobile.presentation.components.commons.AddToCartModal
 import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
@@ -59,13 +57,13 @@ fun CreateTransactionScreen(
         ) {
             items(state.products) { product ->
                 TransactionProductItem(
-                    price = product.price.toString(),
-                    name = "${product.product.name} - ${product.unit}",
-                    image = product.product.imageUrl ?: "",
+                    name = product.name,
+                    image = product.imageUrl ?: "",
                     onAdd = {
                         onEvent(CreateTransactionEvent.SelectProduct(product))
                     },
-                    modifier = Modifier
+                    modifier = Modifier,
+                    variations = product.variations
                 )
             }
             item {
@@ -95,6 +93,5 @@ fun CreateTransactionScreen(
                 onEvent(CreateTransactionEvent.DismissAlertMessage)
             }
         )
-        AddToCartModal()
     }
 }

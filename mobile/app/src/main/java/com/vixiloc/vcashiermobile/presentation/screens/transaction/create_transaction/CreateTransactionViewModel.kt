@@ -32,7 +32,7 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager): ViewModel() {
                     if (!state.selectedProduct.any { it.containsKey(event.product) }) {
                         state = state.copy(
                             selectedProduct = state.selectedProduct.plus(mapOf(event.product to 1)),
-                            totalPrice = state.totalPrice + event.product.price
+//                            totalPrice = state.totalPrice + event.product.price
                         )
                     }
                 }

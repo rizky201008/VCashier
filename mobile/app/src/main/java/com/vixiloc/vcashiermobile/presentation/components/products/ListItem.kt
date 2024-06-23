@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,9 +17,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.Remove
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenu as DropdownMenuCompose
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -41,25 +45,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
+import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
 import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.commons.OutlinedButton
 import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 
 @Composable
 fun TransactionProductItem(
     modifier: Modifier = Modifier,
-    price: String,
+    variations: List<ProductsVariation> = emptyList(),
     name: String,
     image: String? = null,
     onAdd: () -> Unit = {},
-    selected: Boolean = false
 ) {
+    var menuExpanded by remember { mutableStateOf(false) }
+    var selectedVariation: ProductsVariation? by remember { mutableStateOf(null) }
 
     Card(
         modifier = modifier
@@ -103,14 +111,33 @@ fun TransactionProductItem(
                     .padding(bottom = 16.dp)
                     .fillMaxWidth()
             ) {
-                Text(
-                    text = price,
-                    style = MaterialTheme.typography.bodySmall.copy(
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight(500)
+                OutlinedButton(
+                    onClick = {
+                        menuExpanded = !menuExpanded
+                    },
+                    text = selectedVariation?.unit ?: "Variasi",
+                    modifier = Modifier.width((152 / 1.3f).dp),
+                    trailingIcon = Icons.Outlined.KeyboardArrowDown,
+                    textStyle = MaterialTheme.typography.bodySmall.copy(
+                        fontSize = 10.sp
                     ),
-                    modifier = Modifier
+                    contentPadding = PaddingValues(2.dp)
                 )
+                DropdownMenuCompose(
+                    modifier = Modifier
+                        .background(color = MaterialTheme.colorScheme.background),
+                    expanded = menuExpanded,
+                    onDismissRequest = { menuExpanded = false },
+                ) {
+                    variations.forEach { variation ->
+                        DropdownMenuItem(
+                            text = { Text(variation.unit) },
+                            onClick = {
+                                selectedVariation = variation
+                            }
+                        )
+                    }
+                }
                 IconButton(
                     onClick = onAdd,
                     icon = Icons.Outlined.Add,
@@ -270,11 +297,7 @@ private fun ProductItemPreview() {
                     .background(color = MaterialTheme.colorScheme.surface),
                 contentAlignment = Alignment.Center
             ) {
-                TransactionProductItem(
-                    name = "Salad Tuna",
-                    price = "Rp. 100.000",
-                    image = ""
-                )
+
             }
         }
     }

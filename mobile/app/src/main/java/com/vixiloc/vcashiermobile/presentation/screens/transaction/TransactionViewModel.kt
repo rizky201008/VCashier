@@ -51,10 +51,10 @@ class TransactionViewModel(
 
             is TransactionEvent.SelectProduct -> {
                 if (!state.selectedProduct.any { it.containsKey(event.product) }) {
-                    state = state.copy(
-                        selectedProduct = state.selectedProduct.plus(mapOf(event.product to 1)),
-                        totalPrice = state.totalPrice + event.product.price
-                    )
+//                    state = state.copy(
+//                        selectedProduct = state.selectedProduct.plus(mapOf(event.product to 1)),
+//                        totalPrice = state.totalPrice + event.product.price
+//                    )
                 }
             }
 
@@ -69,7 +69,7 @@ class TransactionViewModel(
                             it
                         }
                     },
-                    totalPrice = state.totalPrice + event.product.price
+//                    totalPrice = state.totalPrice + event.product.price
                 )
             }
 
@@ -85,12 +85,12 @@ class TransactionViewModel(
                                 it
                             }
                         },
-                        totalPrice = state.totalPrice - event.product.price
+//                        totalPrice = state.totalPrice - event.product.price
                     )
                 } else {
                     state = state.copy(
                         selectedProduct = state.selectedProduct.filter { !it.containsKey(event.product) },
-                        totalPrice = state.totalPrice - event.product.price
+//                        totalPrice = state.totalPrice - event.product.price
                     )
                 }
             }

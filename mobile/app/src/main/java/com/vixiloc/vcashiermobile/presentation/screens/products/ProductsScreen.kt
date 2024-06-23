@@ -73,13 +73,13 @@ fun ProductsScreen(
             ) {
                 items(state.products) { product: ProductResponseItems ->
                     ProductItem(
-                        price = CurrencyFormatter.formatCurrency(product.price),
+                        price = CurrencyFormatter.formatCurrency(product.variations[0].price),
                         context = context,
-                        name = "${product.product.name} - ${product.unit}",
-                        category = product.product.category.name,
-                        image = product.product.imageUrl,
+                        name = product.name,
+                        category = product.category.name,
+                        image = product.imageUrl,
                         onClick = {
-                            navController.navigate(Screens.Products.UpdateProduct(product.product.id.toString()))
+                            navController.navigate(Screens.Products.UpdateProduct(product.id.toString()))
                         }
                     )
                 }

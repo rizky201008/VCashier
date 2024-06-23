@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kspAndroid)
     alias(libs.plugins.jetbrainsKotlinSerialization)
     alias(libs.plugins.jetbrainsKotlinParcelize)
+    alias(libs.plugins.io.realm.kotlin)
 }
 
 android {
@@ -74,6 +75,7 @@ dependencies {
     implementation(libs.data.store)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.faCompose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

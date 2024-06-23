@@ -5,4 +5,5 @@ plugins {
     alias(libs.plugins.kspAndroid) apply false
     alias(libs.plugins.jetbrainsKotlinSerialization) apply false
     alias(libs.plugins.jetbrainsKotlinParcelize) apply false
+    alias(libs.plugins.io.realm.kotlin) apply false
 }

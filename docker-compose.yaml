@@ -39,14 +39,12 @@ services:
       - vcashier
 
   php:
-    image: vixiloc/vcashier-php:1.0.2
+    image: vixiloc/vcashier-php:1.0.3
     container_name: php_vcashier
     restart: unless-stopped
     tty: true
     working_dir: /var/www/app
     volumes:
       - ./backend:/var/www/app
-    ports:
-      - "${PHP_HOST_PORT}:${PHP_DOCKER_CONTAINER_PORT}"
     networks:
       - vcashier

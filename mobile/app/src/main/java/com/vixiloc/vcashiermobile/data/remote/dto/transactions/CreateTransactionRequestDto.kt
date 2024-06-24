@@ -16,5 +16,7 @@ data class ItemRequestDto(
     @SerializedName("id")
     val id: Int,
     @SerializedName("quantity")
-    val quantity: Int
+    val quantity: Int,
+    @SerializedName("grocery")
+    val grocery: Boolean = false
 )

@@ -19,7 +19,7 @@ class UseCaseManager(
     private val paymentsRepository: PaymentsRepository
 ) {
     fun httpHandler() = HttpHandler()
-    fun saveToken() = SaveToken(repository = dataStoreRepository)
+    private fun saveToken() = SaveToken(repository = dataStoreRepository)
     fun loginUseCase() =
         Login(repository = authRepository, httpHandler = httpHandler(), saveToken = saveToken())
 
@@ -136,6 +136,14 @@ class UseCaseManager(
         repository = paymentsRepository,
         token = getTokenUseCase(),
         httpHandler = httpHandler()
+    )
+
+    fun getCartItemsUseCase() = GetCartItems(
+        repository = transactionRepository
+    )
+
+    fun insertCartUseCase() = InsertCart(
+        repository = transactionRepository
     )
 
 }

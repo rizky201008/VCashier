@@ -11,7 +11,7 @@ import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.commons.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionRequest
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
-import com.vixiloc.vcashiermobile.domain.model.transactions.Item
+import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionItem
 import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
 import com.vixiloc.vcashiermobile.domain.use_case.CreateTransaction
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
@@ -211,7 +211,7 @@ class TransactionViewModel(
     private fun createTransaction() {
         val items = state.selectedProduct.flatMap { map ->
             map.map { (product, quantity) ->
-                Item(id = product.id, quantity = quantity)
+                CreateTransactionItem(id = product.id, quantity = quantity)
             }
         }
         val data = CreateTransactionRequest(

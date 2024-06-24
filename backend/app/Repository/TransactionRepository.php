@@ -5,11 +5,30 @@ namespace App\Repository;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Exception;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TransactionRepository
 {
+    public function processTransaction(array $data): array
+    {
+        DB::beginTransaction();
+
+        try {
+            $transaction = $this->saveTransaction($data);
+            $this->saveTransactionItems($data, $transaction->id);
+
+            DB::commit();
+
+            return [
+                'message' => 'Transaction created'
+            ];
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function getTotalAmount(array $items): int
     {
         $totalAmount = 0;
@@ -48,11 +67,16 @@ class TransactionRepository
         $transactionItems = [];
         foreach ($data['items'] as $item) {
             $productVariation = $productRepository->getProductVariation($item['id']);
+            if ($item['grocery']) {
+                $price = $productVariation->price_grocery;
+            } else {
+                $price = $productVariation->price;
+            }
             $transactionItems[] = [
                 'transaction_id' => $transactionId,
                 'product_variation_id' => $item['id'],
                 'quantity' => $item['quantity'],
-                'price' => $productVariation->price,
+                'price' => $price,
                 'subtotal' => $this->getPriceByQuantity($item['quantity'], $productVariation->price),
             ];
             $productRepository->decreaseStock($item['id'], $item['quantity']);

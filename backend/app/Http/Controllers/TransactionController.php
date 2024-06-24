@@ -47,22 +47,6 @@ class TransactionController extends Controller
         $data['total_amount'] = $this->transactionRepository->getTotalAmount($data['items']);
         $data['transaction_status'] = 'draft';
 
-        DB::beginTransaction();
-
-        try {
-            $transaction = $this->transactionRepository->saveTransaction($data);
-            $this->transactionRepository->saveTransactionItems($data, $transaction->id);
-
-            DB::commit();
-
-            return response()->json([
-                'message' => 'Transaction created'
-            ]);
-        } catch (Exception $e) {
-            DB::rollBack();
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        return response()->json($this->transactionRepository->processTransaction($data));
     }
 }

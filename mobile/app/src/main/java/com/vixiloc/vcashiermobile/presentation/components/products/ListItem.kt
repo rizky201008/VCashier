@@ -64,7 +64,7 @@ fun TransactionProductItem(
     variations: List<ProductsVariation> = emptyList(),
     name: String,
     image: String? = null,
-    onAdd: () -> Unit = {},
+    onAdd: (ProductsVariation) -> Unit = {},
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
     var selectedVariation: ProductsVariation? by remember { mutableStateOf(null) }
@@ -134,12 +134,17 @@ fun TransactionProductItem(
                             text = { Text(variation.unit) },
                             onClick = {
                                 selectedVariation = variation
+                                menuExpanded = false
                             }
                         )
                     }
                 }
                 IconButton(
-                    onClick = onAdd,
+                    onClick = {
+                        selectedVariation?.let {
+                            onAdd(it)
+                        }
+                    },
                     icon = Icons.Outlined.Add,
                     filled = true,
                     containerSize = 30.dp

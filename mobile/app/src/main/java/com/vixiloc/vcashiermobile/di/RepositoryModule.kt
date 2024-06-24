@@ -1,6 +1,7 @@
 package com.vixiloc.vcashiermobile.di
 
 import com.vixiloc.vcashiermobile.data.local.prefs.UserPreference
+import com.vixiloc.vcashiermobile.data.local.realm.CartItemsDao
 import com.vixiloc.vcashiermobile.data.remote.ApiService
 import com.vixiloc.vcashiermobile.data.repository.AuthRepositoryImpl
 import com.vixiloc.vcashiermobile.data.repository.CategoryRepositoryImpl
@@ -16,6 +17,7 @@ import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
 import com.vixiloc.vcashiermobile.domain.repository.PaymentsRepository
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository
+import io.realm.kotlin.Realm
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -24,7 +26,7 @@ val repositoryModule = module {
     single { provideProductsRepository(get()) }
     single { provideCategoryRepository(get()) }
     single { provideCustomerRepository(get()) }
-    single { provideTransactionRepository(get()) }
+    single { provideTransactionRepository(get(), get()) }
     single { providePaymentsRepository(get()) }
 }
 
@@ -48,8 +50,11 @@ fun provideCustomerRepository(apiService: ApiService): CustomerRepository {
     return CustomerRepositoryImpl(apiService)
 }
 
-fun provideTransactionRepository(apiService: ApiService): TransactionRepository {
-    return TransactionRepositoryImpl(apiService)
+fun provideTransactionRepository(
+    apiService: ApiService,
+    cartItemsDao: CartItemsDao
+): TransactionRepository {
+    return TransactionRepositoryImpl(apiService, cartItemsDao)
 }
 
 fun providePaymentsRepository(apiService: ApiService): PaymentsRepository {

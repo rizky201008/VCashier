@@ -13,7 +13,7 @@ class VcashierApp : Application() {
             modules(
                 listOf(
                     retrofitModule, viewModelModule, repositoryModule, useCaseModule,
-                    dataStoreModule
+                    dataStoreModule, realmModule
                 )
             )
         }

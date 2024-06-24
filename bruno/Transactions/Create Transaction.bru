@@ -16,16 +16,18 @@ auth:bearer {
 
 body:json {
   {
-      "customer_id": 1,
-      "items": [
-          {
-              "id": 24,
-              "quantity": 10
-          },
-          {
-              "id": 27,
-              "quantity": 20
-          }
-      ]
+    "customer_id": 1,
+    "items": [
+      {
+        "id": 24,
+        "quantity": 10,
+        "grocery": true
+      },
+      {
+        "id": 27,
+        "quantity": 20,
+        "grocery": false
+      }
+    ]
   }
 }

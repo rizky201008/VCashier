@@ -4,6 +4,8 @@ import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransaction
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
+import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
+import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
 
@@ -14,4 +16,6 @@ interface TransactionRepository {
 
     suspend fun getTransactions(token: String): TransactionsResponseDto
     suspend fun getTransaction(token: String, id: String): TransactionResponseDto
+    suspend fun addToCart(data: CartItems)
+    suspend fun getCartItems(): Flow<List<CartItems>>
 }

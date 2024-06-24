@@ -5,17 +5,19 @@ import com.vixiloc.vcashiermobile.data.remote.dto.transactions.ItemRequestDto
 
 data class CreateTransactionRequest(
     val customerId: Int,
-    val items: List<Item>,
+    val items: List<CreateTransactionItem>,
     val status: String = "draft"
 )
 
-data class Item(
+data class CreateTransactionItem(
     val id: Int,
+    val grocery: Boolean = false,
     val quantity: Int
 )
 
-fun Item.toDto() = ItemRequestDto(
+fun CreateTransactionItem.toDto() = ItemRequestDto(
     id = id,
+    grocery = grocery,
     quantity = quantity
 )
 

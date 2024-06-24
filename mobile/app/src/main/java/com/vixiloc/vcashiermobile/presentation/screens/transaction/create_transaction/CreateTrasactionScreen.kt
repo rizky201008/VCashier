@@ -1,5 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.commons.SearchTextField
 import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.components.products.TransactionProductItem
+import com.vixiloc.vcashiermobile.presentation.components.transaction.AddToCartModal
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -28,7 +30,7 @@ fun CreateTransactionScreen(
     modifier: Modifier = Modifier,
     viewModel: CreateTransactionViewModel = koinViewModel()
 ) {
-    val state = viewModel.state
+    val state = viewModel.state.value
     val onEvent = viewModel::onEvent
     LaunchedEffect(key1 = Unit) {
         onEvent(CreateTransactionEvent.ClearCart)
@@ -60,7 +62,7 @@ fun CreateTransactionScreen(
                     name = product.name,
                     image = product.imageUrl ?: "",
                     onAdd = {
-                        onEvent(CreateTransactionEvent.SelectProduct(product))
+                        onEvent(CreateTransactionEvent.AddToCart(it))
                     },
                     modifier = Modifier,
                     variations = product.variations
@@ -93,5 +95,13 @@ fun CreateTransactionScreen(
                 onEvent(CreateTransactionEvent.DismissAlertMessage)
             }
         )
+
+        state.selectedProduct?.let {
+            AnimatedVisibility(visible = true) {
+                AddToCartModal(variation = it, onDismissRequest = {
+                    onEvent(CreateTransactionEvent.DismissAddToCartModal)
+                })
+            }
+        }
     }
 }

@@ -1,12 +1,12 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction
 
 import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
+import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
 
 data class CreateTransactionState(
     val products: List<ProductResponseItems> = emptyList(),
-    val selectedProduct: List<Map<ProductResponseItems, Int>> = emptyList(),
+    val selectedProduct: ProductsVariation? = null,
     val error: String = "",
     val success: String = "",
-    val totalPrice: Int = 0,
     val isLoading: Boolean = false,
 )

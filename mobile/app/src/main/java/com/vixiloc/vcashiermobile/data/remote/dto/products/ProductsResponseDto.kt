@@ -75,7 +75,9 @@ data class ProductsVariationDto(
     @SerializedName("stock")
     val stock: Int,
     @SerializedName("unit")
-    val unit: String
+    val unit: String,
+    @SerializedName("product_id")
+    val productId: Int
 )
 
 fun ProductsVariationDto.toDomain(): ProductsVariation {
@@ -84,7 +86,8 @@ fun ProductsVariationDto.toDomain(): ProductsVariation {
         price = price,
         priceGrocery = priceGrocery,
         stock = stock,
-        unit = unit
+        unit = unit,
+        productId = productId
     )
 }
 

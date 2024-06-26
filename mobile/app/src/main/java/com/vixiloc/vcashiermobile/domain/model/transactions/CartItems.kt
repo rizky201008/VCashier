@@ -7,10 +7,14 @@ import org.mongodb.kbson.ObjectId
 class CartItems : RealmObject {
     @PrimaryKey
     var _id: ObjectId = ObjectId()
-    var productId: Int = 0
+    var variationId: Int = 0
     var grocery: Boolean = false
     var quantity: Int = 0
+    var price: Int = 0
+    var imageUrl: String? = null
+    var name: String = ""
+    var maxStock: Int = 0
 }
 
 fun CartItems.toDataClass() =
-    CreateTransactionItem(id = productId, grocery = grocery, quantity = quantity)
+    CreateTransactionItem(id = variationId, grocery = grocery, quantity = quantity)

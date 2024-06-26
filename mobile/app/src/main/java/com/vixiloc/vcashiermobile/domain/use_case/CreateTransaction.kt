@@ -5,6 +5,7 @@ import com.vixiloc.vcashiermobile.commons.Resource
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.toDomain
 import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionRequest
 import com.vixiloc.vcashiermobile.domain.model.OnlyResponseMessage
+import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionResponse
 import com.vixiloc.vcashiermobile.domain.model.transactions.toDto
 import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +19,7 @@ class CreateTransaction(
     private val getToken: GetToken,
     private val httpHandler: HttpHandler
 ) {
-    operator fun invoke(data: CreateTransactionRequest): Flow<Resource<OnlyResponseMessage>> =
+    operator fun invoke(data: CreateTransactionRequest): Flow<Resource<CreateTransactionResponse>> =
         flow {
             val token = getToken().first()
             try {

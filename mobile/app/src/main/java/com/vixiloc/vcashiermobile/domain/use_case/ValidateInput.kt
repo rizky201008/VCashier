@@ -5,25 +5,25 @@ import com.vixiloc.vcashiermobile.domain.model.ValidationRule
 
 class ValidateInput {
     operator fun invoke(
-        input: String,
+        input: Any?,
         validationRule: ValidationRule,
         requiredLength: Int? = null
-    ): ValidationResult<Boolean> {
+    ): ValidationResult {
         return when (validationRule) {
             ValidationRule.Required -> {
-                if (input.isEmpty()) {
-                    ValidationResult.Required(true, "Err: Wajib diisi")
+                if (input is String && input.isEmpty()) {
+                    ValidationResult(false, "Error: Data wajib diisi!")
                 } else {
-                    ValidationResult.Required(false, null)
+                    ValidationResult(true, null)
                 }
             }
 
             ValidationRule.MinLength -> {
                 requiredLength?.let {
-                    if (input.length < it) {
-                        ValidationResult.MinLength(true, "Err: Minimal $it karakter")
+                    if (input is String && input.length < it) {
+                        ValidationResult(false, "Err: Minimal $it karakter")
                     } else {
-                        ValidationResult.MinLength(false, null)
+                        ValidationResult(true, null)
                     }
                 }
                     ?: throw IllegalArgumentException("requiredLength must be provided for MinLength validation rule")
@@ -31,13 +31,29 @@ class ValidateInput {
 
             ValidationRule.MinValue -> {
                 requiredLength?.let {
-                    if (input.toInt() < it) {
-                        ValidationResult.MinValue(true, "Err: Minimal $it")
+                    if (input is String && input.toInt() < it) {
+                        ValidationResult(false, "Err: Minimal $it")
                     } else {
-                        ValidationResult.MinValue(false, null)
+                        ValidationResult(true, null)
                     }
                 }
                     ?: throw IllegalArgumentException("requiredLength must be provided for MinValue validation rule")
+            }
+
+            ValidationRule.NotEmpty -> {
+                if (input is List<*> && input.isNotEmpty()) {
+                    ValidationResult(true, null)
+                } else {
+                    ValidationResult(false, "Silahkan pilih minimal 1 produk")
+                }
+            }
+
+            ValidationRule.NotNull -> {
+                if (input != null) {
+                    ValidationResult(true, null)
+                } else {
+                    ValidationResult(false, "Silahkan isi semua data yang diperlukan")
+                }
             }
         }
     }

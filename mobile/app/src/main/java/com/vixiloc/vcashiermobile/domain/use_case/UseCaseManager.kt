@@ -146,4 +146,18 @@ class UseCaseManager(
         repository = transactionRepository
     )
 
+    fun updateCartUseCase() = UpdateCart(
+        repository = transactionRepository
+    )
+
+    fun deleteCartUseCase() = DeleteCart(
+        repository = transactionRepository
+    )
+
+    fun validateInput() = ValidateInput()
+
+    fun clearCartUseCase() = ClearCart(
+        repository = transactionRepository
+    )
+
 }

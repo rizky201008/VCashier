@@ -7,8 +7,9 @@ object CurrencyFormatter {
     fun formatCurrency(amount: Int): String {
         val format: NumberFormat = NumberFormat.getCurrencyInstance()
         format.setMaximumFractionDigits(0)
-        format.setCurrency(Currency.getInstance("IDR"))
+        format.currency = Currency.getInstance("IDR")
 
-        return format.format(amount)
+        val result = format.format(amount)
+        return result.replace("IDR", "Rp ")
     }
 }

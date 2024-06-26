@@ -18,11 +18,11 @@ here is my todo's on this projects :
  - [x] Create Product Variation
  - [x] Update Product
  - [x] Update Product Variation
- - [ ] Search Products
+ - [x] Search Products
  - [x] Show Transactions
  - [x] Create Transactions
- - [ ] Create Transaction Payment
- - [ ] Show Transaction Payment
+ - [x] Create Transaction Payment
+ - [x] Show Transaction Payment
 
 
 ![](https://geps.dev/progress/85)

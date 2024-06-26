@@ -116,7 +116,7 @@ fun FilledButton(
         Text(
             text = text,
             style = textStyle,
-            modifier = Modifier
+            modifier = Modifier.padding(vertical = 20.dp)
         )
         trailingIcon?.let {
             when (it) {

@@ -33,9 +33,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.core.text.isDigitsOnly
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
+import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
+import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
 import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
@@ -46,11 +47,12 @@ fun AddToCartModal(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit = { },
     variation: ProductsVariation,
-    onConfirm: () -> Unit = { }
+    product: ProductResponseItems,
+    onConfirm: (CartItems) -> Unit = { }
 ) {
     var amount by remember { mutableIntStateOf(0) }
     var isGrocery by remember { mutableStateOf(false) }
-    val price = if (isGrocery) variation.priceGrocery else variation.price
+    val productPrice = if (isGrocery) variation.priceGrocery else variation.price
     Dialog(
         onDismissRequest = onDismissRequest
     ) {
@@ -93,7 +95,7 @@ fun AddToCartModal(
                         )
                     )
                     Text(
-                        text = CurrencyFormatter.formatCurrency(price),
+                        text = CurrencyFormatter.formatCurrency(productPrice),
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -143,13 +145,22 @@ fun AddToCartModal(
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight(600))
             )
             Text(
-                text = CurrencyFormatter.formatCurrency(price * amount),
+                text = CurrencyFormatter.formatCurrency(productPrice * amount),
                 style = MaterialTheme.typography.bodySmall
             )
             VerticalSpacer(height = 10.dp)
             FilledButton(
                 onClick = {
-                    onConfirm()
+                    val data = CartItems().apply {
+                        variationId = variation.id
+                        quantity = amount
+                        grocery = isGrocery
+                        price = productPrice
+                        imageUrl = product.imageUrl
+                        name = "${product.name} - ${variation.unit}"
+                        maxStock = variation.stock
+                    }
+                    onConfirm(data)
                     onDismissRequest()
                 },
                 text = "Konfirmasi",
@@ -163,6 +174,6 @@ fun AddToCartModal(
 @Composable
 private fun ModalPrev() {
     VcashierMobileTheme {
-        AddToCartModal(variation = ProductsVariation(1, 15000, 11500, 5, "5 Kg"))
+
     }
 }

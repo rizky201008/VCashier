@@ -55,10 +55,10 @@ fun Loading(modifier: Modifier, visible: Boolean = false) {
 
 @Composable
 fun MessageAlert(
+    modifier: Modifier = Modifier,
     type: AlertType,
     message: String,
     title: String,
-    modifier: Modifier,
     visible: Boolean = false,
     onDismiss: () -> Unit = {},
     confirmButton: @Composable () -> Unit = {},

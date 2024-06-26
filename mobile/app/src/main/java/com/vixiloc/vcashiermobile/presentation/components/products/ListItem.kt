@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,10 +18,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.Remove
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenu as DropdownMenuCompose
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +31,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,6 +46,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -53,6 +58,7 @@ import coil.size.Size
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
+import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
 import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.commons.OutlinedButton
 import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
@@ -115,7 +121,7 @@ fun TransactionProductItem(
                     onClick = {
                         menuExpanded = !menuExpanded
                     },
-                    text = selectedVariation?.unit ?: "Variasi",
+                    text = if (selectedVariation == null) "Pilih Varian" else selectedVariation!!.unit,
                     modifier = Modifier.width((152 / 1.3f).dp),
                     trailingIcon = Icons.Outlined.KeyboardArrowDown,
                     textStyle = MaterialTheme.typography.bodySmall.copy(
@@ -131,7 +137,13 @@ fun TransactionProductItem(
                 ) {
                     variations.forEach { variation ->
                         DropdownMenuItem(
-                            text = { Text(variation.unit) },
+                            text = {
+                                Text(
+                                    variation.unit + " " + CurrencyFormatter.formatCurrency(
+                                        variation.price
+                                    )
+                                )
+                            },
                             onClick = {
                                 selectedVariation = variation
                                 menuExpanded = false
@@ -156,63 +168,79 @@ fun TransactionProductItem(
 
 @Composable
 fun TransactionHorizontalProductItem(
-    price: Int,
-    name: String,
-    image: String? = null,
-    onAdd: () -> Unit = {},
-    onRemove: () -> Unit = {},
-    amount: Int,
+    modifier: Modifier = Modifier,
+    data: CartItems,
+    onDelete: (CartItems) -> Unit
 ) {
-    val priceTotal = price * amount
-    Card(
-        modifier = Modifier
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    var total by remember {
+        mutableIntStateOf(data.price * data.quantity)
+    }
+
+    Box(
+        modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp),
-        shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
+            .height(100.dp)
+            .background(
+                color = Color.White,
+                shape = MaterialTheme.shapes.medium
+            )
     ) {
-        Row {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
-                model = image,
-                placeholder = painterResource(
+                model = data.imageUrl,
+                error = painterResource(
                     id = R.drawable.gmbr_placeholder
                 ),
-                error = painterResource(
+                placeholder = painterResource(
                     id = R.drawable.gmbr_placeholder
                 ),
                 contentDescription = null,
                 modifier = Modifier
-                    .width(130.dp)
-                    .height(130.dp)
+                    .fillMaxHeight()
+                    .width(100.dp)
                     .clip(MaterialTheme.shapes.large),
                 contentScale = ContentScale.Crop
             )
             Column(
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .width(screenWidth / 2f)
             ) {
                 Text(
-                    text = name,
-                    style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.onBackground),
-                )
-                Text(
-                    text = CurrencyFormatter.formatCurrency(priceTotal),
-                    style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.primary),
-                )
-
-                VerticalSpacer(height = 11.dp)
-                Row(
-                    horizontalArrangement = Arrangement.SpaceAround,
-                    verticalAlignment = Alignment.CenterVertically,
+                    text = data.name,
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        fontWeight = FontWeight(600),
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontSize = 14.sp
+                    ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(end = 80.dp)
+                        .height(20.dp),
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Text(
+                    text = CurrencyFormatter.formatCurrency(total),
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                    ),
+                    modifier = Modifier
+                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
                 ) {
-                    IconButton(onClick = onAdd, icon = Icons.Outlined.Add)
                     Text(
-                        text = amount.toString(),
-                        style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.primary)
+                        text = "${data.quantity} Pcs",
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            color = MaterialTheme.colorScheme.primary
+                        ),
+                        modifier = Modifier.padding(horizontal = 8.dp)
                     )
-                    IconButton(onClick = onRemove, icon = Icons.Outlined.Remove)
+                    IconButton(onClick = { onDelete(data) }, icon = Icons.Outlined.Delete)
                 }
             }
         }
@@ -299,10 +327,9 @@ private fun ProductItemPreview() {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.surface),
+                    .padding(25.dp),
                 contentAlignment = Alignment.Center
             ) {
-
             }
         }
     }

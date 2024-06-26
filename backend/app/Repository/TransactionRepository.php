@@ -21,7 +21,8 @@ class TransactionRepository
             DB::commit();
 
             return [
-                'message' => 'Transaction created'
+                'message' => 'Transaction created',
+                'transaction_id' => $transaction->id
             ];
         } catch (Exception $e) {
             DB::rollBack();

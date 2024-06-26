@@ -2,11 +2,15 @@ package com.vixiloc.vcashiermobile.presentation.screens.transaction.create_trans
 
 import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
+import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
 
 data class CreateTransactionState(
     val products: List<ProductResponseItems> = emptyList(),
-    val selectedProduct: ProductsVariation? = null,
+    val selectedVariation: ProductsVariation? = null,
     val error: String = "",
     val success: String = "",
     val isLoading: Boolean = false,
+    val cartItems: List<CartItems> = emptyList(),
+    val cartTotal: Int = 0,
+    val selectedProduct: ProductResponseItems? = null
 )

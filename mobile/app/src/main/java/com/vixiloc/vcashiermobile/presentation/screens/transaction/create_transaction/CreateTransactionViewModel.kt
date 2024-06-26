@@ -5,10 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.commons.Resource
+import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
+import com.vixiloc.vcashiermobile.domain.use_case.GetCartItems
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
+import com.vixiloc.vcashiermobile.domain.use_case.InsertCart
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
@@ -16,6 +21,8 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     val state: State<CreateTransactionState> = _state
 
     private val getProductsUseCase: GetProducts = useCaseManager.getProductsUseCase()
+    private val addToCartUseCase: InsertCart = useCaseManager.insertCartUseCase()
+    private val getCartItemsUseCase: GetCartItems = useCaseManager.getCartItemsUseCase()
 
 
     fun onEvent(event: CreateTransactionEvent) {
@@ -29,8 +36,11 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                 resetCart()
             }
 
-            is CreateTransactionEvent.AddToCart -> {
-                _state.value = state.value.copy(selectedProduct = event.variation)
+            is CreateTransactionEvent.AddVariation -> {
+                _state.value = state.value.copy(
+                    selectedVariation = event.variation,
+                    selectedProduct = event.product
+                )
             }
 
             is CreateTransactionEvent.DismissAlertMessage -> {
@@ -38,13 +48,32 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             }
 
             is CreateTransactionEvent.DismissAddToCartModal -> {
-                _state.value = state.value.copy(selectedProduct = null)
+                _state.value = state.value.copy(selectedVariation = null, selectedProduct = null)
+            }
+
+            is CreateTransactionEvent.AddToCart -> {
+                addToCart(event.item)
             }
 
         }
     }
 
+    private fun addToCart(item: CartItems) {
+        viewModelScope.launch {
+            addToCartUseCase(item)
+        }
+    }
+
+    private fun getCartItems() {
+        viewModelScope.launch {
+            getCartItemsUseCase().onEach {
+                _state.value = state.value.copy(cartItems = it)
+            }.stateIn(viewModelScope)
+        }
+    }
+
     private fun resetCart() {
+        // TODO: Implement Clear Cart Items
     }
 
     private fun getProducts() {
@@ -69,6 +98,11 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    init {
+        getProducts()
+        getCartItems()
     }
 
 }

@@ -18,6 +18,7 @@ fun provideRealm(): Realm {
             CartItems::class
         )
     )
+        .deleteRealmIfMigrationNeeded()
         .compactOnLaunch()
         .build()
 

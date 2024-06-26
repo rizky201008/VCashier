@@ -2,14 +2,12 @@ package com.vixiloc.vcashiermobile.presentation.navigations
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
-import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.CreateCategoryScreen
 import com.vixiloc.vcashiermobile.presentation.screens.category.UpdateCategoryScreen
@@ -20,12 +18,12 @@ import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.CreateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.UpdateProductScreen
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.SearchCustomerScreen
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentScreen
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionReviewScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionsScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.CheckoutScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentScreen
 import kotlinx.serialization.Serializable
 
 sealed interface Screens {
@@ -38,19 +36,7 @@ sealed interface Screens {
         data object CreateTransaction : Screens
 
         @Serializable
-        data object ReviewTransaction : Screens
-
-        @Serializable
-        data object SearchCustomer : Screens
-
-        @Serializable
         data object AllTransactions : Screens
-
-        @Serializable
-        data class MakePayment(val transactionId: String) : Screens
-
-        @Serializable
-        data class PayTransaction(val id: String) : Screens
     }
 
     @Serializable
@@ -98,8 +84,22 @@ sealed interface Screens {
 
 }
 
+sealed interface CheckoutScreens {
+    @Serializable
+    data object Checkout : CheckoutScreens
+
+    @Serializable
+    data class PayTransaction(val id: String) : CheckoutScreens
+
+    @Serializable
+    data object SearchCustomer : CheckoutScreens
+
+    @Serializable
+    data class MakePayment(val transactionId: String) : CheckoutScreens
+}
+
 @Composable
-fun MainNavHost(navController: NavHostController, modifier: Modifier) {
+fun NavHosts(navController: NavHostController, modifier: Modifier) {
     NavHost(navController = navController, startDestination = Screens.Home) {
         composable<Screens.Home> {
             HomeScreen(navigator = navController, modifier = modifier)
@@ -111,45 +111,11 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
                     modifier = modifier,
                 )
             }
-            composable<Screens.Transactions.ReviewTransaction> { navBackStackEntry: NavBackStackEntry ->
-                val customer =
-                    navBackStackEntry.savedStateHandle.get<CustomerResponseItem>("customer")
-                val products =
-                    navBackStackEntry.savedStateHandle.get<List<Map<ProductResponseItems, Int>>>("products")
-                val total = navBackStackEntry.savedStateHandle.get<Int>("total")
-                TransactionReviewScreen(
-                    navigator = navController,
-                    modifier = modifier,
-                    customer = customer,
-                    products = products ?: emptyList(),
-                    total = total ?: 0
-                )
-            }
-            composable<Screens.Transactions.SearchCustomer> {
-                SearchCustomerScreen(
-                    navController = navController,
-                    modifier = modifier
-                )
-            }
+
             composable<Screens.Transactions.AllTransactions> {
                 TransactionsScreen(navHostController = navController, modifier = modifier)
             }
-            composable<Screens.Transactions.MakePayment> {
-                val args = it.toRoute<Screens.Transactions.MakePayment>()
-                TransactionPaymentScreen(
-                    navigator = navController,
-                    navArgs = args,
-                    modifier = modifier
-                )
-            }
-            composable<Screens.Transactions.PayTransaction> {
-                val args = it.toRoute<Screens.Transactions.PayTransaction>()
-                PayTransactionScreen(
-                    navigator = navController,
-                    navArgs = args,
-                    modifier = modifier
-                )
-            }
+
         }
         navigation<Screens.Categories>(
             startDestination = Screens.Categories.AllCategories,
@@ -208,6 +174,42 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier) {
                 val args = it.toRoute<Screens.Products.UpdateProduct>()
                 UpdateProductScreen(navController = navController, modifier = modifier, args = args)
             }
+        }
+    }
+}
+
+@Composable
+fun CheckoutNavHost(
+    navController: NavHostController,
+    modifier: Modifier
+) {
+    NavHost(navController = navController, startDestination = CheckoutScreens.Checkout) {
+        composable<CheckoutScreens.Checkout> { navBackStackEntry ->
+            val customer =
+                navBackStackEntry.savedStateHandle.get<CustomerResponseItem>("customer")
+            CheckoutScreen(navigator = navController, modifier = modifier, customer = customer)
+        }
+        composable<CheckoutScreens.PayTransaction> {
+            val args = it.toRoute<CheckoutScreens.PayTransaction>()
+            PayTransactionScreen(
+                navigator = navController,
+                navArgs = args,
+                modifier = modifier
+            )
+        }
+        composable<CheckoutScreens.SearchCustomer> {
+            SearchCustomerScreen(
+                navController = navController,
+                modifier = modifier
+            )
+        }
+        composable<CheckoutScreens.MakePayment> {
+            val args = it.toRoute<CheckoutScreens.MakePayment>()
+            TransactionPaymentScreen(
+                navigator = navController,
+                navArgs = args,
+                modifier = modifier
+            )
         }
     }
 }

@@ -18,4 +18,7 @@ interface TransactionRepository {
     suspend fun getTransaction(token: String, id: String): TransactionResponseDto
     suspend fun addToCart(data: CartItems)
     suspend fun getCartItems(): Flow<List<CartItems>>
+    suspend fun updateCartItems(cartItems: CartItems)
+    suspend fun deleteCartItems(cartItems: CartItems)
+    suspend fun clearCartItems()
 }

@@ -31,6 +31,18 @@ class TransactionRepositoryImpl(
         return api.getTransaction(token = "Bearer $token", id = id)
     }
 
+    override suspend fun updateCartItems(cartItems: CartItems) {
+        cartItemsDao.updateCartItems(cartItems)
+    }
+
+    override suspend fun deleteCartItems(cartItems: CartItems) {
+        cartItemsDao.deleteCartItems(cartItems)
+    }
+
+    override suspend fun clearCartItems() {
+        cartItemsDao.clearCartItems()
+    }
+
     override suspend fun addToCart(data: CartItems) {
         cartItemsDao.insertCartItems(data)
     }

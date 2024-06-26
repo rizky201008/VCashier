@@ -42,7 +42,12 @@ class TransactionRepository
             }
             $productVariation = $productRepository->getProductVariation($item['id']);
             if ($this->stockExists($item['quantity'], $productVariation->stock)) {
-                $totalAmount += $this->getPriceByQuantity($item['quantity'], $productVariation->price);
+                if ($item['grocery']) {
+                    $price = $productVariation->price_grocery;
+                } else {
+                    $price = $productVariation->price;
+                }
+                $totalAmount += $this->getPriceByQuantity($item['quantity'], $price);
             } else {
                 throw new Exception('Stock is not enough');
             }

@@ -17,7 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.vixiloc.vcashiermobile.presentation.components.transaction.CustomerItem
+import com.vixiloc.vcashiermobile.presentation.components.transaction.TransactionCustomerItem
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -62,34 +62,30 @@ fun SearchCustomerScreen(
                 searchStatus = it
             }) {
             customerFiltered.forEach { data ->
-                CustomerItem(
+                TransactionCustomerItem(
                     modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp),
-                    headlineText = data.name,
-                    supportingText = data.phoneNumber ?: "",
                     onClick = {
                         navController.popBackStack()
                         navController.currentBackStackEntry
                             ?.savedStateHandle
                             ?.set("customer", data)
                     },
-                    showUpdateButton = false
+                    customer = data
                 )
             }
         }
 
         LazyColumn {
             items(customerLists) { data ->
-                CustomerItem(
+                TransactionCustomerItem(
                     modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp),
-                    headlineText = data.name,
-                    supportingText = data.phoneNumber ?: "",
                     onClick = {
                         navController.popBackStack()
                         navController.currentBackStackEntry
                             ?.savedStateHandle
                             ?.set("customer", data)
                     },
-                    showUpdateButton = false
+                    customer = data
                 )
             }
         }

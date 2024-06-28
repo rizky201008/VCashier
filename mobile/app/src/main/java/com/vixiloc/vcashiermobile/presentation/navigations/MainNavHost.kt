@@ -18,7 +18,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.CreateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.UpdateProductScreen
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.SearchCustomerScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.SearchCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.CheckoutScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionScreen

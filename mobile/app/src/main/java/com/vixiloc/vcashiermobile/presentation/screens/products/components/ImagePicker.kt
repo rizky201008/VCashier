@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.components.products
+package com.vixiloc.vcashiermobile.presentation.screens.products.components
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest

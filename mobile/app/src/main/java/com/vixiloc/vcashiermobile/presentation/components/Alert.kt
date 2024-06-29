@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.components.commons
+package com.vixiloc.vcashiermobile.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement

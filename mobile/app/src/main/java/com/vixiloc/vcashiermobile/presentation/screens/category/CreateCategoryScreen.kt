@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
-import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.components.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.Loading
+import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

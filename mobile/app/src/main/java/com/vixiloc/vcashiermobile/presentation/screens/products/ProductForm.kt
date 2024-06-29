@@ -27,14 +27,14 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.products.Variation
-import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.LongTextField
-import com.vixiloc.vcashiermobile.presentation.components.commons.TextField
-import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
-import com.vixiloc.vcashiermobile.presentation.components.products.DropdownMenu
-import com.vixiloc.vcashiermobile.presentation.components.products.ImagePicker
-import com.vixiloc.vcashiermobile.presentation.components.products.VariationDialog
+import com.vixiloc.vcashiermobile.presentation.components.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.LongTextField
+import com.vixiloc.vcashiermobile.presentation.components.TextField
+import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.screens.products.components.DropdownMenu
+import com.vixiloc.vcashiermobile.presentation.screens.products.components.ImagePicker
+import com.vixiloc.vcashiermobile.presentation.screens.products.components.VariationDialog
 
 enum class FormType {
     CREATE, UPDATE

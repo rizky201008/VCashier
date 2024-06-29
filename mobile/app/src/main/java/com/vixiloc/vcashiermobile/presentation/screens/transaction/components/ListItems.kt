@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.components.transaction
+package com.vixiloc.vcashiermobile.presentation.screens.transaction.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,8 +33,8 @@ import com.guru.fontawesomecomposelib.FaIcons
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.domain.model.payments.PaymentMethodData
-import com.vixiloc.vcashiermobile.presentation.components.commons.HorizontalSpacer
-import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.HorizontalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 
 @Composable

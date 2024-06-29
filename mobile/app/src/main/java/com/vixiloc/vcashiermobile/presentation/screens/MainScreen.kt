@@ -40,7 +40,7 @@ import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenu
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenuName
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenuRoute
-import com.vixiloc.vcashiermobile.presentation.components.commons.PainterIconButton
+import com.vixiloc.vcashiermobile.presentation.components.PainterIconButton
 import com.vixiloc.vcashiermobile.presentation.navigations.NavHostsOld
 import kotlinx.coroutines.launch
 

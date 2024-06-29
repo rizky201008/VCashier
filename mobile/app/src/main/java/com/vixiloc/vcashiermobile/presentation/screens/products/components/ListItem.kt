@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.components.products
+package com.vixiloc.vcashiermobile.presentation.screens.products.components
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -57,9 +57,9 @@ import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
 import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
-import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.OutlinedButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.OutlinedButton
+import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 
 @Composable

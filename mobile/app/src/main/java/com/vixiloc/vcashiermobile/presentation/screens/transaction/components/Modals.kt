@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.components.transaction
+package com.vixiloc.vcashiermobile.presentation.screens.transaction.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,9 +37,9 @@ import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
 import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
-import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 
 @Composable

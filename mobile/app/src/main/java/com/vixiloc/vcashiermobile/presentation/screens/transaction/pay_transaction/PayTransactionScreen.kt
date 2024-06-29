@@ -24,12 +24,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
-import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
-import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
-import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.components.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.Loading
+import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navigations.CheckoutScreens
 import org.koin.androidx.compose.koinViewModel
 

@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.TextField
+import com.vixiloc.vcashiermobile.presentation.components.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.TextField
 
 enum class FormType {
     CREATE, UPDATE

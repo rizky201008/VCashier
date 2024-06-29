@@ -34,15 +34,15 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
-import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
-import com.vixiloc.vcashiermobile.presentation.components.commons.FloatingTransactionButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.IconButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
-import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
-import com.vixiloc.vcashiermobile.presentation.components.products.TransactionHorizontalProductItem
-import com.vixiloc.vcashiermobile.presentation.components.transaction.AddCustomerButton
-import com.vixiloc.vcashiermobile.presentation.components.transaction.TransactionCustomerItem
+import com.vixiloc.vcashiermobile.presentation.components.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.FloatingTransactionButton
+import com.vixiloc.vcashiermobile.presentation.components.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.Loading
+import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.screens.products.components.TransactionHorizontalProductItem
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.AddCustomerButton
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionCustomerItem
 import com.vixiloc.vcashiermobile.presentation.navigations.CheckoutScreens
 import org.koin.androidx.compose.koinViewModel
 

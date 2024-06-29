@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.components.products
+package com.vixiloc.vcashiermobile.presentation.screens.products.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -16,8 +16,8 @@ import androidx.core.text.isDigitsOnly
 import com.vixiloc.vcashiermobile.presentation.screens.products.FormType
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductEvent
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsViewModel
-import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.TextField
+import com.vixiloc.vcashiermobile.presentation.components.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.TextField
 
 @Composable
 fun VariationDialog(

@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.components.home
+package com.vixiloc.vcashiermobile.presentation.screens.home.components
 
 import android.content.ContentValues.TAG
 import android.util.Log

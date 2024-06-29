@@ -15,13 +15,13 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
 import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
-import com.vixiloc.vcashiermobile.presentation.components.category.CategoryItem
-import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
-import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
-import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
-import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
-import com.vixiloc.vcashiermobile.presentation.components.commons.TextField
-import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.screens.category.components.CategoryItem
+import com.vixiloc.vcashiermobile.presentation.components.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.Loading
+import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.components.TextField
+import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

@@ -1,7 +1,6 @@
-package com.vixiloc.vcashiermobile.presentation.components.customer
+package com.vixiloc.vcashiermobile.presentation.screens.category.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -22,13 +21,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomerItem(
+fun CategoryItem(
     modifier: Modifier = Modifier,
-    headlineText: String,
-    supportingText: String,
+    headline: String,
     onDelete: () -> Unit,
-    onUpdate: () -> Unit,
-    onClick: () -> Unit = {}
+    onUpdate: () -> Unit
 ) {
     ListItem(
         modifier = modifier
@@ -38,18 +35,11 @@ fun CustomerItem(
                 color = MaterialTheme.colorScheme.background,
                 shape = MaterialTheme.shapes.large
             )
-            .clip(shape = MaterialTheme.shapes.large)
-            .clickable { onClick() },
+            .clip(shape = MaterialTheme.shapes.large),
         headlineContent = {
             Text(
-                text = headlineText,
+                text = headline,
                 style = MaterialTheme.typography.headlineMedium
-            )
-        },
-        supportingContent = {
-            Text(
-                text = "No. Telp: $supportingText",
-                style = MaterialTheme.typography.headlineSmall
             )
         },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),

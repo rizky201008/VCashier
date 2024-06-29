@@ -243,11 +243,7 @@ fun TransactionsScreen(
                         modifier = Modifier.width(screenWidth / 2f),
                         textStyle = MaterialTheme.typography.bodySmall,
                         onClick = {
-                            navHostController.navigate(
-                                Screens.Transactions.MakePayment(
-                                    transactionId = state.selectedTransactionId
-                                )
-                            )
+
                         },
                         text = "Pembayaran"
                     )

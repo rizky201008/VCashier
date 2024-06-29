@@ -34,9 +34,11 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
 
     if (state.screenReady) {
         if (state.token.isNotEmpty()) {
-            context.startActivity(Intent(context, MainActivity::class.java))
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
         } else {
-            context.startActivity(Intent(context, LoginActivity::class.java))
+            val intent = Intent(context, LoginActivity::class.java)
+            context.startActivity(intent)
         }
         (context as? Activity)?.finish()
     }

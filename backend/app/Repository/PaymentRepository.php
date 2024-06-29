@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Models\PaymentMethod;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 use Midtrans\Config as MidtransConfig;
 use \Midtrans\CoreApi as MidtransCoreApi;
 
@@ -18,6 +20,32 @@ class PaymentRepository
     public function getPaymentMethod(string $id)
     {
         return PaymentMethod::find($id);
+    }
+
+    public function processPayment(array $data): array
+    {
+        try {
+            DB::beginTransaction();
+            $paymentMethod = $this->getPaymentMethod($data['payment_method_id']);
+            $repo = new TransactionRepository();
+            $transaction = $repo->getTransactionById($data['transaction_id']);
+            $this->insertTransactionPayment($data, $paymentMethod, Transaction::find($data['transaction_id']));
+            if (!$paymentMethod->cash) {
+                $va = $this->createVa($transaction);
+                $transaction->update([
+                    'va_number' => $va
+                ]);
+            }
+            DB::commit();
+            return [
+                'message' => 'Make payment success'
+            ];
+        } catch (\Exception $th) {
+            DB::rollBack();
+            return [
+                'message' => $th->getMessage()
+            ];
+        }
     }
 
     public function createVa($transaction)
@@ -57,7 +85,7 @@ class PaymentRepository
             MidtransConfig::$isSanitized = true;
             // Set 3DS transaction for credit card to true
             MidtransConfig::$is3ds = true;
-            MidtransConfig::$overrideNotifUrl = "https://example.com";
+            MidtransConfig::$overrideNotifUrl = env("BASE_URL");
             MidtransConfig::$curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;
             MidtransConfig::$curlOptions[CURLOPT_SSL_VERIFYPEER] = 0;
             MidtransConfig::$curlOptions[CURLOPT_HTTPHEADER] = [];
@@ -84,11 +112,8 @@ class PaymentRepository
         return $userAmount == $totalAmount;
     }
 
-    public function insertTransactionPayment(array $data)
+    public function insertTransactionPayment(array $data, PaymentMethod $paymentMethod, Transaction $transaction)
     {
-        $transactionRepository = new TransactionRepository();
-        $paymentMethod = $this->getPaymentMethod($data['payment_method_id']);
-        $transaction = $transactionRepository->getTransactionById($data['transaction_id']);
         $transactionTotal = $transaction->total_amount;
         if ($paymentMethod->cash) {
             if ($this->validateAmount($data['payment_amount'], $transactionTotal)) {

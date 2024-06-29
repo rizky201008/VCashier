@@ -14,7 +14,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
-import com.vixiloc.vcashiermobile.presentation.navigations.Screens
+import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.category.CategoryItem
 import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
@@ -72,7 +72,7 @@ fun CategoriesScreen(
                     },
                     onUpdate = {
                         navController.navigate(
-                            Screens.Categories.UpdateCategory(
+                            ScreensOld.Categories.UpdateCategory(
                                 id = category.id,
                                 name = category.name
                             )
@@ -85,7 +85,7 @@ fun CategoriesScreen(
 
         FilledButton(
             onClick = {
-                navController.navigate(Screens.Categories.CreateCategory)
+                navController.navigate(ScreensOld.Categories.CreateCategory)
             },
             text = "Tambah Kategori",
             modifier = Modifier.constrainAs(addButton) {

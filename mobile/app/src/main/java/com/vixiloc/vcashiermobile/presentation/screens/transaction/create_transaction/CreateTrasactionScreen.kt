@@ -30,7 +30,6 @@ import com.vixiloc.vcashiermobile.presentation.components.commons.SearchTextFiel
 import com.vixiloc.vcashiermobile.presentation.components.commons.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.components.products.TransactionProductItem
 import com.vixiloc.vcashiermobile.presentation.components.transaction.AddToCartModal
-import com.vixiloc.vcashiermobile.presentation.navigations.Screens
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

@@ -26,60 +26,60 @@ import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transacti
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentScreen
 import kotlinx.serialization.Serializable
 
-sealed interface Screens {
+sealed interface ScreensOld {
     @Serializable
-    data object Home : Screens
+    data object Home : ScreensOld
 
     @Serializable
-    data object Transactions : Screens {
+    data object Transactions : ScreensOld {
         @Serializable
-        data object CreateTransaction : Screens
+        data object CreateTransaction : ScreensOld
 
         @Serializable
-        data object AllTransactions : Screens
+        data object AllTransactions : ScreensOld
     }
 
     @Serializable
-    data object Categories : Screens {
+    data object Categories : ScreensOld {
         @Serializable
-        data object AllCategories : Screens
+        data object AllCategories : ScreensOld
 
         @Serializable
-        data object CreateCategory : Screens
+        data object CreateCategory : ScreensOld
 
         @Serializable
         data class UpdateCategory(
             val name: String,
             val id: Int
-        ) : Screens
+        ) : ScreensOld
     }
 
     @Serializable
-    data object Customers : Screens {
+    data object Customers : ScreensOld {
         @Serializable
-        data object AllCustomers : Screens
+        data object AllCustomers : ScreensOld
 
         @Serializable
-        data object CreateCustomer : Screens
+        data object CreateCustomer : ScreensOld
 
         @Serializable
         data class UpdateCustomer(
             val name: String,
             val phoneNumber: String? = null,
             val id: Int
-        ) : Screens
+        ) : ScreensOld
     }
 
     @Serializable
-    data object Products : Screens {
+    data object Products : ScreensOld {
         @Serializable
-        data object AllProducts : Screens
+        data object AllProducts : ScreensOld
 
         @Serializable
-        data object CreateProduct : Screens
+        data object CreateProduct : ScreensOld
 
         @Serializable
-        data class UpdateProduct(val id: String) : Screens
+        data class UpdateProduct(val id: String) : ScreensOld
     }
 
 }
@@ -99,38 +99,38 @@ sealed interface CheckoutScreens {
 }
 
 @Composable
-fun NavHosts(navController: NavHostController, modifier: Modifier) {
-    NavHost(navController = navController, startDestination = Screens.Home) {
-        composable<Screens.Home> {
+fun NavHostsOld(navController: NavHostController, modifier: Modifier) {
+    NavHost(navController = navController, startDestination = ScreensOld.Home) {
+        composable<ScreensOld.Home> {
             HomeScreen(navigator = navController, modifier = modifier)
         }
-        navigation<Screens.Transactions>(startDestination = Screens.Transactions.AllTransactions) {
-            composable<Screens.Transactions.CreateTransaction> {
+        navigation<ScreensOld.Transactions>(startDestination = ScreensOld.Transactions.AllTransactions) {
+            composable<ScreensOld.Transactions.CreateTransaction> {
                 CreateTransactionScreen(
                     navigator = navController,
                     modifier = modifier,
                 )
             }
 
-            composable<Screens.Transactions.AllTransactions> {
+            composable<ScreensOld.Transactions.AllTransactions> {
                 TransactionsScreen(navHostController = navController, modifier = modifier)
             }
 
         }
-        navigation<Screens.Categories>(
-            startDestination = Screens.Categories.AllCategories,
+        navigation<ScreensOld.Categories>(
+            startDestination = ScreensOld.Categories.AllCategories,
         ) {
-            composable<Screens.Categories.AllCategories> {
+            composable<ScreensOld.Categories.AllCategories> {
                 CategoriesScreen(
                     navController = navController,
                     modifier = modifier
                 )
             }
-            composable<Screens.Categories.CreateCategory> {
+            composable<ScreensOld.Categories.CreateCategory> {
                 CreateCategoryScreen(navController = navController, modifier = modifier)
             }
-            composable<Screens.Categories.UpdateCategory> {
-                val args = it.toRoute<Screens.Categories.UpdateCategory>()
+            composable<ScreensOld.Categories.UpdateCategory> {
+                val args = it.toRoute<ScreensOld.Categories.UpdateCategory>()
                 UpdateCategoryScreen(
                     navHostController = navController,
                     modifier = modifier,
@@ -139,20 +139,20 @@ fun NavHosts(navController: NavHostController, modifier: Modifier) {
             }
         }
 
-        navigation<Screens.Customers>(
-            startDestination = Screens.Customers.AllCustomers
+        navigation<ScreensOld.Customers>(
+            startDestination = ScreensOld.Customers.AllCustomers
         ) {
-            composable<Screens.Customers.AllCustomers> {
+            composable<ScreensOld.Customers.AllCustomers> {
                 CustomersScreen(
                     navController = navController,
                     modifier = modifier
                 )
             }
-            composable<Screens.Customers.CreateCustomer> {
+            composable<ScreensOld.Customers.CreateCustomer> {
                 CreateCustomerScreen(navController = navController, modifier = modifier)
             }
-            composable<Screens.Customers.UpdateCustomer> {
-                val args = it.toRoute<Screens.Customers.UpdateCustomer>()
+            composable<ScreensOld.Customers.UpdateCustomer> {
+                val args = it.toRoute<ScreensOld.Customers.UpdateCustomer>()
                 UpdateCustomerScreen(
                     navHostController = navController,
                     modifier = modifier,
@@ -161,17 +161,17 @@ fun NavHosts(navController: NavHostController, modifier: Modifier) {
             }
         }
 
-        navigation<Screens.Products>(
-            startDestination = Screens.Products.AllProducts,
+        navigation<ScreensOld.Products>(
+            startDestination = ScreensOld.Products.AllProducts,
         ) {
-            composable<Screens.Products.AllProducts> {
+            composable<ScreensOld.Products.AllProducts> {
                 ProductsScreen(modifier = modifier, navController = navController)
             }
-            composable<Screens.Products.CreateProduct> {
+            composable<ScreensOld.Products.CreateProduct> {
                 CreateProductScreen(navController = navController, modifier = modifier)
             }
-            composable<Screens.Products.UpdateProduct> {
-                val args = it.toRoute<Screens.Products.UpdateProduct>()
+            composable<ScreensOld.Products.UpdateProduct> {
+                val args = it.toRoute<ScreensOld.Products.UpdateProduct>()
                 UpdateProductScreen(navController = navController, modifier = modifier, args = args)
             }
         }
@@ -179,7 +179,7 @@ fun NavHosts(navController: NavHostController, modifier: Modifier) {
 }
 
 @Composable
-fun CheckoutNavHost(
+fun CheckoutNavHostOld(
     navController: NavHostController,
     modifier: Modifier
 ) {

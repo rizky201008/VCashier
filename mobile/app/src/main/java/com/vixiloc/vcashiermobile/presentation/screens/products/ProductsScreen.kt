@@ -16,7 +16,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
-import com.vixiloc.vcashiermobile.presentation.navigations.Screens
+import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
@@ -79,7 +79,7 @@ fun ProductsScreen(
                         category = product.category.name,
                         image = product.imageUrl,
                         onClick = {
-                            navController.navigate(Screens.Products.UpdateProduct(product.id.toString()))
+                            navController.navigate(ScreensOld.Products.UpdateProduct(product.id.toString()))
                         }
                     )
                 }
@@ -90,7 +90,7 @@ fun ProductsScreen(
 
         FilledButton(
             onClick = {
-                navController.navigate(Screens.Products.CreateProduct)
+                navController.navigate(ScreensOld.Products.CreateProduct)
             },
             text = "Tambah Produk",
             modifier = Modifier.constrainAs(addButton) {

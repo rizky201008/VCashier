@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.vixiloc.vcashiermobile.presentation.navigations.Screens
+import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
 import com.vixiloc.vcashiermobile.presentation.components.commons.MessageAlert
@@ -16,7 +16,7 @@ fun UpdateCustomerScreen(
     modifier: Modifier = Modifier,
     viewModel: CustomerViewModel = koinViewModel(),
     navHostController: NavHostController,
-    navArgs: Screens.Customers.UpdateCustomer
+    navArgs: ScreensOld.Customers.UpdateCustomer
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent

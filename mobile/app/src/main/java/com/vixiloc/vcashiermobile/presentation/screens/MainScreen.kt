@@ -41,7 +41,7 @@ import com.vixiloc.vcashiermobile.domain.model.DrawerMenu
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenuName
 import com.vixiloc.vcashiermobile.domain.model.DrawerMenuRoute
 import com.vixiloc.vcashiermobile.presentation.components.commons.PainterIconButton
-import com.vixiloc.vcashiermobile.presentation.navigations.NavHosts
+import com.vixiloc.vcashiermobile.presentation.navigations.NavHostsOld
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -149,7 +149,7 @@ fun MainScreen(navHostController: NavHostController) {
                 }
             ) { paddingValues ->
                 Surface {
-                    NavHosts(
+                    NavHostsOld(
                         navController = navHostController,
                         modifier = Modifier.padding(paddingValues)
                     )

@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.vixiloc.vcashiermobile.presentation.navigations.CheckoutNavHost
+import com.vixiloc.vcashiermobile.presentation.navigations.CheckoutNavHostOld
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 
 class CheckoutActivity : ComponentActivity() {
@@ -18,7 +18,7 @@ class CheckoutActivity : ComponentActivity() {
             VcashierMobileTheme {
                 Surface {
                     val navHostController = rememberNavController()
-                    CheckoutNavHost(
+                    CheckoutNavHostOld(
                         navController = navHostController,
                         modifier = Modifier
                     )

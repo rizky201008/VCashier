@@ -44,7 +44,7 @@ import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
 import com.vixiloc.vcashiermobile.commons.DateFormatter
 import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
-import com.vixiloc.vcashiermobile.presentation.navigations.Screens
+import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
@@ -105,7 +105,7 @@ fun TransactionsScreen(
                 Text(text = "Cari Pelanggan")
             }
             Button(modifier = Modifier.padding(horizontal = 3.dp), onClick = {
-                navHostController.navigate(Screens.Transactions.CreateTransaction)
+                navHostController.navigate(ScreensOld.Transactions.CreateTransaction)
             }) {
                 Icon(imageVector = Icons.Outlined.ShoppingCart, contentDescription = null)
                 Text(text = "Buat Transaksi")

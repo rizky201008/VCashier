@@ -14,7 +14,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
-import com.vixiloc.vcashiermobile.presentation.navigations.Screens
+import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.commons.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.commons.Loading
@@ -70,7 +70,7 @@ fun CustomersScreen(
                         events(CustomerEvent.DeleteCustomer(customer))
                     },
                     onUpdate = {
-                        navController.navigate(Screens.Customers.UpdateCustomer(
+                        navController.navigate(ScreensOld.Customers.UpdateCustomer(
                             id = customer.id,
                             name = customer.name,
                             phoneNumber = customer.phoneNumber,
@@ -86,7 +86,7 @@ fun CustomersScreen(
 
         FilledButton(
             onClick = {
-                navController.navigate(Screens.Customers.CreateCustomer)
+                navController.navigate(ScreensOld.Customers.CreateCustomer)
             },
             text = "Tambah Pelanggan",
             modifier = Modifier.constrainAs(addButton) {

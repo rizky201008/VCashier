@@ -14,7 +14,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
-import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.screens.category.components.CategoryItem
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
@@ -22,13 +21,14 @@ import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CategoriesScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
-    viewModel: CategoryViewModel = koinViewModel()
+    viewModel: CategoryViewModel = koinViewModel(),
+    onNavigate: (MainRoutes) -> Unit
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
@@ -71,12 +71,7 @@ fun CategoriesScreen(
                         events(CategoryEvent.DeleteCategory(category))
                     },
                     onUpdate = {
-                        navController.navigate(
-                            ScreensOld.Categories.UpdateCategory(
-                                id = category.id,
-                                name = category.name
-                            )
-                        )
+
                     }
                 )
             }
@@ -85,7 +80,7 @@ fun CategoriesScreen(
 
         FilledButton(
             onClick = {
-                navController.navigate(ScreensOld.Categories.CreateCategory)
+
             },
             text = "Tambah Kategori",
             modifier = Modifier.constrainAs(addButton) {

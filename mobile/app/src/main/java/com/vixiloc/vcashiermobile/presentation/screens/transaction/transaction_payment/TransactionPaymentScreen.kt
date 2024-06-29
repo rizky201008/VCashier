@@ -1,6 +1,5 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment
 
-import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,8 +39,8 @@ import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.PaymentMethodItem
-import com.vixiloc.vcashiermobile.presentation.navigations.CheckoutScreens
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -50,7 +49,7 @@ import org.koin.androidx.compose.koinViewModel
 fun TransactionPaymentScreen(
     modifier: Modifier = Modifier,
     navigator: NavHostController,
-    navArgs: CheckoutScreens.MakePayment,
+    navArgs: MainRoutes.NavDrawerScreens.Transactions.MakePayment,
 ) {
     val viewModel: TransactionPaymentViewModel = koinViewModel()
     val onEvent = viewModel::onEvent
@@ -77,11 +76,7 @@ fun TransactionPaymentScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            if (!navigator.popBackStack()) {
-                                (context as Activity).finish()
-                            } else {
-                                navigator.navigateUp()
-                            }
+                            navigator.navigateUp()
                         },
                         icon = Icons.Outlined.ArrowBackIosNew
                     )

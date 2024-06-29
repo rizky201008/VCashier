@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.vixiloc.vcashiermobile.presentation.screens.MainScreen
+import com.vixiloc.vcashiermobile.presentation.navs.hosts.MainHost
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +24,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    MainScreen(navHostController = navController)
+                    MainHost(
+                        navHostController = navController,
+                    )
                 }
             }
         }

@@ -1,13 +1,8 @@
-package com.vixiloc.vcashiermobile.presentation.screens
+package com.vixiloc.vcashiermobile.presentation.navs.hosts
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AllInbox
-import androidx.compose.material.icons.outlined.Group
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,7 +13,6 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
@@ -35,61 +29,46 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.vixiloc.vcashiermobile.R
-import com.vixiloc.vcashiermobile.domain.model.DrawerMenu
-import com.vixiloc.vcashiermobile.domain.model.DrawerMenuName
-import com.vixiloc.vcashiermobile.domain.model.DrawerMenuRoute
+import com.vixiloc.vcashiermobile.domain.model.listDrawer
 import com.vixiloc.vcashiermobile.presentation.components.PainterIconButton
-import com.vixiloc.vcashiermobile.presentation.navigations.NavHostsOld
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
+import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
+import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
+import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
+import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionsScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navHostController: NavHostController) {
+fun SidebarHost(
+    modifier: Modifier = Modifier,
+    navHostController: NavHostController,
+    onNavigate: (MainRoutes) -> Unit
+) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val items = listOf(
-        DrawerMenu(
-            name = DrawerMenuName.HOME,
-            icon = Icons.Outlined.Home,
-            route = DrawerMenuRoute.HOME.route
-        ),
-        DrawerMenu(
-            name = DrawerMenuName.CREATE_TRANSACTION,
-            icon = Icons.Outlined.ShoppingCart,
-            route = DrawerMenuRoute.CREATE_TRANSACTION.route
-        ),
-        DrawerMenu(
-            name = DrawerMenuName.CATEGORIES,
-            icon = Icons.Outlined.AllInbox,
-            route = DrawerMenuRoute.CATEGORIES.route
-        ),
-        DrawerMenu(
-            name = DrawerMenuName.CUSTOMERS,
-            icon = Icons.Outlined.Group,
-            route = DrawerMenuRoute.CUSTOMERS.route
-        ),
-        DrawerMenu(
-            name = DrawerMenuName.PRODUCTS,
-            icon = Icons.Outlined.AllInbox,
-            route = DrawerMenuRoute.PRODUCTS.route
-        )
-    )
-
     val currentTitle = remember { mutableStateOf("Home") }
 
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    currentRoute?.let {
-        val matchedItem = items.find { it.route == it }
+    currentRoute?.let { route ->
+        val matchedItem = listDrawer.find {
+            it.name == route
+        }
+
         matchedItem?.let {
-            currentTitle.value = it.name.menuName
+            currentTitle.value = it.name
         }
     }
 
     ModalNavigationDrawer(
+        modifier = modifier,
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
@@ -101,14 +80,14 @@ fun MainScreen(navHostController: NavHostController) {
                         .align(Alignment.End)
                 )
                 Spacer(Modifier.height(12.dp))
-                items.forEach { item ->
+                listDrawer.forEach { item ->
                     NavigationDrawerItem(
                         icon = { Icon(item.icon, contentDescription = null) },
-                        label = { Text(item.name.menuName) },
-                        selected = item.name.menuName == currentTitle.value,
+                        label = { Text(item.name) },
+                        selected = item.name == currentTitle.value,
                         onClick = {
                             scope.launch { drawerState.close() }
-                            currentTitle.value = item.name.menuName
+                            currentTitle.value = item.name
                             navHostController.navigate(item.route) {
                                 popUpTo(navHostController.graph.findStartDestination().id) {
                                     saveState = true
@@ -148,11 +127,41 @@ fun MainScreen(navHostController: NavHostController) {
                     )
                 }
             ) { paddingValues ->
-                Surface {
-                    NavHostsOld(
-                        navController = navHostController,
-                        modifier = Modifier.padding(paddingValues)
-                    )
+                val screenModifier = Modifier.padding(paddingValues)
+                NavHost(
+                    navController = navHostController,
+                    startDestination = MainRoutes.NavDrawerScreens.Home
+                ) {
+                    composable<MainRoutes.NavDrawerScreens.Home> {
+                        HomeScreen(
+                            modifier = screenModifier,
+                            onNavigate = onNavigate
+                        )
+                    }
+                    composable<MainRoutes.NavDrawerScreens.Transactions> {
+                        TransactionsScreen(
+                            modifier = screenModifier,
+                            onNavigate = onNavigate
+                        )
+                    }
+                    composable<MainRoutes.NavDrawerScreens.Categories> {
+                        CategoriesScreen(
+                            modifier = screenModifier,
+                            onNavigate = onNavigate
+                        )
+                    }
+                    composable<MainRoutes.NavDrawerScreens.Products> {
+                        ProductsScreen(
+                            modifier = screenModifier,
+                            onNavigate = onNavigate
+                        )
+                    }
+                    composable<MainRoutes.NavDrawerScreens.Customers> {
+                        CustomersScreen(
+                            modifier = screenModifier,
+                            onNavigate = onNavigate
+                        )
+                    }
                 }
             }
         }

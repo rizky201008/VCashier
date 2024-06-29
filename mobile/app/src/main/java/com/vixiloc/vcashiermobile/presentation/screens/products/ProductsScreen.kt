@@ -16,13 +16,13 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
-import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.ProductItem
 import org.koin.androidx.compose.koinViewModel
 
@@ -30,7 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 fun ProductsScreen(
     modifier: Modifier = Modifier,
     viewModel: ProductsViewModel = koinViewModel(),
-    navController: NavController
+    onNavigate: (MainRoutes) -> Unit
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
@@ -79,7 +79,7 @@ fun ProductsScreen(
                         category = product.category.name,
                         image = product.imageUrl,
                         onClick = {
-                            navController.navigate(ScreensOld.Products.UpdateProduct(product.id.toString()))
+
                         }
                     )
                 }
@@ -90,7 +90,7 @@ fun ProductsScreen(
 
         FilledButton(
             onClick = {
-                navController.navigate(ScreensOld.Products.CreateProduct)
+
             },
             text = "Tambah Produk",
             modifier = Modifier.constrainAs(addButton) {

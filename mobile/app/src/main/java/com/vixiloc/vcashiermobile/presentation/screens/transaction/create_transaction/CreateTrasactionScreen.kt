@@ -1,6 +1,5 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction
 
-import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,32 +14,30 @@ import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
-import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
-import com.vixiloc.vcashiermobile.presentation.CheckoutActivity
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.TransactionProductItem
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.AddToCartModal
+import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CreateTransactionScreen(
-    navigator: NavHostController,
     modifier: Modifier = Modifier,
-    viewModel: CreateTransactionViewModel = koinViewModel()
+    viewModel: CreateTransactionViewModel = koinViewModel(),
+    onNavigate: (MainRoutes) -> Unit
 ) {
     val state = viewModel.state.value
     val onEvent = viewModel::onEvent
-    val context = LocalContext.current
 
     Column(
         modifier = modifier
@@ -92,7 +89,7 @@ fun CreateTransactionScreen(
 
             FloatingTransactionButton(
                 onClick = {
-                    context.startActivity(Intent(context, CheckoutActivity::class.java))
+                    onNavigate(MainRoutes.NavDrawerScreens.Transactions.Checkout)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

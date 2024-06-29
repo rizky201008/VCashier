@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
-import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FloatingTransactionButton
@@ -40,10 +39,11 @@ import com.vixiloc.vcashiermobile.presentation.components.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.TransactionHorizontalProductItem
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.AddCustomerButton
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionCustomerItem
-import com.vixiloc.vcashiermobile.presentation.navigations.CheckoutScreens
+import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -136,10 +136,10 @@ fun CheckoutScreen(
                     TransactionCustomerItem(
                         customer = it,
                         modifier = customerModifier,
-                        onClick = { navigator.navigate(CheckoutScreens.SearchCustomer) })
+                        onClick = { navigator.navigate(MainRoutes.NavDrawerScreens.Transactions.SearchCustomer) })
                 } ?: run {
                     AddCustomerButton(onClick = {
-                        navigator.navigate(CheckoutScreens.SearchCustomer)
+                        navigator.navigate(MainRoutes.NavDrawerScreens.Transactions.SearchCustomer)
                     }, modifier = customerModifier)
                 }
             }
@@ -184,7 +184,7 @@ fun CheckoutScreen(
                 onDismiss = {
                     onEvent(CheckoutScreenEvent.DismissSuccessAlert)
                     navigator.popBackStack()
-                    navigator.navigate(CheckoutScreens.MakePayment(state.transactionId))
+                    navigator.navigate(MainRoutes.NavDrawerScreens.Transactions.MakePayment(state.transactionId))
                 }
             )
 

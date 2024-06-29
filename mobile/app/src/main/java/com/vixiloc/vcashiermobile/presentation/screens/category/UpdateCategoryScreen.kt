@@ -5,10 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -16,7 +16,7 @@ fun UpdateCategoryScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoryViewModel = koinViewModel(),
     navHostController: NavHostController,
-    navArgs: ScreensOld.Categories.UpdateCategory
+    navArgs: MainRoutes.NavDrawerScreens.Categories.UpdateCategory
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent

@@ -1,8 +1,5 @@
 package com.vixiloc.vcashiermobile.presentation.screens.welcome
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,33 +11,38 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.R
-import com.vixiloc.vcashiermobile.presentation.LoginActivity
-import com.vixiloc.vcashiermobile.presentation.MainActivity
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun WelcomeScreen(modifier: Modifier = Modifier) {
+fun WelcomeScreen(
+    modifier: Modifier = Modifier,
+    navHostController: NavHostController
+) {
     val viewModel: WelcomeViewModel = koinViewModel()
     val state = viewModel.state.value
-    val context: Context = LocalContext.current
 
     if (state.screenReady) {
         if (state.token.isNotEmpty()) {
-            val intent = Intent(context, MainActivity::class.java)
-            context.startActivity(intent)
+            LaunchedEffect(key1 = Unit) {
+                navHostController.popBackStack()
+                navHostController.navigate(MainRoutes.NavDrawerScreens)
+            }
         } else {
-            val intent = Intent(context, LoginActivity::class.java)
-            context.startActivity(intent)
+            LaunchedEffect(key1 = Unit) {
+                navHostController.popBackStack()
+                navHostController.navigate(MainRoutes.LoginScreen)
+            }
         }
-        (context as? Activity)?.finish()
     }
 
     Box(

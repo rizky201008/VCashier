@@ -14,13 +14,13 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
-import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.customer.components.CustomerItem
 import org.koin.androidx.compose.koinViewModel
 
@@ -28,7 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 fun CustomersScreen(
     modifier: Modifier = Modifier,
     viewModel: CustomerViewModel = koinViewModel(),
-    navController: NavHostController
+    onNavigate: (MainRoutes) -> Unit
 ) {
     val state = viewModel.state
     val events = viewModel::onEvent
@@ -70,11 +70,7 @@ fun CustomersScreen(
                         events(CustomerEvent.DeleteCustomer(customer))
                     },
                     onUpdate = {
-                        navController.navigate(ScreensOld.Customers.UpdateCustomer(
-                            id = customer.id,
-                            name = customer.name,
-                            phoneNumber = customer.phoneNumber,
-                        ))
+
                     },
                     onClick = {
 
@@ -86,7 +82,7 @@ fun CustomersScreen(
 
         FilledButton(
             onClick = {
-                navController.navigate(ScreensOld.Customers.CreateCustomer)
+
             },
             text = "Tambah Pelanggan",
             modifier = Modifier.constrainAs(addButton) {

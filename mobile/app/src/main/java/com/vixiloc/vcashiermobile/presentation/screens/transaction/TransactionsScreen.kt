@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -44,11 +43,11 @@ import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.utils.DateFormatter
 import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
-import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionItem
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -57,8 +56,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun TransactionsScreen(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController,
-    viewModel: TransactionViewModel = koinViewModel()
+    viewModel: TransactionViewModel = koinViewModel(),
+    onNavigate: (MainRoutes) -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -103,12 +102,6 @@ fun TransactionsScreen(
             }) {
                 Icon(imageVector = Icons.Outlined.Search, contentDescription = null)
                 Text(text = "Cari Pelanggan")
-            }
-            Button(modifier = Modifier.padding(horizontal = 3.dp), onClick = {
-                navHostController.navigate(ScreensOld.Transactions.CreateTransaction)
-            }) {
-                Icon(imageVector = Icons.Outlined.ShoppingCart, contentDescription = null)
-                Text(text = "Buat Transaksi")
             }
         }
         AnimatedVisibility(visible = searchBarStatus) {

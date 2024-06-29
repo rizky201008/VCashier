@@ -29,12 +29,13 @@ import androidx.navigation.NavHostController
 import com.guru.fontawesomecomposelib.FaIcon
 import com.guru.fontawesomecomposelib.FaIcons
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionScreen
 
 @Composable
 fun HomeScreen(
-    navigator: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNavigate: (MainRoutes) -> Unit
 ) {
     val config = LocalConfiguration.current
     val screenWidth = config.screenWidthDp.dp
@@ -80,6 +81,6 @@ fun HomeScreen(
                 FaIcon(faIcon = FaIcons.Filter, size = 24.dp)
             }
         }
-        CreateTransactionScreen(navigator = navigator)
+        CreateTransactionScreen(onNavigate = onNavigate)
     }
 }

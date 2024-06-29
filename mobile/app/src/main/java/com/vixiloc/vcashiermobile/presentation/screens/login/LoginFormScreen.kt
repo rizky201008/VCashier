@@ -1,8 +1,5 @@
 package com.vixiloc.vcashiermobile.presentation.screens.login
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,31 +11,30 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.guru.fontawesomecomposelib.FaIcon
 import com.guru.fontawesomecomposelib.FaIcons
-import com.vixiloc.vcashiermobile.presentation.MainActivity
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.material3.IconButton as IconButtonCompose
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginFormScreen(modifier: Modifier = Modifier) {
+fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostController) {
     val viewModel: LoginViewModel = koinViewModel()
     val state = viewModel.state
     val events = viewModel::onEvent
     val keyboardController = LocalSoftwareKeyboardController.current
     val showErrorAlert: Boolean = state.errorMessage.isNotBlank()
-    val context: Context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -77,8 +73,8 @@ fun LoginFormScreen(modifier: Modifier = Modifier) {
             Loading(modifier = Modifier, visible = state.isLoading)
             if (state.isLoading) keyboardController?.hide()
             if (state.loginSuccess) {
-                context.startActivity(Intent(context, MainActivity::class.java))
-                (context as? Activity)?.finish()
+                navHostController.popBackStack()
+                navHostController.navigate(MainRoutes.NavDrawerScreens)
             }
             MessageAlert(
                 type = AlertType.ERROR,

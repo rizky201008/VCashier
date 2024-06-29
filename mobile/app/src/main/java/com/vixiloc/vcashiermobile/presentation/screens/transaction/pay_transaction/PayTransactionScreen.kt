@@ -30,14 +30,14 @@ import com.vixiloc.vcashiermobile.presentation.components.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
-import com.vixiloc.vcashiermobile.presentation.navigations.CheckoutScreens
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PayTransactionScreen(
     modifier: Modifier = Modifier,
     navigator: NavHostController,
-    navArgs: CheckoutScreens.PayTransaction
+    navArgs: MainRoutes.NavDrawerScreens.Transactions.PayTransaction
 ) {
     val id = navArgs.id
     val viewModel: PayTransactionViewModel = koinViewModel()

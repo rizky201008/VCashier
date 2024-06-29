@@ -26,7 +26,7 @@ class TransactionPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() 
             }
 
             is TransactionPaymentEvent.InsertTransactionTotal -> {
-                _state.value = _state.value.copy(totalPrice = event.total)
+                _state.value = _state.value.copy(transactionTotal = event.total)
             }
 
 
@@ -106,7 +106,7 @@ class TransactionPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() 
         }.launchIn(viewModelScope)
     }
 
-    fun getPaymentMethods() {
+    private fun getPaymentMethods() {
         getPaymentMethodsUseCase().onEach { resource ->
             when (resource) {
                 is Resource.Loading -> {
@@ -129,5 +129,9 @@ class TransactionPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() 
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    init {
+        getPaymentMethods()
     }
 }

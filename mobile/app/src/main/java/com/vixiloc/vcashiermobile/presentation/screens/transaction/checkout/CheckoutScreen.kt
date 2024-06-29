@@ -183,6 +183,7 @@ fun CheckoutScreen(
                 visible = state.success.isNotEmpty(),
                 onDismiss = {
                     onEvent(CheckoutScreenEvent.DismissSuccessAlert)
+                    navigator.popBackStack()
                     navigator.navigate(CheckoutScreens.MakePayment(state.transactionId))
                 }
             )

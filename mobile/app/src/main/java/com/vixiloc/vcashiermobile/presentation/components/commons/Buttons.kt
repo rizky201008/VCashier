@@ -116,7 +116,7 @@ fun FilledButton(
         Text(
             text = text,
             style = textStyle,
-            modifier = Modifier.padding(vertical = 20.dp)
+            modifier = Modifier
         )
         trailingIcon?.let {
             when (it) {
@@ -130,7 +130,6 @@ fun FilledButton(
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
-                // Add other cases if needed
             }
         }
     }

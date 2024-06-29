@@ -2,4 +2,5 @@
     <string name="app_name">Vcashier</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_checkout">CheckoutActivity</string>
 </resources>

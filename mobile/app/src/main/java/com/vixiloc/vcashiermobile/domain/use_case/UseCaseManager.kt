@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
-import com.vixiloc.vcashiermobile.commons.HttpHandler
+import com.vixiloc.vcashiermobile.utils.HttpHandler
 import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 import com.vixiloc.vcashiermobile.domain.repository.CustomerRepository

@@ -7,8 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vixiloc.vcashiermobile.commons.Resource
-import com.vixiloc.vcashiermobile.commons.Strings.TAG
+import com.vixiloc.vcashiermobile.utils.Resource
+import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionRequest
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionItem

@@ -1,7 +1,7 @@
 package com.vixiloc.vcashiermobile.di
 
 import android.content.Context
-import com.vixiloc.vcashiermobile.commons.FileConverter
+import com.vixiloc.vcashiermobile.utils.FileConverter
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerViewModel

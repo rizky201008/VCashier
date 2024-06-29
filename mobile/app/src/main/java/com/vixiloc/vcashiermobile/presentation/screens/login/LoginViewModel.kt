@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vixiloc.vcashiermobile.commons.Resource
-import com.vixiloc.vcashiermobile.commons.Strings.TAG
+import com.vixiloc.vcashiermobile.utils.Resource
+import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.model.auth.LoginRequest
 import com.vixiloc.vcashiermobile.domain.use_case.Login
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager

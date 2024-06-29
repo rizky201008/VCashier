@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vixiloc.vcashiermobile.commons.Resource
+import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.domain.model.ValidationRule
 import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
 import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionRequest

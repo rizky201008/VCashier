@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vixiloc.vcashiermobile.commons.Resource
+import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.domain.model.payments.MakePaymentRequest
 import com.vixiloc.vcashiermobile.domain.use_case.GetPaymentMethods
 import com.vixiloc.vcashiermobile.domain.use_case.GetTransaction

@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.commons
+package com.vixiloc.vcashiermobile.utils
 
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody

@@ -1,7 +1,7 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
-import com.vixiloc.vcashiermobile.commons.HttpHandler
-import com.vixiloc.vcashiermobile.commons.Resource
+import com.vixiloc.vcashiermobile.utils.HttpHandler
+import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.toDomain
 import com.vixiloc.vcashiermobile.domain.model.payments.MakePaymentRequest
 import com.vixiloc.vcashiermobile.domain.model.OnlyResponseMessage

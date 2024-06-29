@@ -1,9 +1,9 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
 import android.util.Log
-import com.vixiloc.vcashiermobile.commons.HttpHandler
-import com.vixiloc.vcashiermobile.commons.Resource
-import com.vixiloc.vcashiermobile.commons.Strings.TAG
+import com.vixiloc.vcashiermobile.utils.HttpHandler
+import com.vixiloc.vcashiermobile.utils.Resource
+import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.toLoginResponse
 import com.vixiloc.vcashiermobile.domain.model.auth.LoginRequest
 import com.vixiloc.vcashiermobile.domain.model.auth.LoginResponse

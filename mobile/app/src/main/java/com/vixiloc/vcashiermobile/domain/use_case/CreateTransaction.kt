@@ -1,10 +1,9 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
-import com.vixiloc.vcashiermobile.commons.HttpHandler
-import com.vixiloc.vcashiermobile.commons.Resource
+import com.vixiloc.vcashiermobile.utils.HttpHandler
+import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.toDomain
 import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionRequest
-import com.vixiloc.vcashiermobile.domain.model.OnlyResponseMessage
 import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionResponse
 import com.vixiloc.vcashiermobile.domain.model.transactions.toDto
 import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository

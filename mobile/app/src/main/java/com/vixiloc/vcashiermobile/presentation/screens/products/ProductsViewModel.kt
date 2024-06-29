@@ -8,9 +8,9 @@ import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vixiloc.vcashiermobile.commons.FileConverter
-import com.vixiloc.vcashiermobile.commons.Resource
-import com.vixiloc.vcashiermobile.commons.Strings.TAG
+import com.vixiloc.vcashiermobile.utils.FileConverter
+import com.vixiloc.vcashiermobile.utils.Resource
+import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.model.products.CreateUpdateProductRequest
 import com.vixiloc.vcashiermobile.domain.model.products.Variation
 import com.vixiloc.vcashiermobile.domain.use_case.CreateImage

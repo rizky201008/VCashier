@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.commons
+package com.vixiloc.vcashiermobile.utils
 
 import java.text.NumberFormat
 import java.util.Currency

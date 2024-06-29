@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.commons
+package com.vixiloc.vcashiermobile.utils
 
 import java.time.ZoneId
 import java.time.ZonedDateTime

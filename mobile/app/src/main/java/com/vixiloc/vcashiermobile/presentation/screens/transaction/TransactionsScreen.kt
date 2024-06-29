@@ -41,8 +41,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.vixiloc.vcashiermobile.commons.CurrencyFormatter
-import com.vixiloc.vcashiermobile.commons.DateFormatter
+import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
+import com.vixiloc.vcashiermobile.utils.DateFormatter
 import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
 import com.vixiloc.vcashiermobile.presentation.navigations.ScreensOld
 import com.vixiloc.vcashiermobile.presentation.components.commons.AlertType

@@ -9,8 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
-import com.vixiloc.vcashiermobile.presentation.screens.category.CreateCategoryScreen
-import com.vixiloc.vcashiermobile.presentation.screens.category.UpdateCategoryScreen
+import com.vixiloc.vcashiermobile.presentation.screens.customer.CreateCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.UpdateCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginFormScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.CreateProductScreen
@@ -66,19 +65,8 @@ fun MainHost(
                 modifier = modifier
             )
         }
-        composable<MainRoutes.NavDrawerScreens.Categories.CreateCategory> {
-            CreateCategoryScreen(navController = navHostController, modifier = modifier)
-        }
-        composable<MainRoutes.NavDrawerScreens.Categories.UpdateCategory> {
-            val args = it.toRoute<MainRoutes.NavDrawerScreens.Categories.UpdateCategory>()
-            UpdateCategoryScreen(
-                navHostController = navHostController,
-                modifier = modifier,
-                navArgs = args
-            )
-        }
         composable<MainRoutes.NavDrawerScreens.Customers.CreateCustomer> {
-            CreateCategoryScreen(navController = navHostController, modifier = modifier)
+            CreateCustomerScreen(navController = navHostController, modifier = modifier)
         }
         composable<MainRoutes.NavDrawerScreens.Customers.UpdateCustomer> {
             val args = it.toRoute<MainRoutes.NavDrawerScreens.Customers.UpdateCustomer>()

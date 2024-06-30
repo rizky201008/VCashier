@@ -146,8 +146,7 @@ fun SidebarHost(
                     }
                     composable<MainRoutes.NavDrawerScreens.Categories> {
                         CategoriesScreen(
-                            modifier = screenModifier,
-                            onNavigate = onNavigate
+                            modifier = screenModifier
                         )
                     }
                     composable<MainRoutes.NavDrawerScreens.Products> {

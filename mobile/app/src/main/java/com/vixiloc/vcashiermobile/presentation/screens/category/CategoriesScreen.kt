@@ -1,94 +1,127 @@
 package com.vixiloc.vcashiermobile.presentation.screens.category
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FilterAlt
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.navigation.NavHostController
-import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
-import com.vixiloc.vcashiermobile.presentation.screens.category.components.CategoryItem
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
-import com.vixiloc.vcashiermobile.presentation.components.TextField
+import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
-import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
+import com.vixiloc.vcashiermobile.presentation.screens.category.components.CategoryListItem
+import com.vixiloc.vcashiermobile.presentation.screens.category.components.FilledIconButton
+import com.vixiloc.vcashiermobile.presentation.screens.category.components.InputCategoryDialog
+import com.vixiloc.vcashiermobile.presentation.screens.category.components.InputType
+import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CategoriesScreen(
-    modifier: Modifier = Modifier,
-    viewModel: CategoryViewModel = koinViewModel(),
-    onNavigate: (MainRoutes) -> Unit
+    modifier: Modifier = Modifier
 ) {
+    val viewModel: CategoryViewModel = koinViewModel()
     val state = viewModel.state
     val events = viewModel::onEvent
+    val focusManager = LocalFocusManager.current
 
-    LaunchedEffect(Unit) {
-        viewModel.getAllCategories()
-    }
-
-    ConstraintLayout(modifier = modifier) {
-        val (searchInput, categories, addButton) = createRefs()
-
-        TextField(
-            value = state.searchQuery,
-            onValueChanged = {
-                events(CategoryEvent.InputSearchValue(it))
-            },
-            modifier = Modifier.constrainAs(searchInput) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            title = "Cari",
-            textStyle = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground)
-        )
-
-        LazyColumn(modifier = Modifier
-            .fillMaxWidth()
-            .height(500.dp)
-            .constrainAs(categories) {
-                top.linkTo(searchInput.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }) {
-            items(state.categories) { category: CategoriesResponseItem ->
-                CategoryItem(
-                    headline = category.name,
-                    modifier = Modifier
-                        .padding(10.dp),
-                    onDelete = {
-                        events(CategoryEvent.DeleteCategory(category))
+    ConstraintLayout(
+        modifier = modifier.fillMaxSize()
+    ) {
+        val (mainContent, bottomButton) = createRefs()
+        Column(
+            modifier = Modifier
+                .constrainAs(mainContent) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                .padding(25.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                SearchTextField(
+                    modifier = Modifier.width(242.dp),
+                    value = state.searchQuery,
+                    onValueChanged = {
+                        events(CategoryEvent.InputSearchValue(it))
                     },
-                    onUpdate = {
-
-                    }
+                    placeHolder = "Cari kategori",
+                    keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                )
+                FilledIconButton(
+                    modifier = Modifier.background(
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                        shape = MaterialTheme.shapes.medium
+                    ),
+                    icon = Icons.Outlined.FilterAlt, onClick = {}
                 )
             }
-            item { VerticalSpacer(height = 300.dp, modifier = Modifier) }
+            VerticalSpacer(height = 32.dp)
+            LazyColumn {
+                items(state.categories) { category ->
+                    CategoryListItem(
+                        onUpdate = {
+                            events(CategoryEvent.PreFillFormData(category))
+                            events(CategoryEvent.ShowUpdateModal(true))
+                        },
+                        onDelete = {
+                            events(CategoryEvent.SelectCategory(category))
+                            events(CategoryEvent.ShowDeleteModal(true))
+                        },
+                        item = category
+                    )
+                    VerticalSpacer(height = 12.dp)
+                }
+            }
         }
-
-        FilledButton(
-            onClick = {
-
-            },
-            text = "Tambah Kategori",
-            modifier = Modifier.constrainAs(addButton) {
-                top.linkTo(parent.bottom)
-                start.linkTo(parent.start, margin = 10.dp)
-                end.linkTo(parent.end, margin = 10.dp)
-                width = Dimension.matchParent
-            })
+        Box(
+            modifier = Modifier
+                .constrainAs(bottomButton) {
+                    width = Dimension.matchParent
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                .background(color = Color.White)
+                .padding(horizontal = 24.dp, vertical = 14.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            FilledButton(
+                onClick = { events(CategoryEvent.ShowCreateModal(true)) },
+                text = "Tambah Kategori",
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight(700)),
+                contentPadding = PaddingValues(15.dp)
+            )
+        }
 
         Loading(modifier = Modifier, visible = state.isLoading)
 
@@ -112,25 +145,53 @@ fun CategoriesScreen(
 
         MessageAlert(
             type = AlertType.WARNING,
-            message = state.confirmationMessage,
+            message = "Anda yakin ingin menghapus kategori ini?",
             title = "Hapus Kategori",
-            visible = state.confirmationMessage.isNotBlank(),
+            visible = state.showDeleteModal,
             modifier = Modifier,
             confirmButton = {
                 FilledButton(
-                    onClick = { events(CategoryEvent.ProcessDeleteCategory) },
+                    onClick = {
+                        events(CategoryEvent.ShowDeleteModal(false))
+                        events(CategoryEvent.DeleteCategory)
+                    },
                     text = "Ya",
                     modifier = Modifier
                 )
             },
             dismissButton = {
                 FilledButton(
-                    onClick = { events(CategoryEvent.DismissAlertMessage) },
+                    onClick = {
+                        events(CategoryEvent.SelectCategory(null))
+                        events(CategoryEvent.ShowDeleteModal(false))
+                    },
                     text = "Tidak",
                     modifier = Modifier
                 )
             }
         )
 
+        if (state.showCreateModal) {
+            InputCategoryDialog(
+                type = InputType.CREATE,
+                viewModel = viewModel
+            )
+        }
+
+        if (state.showUpdateModal) {
+            InputCategoryDialog(
+                type = InputType.UPDATE,
+                viewModel = viewModel
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun CategoriesScreenPreview() {
+    VcashierMobileTheme {
+        Surface {
+        }
     }
 }

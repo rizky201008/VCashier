@@ -22,8 +22,9 @@ import kotlinx.coroutines.launch
 
 class CategoryViewModel(
     useCaseManager: UseCaseManager,
-    private var searchJob: Job? = null
 ) : ViewModel() {
+
+    private var searchJob: Job? = null
 
     var state by mutableStateOf(CategoryState())
     private val getCategories: GetCategories = useCaseManager.getCategoriesUseCase()
@@ -34,10 +35,10 @@ class CategoryViewModel(
     fun onEvent(e: CategoryEvent) {
         when (e) {
             is CategoryEvent.DismissAlertMessage -> {
+                getAllCategories()
                 state = state.copy(
                     error = "",
                     success = "",
-                    confirmationMessage = "",
                     categoryId = null
                 )
             }
@@ -51,20 +52,18 @@ class CategoryViewModel(
             }
 
             is CategoryEvent.PreFillFormData -> {
-                state = state.copy(categoryName = e.name, categoryId = e.id)
+                state = state.copy(
+                    categoryName = e.data.name,
+                    categoryId = e.data.id
+                )
             }
 
             is CategoryEvent.SubmitUpdateCategory -> {
                 submitUpdateCategory()
             }
 
-            is CategoryEvent.DeleteCategory -> {
-                state = state.copy(categoryId = e.data.id)
-                showConfirmationDialog(name = e.data.name)
-            }
-
-            is CategoryEvent.ProcessDeleteCategory -> {
-                processDeleteCategory(state.categoryId.toString())
+            is CategoryEvent.SelectCategory -> {
+                state = state.copy(categoryId = e.data?.id)
             }
 
             is CategoryEvent.InputSearchValue -> {
@@ -75,6 +74,26 @@ class CategoryViewModel(
                 searchJob = viewModelScope.launch {
                     delay(1000)
                     searchCategories()
+                }
+            }
+
+            is CategoryEvent.ShowCreateModal -> {
+                state = state.copy(showCreateModal = e.show)
+            }
+
+            is CategoryEvent.ShowUpdateModal -> {
+                state = state.copy(showUpdateModal = e.show)
+            }
+
+            is CategoryEvent.ShowDeleteModal -> {
+                state = state.copy(
+                    showDeleteModal = e.show,
+                )
+            }
+
+            is CategoryEvent.DeleteCategory -> {
+                state.categoryId?.let {
+                    processDeleteCategory(it.toString())
                 }
             }
         }
@@ -144,7 +163,7 @@ class CategoryViewModel(
         }.launchIn(viewModelScope)
     }
 
-    fun getAllCategories() {
+    private fun getAllCategories() {
         Log.d(TAG, "getAllCategories: called")
         getCategories().onEach { resource ->
             Log.d(TAG, "getAllCategories: ${resource.data}")
@@ -169,15 +188,11 @@ class CategoryViewModel(
         }.launchIn(viewModelScope)
     }
 
-    private fun showConfirmationDialog(name: String) {
-        state = state.copy(confirmationMessage = "Anda ingin menghapus kategori $name?")
-    }
-
     private fun processDeleteCategory(id: String) {
         deleteCategory(id).onEach { res ->
             when (res) {
                 is Resource.Loading -> {
-                    state = state.copy(confirmationMessage = "", isLoading = true)
+                    state = state.copy(isLoading = true)
                 }
 
                 is Resource.Error -> {
@@ -194,9 +209,12 @@ class CategoryViewModel(
                         success = res.data?.message ?: "Success",
                         categoryId = null,
                     )
-                    getAllCategories()
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    init {
+        getAllCategories()
     }
 }

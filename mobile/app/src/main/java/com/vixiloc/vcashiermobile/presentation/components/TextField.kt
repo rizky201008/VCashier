@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.MaterialTheme
@@ -149,7 +150,8 @@ fun SearchTextField(
     isError: Boolean = false,
     errorMessage: String = "",
     placeHolder: String = "",
-    trailingIcon: @Composable() (() -> Unit) = {}
+    trailingIcon: @Composable() (() -> Unit) = {},
+    keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
     Column(modifier = modifier) {
         TextFieldCompose(
@@ -184,6 +186,7 @@ fun SearchTextField(
             leadingIcon = {
                 FaIcon(faIcon = FaIcons.Search, tint = MaterialTheme.colorScheme.primary)
             },
+            keyboardActions = keyboardActions
         )
 
         val errorVisibleState = remember { MutableTransitionState(isError) }

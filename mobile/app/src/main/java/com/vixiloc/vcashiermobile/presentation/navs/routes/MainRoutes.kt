@@ -33,16 +33,7 @@ sealed interface MainRoutes {
         }
 
         @Serializable
-        data object Categories : MainRoutes {
-            @Serializable
-            data object CreateCategory : MainRoutes
-
-            @Serializable
-            data class UpdateCategory(
-                val name: String,
-                val id: Int
-            ) : MainRoutes
-        }
+        data object Categories : MainRoutes
 
         @Serializable
         data object Customers : MainRoutes {

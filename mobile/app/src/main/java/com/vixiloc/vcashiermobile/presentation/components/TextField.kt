@@ -148,56 +148,42 @@ fun SearchTextField(
     singleLine: Boolean = true,
     enabled: Boolean = true,
     isError: Boolean = false,
-    errorMessage: String = "",
-    placeHolder: String = "",
-    trailingIcon: @Composable() (() -> Unit) = {},
-    keyboardActions: KeyboardActions = KeyboardActions.Default
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    placeHolder: String = "Cari produk"
 ) {
-    Column(modifier = modifier) {
-        TextFieldCompose(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.White, shape = MaterialTheme.shapes.large),
-            value = value,
-            onValueChange = onValueChanged,
-            singleLine = singleLine,
-            textStyle = textStyle,
-            visualTransformation = VisualTransformation.None,
-            keyboardOptions = keyboardOptions,
-            enabled = enabled,
-            isError = isError,
-            placeholder = {
-                Text(text = "Cari produk", style = MaterialTheme.typography.bodySmall.copy())
-            },
-            colors = TextFieldDefaults.colors(
-                disabledContainerColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
-                errorContainerColor = MaterialTheme.colorScheme.errorContainer,
-                unfocusedContainerColor = Color.Transparent,
-                selectionColors = TextSelectionColors(
-                    handleColor = Color.Red,
-                    backgroundColor = Color.Green
-                ),
-                focusedIndicatorColor = Color.Transparent,
-                errorIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
+    TextFieldCompose(
+        modifier = modifier
+            .background(color = Color.White, shape = MaterialTheme.shapes.large),
+        value = value,
+        onValueChange = onValueChanged,
+        singleLine = singleLine,
+        textStyle = textStyle,
+        visualTransformation = VisualTransformation.None,
+        keyboardOptions = keyboardOptions,
+        enabled = enabled,
+        isError = isError,
+        placeholder = {
+            Text(text = placeHolder, style = MaterialTheme.typography.bodySmall.copy())
+        },
+        colors = TextFieldDefaults.colors(
+            disabledContainerColor = Color.Transparent,
+            focusedContainerColor = Color.Transparent,
+            errorContainerColor = MaterialTheme.colorScheme.errorContainer,
+            unfocusedContainerColor = Color.Transparent,
+            selectionColors = TextSelectionColors(
+                handleColor = Color.Red,
+                backgroundColor = Color.Green
             ),
-            leadingIcon = {
-                FaIcon(faIcon = FaIcons.Search, tint = MaterialTheme.colorScheme.primary)
-            },
-            keyboardActions = keyboardActions
-        )
-
-        val errorVisibleState = remember { MutableTransitionState(isError) }
-        AnimatedVisibility(visibleState = errorVisibleState) {
-            Text(
-                text = errorMessage,
-                style = MaterialTheme.typography.bodySmall.copy(color = Color.Red),
-                modifier = Modifier.padding(start = 10.dp)
-            )
-        }
-    }
+            focusedIndicatorColor = Color.Transparent,
+            errorIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        ),
+        leadingIcon = {
+            FaIcon(faIcon = FaIcons.Search, tint = MaterialTheme.colorScheme.primary)
+        },
+        keyboardActions = keyboardActions
+    )
 }
 
 @Preview(showBackground = true)

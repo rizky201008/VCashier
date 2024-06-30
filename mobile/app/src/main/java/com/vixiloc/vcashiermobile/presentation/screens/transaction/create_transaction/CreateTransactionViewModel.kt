@@ -11,6 +11,8 @@ import com.vixiloc.vcashiermobile.domain.use_case.GetCartItems
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.InsertCart
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -18,6 +20,7 @@ import kotlinx.coroutines.launch
 
 class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
+    private var searchJob: Job? = null
     private val _state = mutableStateOf(CreateTransactionState())
     val state: State<CreateTransactionState> = _state
 
@@ -62,9 +65,27 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             }
 
             is CreateTransactionEvent.UpdateSearchValue -> {
-                _state.value = state.value.copy(searchValue = event.value)
+                searchJob?.cancel()
+                _state.value = state.value.copy(searchQuery = event.value)
+                searchJob = viewModelScope.launch {
+                    delay(1000)
+                    searchProducts()
+                }
             }
 
+        }
+    }
+
+    private fun searchProducts() {
+        val query = state.value.searchQuery
+        if (query.isBlank()) {
+            getProducts()
+        } else {
+            _state.value = _state.value.copy(
+                products = state.value.products.filter {
+                    it.name.contains(query, ignoreCase = true)
+                }
+            )
         }
     }
 

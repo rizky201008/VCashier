@@ -117,11 +117,11 @@ fun CreateTransactionScreen(
         }
         VerticalSpacer(height = 24.dp)
         SearchTextField(
-            value = state.searchValue,
+            modifier = Modifier.fillMaxWidth(),
+            value = state.searchQuery,
             onValueChanged = {
                 onEvent(CreateTransactionEvent.UpdateSearchValue(it))
             },
-            modifier = Modifier,
             textStyle = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,

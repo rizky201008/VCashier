@@ -54,7 +54,6 @@ fun TransactionPaymentScreen(
     val viewModel: TransactionPaymentViewModel = koinViewModel()
     val onEvent = viewModel::onEvent
     val state = viewModel.state.value
-    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.getTransaction(navArgs.transactionId)
@@ -191,6 +190,7 @@ fun TransactionPaymentScreen(
                 visible = state.success.isNotEmpty(),
                 onDismiss = {
                     onEvent(TransactionPaymentEvent.DismissAlertMessage)
+                    navigator.navigateUp()
                 }
             )
             MessageAlert(

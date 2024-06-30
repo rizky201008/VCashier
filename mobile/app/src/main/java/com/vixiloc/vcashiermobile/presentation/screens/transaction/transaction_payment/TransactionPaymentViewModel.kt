@@ -13,6 +13,7 @@ import com.vixiloc.vcashiermobile.domain.use_case.MakePayment
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class TransactionPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     private val _state = mutableStateOf(TransactionPaymentState())
@@ -28,7 +29,6 @@ class TransactionPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() 
             is TransactionPaymentEvent.InsertTransactionTotal -> {
                 _state.value = _state.value.copy(transactionTotal = event.total)
             }
-
 
             is TransactionPaymentEvent.UpdatePaymentAmount -> {
                 if (event.amount.isDigitsOnly() && event.amount.isNotBlank()) {
@@ -57,78 +57,84 @@ class TransactionPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() 
             paymentAmount = state.value.paymentAmount,
             paymentMethodId = state.value.paymentMethod?.id ?: 1
         )
-        makePaymentUseCase(data = data).onEach { res ->
-            when (res) {
-                is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
-                }
+        viewModelScope.launch {
+            makePaymentUseCase(data = data).onEach { res ->
+                when (res) {
+                    is Resource.Loading -> {
+                        _state.value = _state.value.copy(isLoading = true)
+                    }
 
-                is Resource.Success -> {
-                    _state.value = _state.value.copy(
-                        success = res.data?.message ?: "Pembayaran berhasil dibuat",
-                        isLoading = false
-                    )
-                }
+                    is Resource.Success -> {
+                        _state.value = _state.value.copy(
+                            success = res.data?.message ?: "Pembayaran berhasil dibuat",
+                            isLoading = false
+                        )
+                    }
 
-                is Resource.Error -> {
-                    _state.value = _state.value.copy(
-                        isLoading = false,
-                        error = res.message ?: "An unexpected error occurred"
-                    )
+                    is Resource.Error -> {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            error = res.message ?: "An unexpected error occurred"
+                        )
+                    }
                 }
-            }
+            }.launchIn(viewModelScope)
         }
     }
 
     fun getTransaction(id: String) {
-        getTransactionUseCase(id).onEach { resource ->
-            when (resource) {
-                is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
-                }
+        viewModelScope.launch {
+            getTransactionUseCase(id).onEach { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        _state.value = _state.value.copy(isLoading = true)
+                    }
 
-                is Resource.Success -> {
-                    _state.value = _state.value.copy(
-                        transactionTotal = resource.data?.totalAmount ?: 0,
-                        paymentAmount = resource.data?.totalAmount ?: 0,
-                        isLoading = false,
-                        selectedTransactionId = id
-                    )
-                }
+                    is Resource.Success -> {
+                        _state.value = _state.value.copy(
+                            transactionTotal = resource.data?.totalAmount ?: 0,
+                            paymentAmount = resource.data?.totalAmount ?: 0,
+                            isLoading = false,
+                            selectedTransactionId = id
+                        )
+                    }
 
-                is Resource.Error -> {
-                    _state.value = _state.value.copy(
-                        isLoading = false,
-                        error = resource.message ?: "An unexpected error occurred"
-                    )
+                    is Resource.Error -> {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            error = resource.message ?: "An unexpected error occurred"
+                        )
+                    }
                 }
-            }
-        }.launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
+        }
     }
 
     private fun getPaymentMethods() {
-        getPaymentMethodsUseCase().onEach { resource ->
-            when (resource) {
-                is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
-                }
+        viewModelScope.launch {
+            getPaymentMethodsUseCase().onEach { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        _state.value = _state.value.copy(isLoading = true)
+                    }
 
-                is Resource.Success -> {
-                    _state.value = _state.value.copy(
-                        paymentMethods = resource.data?.data ?: emptyList(),
-                        paymentMethod = resource.data?.data?.firstOrNull(),
-                        isLoading = false
-                    )
-                }
+                    is Resource.Success -> {
+                        _state.value = _state.value.copy(
+                            paymentMethods = resource.data?.data ?: emptyList(),
+                            paymentMethod = resource.data?.data?.firstOrNull(),
+                            isLoading = false
+                        )
+                    }
 
-                is Resource.Error -> {
-                    _state.value = _state.value.copy(
-                        isLoading = false,
-                        error = resource.message ?: "An unexpected error occurred"
-                    )
+                    is Resource.Error -> {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            error = resource.message ?: "An unexpected error occurred"
+                        )
+                    }
                 }
-            }
-        }.launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
+        }
     }
 
     init {

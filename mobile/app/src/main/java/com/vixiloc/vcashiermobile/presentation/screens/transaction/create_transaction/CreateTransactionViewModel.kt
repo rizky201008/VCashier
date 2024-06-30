@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
 import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
 import com.vixiloc.vcashiermobile.domain.use_case.GetCartItems
@@ -23,6 +24,7 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     private val getProductsUseCase: GetProducts = useCaseManager.getProductsUseCase()
     private val addToCartUseCase: InsertCart = useCaseManager.insertCartUseCase()
     private val getCartItemsUseCase: GetCartItems = useCaseManager.getCartItemsUseCase()
+    private val getCategoriesUseCase = useCaseManager.getCategoriesUseCase()
 
 
     fun onEvent(event: CreateTransactionEvent) {
@@ -55,6 +57,14 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                 addToCart(event.item)
             }
 
+            is CreateTransactionEvent.SelectCategory -> {
+                updateCategory(event.category)
+            }
+
+            is CreateTransactionEvent.UpdateSearchValue -> {
+                _state.value = state.value.copy(searchValue = event.value)
+            }
+
         }
     }
 
@@ -70,6 +80,10 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                 _state.value = state.value.copy(cartItems = it)
             }.stateIn(viewModelScope)
         }
+    }
+
+    private fun updateCategory(category: CategoriesResponseItem?) {
+        _state.value = state.value.copy(selectedCategory = category)
     }
 
     private fun resetCart() {
@@ -100,9 +114,36 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
         }.launchIn(viewModelScope)
     }
 
+    private fun getCategories() {
+        viewModelScope.launch {
+            getCategoriesUseCase().onEach { res ->
+                when (res) {
+                    is Resource.Loading -> {
+                        _state.value = state.value.copy(isLoading = true)
+                    }
+
+                    is Resource.Success -> {
+                        _state.value = state.value.copy(
+                            isLoading = false,
+                            categories = res.data ?: emptyList()
+                        )
+                    }
+
+                    is Resource.Error -> {
+                        _state.value = state.value.copy(
+                            isLoading = false,
+                            error = res.message ?: "An unexpected error occurred"
+                        )
+                    }
+                }
+            }.launchIn(viewModelScope)
+        }
+    }
+
     init {
         getProducts()
         getCartItems()
+        getCategories()
     }
 
 }

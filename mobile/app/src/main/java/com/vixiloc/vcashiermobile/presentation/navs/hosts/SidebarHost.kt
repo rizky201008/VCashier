@@ -40,7 +40,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionsScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionsScreenOld
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -139,7 +139,7 @@ fun SidebarHost(
                         )
                     }
                     composable<MainRoutes.NavDrawerScreens.Transactions> {
-                        TransactionsScreen(
+                        TransactionsScreenOld(
                             modifier = screenModifier,
                             onNavigate = onNavigate
                         )

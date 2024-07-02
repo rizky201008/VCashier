@@ -18,9 +18,11 @@ class TransactionController extends Controller
         $this->transactionRepository = new TransactionRepository();
     }
 
-    public function getTransactions(): JsonResponse
+    public function getTransactions(Request $request): JsonResponse
     {
-        return response()->json($this->transactionRepository->getTransactions());
+        $status = $request->query('status');
+        $paymentStatus = $request->query('payment_status');
+        return response()->json($this->transactionRepository->getTransactions($status,$paymentStatus));
     }
 
     public function getTransaction(string $id): JsonResponse

@@ -99,10 +99,10 @@ class TransactionRepository
     public function getTransactions($status, $paymentStatus)
     {
         $trx = Transaction::with('items', 'items.productVariation', 'items.productVariation.product', 'customer')->orderBy('created_at', 'desc');
-        if($status) {
+        if ($status && $status !== "semua") {
             $trx->where('transaction_status', $status);
         }
-        if($paymentStatus) {
+        if ($paymentStatus) {
             $trx->where('payment_status', $paymentStatus);
         }
         return ['data' => $trx->get()];

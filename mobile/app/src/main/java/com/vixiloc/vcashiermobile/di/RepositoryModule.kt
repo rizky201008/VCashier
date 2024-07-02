@@ -10,6 +10,7 @@ import com.vixiloc.vcashiermobile.data.repository.DataStoreRepositoryImpl
 import com.vixiloc.vcashiermobile.data.repository.PaymentsRepositoryImpl
 import com.vixiloc.vcashiermobile.data.repository.ProductsRepositoryImpl
 import com.vixiloc.vcashiermobile.data.repository.TransactionRepositoryImpl
+import com.vixiloc.vcashiermobile.data.repository.UserRepositoryImpl
 import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import com.vixiloc.vcashiermobile.domain.repository.CategoryRepository
 import com.vixiloc.vcashiermobile.domain.repository.CustomerRepository
@@ -17,6 +18,7 @@ import com.vixiloc.vcashiermobile.domain.repository.DataStoreRepository
 import com.vixiloc.vcashiermobile.domain.repository.PaymentsRepository
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository
+import com.vixiloc.vcashiermobile.domain.repository.UserRepository
 import io.realm.kotlin.Realm
 import org.koin.dsl.module
 
@@ -28,6 +30,7 @@ val repositoryModule = module {
     single { provideCustomerRepository(get()) }
     single { provideTransactionRepository(get(), get()) }
     single { providePaymentsRepository(get()) }
+    single { provideUserRepository(get()) }
 }
 
 fun provideAuthRepository(apiService: ApiService): AuthRepository {
@@ -59,4 +62,8 @@ fun provideTransactionRepository(
 
 fun providePaymentsRepository(apiService: ApiService): PaymentsRepository {
     return PaymentsRepositoryImpl(apiService)
+}
+
+fun provideUserRepository(apiService: ApiService): UserRepository {
+    return UserRepositoryImpl(apiService)
 }

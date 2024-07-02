@@ -5,6 +5,7 @@ import com.vixiloc.vcashiermobile.utils.FileConverter
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.EmployeesViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionViewModel
@@ -29,6 +30,7 @@ val viewModelModule = module {
     viewModel { providePayTransactionViewModel(get()) }
     viewModel { provideCreateTransactionViewModel(get()) }
     viewModel { provideCheckoutScreenViewModel(get()) }
+    viewModel { provideEmployeesViewModel(get()) }
 }
 
 fun provideLoginViewModel(useCaseManager: UseCaseManager): LoginViewModel {
@@ -84,3 +86,6 @@ fun provideCreateTransactionViewModel(useCaseManager: UseCaseManager) =
 
 fun provideCheckoutScreenViewModel(useCaseManager: UseCaseManager) =
     CheckoutScreenViewModel(useCaseManager = useCaseManager)
+
+fun provideEmployeesViewModel(useCaseManager: UseCaseManager) =
+    EmployeesViewModel(useCaseManager = useCaseManager)

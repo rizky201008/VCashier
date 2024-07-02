@@ -10,6 +10,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
 import com.vixiloc.vcashiermobile.data.remote.Routes.REGISTER
 import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
+import com.vixiloc.vcashiermobile.data.remote.Routes.USERS_LIST
 import com.vixiloc.vcashiermobile.data.remote.dto.categories.CategoriesResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionRequestDto
@@ -32,6 +33,7 @@ import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.users.UsersResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -189,4 +191,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body data: MakePaymentRequestDto
     ): MakePaymentResponseDto
+
+    @GET(USERS_LIST)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun getUsers(
+        @Header("Authorization") token: String,
+    ): UsersResponseDto
 }

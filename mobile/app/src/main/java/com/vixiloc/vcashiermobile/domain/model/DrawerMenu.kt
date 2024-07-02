@@ -3,6 +3,7 @@ package com.vixiloc.vcashiermobile.domain.model
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ViewList
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.PeopleOutline
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material.icons.outlined.Square
@@ -36,5 +37,10 @@ val listDrawer = listOf(
         name = "Produk",
         icon = Icons.Outlined.Square,
         route = MainRoutes.NavDrawerScreens.Products
+    ),
+    DrawerMenu(
+        name = "Pegawai",
+        icon = Icons.Outlined.PeopleOutline,
+        route = MainRoutes.NavDrawerScreens.Employees
     )
 )

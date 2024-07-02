@@ -9,4 +9,6 @@ data class RegisterRequestDto(
     val password:String,
     @SerializedName("name")
     val name:String,
+    @SerializedName("role")
+    val role:String,
 )

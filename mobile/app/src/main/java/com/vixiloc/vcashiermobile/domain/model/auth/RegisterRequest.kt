@@ -5,13 +5,15 @@ import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterRequestDto
 data class RegisterRequest(
     val name: String,
     val email: String,
-    val password: String
+    val password: String,
+    val role: String
 )
 
 fun RegisterRequest.toDto(): RegisterRequestDto {
     return RegisterRequestDto(
         name = name,
         email = email,
-        password = password
+        password = password,
+        role = role
     )
 }

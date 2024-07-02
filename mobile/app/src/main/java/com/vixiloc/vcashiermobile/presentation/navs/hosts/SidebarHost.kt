@@ -38,9 +38,10 @@ import com.vixiloc.vcashiermobile.presentation.components.PainterIconButton
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
+import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.EmployeesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionsScreenOld
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionsScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,10 +91,10 @@ fun SidebarHost(
                             currentTitle.value = item.name
                             navHostController.navigate(item.route) {
                                 popUpTo(navHostController.graph.findStartDestination().id) {
-                                    saveState = true
+                                    saveState = false
                                 }
                                 launchSingleTop = true
-                                restoreState = true
+                                restoreState = false
                             }
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
@@ -139,9 +140,13 @@ fun SidebarHost(
                         )
                     }
                     composable<MainRoutes.NavDrawerScreens.Transactions> {
-                        TransactionsScreenOld(
+                        TransactionsScreen(
                             modifier = screenModifier,
-                            onNavigate = onNavigate
+                            onNavigate = onNavigate,
+                            navController = navHostController,
+                            onTitleChange = { title ->
+                                currentTitle.value = title
+                            }
                         )
                     }
                     composable<MainRoutes.NavDrawerScreens.Categories> {
@@ -159,6 +164,11 @@ fun SidebarHost(
                         CustomersScreen(
                             modifier = screenModifier,
                             onNavigate = onNavigate
+                        )
+                    }
+                    composable<MainRoutes.NavDrawerScreens.Employees> {
+                        EmployeesScreen(
+                            modifier = screenModifier
                         )
                     }
                 }

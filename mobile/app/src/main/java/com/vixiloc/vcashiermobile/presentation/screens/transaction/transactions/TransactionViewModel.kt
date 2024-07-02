@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.transaction
+package com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -7,24 +7,22 @@ import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vixiloc.vcashiermobile.utils.Resource
-import com.vixiloc.vcashiermobile.utils.Strings.TAG
-import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionRequest
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionItem
+import com.vixiloc.vcashiermobile.domain.model.transactions.CreateTransactionRequest
 import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
 import com.vixiloc.vcashiermobile.domain.use_case.CreateTransaction
 import com.vixiloc.vcashiermobile.domain.use_case.GetCustomers
-import com.vixiloc.vcashiermobile.domain.use_case.GetPaymentMethods
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
-import com.vixiloc.vcashiermobile.domain.use_case.GetTransaction
 import com.vixiloc.vcashiermobile.domain.use_case.GetTransactions
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
+import com.vixiloc.vcashiermobile.utils.Resource
+import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class TransactionViewModel(
-   useCaseManager: UseCaseManager
+    useCaseManager: UseCaseManager
 ) : ViewModel() {
 
     var state by mutableStateOf(TransactionState())
@@ -33,9 +31,6 @@ class TransactionViewModel(
         useCaseManager.createTransactionUseCase()
     private val getCustomersUseCase: GetCustomers = useCaseManager.getCustomersUseCase()
     private val getTransactionsUseCase: GetTransactions = useCaseManager.getTransactionsUseCase()
-    private val getTransactionUseCase: GetTransaction = useCaseManager.getTransactionUseCase()
-    private val getPaymentMethodsUseCase: GetPaymentMethods =
-        useCaseManager.getPaymentMethodsUseCase()
 
 
     fun onEvent(event: TransactionEvent) {
@@ -50,12 +45,12 @@ class TransactionViewModel(
             }
 
             is TransactionEvent.SelectProduct -> {
-                if (!state.selectedProduct.any { it.containsKey(event.product) }) {
+//                if (!state.selectedProduct.any { it.containsKey(event.product) }) {
 //                    state = state.copy(
 //                        selectedProduct = state.selectedProduct.plus(mapOf(event.product to 1)),
 //                        totalPrice = state.totalPrice + event.product.price
 //                    )
-                }
+//                }
             }
 
             is TransactionEvent.IncreaseQty -> {
@@ -69,7 +64,6 @@ class TransactionViewModel(
                             it
                         }
                     },
-//                    totalPrice = state.totalPrice + event.product.price
                 )
             }
 
@@ -85,7 +79,6 @@ class TransactionViewModel(
                                 it
                             }
                         },
-//                        totalPrice = state.totalPrice - event.product.price
                     )
                 } else {
                     state = state.copy(
@@ -152,7 +145,15 @@ class TransactionViewModel(
             is TransactionEvent.SubmitTransactionPayment -> {
                 makePayment()
             }
+
+            is TransactionEvent.SelectStatus -> {
+                filterTransactions(event.status)
+            }
         }
+    }
+
+    private fun filterTransactions(status: String) {
+
     }
 
     private fun makePayment() {
@@ -242,7 +243,7 @@ class TransactionViewModel(
         }.launchIn(viewModelScope)
     }
 
-    fun getTransactions() {
+    private fun getTransactions() {
         getTransactionsUseCase().onEach { resource ->
             when (resource) {
                 is Resource.Loading -> {
@@ -267,54 +268,8 @@ class TransactionViewModel(
         }.launchIn(viewModelScope)
     }
 
-    fun getTransaction(id: String) {
-        getTransactionUseCase(id).onEach { resource ->
-            when (resource) {
-                is Resource.Loading -> {
-                    state = state.copy(isLoading = true)
-                }
-
-                is Resource.Success -> {
-                    state = state.copy(
-                        transactionTotal = resource.data?.totalAmount ?: 0,
-                        paymentAmount = resource.data?.totalAmount ?: 0,
-                        isLoading = false
-                    )
-                }
-
-                is Resource.Error -> {
-                    state = state.copy(
-                        isLoading = false,
-                        error = resource.message ?: "An unexpected error occurred"
-                    )
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    fun getPaymentMethods() {
-        getPaymentMethodsUseCase().onEach { resource ->
-            when (resource) {
-                is Resource.Loading -> {
-                    state = state.copy(isLoading = true)
-                }
-
-                is Resource.Success -> {
-                    state = state.copy(
-                        paymentMethods = resource.data?.data ?: emptyList(),
-                        paymentMethod = resource.data?.data?.first(),
-                        isLoading = false
-                    )
-                }
-
-                is Resource.Error -> {
-                    state = state.copy(
-                        isLoading = false,
-                        error = resource.message ?: "An unexpected error occurred"
-                    )
-                }
-            }
-        }.launchIn(viewModelScope)
+    init {
+        getTransactions()
     }
 
 }

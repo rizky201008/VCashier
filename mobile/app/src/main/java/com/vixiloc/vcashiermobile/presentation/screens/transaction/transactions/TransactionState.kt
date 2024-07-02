@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.transaction
+package com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions
 
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.domain.model.payments.PaymentMethodData

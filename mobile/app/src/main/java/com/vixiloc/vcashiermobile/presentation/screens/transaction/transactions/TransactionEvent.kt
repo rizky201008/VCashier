@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.transaction
+package com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions
 
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.domain.model.payments.PaymentMethodData
@@ -23,4 +23,5 @@ sealed class TransactionEvent {
     data class SelectPaymentMethod(val method: PaymentMethodData) : TransactionEvent()
     data class SelectTransaction(val id: String) : TransactionEvent()
     data object SubmitTransactionPayment : TransactionEvent()
+    data class SelectStatus(val status: String) : TransactionEvent()
 }

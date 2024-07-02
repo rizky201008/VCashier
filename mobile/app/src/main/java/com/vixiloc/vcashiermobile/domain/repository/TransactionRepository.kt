@@ -14,7 +14,12 @@ interface TransactionRepository {
         data: CreateTransactionRequestDto
     ): CreateTransactionResponseDto
 
-    suspend fun getTransactions(token: String): TransactionsResponseDto
+    suspend fun getTransactions(
+        token: String,
+        status: String = "",
+        paymentStatus: String = ""
+    ): TransactionsResponseDto
+
     suspend fun getTransaction(token: String, id: String): TransactionResponseDto
     suspend fun addToCart(data: CartItems)
     suspend fun getCartItems(): Flow<List<CartItems>>

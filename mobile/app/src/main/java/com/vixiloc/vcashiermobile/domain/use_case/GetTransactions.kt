@@ -17,11 +17,14 @@ class GetTransactions(
     private val token: GetToken
 ) {
 
-    operator fun invoke(): Flow<Resource<TransactionsResponse>> = flow {
+    operator fun invoke(
+        status: String = "",
+        paymentStatus: String = ""
+    ): Flow<Resource<TransactionsResponse>> = flow {
         try {
             emit(Resource.Loading())
             val token = token().first()
-            val response = repository.getTransactions(token)
+            val response = repository.getTransactions(token, status, paymentStatus)
             emit(Resource.Success(response.toDomain()))
         } catch (e: HttpException) {
             val errorMessage = httpHandler.handleHttpException(e)

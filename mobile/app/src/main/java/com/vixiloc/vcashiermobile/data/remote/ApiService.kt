@@ -42,6 +42,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -159,6 +160,8 @@ interface ApiService {
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun getTransactions(
         @Header("Authorization") token: String,
+        @Query("status") status: String = "",
+        @Query("payment_status") paymentStatus: String = "",
     ): TransactionsResponseDto
 
     @GET("$TRANSACTIONS/{id}")

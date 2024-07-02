@@ -23,8 +23,11 @@ class TransactionRepositoryImpl(
         return api.createTransaction("Bearer $token", data)
     }
 
-    override suspend fun getTransactions(token: String): TransactionsResponseDto {
-        return api.getTransactions("Bearer $token")
+    override suspend fun getTransactions(
+        token: String, status: String,
+        paymentStatus: String
+    ): TransactionsResponseDto {
+        return api.getTransactions("Bearer $token", status, paymentStatus)
     }
 
     override suspend fun getTransaction(token: String, id: String): TransactionResponseDto {

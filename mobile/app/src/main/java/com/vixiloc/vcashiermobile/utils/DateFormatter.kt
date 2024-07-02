@@ -18,7 +18,7 @@ object DateFormatter {
         val localDateTime = utcDateTime.withZoneSameInstant(ZoneId.systemDefault())
 
         // Format hasil ke format yang diinginkan
-        val outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+        val outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
         val formattedDateTime = localDateTime.format(outputFormatter)
         return formattedDateTime
     }

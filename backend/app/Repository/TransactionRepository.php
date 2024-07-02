@@ -96,9 +96,16 @@ class TransactionRepository
         return Transaction::with('items')->find($id);
     }
 
-    public function getTransactions()
+    public function getTransactions($status, $paymentStatus)
     {
-        return ['data' => Transaction::with('items', 'items.productVariation', 'items.productVariation.product', 'customer')->orderBy('created_at', 'desc')->get()];
+        $trx = Transaction::with('items', 'items.productVariation', 'items.productVariation.product', 'customer')->orderBy('created_at', 'desc');
+        if($status) {
+            $trx->where('transaction_status', $status);
+        }
+        if($paymentStatus) {
+            $trx->where('payment_status', $paymentStatus);
+        }
+        return ['data' => $trx->get()];
     }
 
     public function stockExists(int $quantity, int $stock): bool

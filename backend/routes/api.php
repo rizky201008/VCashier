@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::prefix('users')->group(function () {
         Route::get('role', [UserController::class, 'getRole']);
         Route::get('validate', [UserController::class, 'validateToken']);
+        Route::get('lists', [UserController::class, 'allUsers']);
     });
     Route::prefix('payment')->group(function () {
         Route::get('methods', [PaymentController::class, 'getPaymentMethods']);

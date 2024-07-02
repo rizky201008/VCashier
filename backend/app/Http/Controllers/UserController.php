@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,13 @@ class UserController extends Controller
     {
         return response()->json([
             'message' => 'Validated'
+        ]);
+    }
+
+    public function allUsers(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => User::all()
         ]);
     }
 }

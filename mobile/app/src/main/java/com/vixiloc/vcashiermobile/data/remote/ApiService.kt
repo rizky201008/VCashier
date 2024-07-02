@@ -7,6 +7,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_MAKE
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_METHODS
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
+import com.vixiloc.vcashiermobile.data.remote.Routes.REGISTER
 import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.dto.categories.CategoriesResponseDto
@@ -21,7 +22,8 @@ import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductIm
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.customers.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRegisterResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.PaymentMethodsDto
@@ -48,7 +50,11 @@ interface ApiService {
 
     @POST(LOGIN)
     @Headers("Content-Type: application/json", "Accept: application/json")
-    suspend fun login(@Body data: LoginRequestDto): LoginResponseDto
+    suspend fun login(@Body data: LoginRequestDto): LoginRegisterResponseDto
+
+    @POST(REGISTER)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun register(@Body data: RegisterRequestDto): LoginRegisterResponseDto
 
     @GET(PRODUCTS)
     @Headers("Content-Type: application/json", "Accept: application/json")

@@ -4,6 +4,7 @@ object Routes {
 
     const val BASE_URL = "https://vc.vixiloc.com/api/"
     const val LOGIN = "auth/login"
+    const val REGISTER = "auth/register"
     const val PRODUCTS = "products"
     const val CATEGORIES = "categories"
     const val CUSTOMERS = "customers"

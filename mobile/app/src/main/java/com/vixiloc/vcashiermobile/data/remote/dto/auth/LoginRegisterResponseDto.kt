@@ -1,15 +1,15 @@
 package com.vixiloc.vcashiermobile.data.remote.dto.auth
 
 import com.google.gson.annotations.SerializedName
-import com.vixiloc.vcashiermobile.domain.model.auth.LoginResponse
+import com.vixiloc.vcashiermobile.domain.model.auth.LoginRegisterResponse
 
-data class LoginResponseDto(
+data class LoginRegisterResponseDto(
     @SerializedName("token") val token: String? = null,
     @SerializedName("message") val message: String
 )
 
-fun LoginResponseDto.toLoginResponse(): LoginResponse {
-    return LoginResponse(
+fun LoginRegisterResponseDto.toDomain(): LoginRegisterResponse {
+    return LoginRegisterResponse(
         token = token,
         message = message
     )

@@ -36,7 +36,7 @@ class AuthController extends Controller
             'role' => 'required|in:cashier,warehouse'
         ]);
 
-        $data  = $req->all();
+        $data = $req->all();
         return $this->authRepository->register($data);
     }
 
@@ -70,6 +70,20 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Password successfully updated'
+        ], 200);
+    }
+
+    function resetPassword(Request $req): JsonResponse
+    {
+        $req->validate([
+            'email' => 'required|email'
+        ]);
+        $user = $req->user();
+        $user->password = bcrypt('password');
+        $user->save();
+
+        return response()->json([
+            'message' => 'Password successfully reset'
         ], 200);
     }
 }

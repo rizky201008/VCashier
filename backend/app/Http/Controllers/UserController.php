@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function getRole(Request $request) : JsonResponse
+    public function getRole(Request $request): JsonResponse
     {
         return response()->json([
             'role' => $request->user()->role
@@ -26,6 +26,14 @@ class UserController extends Controller
     {
         return response()->json([
             'data' => User::all()
+        ]);
+    }
+
+    public function deleteUser(Request $request): JsonResponse {
+        $user = User::find($request->id);
+        $user->delete();
+        return response()->json([
+            'message' => 'User deleted'
         ]);
     }
 }

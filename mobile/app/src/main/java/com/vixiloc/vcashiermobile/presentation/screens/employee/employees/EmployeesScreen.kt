@@ -27,6 +27,7 @@ import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryEvent
 import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.components.AddEmployeeDialog
 import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.components.EmployeeListItem
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionEvent
@@ -56,7 +57,17 @@ fun EmployeesScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier.height((state.users.size * 100).dp)
             ) {
                 items(state.users) { item: UsersResponseData ->
-                    EmployeeListItem(item = item)
+                    EmployeeListItem(
+                        item = item,
+                        onDelete = {
+                            onEvent(EmployeesEvent.SelectEmployee(it.id))
+                            onEvent(EmployeesEvent.ShowDeleteEmployeeAlert(true))
+                        },
+                        onReset = {
+                            onEvent(EmployeesEvent.SelectEmployee(it.id))
+                            onEvent(EmployeesEvent.ShowResetPasswordAlert(true))
+                        }
+                    )
                     VerticalSpacer(12.dp)
                 }
             }
@@ -105,6 +116,69 @@ fun EmployeesScreen(modifier: Modifier = Modifier) {
             visible = state.showErrorAlert,
             onDismiss = {
                 onEvent(EmployeesEvent.ShowErrorAlert(false))
+            }
+        )
+        MessageAlert(
+            type = AlertType.WARNING,
+            message = "Anda yakin ingin menghapus pegawai ini?",
+            title = "Hapus Pegawai",
+            visible = state.showDeleteEmployeeAlert,
+            modifier = Modifier,
+            confirmButton = {
+                FilledButton(
+                    onClick = {
+                        onEvent(EmployeesEvent.ShowDeleteEmployeeAlert(false))
+                        onEvent(EmployeesEvent.DeleteEmployee)
+                    },
+                    text = "Ya",
+                    modifier = Modifier
+                )
+            },
+            dismissButton = {
+                FilledButton(
+                    onClick = {
+                        onEvent(EmployeesEvent.ShowDeleteEmployeeAlert(false))
+                        onEvent(EmployeesEvent.SelectEmployee(null))
+                    },
+                    text = "Tidak",
+                    modifier = Modifier
+                )
+            },
+            onDismiss = {
+                onEvent(EmployeesEvent.ShowDeleteEmployeeAlert(false))
+                onEvent(EmployeesEvent.SelectEmployee(null))
+            }
+        )
+
+        MessageAlert(
+            type = AlertType.WARNING,
+            message = "Anda yakin ingin mereset password pegawai ini?",
+            title = "Reset Password",
+            visible = state.showResetPasswordAlert,
+            modifier = Modifier,
+            confirmButton = {
+                FilledButton(
+                    onClick = {
+                        onEvent(EmployeesEvent.ShowResetPasswordAlert(false))
+                        onEvent(EmployeesEvent.ResetPassword)
+                    },
+                    text = "Ya",
+                    modifier = Modifier
+                )
+            },
+            dismissButton = {
+                FilledButton(
+                    onClick = {
+                        onEvent(EmployeesEvent.ShowResetPasswordAlert(false))
+                        onEvent(EmployeesEvent.SelectEmployee(null))
+                    },
+                    text = "Tidak",
+                    modifier = Modifier
+                )
+            },
+            onDismiss = {
+                onEvent(EmployeesEvent.ShowResetPasswordAlert(false))
+                onEvent(EmployeesEvent.SelectEmployee(null))
             }
         )
         if (state.showAddDialog) {

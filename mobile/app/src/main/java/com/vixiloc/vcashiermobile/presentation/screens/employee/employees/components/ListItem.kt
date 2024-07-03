@@ -28,7 +28,9 @@ import com.vixiloc.vcashiermobile.presentation.screens.category.components.Fille
 @Composable
 fun EmployeeListItem(
     modifier: Modifier = Modifier,
-    item: UsersResponseData
+    item: UsersResponseData,
+    onDelete: (UsersResponseData) -> Unit,
+    onReset: (UsersResponseData) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -66,7 +68,7 @@ fun EmployeeListItem(
                     shape = MaterialTheme.shapes.small,
                     icon = Icons.Outlined.Key,
                     onClick = {
-
+                        onReset(item)
                     },
                     iconSize = 16
                 )
@@ -80,7 +82,7 @@ fun EmployeeListItem(
                     shape = MaterialTheme.shapes.small,
                     icon = Icons.Outlined.Delete,
                     onClick = {
-
+                        onDelete(item)
                     },
                     iconTint = MaterialTheme.colorScheme.error,
                     iconSize = 16

@@ -10,6 +10,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
 import com.vixiloc.vcashiermobile.data.remote.Routes.REGISTER
 import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
+import com.vixiloc.vcashiermobile.data.remote.Routes.USERS_DELETE
 import com.vixiloc.vcashiermobile.data.remote.Routes.USERS_LIST
 import com.vixiloc.vcashiermobile.data.remote.dto.categories.CategoriesResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
@@ -33,6 +34,8 @@ import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.users.DeleteUserRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.users.DeleteUserResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.users.UsersResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -197,4 +200,11 @@ interface ApiService {
     suspend fun getUsers(
         @Header("Authorization") token: String,
     ): UsersResponseDto
+
+    @POST(USERS_DELETE)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun deleteUser(
+        @Header("Authorization") token: String,
+        @Body data: DeleteUserRequestDto
+    ): DeleteUserResponseDto
 }

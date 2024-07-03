@@ -17,8 +17,8 @@ class DeleteUser(
     private val token: GetToken
 ) {
     operator fun invoke(data: DeleteUserRequest): Flow<Resource<String>> = flow {
-        val token = token().first()
         try {
+            val token = token().first()
             emit(Resource.Loading())
             val response = repository.deleteUser(token = token, data = data.toDto())
             emit(Resource.Success(response.message))

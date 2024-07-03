@@ -60,7 +60,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('role', [UserController::class, 'getRole']);
         Route::get('validate', [UserController::class, 'validateToken']);
         Route::get('lists', [UserController::class, 'allUsers']);
-        Route::post('delete', [UserController::class, 'deleteUser']);
+        Route::delete('{id}', [UserController::class, 'deleteUser']);
     });
     Route::prefix('payment')->group(function () {
         Route::get('methods', [PaymentController::class, 'getPaymentMethods']);

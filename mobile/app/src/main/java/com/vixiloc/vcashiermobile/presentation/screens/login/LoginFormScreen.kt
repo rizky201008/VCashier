@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
@@ -70,20 +71,6 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                 .fillMaxSize()
                 .padding(horizontal = 24.dp)
         ) {
-            Loading(modifier = Modifier, visible = state.isLoading)
-            if (state.isLoading) keyboardController?.hide()
-            if (state.loginSuccess) {
-                navHostController.popBackStack()
-                navHostController.navigate(MainRoutes.NavDrawerScreens)
-            }
-            MessageAlert(
-                type = AlertType.ERROR,
-                message = state.errorMessage,
-                title = "Error",
-                modifier = Modifier,
-                visible = showErrorAlert,
-                onDismiss = { events(LoginEvent.DismissAlertMessage) }
-            )
             VerticalSpacer(height = 40.dp)
             TextField(
                 value = state.email,
@@ -123,6 +110,23 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                 },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight(600))
+            )
+
+            Loading(modifier = Modifier, visible = state.isLoading)
+            if (state.isLoading) keyboardController?.hide()
+            if (state.loginSuccess) {
+                LaunchedEffect(key1 = Unit) {
+                    navHostController.popBackStack()
+                    navHostController.navigate(MainRoutes.NavDrawerScreens)
+                }
+            }
+            MessageAlert(
+                type = AlertType.ERROR,
+                message = state.errorMessage,
+                title = "Error",
+                modifier = Modifier,
+                visible = showErrorAlert,
+                onDismiss = { events(LoginEvent.DismissAlertMessage) }
             )
         }
     }

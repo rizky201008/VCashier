@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Repository\AuthRepository;
 use Illuminate\Http\Request;
 use \Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use mysql_xdevapi\Exception;
 
 class AuthController extends Controller
 {
@@ -73,17 +75,21 @@ class AuthController extends Controller
         ], 200);
     }
 
-    function resetPassword(Request $req): JsonResponse
+    function resetPassword($id): JsonResponse
     {
-        $req->validate([
-            'email' => 'required|email'
-        ]);
-        $user = $req->user();
-        $user->password = bcrypt('password');
-        $user->save();
+        try {
+            $user = User::find($id);
+            $user->password = bcrypt('password');
+            $user->save();
 
-        return response()->json([
-            'message' => 'Password successfully reset'
-        ], 200);
+            return response()->json([
+                'message' => 'Password successfully reset'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => "Failed to reset password " . $e->getMessage()
+            ], 500);
+        }
     }
 }

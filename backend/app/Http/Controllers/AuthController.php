@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Repository\AuthRepository;
 use Illuminate\Http\Request;
 use \Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
-use mysql_xdevapi\Exception;
 
 class AuthController extends Controller
 {

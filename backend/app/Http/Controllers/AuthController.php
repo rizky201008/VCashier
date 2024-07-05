@@ -74,22 +74,4 @@ class AuthController extends Controller
             'message' => 'Password successfully updated'
         ], 200);
     }
-
-    function resetPassword($id): JsonResponse
-    {
-        try {
-            $user = User::find($id);
-            $user->password = bcrypt('password');
-            $user->save();
-
-            return response()->json([
-                'message' => 'Password successfully reset'
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => "Failed to reset password " . $e->getMessage()
-            ], 500);
-        }
-    }
 }

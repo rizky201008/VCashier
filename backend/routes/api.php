@@ -60,7 +60,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('role', [UserController::class, 'getRole']);
         Route::get('validate', [UserController::class, 'validateToken']);
         Route::get('lists', [UserController::class, 'allUsers']);
-        Route::delete('/{id}', [UserController::class, 'deleteUser']);
+        Route::delete('delete/{id}', [UserController::class, 'deleteUser']);
+        Route::post("reset-password/{id}", [UserController::class, 'resetPassword'])->middleware('auth:sanctum');
     });
     Route::prefix('payment')->group(function () {
         Route::get('methods', [PaymentController::class, 'getPaymentMethods']);
@@ -73,5 +74,4 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::post("change-password", [AuthController::class, 'changePassword'])->middleware('auth:sanctum');
-    Route::post("reset-password/{id}", [AuthController::class, 'resetPassword'])->middleware('auth:sanctum');
 });

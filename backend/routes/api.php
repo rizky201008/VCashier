@@ -47,20 +47,20 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::prefix('customers')->group(function () {
         Route::get('/', [CustomerController::class, 'getCustomers']);
         Route::post('/', [CustomerController::class, 'createCustomer']);
-        Route::get('{id}', [CustomerController::class, 'getCustomer']);
-        Route::delete('{id}', [CustomerController::class, 'deleteCustomer']);
+        Route::get('/{id}', [CustomerController::class, 'getCustomer']);
+        Route::delete('/{id}', [CustomerController::class, 'deleteCustomer']);
         Route::put('/', [CustomerController::class, 'updateCustomer']);
     });
     Route::prefix('transactions')->group(function () {
         Route::get('/', [TransactionController::class, 'getTransactions']);
-        Route::get('{id}', [TransactionController::class, 'getTransaction']);
+        Route::get('/{id}', [TransactionController::class, 'getTransaction']);
         Route::post('/', [TransactionController::class, 'createTransaction']);
     });
     Route::prefix('users')->group(function () {
         Route::get('role', [UserController::class, 'getRole']);
         Route::get('validate', [UserController::class, 'validateToken']);
         Route::get('lists', [UserController::class, 'allUsers']);
-        Route::delete('{id}', [UserController::class, 'deleteUser']);
+        Route::delete('/{id}', [UserController::class, 'deleteUser']);
     });
     Route::prefix('payment')->group(function () {
         Route::get('methods', [PaymentController::class, 'getPaymentMethods']);

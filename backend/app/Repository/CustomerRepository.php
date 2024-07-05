@@ -26,18 +26,18 @@ class CustomerRepository
     public function createCustomer($data)
     {
         $this->customer->create($data);
-        return response()->json(["message" => "Customer created"], 201);
+        return response()->json(["message" => "customer created"], 201);
     }
 
     public function updateCustomer($id, $data)
     {
         $this->customer->find($id)->update($data);
-        return response()->json(["message" => "product updated!"]);
+        return response()->json(["message" => "customer updated!"]);
     }
 
     public function deleteCustomer($id)
     {
         $this->customer->find($id)->delete();
-        return response()->json(["message" => "product deleted!"]);
+        return response()->json(["message" => "customer deleted!"]);
     }
 }

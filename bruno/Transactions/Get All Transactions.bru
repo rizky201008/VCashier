@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: {{BASE_URL}}transactions
+  url: {{BASE_URL}}transactions?status=draft
   body: none
   auth: bearer
+}
+
+query {
+  status: draft
 }
 
 auth:bearer {

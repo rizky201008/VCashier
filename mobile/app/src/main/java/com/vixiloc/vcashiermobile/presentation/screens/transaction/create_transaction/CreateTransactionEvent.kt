@@ -8,7 +8,6 @@ import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
 sealed class CreateTransactionEvent {
     data object DismissAlertMessage : CreateTransactionEvent()
     data object Refresh : CreateTransactionEvent()
-    data object ClearCart : CreateTransactionEvent()
     data class AddVariation(val variation: ProductsVariation, val product: ProductResponseItems) :
         CreateTransactionEvent()
 

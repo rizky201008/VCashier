@@ -156,13 +156,7 @@ fun TransactionsScreen(
         ) {
             FilledButton(
                 onClick = {
-                    navController.navigate(MainRoutes.NavDrawerScreens.Home) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navController.navigate(MainRoutes.NavDrawerScreens.Home)
                     onTitleChange("Home")
                 },
                 text = "Buat Transaksi",

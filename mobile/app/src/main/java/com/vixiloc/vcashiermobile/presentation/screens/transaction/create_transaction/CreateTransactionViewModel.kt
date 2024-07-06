@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
+import com.vixiloc.vcashiermobile.domain.model.categories.toCategory
 import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
 import com.vixiloc.vcashiermobile.domain.use_case.GetCartItems
@@ -35,10 +36,6 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
             is CreateTransactionEvent.Refresh -> {
                 getProducts()
-            }
-
-            is CreateTransactionEvent.ClearCart -> {
-                resetCart()
             }
 
             is CreateTransactionEvent.AddVariation -> {
@@ -105,10 +102,34 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
     private fun updateCategory(category: CategoriesResponseItem?) {
         _state.value = state.value.copy(selectedCategory = category)
-    }
+        if (category == null) {
+            getProducts()
+        } else {
+            getProductsUseCase().onEach { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        _state.value = state.value.copy(isLoading = true)
+                    }
 
-    private fun resetCart() {
-        // TODO: Implement Clear Cart Items
+                    is Resource.Success -> {
+                        val filteredProducts = resource.data?.filter {
+                            it.category == category.toCategory()
+                        }
+                        _state.value = _state.value.copy(
+                            products = filteredProducts ?: emptyList(),
+                            isLoading = false,
+                        )
+                    }
+
+                    is Resource.Error -> {
+                        _state.value = state.value.copy(
+                            isLoading = false,
+                            error = resource.message ?: "An unexpected error occurred"
+                        )
+                    }
+                }
+            }.launchIn(viewModelScope)
+        }
     }
 
     private fun getProducts() {

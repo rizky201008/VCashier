@@ -8,6 +8,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_MAKE
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_METHODS
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
 import com.vixiloc.vcashiermobile.data.remote.Routes.REGISTER
+import com.vixiloc.vcashiermobile.data.remote.Routes.RESET_PASSWORD
 import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.USERS_DELETE
@@ -26,6 +27,7 @@ import com.vixiloc.vcashiermobile.data.remote.dto.customers.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRegisterResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.ResetPasswordResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.PaymentMethodsDto
@@ -201,10 +203,17 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): UsersResponseDto
 
-    @POST(USERS_DELETE)
+    @DELETE(USERS_DELETE)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun deleteUser(
         @Header("Authorization") token: String,
-        @Body data: DeleteUserRequestDto
+        @Path("id") data: String
     ): DeleteUserResponseDto
+
+    @POST(RESET_PASSWORD)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun resetPassword(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): ResetPasswordResponseDto
 }

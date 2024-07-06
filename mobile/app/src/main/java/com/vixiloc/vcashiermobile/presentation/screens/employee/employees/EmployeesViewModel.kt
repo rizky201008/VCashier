@@ -20,6 +20,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     val getUsersUseCase = useCaseManager.getUsersUseCase()
     val registerUseCase = useCaseManager.registerUseCase()
     val deleteUserUseCase = useCaseManager.deleteUserUseCase()
+    val resetPasswordUseCase = useCaseManager.resetPasswordUseCase()
 
     fun onEvent(e: EmployeesEvent) {
         when (e) {
@@ -80,6 +81,9 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                 _state.value = _state.value.copy(
                     showResetPasswordAlert = e.show
                 )
+                if (!e.show) {
+                    getUsers()
+                }
             }
 
             is EmployeesEvent.ShowDeleteEmployeeAlert -> {
@@ -127,7 +131,6 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                             success = res.data ?: "Hapus pegawai sukses",
                             selectedEmployee = null
                         )
-                        getUsers()
                     }
                 }
             }.launchIn(viewModelScope)
@@ -135,7 +138,31 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     }
 
     private fun resetPassword() {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            resetPasswordUseCase(state.value.selectedEmployee.toString()).onEach { res ->
+                when (res) {
+                    is Resource.Loading -> {
+                        _state.value = _state.value.copy(isLoading = true)
+                    }
+
+                    is Resource.Error -> {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            error = res.message ?: "Error Unknowns",
+                            showErrorAlert = true
+                        )
+                    }
+
+                    is Resource.Success -> {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            success = res.data?.message ?: "Reset password sukses",
+                            selectedEmployee = null
+                        )
+                    }
+                }
+            }.launchIn(viewModelScope)
+        }
     }
 
     private fun createUser() {

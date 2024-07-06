@@ -3,13 +3,14 @@ package com.vixiloc.vcashiermobile.data.remote
 object Routes {
 
     const val BASE_URL = "https://vc.vixiloc.com/api/"
-    const val LOGIN = "auth/login"
-    const val REGISTER = "auth/register"
+    private const val AUTH = "auth"
+    const val LOGIN = "$AUTH/login"
+    const val REGISTER = "$AUTH/register"
     const val PRODUCTS = "products"
     const val CATEGORIES = "categories"
     const val CUSTOMERS = "customers"
     const val TRANSACTIONS = "transactions"
-    private const val PRODUCT_IMAGES= "product-images"
+    private const val PRODUCT_IMAGES = "product-images"
     const val ADD_IMAGE = "${PRODUCT_IMAGES}/add"
     const val UPDATE_IMAGE = "${PRODUCT_IMAGES}/update"
     private const val PAYMENT = "payment"
@@ -17,5 +18,6 @@ object Routes {
     const val PAYMENT_MAKE = "$PAYMENT/make-payment"
     private const val USERS = "users"
     const val USERS_LIST = "$USERS/lists"
-    const val USERS_DELETE = "$USERS/delete"
+    const val USERS_DELETE = "$USERS/delete/{id}"
+    const val RESET_PASSWORD = "$USERS/reset-password/{id}"
 }

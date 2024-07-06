@@ -5,90 +5,125 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowBackIosNew
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SearchBar
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionCustomerItem
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.TransactionViewModel
+import com.vixiloc.vcashiermobile.presentation.components.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.Loading
+import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.components.CustomerListItem
+import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchCustomerScreen(
-    modifier: Modifier = Modifier,
-    navController: NavController,
-    viewModel: TransactionViewModel = koinViewModel()
-) {
-    val state = viewModel.state
-    var searchStatus: Boolean by remember {
-        mutableStateOf(false)
-    }
-    var query by remember {
-        mutableStateOf("")
-    }
-
-    val customerLists = state.customers
-
-    val customerFiltered = customerLists.filter {
-        it.name.contains(query, ignoreCase = true)
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.getCustomers()
-    }
-
-    Column(modifier = modifier) {
-        SearchBar(
-            modifier = Modifier
-                .padding(horizontal = if (searchStatus) 0.dp else 10.dp)
-                .fillMaxWidth(),
-            query = query,
-            onQueryChange = { query = it },
-            onSearch = {
-
-            },
-            placeholder = { Text("Search Customer") },
-            active = searchStatus,
-            onActiveChange = {
-                searchStatus = it
-            }) {
-            customerFiltered.forEach { data ->
-                TransactionCustomerItem(
-                    modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp),
-                    onClick = {
-                        navController.popBackStack()
-                        navController.currentBackStackEntry
-                            ?.savedStateHandle
-                            ?.set("customer", data)
-                    },
-                    customer = data
-                )
-            }
+fun SearchCustomerScreen(modifier: Modifier = Modifier, navController: NavController) {
+    val viewModel: SearchCustomerViewModel = koinViewModel()
+    val state = viewModel.state.value
+    val onEvent = viewModel::onEvent
+    val focusManager = LocalFocusManager.current
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.White),
+                title = {
+                    Text(
+                        text = "Tambah Pelanggan",
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight(600)
+                        )
+                    )
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            navController.navigateUp()
+                        },
+                        icon = Icons.Outlined.ArrowBackIosNew
+                    )
+                }
+            )
         }
-
-        LazyColumn {
-            items(customerLists) { data ->
-                TransactionCustomerItem(
-                    modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp),
-                    onClick = {
-                        navController.popBackStack()
-                        navController.currentBackStackEntry
-                            ?.savedStateHandle
-                            ?.set("customer", data)
-                    },
-                    customer = data
-                )
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .padding(25.dp)
+        ) {
+            SearchTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = state.searchValue,
+                onValueChanged = {
+                    onEvent(SearchCustomerEvent.SetSearchValue(it))
+                },
+                placeHolder = "Cari pengguna",
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            )
+            LazyColumn {
+                items(state.customers) { customer ->
+                    CustomerListItem(
+                        modifier = Modifier.padding(vertical = 12.dp),
+                        item = customer,
+                        onClick = {
+                            navController.popBackStack()
+                            navController.currentBackStackEntry
+                                ?.savedStateHandle
+                                ?.set("customer", it)
+                        }
+                    )
+                }
             }
+            Loading(modifier = Modifier, visible = state.isLoading)
+
+            MessageAlert(
+                type = AlertType.SUCCESS,
+                message = state.success,
+                title = "Sukses",
+                modifier = Modifier,
+                visible = state.success.isNotEmpty(),
+                onDismiss = {
+                    onEvent(SearchCustomerEvent.ShowSuccessAlert(false))
+                }
+            )
+            MessageAlert(
+                type = AlertType.ERROR,
+                message = state.error,
+                title = "Error",
+                modifier = Modifier,
+                visible = state.error.isNotEmpty(),
+                onDismiss = {
+                    onEvent(SearchCustomerEvent.ShowErrorAlert(false))
+                }
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun SearchCustomerPreview() {
+    VcashierMobileTheme {
+        Surface {
+//            SearchCustomerScreenNew()
         }
     }
 }

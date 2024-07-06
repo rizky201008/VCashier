@@ -15,6 +15,6 @@ class UserRepositoryImpl(private val apiService: ApiService) : UserRepository {
         token: String,
         data: DeleteUserRequestDto
     ): DeleteUserResponseDto {
-        return apiService.deleteUser("Bearer $token", data = data)
+        return apiService.deleteUser("Bearer $token", data = data.id.toString())
     }
 }

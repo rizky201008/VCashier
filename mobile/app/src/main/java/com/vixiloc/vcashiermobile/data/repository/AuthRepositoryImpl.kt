@@ -4,6 +4,7 @@ import com.vixiloc.vcashiermobile.data.remote.ApiService
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRegisterResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.ResetPasswordResponseDto
 import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 
 class AuthRepositoryImpl(private val apiService: ApiService) : AuthRepository {
@@ -13,5 +14,9 @@ class AuthRepositoryImpl(private val apiService: ApiService) : AuthRepository {
 
     override suspend fun register(data: RegisterRequestDto): LoginRegisterResponseDto {
         return apiService.register(data)
+    }
+
+    override suspend fun resetPassword(token: String, id: String): ResetPasswordResponseDto {
+        return apiService.resetPassword("Bearer $token", id)
     }
 }

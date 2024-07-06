@@ -29,9 +29,7 @@ data class CustomerResponseDtoItem(
 )
 
 fun CustomerResponseDtoItem.toModel() = CustomerResponseItem(
-    updatedAt = updatedAt,
     name = name,
-    createdAt = createdAt,
     phoneNumber = phoneNumber,
     id = id
 )

@@ -29,7 +29,6 @@ import com.vixiloc.vcashiermobile.presentation.screens.category.components.Fille
 fun EmployeeListItem(
     modifier: Modifier = Modifier,
     item: UsersResponseData,
-    onDelete: (UsersResponseData) -> Unit,
     onReset: (UsersResponseData) -> Unit
 ) {
     Box(
@@ -55,40 +54,21 @@ fun EmployeeListItem(
                     style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp)
                 )
             }
-            if(item.role != "admin") {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    FilledIconButton(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .background(
-                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-                                shape = MaterialTheme.shapes.small
-                            ),
-                        shape = MaterialTheme.shapes.small,
-                        icon = Icons.Outlined.Key,
-                        onClick = {
-                            onReset(item)
-                        },
-                        iconSize = 16
-                    )
-                    FilledIconButton(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .background(
-                                color = MaterialTheme.colorScheme.error.copy(alpha = 0.2f),
-                                shape = MaterialTheme.shapes.small
-                            ),
-                        shape = MaterialTheme.shapes.small,
-                        icon = Icons.Outlined.Delete,
-                        onClick = {
-                            onDelete(item)
-                        },
-                        iconTint = MaterialTheme.colorScheme.error,
-                        iconSize = 16
-                    )
-                }
+            if (item.role != "admin") {
+                FilledIconButton(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                            shape = MaterialTheme.shapes.small
+                        ),
+                    shape = MaterialTheme.shapes.small,
+                    icon = Icons.Outlined.Key,
+                    onClick = {
+                        onReset(item)
+                    },
+                    iconSize = 16
+                )
             }
         }
     }

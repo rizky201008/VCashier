@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.domain.model.auth.RegisterRequest
-import com.vixiloc.vcashiermobile.domain.model.user.DeleteUserRequest
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import com.vixiloc.vcashiermobile.utils.Resource
 import kotlinx.coroutines.flow.launchIn
@@ -19,7 +18,6 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
     val getUsersUseCase = useCaseManager.getUsersUseCase()
     val registerUseCase = useCaseManager.registerUseCase()
-    val deleteUserUseCase = useCaseManager.deleteUserUseCase()
     val resetPasswordUseCase = useCaseManager.resetPasswordUseCase()
 
     fun onEvent(e: EmployeesEvent) {
@@ -86,16 +84,6 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                 }
             }
 
-            is EmployeesEvent.ShowDeleteEmployeeAlert -> {
-                _state.value = _state.value.copy(
-                    showDeleteEmployeeAlert = e.show
-                )
-            }
-
-            is EmployeesEvent.DeleteEmployee -> {
-                deleteEmployee()
-            }
-
             is EmployeesEvent.ResetPassword -> {
                 resetPassword()
             }
@@ -103,37 +91,6 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             is EmployeesEvent.SelectEmployee -> {
                 _state.value = _state.value.copy(selectedEmployee = e.id)
             }
-        }
-    }
-
-    private fun deleteEmployee() {
-        viewModelScope.launch {
-            val data = DeleteUserRequest(
-                id = state.value.selectedEmployee!!
-            )
-            deleteUserUseCase(data).onEach { res ->
-                when (res) {
-                    is Resource.Loading -> {
-                        _state.value = _state.value.copy(isLoading = true)
-                    }
-
-                    is Resource.Error -> {
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            error = res.message ?: "Error Unknowns",
-                            showErrorAlert = true
-                        )
-                    }
-
-                    is Resource.Success -> {
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            success = res.data ?: "Hapus pegawai sukses",
-                            selectedEmployee = null
-                        )
-                    }
-                }
-            }.launchIn(viewModelScope)
         }
     }
 

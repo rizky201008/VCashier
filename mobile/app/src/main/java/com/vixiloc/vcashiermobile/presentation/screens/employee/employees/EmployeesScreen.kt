@@ -27,10 +27,8 @@ import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
-import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryEvent
 import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.components.AddEmployeeDialog
 import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.components.EmployeeListItem
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionEvent
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -59,10 +57,6 @@ fun EmployeesScreen(modifier: Modifier = Modifier) {
                 items(state.users) { item: UsersResponseData ->
                     EmployeeListItem(
                         item = item,
-                        onDelete = {
-                            onEvent(EmployeesEvent.SelectEmployee(it.id))
-                            onEvent(EmployeesEvent.ShowDeleteEmployeeAlert(true))
-                        },
                         onReset = {
                             onEvent(EmployeesEvent.SelectEmployee(it.id))
                             onEvent(EmployeesEvent.ShowResetPasswordAlert(true))
@@ -116,37 +110,6 @@ fun EmployeesScreen(modifier: Modifier = Modifier) {
             visible = state.showErrorAlert,
             onDismiss = {
                 onEvent(EmployeesEvent.ShowErrorAlert(false))
-            }
-        )
-        MessageAlert(
-            type = AlertType.WARNING,
-            message = "Anda yakin ingin menghapus pegawai ini?",
-            title = "Hapus Pegawai",
-            visible = state.showDeleteEmployeeAlert,
-            modifier = Modifier,
-            confirmButton = {
-                FilledButton(
-                    onClick = {
-                        onEvent(EmployeesEvent.ShowDeleteEmployeeAlert(false))
-                        onEvent(EmployeesEvent.DeleteEmployee)
-                    },
-                    text = "Ya",
-                    modifier = Modifier
-                )
-            },
-            dismissButton = {
-                FilledButton(
-                    onClick = {
-                        onEvent(EmployeesEvent.ShowDeleteEmployeeAlert(false))
-                        onEvent(EmployeesEvent.SelectEmployee(null))
-                    },
-                    text = "Tidak",
-                    modifier = Modifier
-                )
-            },
-            onDismiss = {
-                onEvent(EmployeesEvent.ShowDeleteEmployeeAlert(false))
-                onEvent(EmployeesEvent.SelectEmployee(null))
             }
         )
 

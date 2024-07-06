@@ -11,7 +11,6 @@ data class EmployeesState(
     val showErrorAlert: Boolean = false,
     val showAddDialog: Boolean = false,
     val showResetPasswordAlert: Boolean = false,
-    val showDeleteEmployeeAlert: Boolean = false,
     val name: String = "",
     val email: String = "",
     val password: String = "",

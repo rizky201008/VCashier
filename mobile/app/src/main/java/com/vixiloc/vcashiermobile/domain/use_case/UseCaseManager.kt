@@ -171,12 +171,6 @@ class UseCaseManager(
         httpHandler = httpHandler()
     )
 
-    fun deleteUserUseCase() = DeleteUser(
-        repository = userRepository,
-        token = getTokenUseCase(),
-        httpHandler = httpHandler()
-    )
-
     fun resetPasswordUseCase() = ResetPassword(
         repository = authRepository,
         httpHandler = httpHandler(),

@@ -9,8 +9,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
-import com.vixiloc.vcashiermobile.presentation.screens.customer.CreateCustomerScreen
-import com.vixiloc.vcashiermobile.presentation.screens.customer.UpdateCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginFormScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.CreateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.UpdateProductScreen
@@ -61,17 +59,6 @@ fun MainHost(
             val args = it.toRoute<MainRoutes.NavDrawerScreens.Transactions.MakePayment>()
             TransactionPaymentScreen(
                 navigator = navHostController,
-                navArgs = args,
-                modifier = modifier
-            )
-        }
-        composable<MainRoutes.NavDrawerScreens.Customers.CreateCustomer> {
-            CreateCustomerScreen(navController = navHostController, modifier = modifier)
-        }
-        composable<MainRoutes.NavDrawerScreens.Customers.UpdateCustomer> {
-            val args = it.toRoute<MainRoutes.NavDrawerScreens.Customers.UpdateCustomer>()
-            UpdateCustomerScreen(
-                navHostController = navHostController,
                 navArgs = args,
                 modifier = modifier
             )

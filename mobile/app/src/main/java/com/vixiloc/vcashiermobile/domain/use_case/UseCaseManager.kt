@@ -77,12 +77,6 @@ class UseCaseManager(
         httpHandler = httpHandler()
     )
 
-    fun deleteCustomerUseCase() = DeleteCustomer(
-        repository = customerRepository,
-        getToken = getTokenUseCase(),
-        httpHandler = httpHandler()
-    )
-
     fun createProductUseCase() = CreateProduct(
         repository = productsRepository,
         getToken = getTokenUseCase(),

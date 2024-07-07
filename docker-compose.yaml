@@ -39,7 +39,7 @@ services:
       - vcashier
 
   php:
-    image: vixiloc/vcashier-php:1.0.3
+    image: vixiloc/vcashier-php:latest
     container_name: php_vcashier
     restart: unless-stopped
     tty: true

@@ -35,6 +35,10 @@ class PaymentRepository
                 $transaction->update([
                     'va_number' => $va
                 ]);
+            } else {
+                $transaction->update([
+                    'payment_status' => 'paid'
+                ]);
             }
             DB::commit();
             return [

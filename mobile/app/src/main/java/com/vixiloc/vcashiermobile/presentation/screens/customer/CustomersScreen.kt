@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
@@ -30,7 +29,7 @@ fun CustomersScreen(
     viewModel: CustomerViewModel = koinViewModel(),
     onNavigate: (MainRoutes) -> Unit
 ) {
-    val state = viewModel.state
+    val state = viewModel.stateValue
     val events = viewModel::onEvent
 
     LaunchedEffect(Unit) {
@@ -66,9 +65,6 @@ fun CustomersScreen(
                     headlineText = customer.name,
                     supportingText = customer.phoneNumber ?: "-",
                     modifier = Modifier.padding(10.dp),
-                    onDelete = {
-                        events(CustomerEvent.DeleteCustomer(customer))
-                    },
                     onUpdate = {
 
                     },
@@ -99,8 +95,10 @@ fun CustomersScreen(
             message = state.error,
             title = "Error",
             modifier = Modifier,
-            visible = state.error.isNotBlank(),
-            onDismiss = { events(CustomerEvent.DismissAlertMessage) }
+            visible = state.showError,
+            onDismiss = {
+                events(CustomerEvent.ShowError(false))
+            }
         )
 
         MessageAlert(
@@ -108,31 +106,10 @@ fun CustomersScreen(
             message = state.success,
             title = "Success",
             modifier = Modifier,
-            visible = state.success.isNotBlank(),
-            onDismiss = { events(CustomerEvent.DismissAlertMessage) }
-        )
-
-        MessageAlert(
-            type = AlertType.WARNING,
-            message = state.confirmationMessage,
-            title = "Hapus Pelanggan?",
-            visible = state.confirmationMessage.isNotBlank(),
-            modifier = Modifier,
-            confirmButton = {
-                FilledButton(
-                    onClick = { events(CustomerEvent.ProcessDeleteCustomer) },
-                    text = "Ya",
-                    modifier = Modifier
-                )
-            },
-            dismissButton = {
-                FilledButton(
-                    onClick = { events(CustomerEvent.DismissAlertMessage) },
-                    text = "Tidak",
-                    modifier = Modifier
-                )
+            visible = state.showSuccess,
+            onDismiss = {
+                events(CustomerEvent.ShowSuccess(false))
             }
         )
-
     }
 }

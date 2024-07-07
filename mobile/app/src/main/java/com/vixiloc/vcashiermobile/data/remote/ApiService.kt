@@ -152,13 +152,6 @@ interface ApiService {
         @Body data: CreateUpdateCustomerRequestDto
     ): CreateUpdateCustomerResponseDto
 
-    @DELETE("$CUSTOMERS/{id}")
-    @Headers("Content-Type: application/json", "Accept: application/json")
-    suspend fun deleteCustomer(
-        @Header("Authorization") token: String,
-        @Path("id") id: String
-    ): CreateUpdateCustomerResponseDto
-
     @POST(TRANSACTIONS)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun createTransaction(

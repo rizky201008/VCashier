@@ -16,7 +16,7 @@ fun CreateCustomerScreen(
     navController: NavController,
     viewModel: CustomerViewModel = koinViewModel()
 ) {
-    val state = viewModel.state
+    val state = viewModel.stateValue
     val events = viewModel::onEvent
 
     Column(modifier = modifier) {

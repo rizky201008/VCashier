@@ -15,7 +15,7 @@ enum class FormType {
 
 @Composable
 fun CustomerForm(modifier: Modifier = Modifier, viewModel: CustomerViewModel, type: FormType) {
-    val state = viewModel.state
+    val state = viewModel.stateValue
     val events = viewModel::onEvent
     TextField(
         value = state.customerName,

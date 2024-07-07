@@ -18,7 +18,7 @@ fun UpdateCustomerScreen(
     navHostController: NavHostController,
     navArgs: MainRoutes.NavDrawerScreens.Customers.UpdateCustomer
 ) {
-    val state = viewModel.state
+    val state = viewModel.stateValue
     val events = viewModel::onEvent
     LaunchedEffect(key1 = Unit) {
         events(

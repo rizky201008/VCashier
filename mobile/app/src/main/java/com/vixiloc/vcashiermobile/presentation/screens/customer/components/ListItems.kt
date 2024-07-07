@@ -26,7 +26,6 @@ fun CustomerItem(
     modifier: Modifier = Modifier,
     headlineText: String,
     supportingText: String,
-    onDelete: () -> Unit,
     onUpdate: () -> Unit,
     onClick: () -> Unit = {}
 ) {
@@ -54,23 +53,13 @@ fun CustomerItem(
         },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
         trailingContent = {
-            Row {
-                IconButton(onClick = { onUpdate() }) {
-                    Icon(
-                        imageVector = Icons.Outlined.Edit,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(25.dp)
-                    )
-                }
-                IconButton(onClick = { onDelete() }) {
-                    Icon(
-                        imageVector = Icons.Outlined.Delete,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.size(25.dp)
-                    )
-                }
+            IconButton(onClick = { onUpdate() }) {
+                Icon(
+                    imageVector = Icons.Outlined.Edit,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(25.dp)
+                )
             }
         }
     )

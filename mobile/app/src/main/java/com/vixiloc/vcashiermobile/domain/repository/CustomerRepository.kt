@@ -17,6 +17,4 @@ interface CustomerRepository {
         token: String,
         data: CreateUpdateCustomerRequestDto
     ): CreateUpdateCustomerResponseDto
-
-    suspend fun deleteCustomer(token: String, customerId: String): CreateUpdateCustomerResponseDto
 }

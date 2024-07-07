@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
@@ -54,7 +54,7 @@ fun TransactionsScreen(
     onTitleChange: (String) -> Unit
 ) {
     val viewModel: TransactionViewModel = koinViewModel()
-    val state = viewModel.state
+    val state = viewModel.state.value
     val onEvent = viewModel::onEvent
     val focusManager = LocalFocusManager.current
     val status: List<String> = listOf(
@@ -65,6 +65,8 @@ fun TransactionsScreen(
         "completed",
         "draft"
     )
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
 
     ConstraintLayout(
         modifier = modifier
@@ -106,13 +108,13 @@ fun TransactionsScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     SearchTextField(
-                        modifier = Modifier.width(242.dp),
-                        value = "",
+                        modifier = Modifier.width(screenWidth / 1.5f),
+                        value = state.searchQuery,
                         onValueChanged = {
-
+                            onEvent(TransactionEvent.OnSearchChanged(it))
                         },
                         placeHolder = "Cari pelanggan",
                         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),

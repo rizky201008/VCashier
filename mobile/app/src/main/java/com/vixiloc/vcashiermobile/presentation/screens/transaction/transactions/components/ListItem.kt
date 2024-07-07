@@ -53,7 +53,7 @@ fun TransactionListItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Prayogi Ajha",
+                text = data.customer.name,
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight(600))
             )
             Row {

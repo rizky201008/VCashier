@@ -23,8 +23,7 @@ class CustomerViewModel(
 ) : ViewModel() {
 
     private val _state = mutableStateOf(CustomerState())
-    private val state: State<CustomerState> = _state
-    val stateValue = state.value
+    val state: State<CustomerState> = _state
 
     private val getCustomers: GetCustomers = useCaseManager.getCustomersUseCase()
     private val createCustomer: CreateCustomer = useCaseManager.createCustomerUseCase()
@@ -38,31 +37,46 @@ class CustomerViewModel(
 
             is CustomerEvent.ShowSuccess -> {
                 _state.value = _state.value.copy(showSuccess = event.show)
-            }
-
-            is CustomerEvent.InputCustomerName -> {
-                _state.value = _state.value.copy(customerName = event.name)
-            }
-
-            is CustomerEvent.InputCustomerNumber -> {
-                if (event.number.isDigitsOnly()) {
-                    _state.value = _state.value.copy(customerNumber = event.number)
+                if (!event.show) {
+                    getAllCustomers()
                 }
             }
 
-            is CustomerEvent.SubmitCreateCustomer -> {
+            is CustomerEvent.ShowUpdateModal -> {
+                _state.value = _state.value.copy(showUpdateModal = event.show)
+            }
+
+            is CustomerEvent.ShowCreateModal -> {
+                _state.value = _state.value.copy(showCreateModal = event.show)
+            }
+
+            is CustomerEvent.ChangeInput -> {
+                when (event.type) {
+                    CustomerFormInput.NAME -> {
+                        _state.value = _state.value.copy(customerName = event.value)
+                    }
+
+                    CustomerFormInput.NUMBER -> {
+                        if (event.value.isDigitsOnly()) {
+                            _state.value = _state.value.copy(customerNumber = event.value)
+                        }
+                    }
+                }
+            }
+
+            is CustomerEvent.CreateCustomer -> {
                 proceessCreateCustomer()
             }
 
-            is CustomerEvent.SubmitUpdateCustomer -> {
+            is CustomerEvent.UpdateCustomer -> {
                 processUpdateCustomer()
             }
 
-            is CustomerEvent.PreFillFormData -> {
+            is CustomerEvent.FillFormData -> {
                 _state.value = _state.value.copy(
-                    customerName = event.name,
-                    customerNumber = event.number,
-                    customerId = event.id
+                    customerName = event.data?.name ?: "",
+                    customerNumber = event.data?.phoneNumber ?: "",
+                    customerId = event.data?.id
                 )
             }
 
@@ -80,6 +94,7 @@ class CustomerViewModel(
     }
 
     private fun processUpdateCustomer() {
+        val stateValue = state.value
         val data = CreateUpdateCustomerRequest(
             name = stateValue.customerName,
             phoneNumber = stateValue.customerNumber,
@@ -95,14 +110,19 @@ class CustomerViewModel(
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
-                        success = "Customer updated successfully"
+                        success = "Customer updated successfully",
+                        showSuccess = true,
+                        customerId = null,
+                        customerName = "",
+                        customerNumber = ""
                     )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
-                        error = res.message ?: "An unexpected error occurred"
+                        error = res.message ?: "An unexpected error occurred",
+                        showError = true
                     )
                 }
             }
@@ -110,6 +130,7 @@ class CustomerViewModel(
     }
 
     private fun searchCustomers() {
+        val stateValue = state.value
         val query = stateValue.searchQuery
         if (query.isBlank()) {
             getAllCustomers()
@@ -131,7 +152,8 @@ class CustomerViewModel(
                     is Resource.Error -> {
                         _state.value = _state.value.copy(
                             isLoading = false,
-                            error = res.message ?: "An unexpected error occurred"
+                            error = res.message ?: "An unexpected error occurred",
+                            showError = true
                         )
                     }
                 }
@@ -140,6 +162,7 @@ class CustomerViewModel(
     }
 
     private fun proceessCreateCustomer() {
+        val stateValue = state.value
         val data = CreateUpdateCustomerRequest(
             name = stateValue.customerName,
             phoneNumber = stateValue.customerNumber
@@ -153,13 +176,17 @@ class CustomerViewModel(
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
-                        success = "Customer created successfully"
+                        success = "Customer created successfully",
+                        showSuccess = true,
+                        customerName = "",
+                        customerNumber = ""
                     )
                 }
 
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
+                        showError = true,
                         error = res.message ?: "An unexpected error occurred"
                     )
                 }
@@ -182,6 +209,7 @@ class CustomerViewModel(
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         isLoading = false,
+                        showError = true,
                         error = res.message ?: "An unexpected error occurred"
                     )
                 }

@@ -11,6 +11,8 @@ data class CustomerState(
     val customerName: String = "",
     val success: String = "",
     val customerId: Int? = null,
-    val customerNumber: String? = null,
-    val searchQuery: String = ""
+    val customerNumber: String = "",
+    val searchQuery: String = "",
+    val showCreateModal: Boolean = false,
+    val showUpdateModal: Boolean = false
 )

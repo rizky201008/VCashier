@@ -1,14 +1,18 @@
 package com.vixiloc.vcashiermobile.presentation.screens.customer
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -17,10 +21,14 @@ import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
 import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
+import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryEvent
+import com.vixiloc.vcashiermobile.presentation.screens.customer.components.CreateUpdateCustomerDialog
 import com.vixiloc.vcashiermobile.presentation.screens.customer.components.CustomerItem
+import com.vixiloc.vcashiermobile.presentation.screens.customer.components.InputType
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -29,56 +37,66 @@ fun CustomersScreen(
     viewModel: CustomerViewModel = koinViewModel(),
     onNavigate: (MainRoutes) -> Unit
 ) {
-    val state = viewModel.stateValue
+    val state = viewModel.state.value
     val events = viewModel::onEvent
+    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(Unit) {
         viewModel.getAllCustomers()
     }
     ConstraintLayout(modifier = modifier) {
-        val (searchInput, categories, addButton) = createRefs()
+        val (content, addButton) = createRefs()
 
-        TextField(
-            value = state.searchQuery,
-            onValueChanged = {
-                events(CustomerEvent.InputSearchValue(it))
-            },
-            modifier = Modifier.constrainAs(searchInput) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            title = "Cari",
-            textStyle = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground)
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(25.dp)
+                .constrainAs(content) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(addButton.top)
+                }
+        ) {
+            SearchTextField(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
+                value = state.searchQuery,
+                onValueChanged = {
+                    events(CustomerEvent.InputSearchValue(it))
+                },
+                placeHolder = "Cari pelanggan",
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            )
 
-        LazyColumn(modifier = Modifier
-            .fillMaxWidth()
-            .height(500.dp)
-            .constrainAs(categories) {
-                top.linkTo(searchInput.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }) {
-            items(state.customers) { customer: CustomerResponseItem ->
-                CustomerItem(
-                    headlineText = customer.name,
-                    supportingText = customer.phoneNumber ?: "-",
-                    modifier = Modifier.padding(10.dp),
-                    onUpdate = {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(500.dp)
+            ) {
+                items(state.customers) { customer: CustomerResponseItem ->
+                    CustomerItem(
+                        item = customer,
+                        modifier = Modifier.padding(bottom = 10.dp),
+                        onUpdate = {
+                            events(
+                                CustomerEvent.FillFormData(
+                                    it
+                                )
+                            )
+                            events(CustomerEvent.ShowUpdateModal(true))
+                        },
+                        onClick = {
 
-                    },
-                    onClick = {
-
-                    }
-                )
+                        }
+                    )
+                }
+                item { VerticalSpacer(height = 300.dp, modifier = Modifier) }
             }
-            item { VerticalSpacer(height = 300.dp, modifier = Modifier) }
         }
 
         FilledButton(
             onClick = {
-
+                events(CustomerEvent.ShowCreateModal(true))
             },
             text = "Tambah Pelanggan",
             modifier = Modifier.constrainAs(addButton) {
@@ -111,5 +129,13 @@ fun CustomersScreen(
                 events(CustomerEvent.ShowSuccess(false))
             }
         )
+
+        if (state.showCreateModal) {
+            CreateUpdateCustomerDialog(type = InputType.CREATE, viewModel = viewModel)
+        }
+
+        if (state.showUpdateModal) {
+            CreateUpdateCustomerDialog(type = InputType.UPDATE, viewModel = viewModel)
+        }
     }
 }

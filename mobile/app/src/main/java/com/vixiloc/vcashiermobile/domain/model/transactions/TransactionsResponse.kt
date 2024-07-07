@@ -15,7 +15,7 @@ data class TransactionsData(
     val transactionStatus: String,
     val updatedAt: String?,
     val userId: Int,
-    val customer: TransactionsCustomer? = null
+    val customer: TransactionsCustomer
 )
 
 data class TransactionsProduct(

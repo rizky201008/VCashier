@@ -37,7 +37,7 @@ data class TransactionsDataDto(
     @SerializedName("user_id")
     val userId: Int,
     @SerializedName("customer")
-    val customer: TransactionsCustomerDto? = null
+    val customer: TransactionsCustomerDto
 )
 
 data class TransactionsCustomerDto(
@@ -175,7 +175,7 @@ fun TransactionsDataDto.toDomain() = TransactionsData(
     transactionStatus = transactionStatus,
     updatedAt = updatedAt,
     userId = userId,
-    customer = customer?.toDomain()
+    customer = customer.toDomain()
 )
 
 fun TransactionsResponseDto.toDomain() = TransactionsResponse(

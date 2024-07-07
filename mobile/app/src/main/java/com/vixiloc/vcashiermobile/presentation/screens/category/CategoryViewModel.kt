@@ -10,7 +10,6 @@ import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.model.categories.CreateUpdateCategoryRequest
 import com.vixiloc.vcashiermobile.domain.use_case.CreateCategory
-import com.vixiloc.vcashiermobile.domain.use_case.DeleteCategory
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.UpdateCategory
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
@@ -30,7 +29,6 @@ class CategoryViewModel(
     private val getCategories: GetCategories = useCaseManager.getCategoriesUseCase()
     private val createCategory: CreateCategory = useCaseManager.createCategoryUseCase()
     private val updateCategory: UpdateCategory = useCaseManager.updateCategoryUseCase()
-    private val deleteCategory: DeleteCategory = useCaseManager.deleteCategoryUseCase()
 
     fun onEvent(e: CategoryEvent) {
         when (e) {
@@ -83,18 +81,6 @@ class CategoryViewModel(
 
             is CategoryEvent.ShowUpdateModal -> {
                 state = state.copy(showUpdateModal = e.show)
-            }
-
-            is CategoryEvent.ShowDeleteModal -> {
-                state = state.copy(
-                    showDeleteModal = e.show,
-                )
-            }
-
-            is CategoryEvent.DeleteCategory -> {
-                state.categoryId?.let {
-                    processDeleteCategory(it.toString())
-                }
             }
         }
     }
@@ -184,32 +170,6 @@ class CategoryViewModel(
                     state = state.copy(isLoading = false, categories = resource.data ?: emptyList())
                 }
 
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun processDeleteCategory(id: String) {
-        deleteCategory(id).onEach { res ->
-            when (res) {
-                is Resource.Loading -> {
-                    state = state.copy(isLoading = true)
-                }
-
-                is Resource.Error -> {
-                    state = state.copy(
-                        isLoading = false,
-                        error = res.message ?: "An error unexpected!",
-                        categoryId = null
-                    )
-                }
-
-                is Resource.Success -> {
-                    state = state.copy(
-                        isLoading = false,
-                        success = res.data?.message ?: "Success",
-                        categoryId = null,
-                    )
-                }
             }
         }.launchIn(viewModelScope)
     }

@@ -53,12 +53,6 @@ class UseCaseManager(
         httpHandler = httpHandler()
     )
 
-    fun deleteCategoryUseCase() = DeleteCategory(
-        repository = categoryRepository,
-        getToken = getTokenUseCase(),
-        httpHandler = httpHandler()
-    )
-
     fun getCustomersUseCase() = GetCustomers(
         repository = customerRepository,
         getToken = getTokenUseCase(),

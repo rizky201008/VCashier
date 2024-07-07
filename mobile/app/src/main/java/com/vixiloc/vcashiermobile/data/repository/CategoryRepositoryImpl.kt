@@ -24,11 +24,4 @@ class CategoryRepositoryImpl(private val api: ApiService) : CategoryRepository {
     ): CreateUpdateCategoryResponseDto {
         return api.updateCategory(data = data, token = "Bearer $token")
     }
-
-    override suspend fun deleteCategory(
-        token: String,
-        categoryId: String
-    ): CreateUpdateCategoryResponseDto {
-        return api.deleteCategory(id = categoryId, token = "Bearer $token")
-    }
 }

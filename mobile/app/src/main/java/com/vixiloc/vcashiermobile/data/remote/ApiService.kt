@@ -125,13 +125,6 @@ interface ApiService {
         @Body data: CreateUpdateCategoryRequestDto
     ): CreateUpdateCategoryResponseDto
 
-    @DELETE("$CATEGORIES/{id}")
-    @Headers("Content-Type: application/json", "Accept: application/json")
-    suspend fun deleteCategory(
-        @Header("Authorization") token: String,
-        @Path("id") id: String
-    ): CreateUpdateCategoryResponseDto
-
     @GET(CUSTOMERS)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun getCustomers(

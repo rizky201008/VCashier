@@ -11,6 +11,5 @@ data class CategoryState(
     val success: String = "",
     val searchQuery: String = "",
     val showCreateModal: Boolean = false,
-    val showUpdateModal: Boolean = false,
-    val showDeleteModal: Boolean = false
+    val showUpdateModal: Boolean = false
 )

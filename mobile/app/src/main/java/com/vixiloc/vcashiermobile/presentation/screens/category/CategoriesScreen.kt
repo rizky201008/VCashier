@@ -1,11 +1,9 @@
 package com.vixiloc.vcashiermobile.presentation.screens.category
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,8 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.FilterAlt
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -34,7 +30,6 @@ import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.screens.category.components.CategoryListItem
-import com.vixiloc.vcashiermobile.presentation.screens.category.components.FilledIconButton
 import com.vixiloc.vcashiermobile.presentation.screens.category.components.InputCategoryDialog
 import com.vixiloc.vcashiermobile.presentation.screens.category.components.InputType
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
@@ -62,28 +57,15 @@ fun CategoriesScreen(
                 }
                 .padding(25.dp)
         ) {
-            Row(
+            SearchTextField(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                SearchTextField(
-                    modifier = Modifier.width(242.dp),
-                    value = state.searchQuery,
-                    onValueChanged = {
-                        events(CategoryEvent.InputSearchValue(it))
-                    },
-                    placeHolder = "Cari kategori",
-                    keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-                )
-                FilledIconButton(
-                    modifier = Modifier.background(
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-                        shape = MaterialTheme.shapes.medium
-                    ),
-                    icon = Icons.Outlined.FilterAlt, onClick = {}
-                )
-            }
+                value = state.searchQuery,
+                onValueChanged = {
+                    events(CategoryEvent.InputSearchValue(it))
+                },
+                placeHolder = "Cari kategori",
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            )
             VerticalSpacer(height = 32.dp)
             LazyColumn {
                 items(state.categories) { category ->
@@ -91,10 +73,6 @@ fun CategoriesScreen(
                         onUpdate = {
                             events(CategoryEvent.PreFillFormData(category))
                             events(CategoryEvent.ShowUpdateModal(true))
-                        },
-                        onDelete = {
-                            events(CategoryEvent.SelectCategory(category))
-                            events(CategoryEvent.ShowDeleteModal(true))
                         },
                         item = category
                     )
@@ -141,34 +119,6 @@ fun CategoriesScreen(
             modifier = Modifier,
             visible = state.success.isNotBlank(),
             onDismiss = { events(CategoryEvent.DismissAlertMessage) }
-        )
-
-        MessageAlert(
-            type = AlertType.WARNING,
-            message = "Anda yakin ingin menghapus kategori ini?",
-            title = "Hapus Kategori",
-            visible = state.showDeleteModal,
-            modifier = Modifier,
-            confirmButton = {
-                FilledButton(
-                    onClick = {
-                        events(CategoryEvent.ShowDeleteModal(false))
-                        events(CategoryEvent.DeleteCategory)
-                    },
-                    text = "Ya",
-                    modifier = Modifier
-                )
-            },
-            dismissButton = {
-                FilledButton(
-                    onClick = {
-                        events(CategoryEvent.SelectCategory(null))
-                        events(CategoryEvent.ShowDeleteModal(false))
-                    },
-                    text = "Tidak",
-                    modifier = Modifier
-                )
-            }
         )
 
         if (state.showCreateModal) {

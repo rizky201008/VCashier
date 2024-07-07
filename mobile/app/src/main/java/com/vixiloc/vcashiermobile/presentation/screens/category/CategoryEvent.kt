@@ -9,8 +9,6 @@ sealed class CategoryEvent {
     data object SubmitUpdateCategory : CategoryEvent()
     data class PreFillFormData(val data: CategoriesResponseItem) : CategoryEvent()
     data class SelectCategory(val data: CategoriesResponseItem?) : CategoryEvent()
-    data object DeleteCategory : CategoryEvent()
-    data class ShowDeleteModal(val show: Boolean) : CategoryEvent()
     data class InputSearchValue(val query: String) : CategoryEvent()
     data class ShowCreateModal(val show: Boolean) : CategoryEvent()
     data class ShowUpdateModal(val show: Boolean) : CategoryEvent()

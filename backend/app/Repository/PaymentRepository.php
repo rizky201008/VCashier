@@ -27,19 +27,7 @@ class PaymentRepository
         try {
             DB::beginTransaction();
             $paymentMethod = $this->getPaymentMethod($data['payment_method_id']);
-            $repo = new TransactionRepository();
-            $transaction = $repo->getTransactionById($data['transaction_id']);
             $this->insertTransactionPayment($data, $paymentMethod, Transaction::find($data['transaction_id']));
-            if (!$paymentMethod->cash) {
-                $va = $this->createVa($transaction);
-                $transaction->update([
-                    'va_number' => $va
-                ]);
-            } else {
-                $transaction->update([
-                    'payment_status' => 'paid'
-                ]);
-            }
             DB::commit();
             return [
                 'message' => 'Make payment success'
@@ -122,15 +110,16 @@ class PaymentRepository
         if ($paymentMethod->cash) {
             if ($this->validateAmount($data['payment_amount'], $transactionTotal)) {
                 $data['change'] = $data['payment_amount'] - $transactionTotal;
-                $transaction->update([
-                    'payment_status' => 'paid'
-                ]);
+                $data['payment_status'] = 'paid';
+                $data['transaction_status'] = 'completed';
             } else {
                 throw new \Exception('Amount is not enough');
             }
         } else {
             if ($this->amountMatch($data['payment_amount'], $transactionTotal)) {
                 $data['payment_amount'] += $paymentMethod->fee;
+                $va = $this->createVa($transaction);
+                $data['va_number'] = $va;
             } else {
                 throw new \Exception('Amount and transaction amount must be same');
             }

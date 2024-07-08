@@ -130,6 +130,7 @@ class PaymentRepository
         } else {
             if ($this->amountMatch($data['payment_amount'], $transactionTotal)) {
                 $data['payment_amount'] += $paymentMethod->fee;
+                $data['transaction_status'] = 'pending';
             } else {
                 throw new \Exception('Amount and transaction amount must be the same: ' . $data['payment_amount'] . ' vs ' . $transactionTotal);
             }

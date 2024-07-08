@@ -93,7 +93,7 @@ class TransactionRepository
 
     public function getTransactionById(string $id)
     {
-        return Transaction::with('items')->find($id);
+        return Transaction::with(['items', 'paymentMethod'])->find($id);
     }
 
     public function getTransactions($status, $paymentStatus)

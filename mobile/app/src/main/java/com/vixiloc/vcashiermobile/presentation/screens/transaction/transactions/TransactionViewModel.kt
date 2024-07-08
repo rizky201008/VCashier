@@ -55,8 +55,11 @@ class TransactionViewModel(
                 }
             }
 
-            is TransactionEvent.SelectTransaction -> {
-                _state.value = _state.value.copy(selectedTransactionId = event.id)
+            is TransactionEvent.ShowTransactionAction -> {
+                _state.value = _state.value.copy(
+                    selectedTransaction = event.data,
+                    showTransactionAction = event.show
+                )
             }
 
             is TransactionEvent.SelectStatus -> {

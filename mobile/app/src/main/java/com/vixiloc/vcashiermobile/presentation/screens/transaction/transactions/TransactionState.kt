@@ -10,6 +10,7 @@ data class TransactionState(
     val success: String = "",
     val transactions: List<TransactionsData> = emptyList(),
     val searchQuery: String = "",
-    val selectedTransactionId: String = "",
+    val selectedTransaction: TransactionsData? = null,
+    val showTransactionAction: Boolean = false,
     val status: String = "semua"
 )

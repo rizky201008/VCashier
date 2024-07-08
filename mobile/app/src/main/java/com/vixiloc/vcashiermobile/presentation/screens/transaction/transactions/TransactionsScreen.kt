@@ -41,6 +41,7 @@ import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.category.components.FilledIconButton
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.components.TransactionActionDialog
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.components.TransactionListItem
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.components.TransactionStatusChip
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
@@ -134,7 +135,14 @@ fun TransactionsScreen(
                     items(state.transactions) { transaction: TransactionsData ->
                         TransactionListItem(
                             data = transaction,
-                            onClick = {}
+                            onClick = {
+                                onEvent(
+                                    TransactionEvent.ShowTransactionAction(
+                                        true,
+                                        transaction
+                                    )
+                                )
+                            }
                         )
                         VerticalSpacer(height = 12.dp)
                     }
@@ -190,6 +198,18 @@ fun TransactionsScreen(
                 onEvent(TransactionEvent.DismissAlertMessage)
             }
         )
+
+        if (state.showTransactionAction) {
+            TransactionActionDialog(
+                viewModel = viewModel,
+                onPay = {
+                    onNavigate(MainRoutes.NavDrawerScreens.Transactions.PayTransaction(it))
+                },
+                onProcessPayment = {
+                    onNavigate(MainRoutes.NavDrawerScreens.Transactions.MakePayment(it))
+                }
+            )
+        }
     }
 }
 

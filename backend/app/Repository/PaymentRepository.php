@@ -26,9 +26,18 @@ class PaymentRepository
     {
         try {
             DB::beginTransaction();
+
             $paymentMethod = $this->getPaymentMethod($data['payment_method_id']);
-            $this->insertTransactionPayment($data, $paymentMethod, Transaction::find($data['transaction_id']));
+            $transaction = Transaction::with(['paymentMethod'])->where('id', $data['transaction_id'])->first();
+
+            $this->insertTransactionPayment($data, $paymentMethod, $transaction);
+
+            if (!$transaction->paymentMethod->cash) {
+                $this->createVa($transaction);
+            }
+
             DB::commit();
+
             return [
                 'message' => 'Make payment success',
                 'id' => $data['transaction_id']
@@ -41,7 +50,7 @@ class PaymentRepository
         }
     }
 
-    public function createVa($transaction)
+    public function createVa($transaction): void
     {
         $data = [
             "transaction_details" => [
@@ -60,12 +69,12 @@ class PaymentRepository
             ]
         ];
 
-        foreach ($transaction->items() as $data) {
+        foreach ($transaction->items() as $item) {
             $data['item_details'][] = [
-                'id' => "$data->id",
-                'price' => $data->price,
-                'quantity' => $data->quantity,
-                'name' => $data->product->name . ' ' . $data->productVariation->name
+                'id' => "$item->id",
+                'price' => $item->price,
+                'quantity' => $item->quantity,
+                'name' => $item->product->name . ' ' . $item->productVariation->name
             ];
         }
 
@@ -84,23 +93,24 @@ class PaymentRepository
             MidtransConfig::$curlOptions[CURLOPT_HTTPHEADER] = [];
 
             $coreResponse = MidtransCoreApi::charge($data);
-
+            $data[] = [];
             if ($transaction->paymentMethod->code == "permata") {
-                return $coreResponse->permata_va_number;
+                $data['va_number'] = $coreResponse->permata_va_number;
             } else {
-                return $coreResponse->va_numbers[0]->va_number;
+                $data['va_number'] = $coreResponse->va_numbers[0]->va_number;
             }
+            $transaction->update($data);
         } catch (\Exception $th) {
-            throw new \Exception("MIDTRANS Err :" . $th->getMessage());
+            throw new \Exception("MIDTRANS Error: " . $th->getMessage());
         }
     }
 
-    private function validateAmount(int $userAmount, int $totalAmount)
+    private function validateAmount(int $userAmount, int $totalAmount): bool
     {
         return $userAmount >= $totalAmount;
     }
 
-    private function amountMatch(int $userAmount, int $totalAmount)
+    private function amountMatch(int $userAmount, int $totalAmount): bool
     {
         return $userAmount == $totalAmount;
     }
@@ -108,6 +118,7 @@ class PaymentRepository
     public function insertTransactionPayment(array $data, PaymentMethod $paymentMethod, Transaction $transaction)
     {
         $transactionTotal = $transaction->total_amount;
+
         if ($paymentMethod->cash) {
             if ($this->validateAmount($data['payment_amount'], $transactionTotal)) {
                 $data['change'] = $data['payment_amount'] - $transactionTotal;
@@ -119,12 +130,11 @@ class PaymentRepository
         } else {
             if ($this->amountMatch($data['payment_amount'], $transactionTotal)) {
                 $data['payment_amount'] += $paymentMethod->fee;
-                $va = $this->createVa($transaction);
-                $data['va_number'] = $va;
             } else {
-                throw new \Exception('Amount and transaction amount must be same');
+                throw new \Exception('Amount and transaction amount must be the same: ' . $data['payment_amount'] . ' vs ' . $transactionTotal);
             }
         }
+
         return $transaction->update($data);
     }
 }

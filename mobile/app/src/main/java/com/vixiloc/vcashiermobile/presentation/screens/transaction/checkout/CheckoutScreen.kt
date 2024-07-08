@@ -1,6 +1,5 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout
 
-import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +25,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -56,7 +54,6 @@ fun CheckoutScreen(
 ) {
     val state = viewModel.state.value
     val onEvent = viewModel::onEvent
-    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         onEvent(CheckoutScreenEvent.UpdateCustomer(customer))
@@ -78,7 +75,7 @@ fun CheckoutScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            (context as? Activity)?.finish()
+                            navigator.navigateUp()
                         },
                         icon = Icons.Outlined.ArrowBackIosNew
                     )
@@ -183,7 +180,6 @@ fun CheckoutScreen(
                 visible = state.success.isNotEmpty(),
                 onDismiss = {
                     onEvent(CheckoutScreenEvent.DismissSuccessAlert)
-                    navigator.popBackStack()
                     navigator.navigate(MainRoutes.NavDrawerScreens.Transactions.MakePayment(state.transactionId))
                 }
             )

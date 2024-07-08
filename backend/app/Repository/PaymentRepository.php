@@ -30,7 +30,8 @@ class PaymentRepository
             $this->insertTransactionPayment($data, $paymentMethod, Transaction::find($data['transaction_id']));
             DB::commit();
             return [
-                'message' => 'Make payment success'
+                'message' => 'Make payment success',
+                'id' => $data['transaction_id']
             ];
         } catch (\Exception $th) {
             DB::rollBack();

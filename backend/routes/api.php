@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::prefix('payment')->group(function () {
         Route::get('methods', [PaymentController::class, 'getPaymentMethods']);
         Route::post('make-payment', [PaymentController::class, 'createTransactionPayment']);
+        Route::post('create-va', [PaymentController::class, 'createVa']);
     });
 });
 

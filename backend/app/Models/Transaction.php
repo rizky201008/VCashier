@@ -46,8 +46,13 @@ class Transaction extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function paymentMethod(): BelongsTo
+    public function payment_method(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

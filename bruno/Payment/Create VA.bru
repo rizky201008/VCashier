@@ -1,0 +1,21 @@
+meta {
+  name: Create VA
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}payment/create-va
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "transaction_id" : "04ad64fa-5c66-4c5c-932a-18c6c16d6bed"
+  }
+}

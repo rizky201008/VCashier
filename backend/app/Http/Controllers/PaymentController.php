@@ -41,9 +41,10 @@ class PaymentController extends Controller
             'transaction_id' => 'required|exists:transactions,id'
         ]);
         $paymentRepository = new PaymentRepository();
-        $paymentRepository->processCreateVa($request->transaction_id);
+        $va = $paymentRepository->processCreateVa($request->transaction_id);
         return response()->json([
-            'message' => 'VA created'
+            'message' => 'VA created',
+            'va' => $va
         ]);
     }
 }

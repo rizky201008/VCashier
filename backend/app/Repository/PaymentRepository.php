@@ -62,20 +62,20 @@ class PaymentRepository
 
     }
 
-    public function processCreateVa($transactionId): void
+    public function processCreateVa($transactionId): string
     {
         $transaction = Transaction::with(['payment_method', 'items', 'items.productVariation.product', 'items.productVariation', 'customer', 'user'])->where('id', $transactionId)->first();
         if ($transaction->payment_method_id == null) {
             throw new \Exception("Payment method not set");
         }
         if ($transaction->va_number == null) {
-            $this->createVa($transaction);
+            return $this->createVa($transaction);
         } else {
             throw new \Exception("VA already created");
         }
     }
 
-    public function createVa($transaction): void
+    public function createVa($transaction): string
     {
         $data = [
             "transaction_details" => [
@@ -129,6 +129,7 @@ class PaymentRepository
                 $transactionData['va_number'] = $coreResponse->va_numbers[0]->va_number;
             }
             $transaction->update($transactionData);
+            return $transactionData['va_number'];
         } catch (\Exception $th) {
             throw new \Exception("MIDTRANS Error: " . $th->getMessage());
         }

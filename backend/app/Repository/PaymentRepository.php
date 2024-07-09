@@ -50,7 +50,7 @@ class PaymentRepository
 
             $transaction->update($data);
 
-            if (!$transaction->paymentMethod->cash) {
+            if (!$paymentMethod->cash) {
                 $this->createVa($transaction);
             }
 
@@ -60,10 +60,11 @@ class PaymentRepository
                 'message' => 'Make payment success',
                 'id' => $data['transaction_id']
             ];
+
         } catch (\Exception $th) {
             DB::rollBack();
             return [
-                'message' => $th->getMessage()
+                'message' => "Err: db catch " . $th->getMessage()
             ];
         }
     }

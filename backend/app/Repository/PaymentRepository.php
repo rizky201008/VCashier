@@ -24,13 +24,31 @@ class PaymentRepository
 
     public function processPayment(array $data): array
     {
+        $paymentMethod = $this->getPaymentMethod($data['payment_method_id']);
+        $transaction = Transaction::with(['paymentMethod'])->where('id', $data['transaction_id'])->first();
         try {
             DB::beginTransaction();
 
-            $paymentMethod = $this->getPaymentMethod($data['payment_method_id']);
-            $transaction = Transaction::with(['paymentMethod'])->where('id', $data['transaction_id'])->first();
+            $transactionTotal = $transaction->total_amount;
 
-            $this->insertTransactionPayment($data, $paymentMethod, $transaction);
+            if ($paymentMethod->cash) {
+                if ($this->validateAmount($data['payment_amount'], $transactionTotal)) {
+                    $data['change'] = $data['payment_amount'] - $transactionTotal;
+                    $data['payment_status'] = 'paid';
+                    $data['transaction_status'] = 'completed';
+                } else {
+                    throw new \Exception('Amount is not enough');
+                }
+            } else {
+                if ($this->amountMatch($data['payment_amount'], $transactionTotal)) {
+                    $data['payment_amount'] += $paymentMethod->fee;
+                    $data['transaction_status'] = 'pending';
+                } else {
+                    throw new \Exception('Amount and transaction amount must be the same: ' . $data['payment_amount'] . ' vs ' . $transactionTotal);
+                }
+            }
+
+            $transaction->update($data);
 
             if (!$transaction->paymentMethod->cash) {
                 $this->createVa($transaction);
@@ -111,27 +129,4 @@ class PaymentRepository
         return $userAmount == $totalAmount;
     }
 
-    public function insertTransactionPayment(array $data, PaymentMethod $paymentMethod, Transaction $transaction)
-    {
-        $transactionTotal = $transaction->total_amount;
-
-        if ($paymentMethod->cash) {
-            if ($this->validateAmount($data['payment_amount'], $transactionTotal)) {
-                $data['change'] = $data['payment_amount'] - $transactionTotal;
-                $data['payment_status'] = 'paid';
-                $data['transaction_status'] = 'completed';
-            } else {
-                throw new \Exception('Amount is not enough');
-            }
-        } else {
-            if ($this->amountMatch($data['payment_amount'], $transactionTotal)) {
-                $data['payment_amount'] += $paymentMethod->fee;
-                $data['transaction_status'] = 'pending';
-            } else {
-                throw new \Exception('Amount and transaction amount must be the same: ' . $data['payment_amount'] . ' vs ' . $transactionTotal);
-            }
-        }
-
-        return $transaction->update($data);
-    }
 }

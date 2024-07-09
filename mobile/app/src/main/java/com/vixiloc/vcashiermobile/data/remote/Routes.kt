@@ -16,6 +16,7 @@ object Routes {
     private const val PAYMENT = "payment"
     const val PAYMENT_METHODS = "$PAYMENT/methods"
     const val PAYMENT_MAKE = "$PAYMENT/make-payment"
+    const val PAYMENT_CREATE_VA = "$PAYMENT/create-va"
     private const val USERS = "users"
     const val USERS_LIST = "$USERS/lists"
     const val RESET_PASSWORD = "$USERS/reset-password/{id}"

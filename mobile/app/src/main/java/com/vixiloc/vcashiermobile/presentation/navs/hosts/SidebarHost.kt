@@ -90,11 +90,8 @@ fun SidebarHost(
                             scope.launch { drawerState.close() }
                             currentTitle.value = item.name
                             navHostController.navigate(item.route) {
-                                popUpTo(navHostController.graph.findStartDestination().id) {
-                                    saveState = false
-                                }
+                                popUpTo(navHostController.graph.findStartDestination().id)
                                 launchSingleTop = true
-                                restoreState = false
                             }
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)

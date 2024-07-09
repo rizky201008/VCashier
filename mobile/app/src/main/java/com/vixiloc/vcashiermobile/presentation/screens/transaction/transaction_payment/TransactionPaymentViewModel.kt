@@ -67,6 +67,7 @@ class TransactionPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() 
                     is Resource.Success -> {
                         _state.value = _state.value.copy(
                             success = res.data?.message ?: "Pembayaran berhasil dibuat",
+                            response = res.data,
                             isLoading = false
                         )
                     }

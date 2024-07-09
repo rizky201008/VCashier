@@ -24,7 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -99,7 +98,7 @@ fun TransactionPaymentScreen(
             ) {
                 TextField(
                     modifier = Modifier,
-                    value = state.transactionTotal.toString(),
+                    value = state.paymentAmount.toString(),
                     onValueChanged = {
                         onEvent(TransactionPaymentEvent.UpdatePaymentAmount(it))
                     },
@@ -190,7 +189,12 @@ fun TransactionPaymentScreen(
                 visible = state.success.isNotEmpty(),
                 onDismiss = {
                     onEvent(TransactionPaymentEvent.DismissAlertMessage)
-                    navigator.navigateUp()
+                    navigator.popBackStack()
+                    navigator.navigate(
+                        MainRoutes.NavDrawerScreens.Transactions.PayTransaction(
+                            navArgs.transactionId
+                        )
+                    )
                 }
             )
             MessageAlert(

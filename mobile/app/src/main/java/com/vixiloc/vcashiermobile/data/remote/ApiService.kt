@@ -4,6 +4,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.ADD_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
 import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
+import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_CREATE_VA
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_MAKE
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_METHODS
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
@@ -27,6 +28,8 @@ import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRegisterResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.ResetPasswordResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.CreateVaRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.CreateVaResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.PaymentMethodsDto
@@ -179,6 +182,13 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body data: MakePaymentRequestDto
     ): MakePaymentResponseDto
+
+    @POST(PAYMENT_CREATE_VA)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun createVa(
+        @Header("Authorization") token: String,
+        @Body data: CreateVaRequestDto
+    ): CreateVaResponseDto
 
     @GET(USERS_LIST)
     @Headers("Content-Type: application/json", "Accept: application/json")

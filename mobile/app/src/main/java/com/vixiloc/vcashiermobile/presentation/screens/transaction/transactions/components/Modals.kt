@@ -89,9 +89,7 @@ fun TransactionActionDialog(
                 )
                 FilledButton(
                     onClick = {
-                        if (state.selectedTransaction!!.payment == "unpaid") {
-                            onPay(state.selectedTransaction.id)
-                        }
+                        onPay(state.selectedTransaction!!.id)
                     },
                     text = "Bayar",
                     modifier = Modifier.width(buttonWidth)

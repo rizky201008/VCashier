@@ -165,4 +165,10 @@ class UseCaseManager(
         token = getTokenUseCase()
     )
 
+    fun createVaUseCase() = CreateVa(
+        repository = paymentsRepository,
+        getToken = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
+
 }

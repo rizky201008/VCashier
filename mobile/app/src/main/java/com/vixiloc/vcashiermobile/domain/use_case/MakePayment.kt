@@ -5,6 +5,7 @@ import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.toDomain
 import com.vixiloc.vcashiermobile.domain.model.payments.MakePaymentRequest
 import com.vixiloc.vcashiermobile.domain.model.OnlyResponseMessage
+import com.vixiloc.vcashiermobile.domain.model.payments.MakePaymentResponse
 import com.vixiloc.vcashiermobile.domain.model.payments.toDto
 import com.vixiloc.vcashiermobile.domain.repository.PaymentsRepository
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +19,7 @@ class MakePayment(
     private val httpHandler: HttpHandler,
     private val token: GetToken
 ) {
-    operator fun invoke(data: MakePaymentRequest): Flow<Resource<OnlyResponseMessage>> = flow {
+    operator fun invoke(data: MakePaymentRequest): Flow<Resource<MakePaymentResponse>> = flow {
         try {
             emit(Resource.Loading())
             val token = token().first()

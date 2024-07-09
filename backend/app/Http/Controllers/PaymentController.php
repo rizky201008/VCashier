@@ -30,7 +30,6 @@ class PaymentController extends Controller
             'payment_amount' => 'required'
         ]);
         $paymentRepository = new PaymentRepository();
-
         return response()->json(
             $paymentRepository->processPayment($request->all())
         );

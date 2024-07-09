@@ -70,7 +70,7 @@ class PaymentRepository
         ];
 
         foreach ($transaction->items() as $item) {
-            $data['item_details'][] = [
+            $data['item_details'] = [
                 'id' => "$item->id",
                 'price' => $item->price,
                 'quantity' => $item->quantity,
@@ -79,13 +79,9 @@ class PaymentRepository
         }
 
         try {
-            // Set your Merchant Server Key
             MidtransConfig::$serverKey = env("MIDTRANS_SERVER_KEY");
-            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
             MidtransConfig::$isProduction = false;
-            // Set sanitization on (default)
             MidtransConfig::$isSanitized = true;
-            // Set 3DS transaction for credit card to true
             MidtransConfig::$is3ds = true;
             MidtransConfig::$overrideNotifUrl = env("BASE_URL");
             MidtransConfig::$curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;

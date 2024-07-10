@@ -37,7 +37,27 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        return $this->productRepository->updateProduct($request, $request->id);
+        $this->productRepository->updateProduct($request, $request->id);
+        return response()->json([
+            'message' => 'Product updated successfully'
+        ]);
+    }
+
+    public function updateProductVariation(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:product_variations,id',
+        ]);
+
+        $this->productRepository->updateProductVariation($request->all());
+        return response()->json([
+            'message' => 'Product variation updated successfully'
+        ]);
+    }
+
+    public function getProductVariation($id)
+    {
+        return response()->json($this->productRepository->getProductVariation($id));
     }
 
     public function deleteProduct($id)

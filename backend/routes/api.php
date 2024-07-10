@@ -40,6 +40,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::put('/', [ProductController::class, 'updateProduct']);
         Route::delete('{id}', [ProductController::class, 'deleteProduct']);
     });
+    Route::prefix('product-variations')->group(function () {
+        Route::put('/', [ProductController::class, 'updateProductVariation']);
+        Route::get('/{id}', [ProductController::class, 'getProductVariation']);
+    });
     Route::prefix('product-images')->group(function () {
         Route::post('update', [ProductImageController::class, 'updateImages']);
         Route::post('add', [ProductImageController::class, 'addImage']);

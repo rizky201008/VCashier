@@ -34,7 +34,7 @@ class ProductRepository
 
     public function getProductVariation($id): ProductVariation
     {
-        return $this->variation->where('id', $id)->first();
+        return ProductVariation::where('id', $id)->first();
     }
 
     public function decreaseStock(int $productVariationId, int $quantity)
@@ -59,11 +59,13 @@ class ProductRepository
             $productVariations = $data->variations;
 
             foreach ($productVariations as $variation) {
-                $this->variation->create([
+                ProductVariation::create([
                     'unit' => $variation['unit'],
                     'stock' => $variation['stock'],
                     'price' => $variation['price'],
+                    'price_capital' => $variation['price_capital'],
                     'price_grocery' => $variation['price_grocery'],
+                    'price_grocery_capital' => $variation['price_grocery_capital'],
                     'product_id' => $createdProduct->id
                 ]);
             }
@@ -78,7 +80,7 @@ class ProductRepository
         }
     }
 
-    function updateProduct($data, $productId): JsonResponse
+    function updateProduct($data, $productId): void
     {
         $product = Product::find($productId);
 
@@ -88,27 +90,22 @@ class ProductRepository
 
             $product->update($data->all());
 
-            $variations = $data->variations;
-
-            if ($variations !== null) {
-                $product->variations()->delete();
-                foreach ($variations as $variation) {
-                    $this->variation->create(
-                        [
-                            'unit' => $variation['unit'],
-                            'stock' => $variation['stock'],
-                            'price' => $variation['price'],
-                            'price_grocery' => $variation['price_grocery'],
-                            'product_id' => $product->id
-                        ]
-                    );
-                }
-            }
-
             DB::commit();
-            return response()->json([
-                'message' => 'Product updated successfully'
-            ]);
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            throw new \Exception($th->getMessage());
+        }
+    }
+
+    public function updateProductVariation(array $data): void
+    {
+        DB::beginTransaction();
+        try {
+            $productVariation = ProductVariation::find($data['id']);
+            $productVariation->update($data);
+            DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
 

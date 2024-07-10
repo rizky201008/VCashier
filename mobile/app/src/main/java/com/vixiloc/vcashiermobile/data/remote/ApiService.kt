@@ -22,7 +22,7 @@ import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategor
 import com.vixiloc.vcashiermobile.data.remote.dto.customers.CreateUpdateCustomerRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.customers.CreateUpdateCustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductImageResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.customers.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRegisterResponseDto
@@ -42,7 +42,6 @@ import com.vixiloc.vcashiermobile.data.remote.dto.users.UsersResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -80,14 +79,14 @@ interface ApiService {
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun createProduct(
         @Header("Authorization") token: String,
-        @Body data: CreateUpdateProductRequestDto
+        @Body data: CreateProductRequestDto
     ): CreateProductResponseDto
 
     @PUT(PRODUCTS)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun updateProduct(
         @Header("Authorization") token: String,
-        @Body data: CreateUpdateProductRequestDto
+        @Body data: CreateProductRequestDto
     ): UpdateProductResponseDto
 
     @Multipart

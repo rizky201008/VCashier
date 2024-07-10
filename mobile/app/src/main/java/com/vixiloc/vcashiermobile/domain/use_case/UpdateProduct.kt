@@ -3,7 +3,7 @@ package com.vixiloc.vcashiermobile.domain.use_case
 import com.vixiloc.vcashiermobile.utils.HttpHandler
 import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.data.remote.dto.products.toDomain
-import com.vixiloc.vcashiermobile.domain.model.products.CreateUpdateProductRequest
+import com.vixiloc.vcashiermobile.domain.model.products.CreateProductRequest
 import com.vixiloc.vcashiermobile.domain.model.OnlyResponseMessage
 import com.vixiloc.vcashiermobile.domain.model.products.toDto
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
@@ -18,7 +18,7 @@ class UpdateProduct(
     private val getToken: GetToken,
     private val httpHandler: HttpHandler
 ) {
-    operator fun invoke(data: CreateUpdateProductRequest): Flow<Resource<OnlyResponseMessage>> =
+    operator fun invoke(data: CreateProductRequest): Flow<Resource<OnlyResponseMessage>> =
         flow {
             try {
                 val token: String = getToken().first()

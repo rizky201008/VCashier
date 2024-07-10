@@ -10,8 +10,8 @@ import androidx.navigation.toRoute
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginFormScreen
-import com.vixiloc.vcashiermobile.presentation.screens.products.CreateProductScreen
-import com.vixiloc.vcashiermobile.presentation.screens.products.UpdateProductScreen
+import com.vixiloc.vcashiermobile.presentation.screens.products.create_product.CreateProductScreen
+import com.vixiloc.vcashiermobile.presentation.screens.products.update_product.UpdateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.CheckoutScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.SearchCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionScreen

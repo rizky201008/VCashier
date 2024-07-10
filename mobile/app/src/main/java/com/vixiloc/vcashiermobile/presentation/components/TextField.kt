@@ -56,7 +56,7 @@ fun TextField(
         TextFieldCompose(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color(0xFFEBEBEB), shape = MaterialTheme.shapes.large),
+                .background(color = Color.White, shape = MaterialTheme.shapes.large),
             value = value,
             onValueChange = onValueChanged,
             singleLine = singleLine,
@@ -99,39 +99,58 @@ fun TextField(
 fun LongTextField(
     value: String,
     onValueChanged: (String) -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     title: String,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     textStyle: TextStyle = MaterialTheme.typography.bodySmall,
-    singleLine: Boolean = true
+    enabled: Boolean = true,
+    isError: Boolean = false,
+    errorMessage: String = "",
+    placeHolder: String = "",
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp)
     ) {
-        Text(text = title, style = textStyle)
+        Text(text = title, style = textStyle.copy(fontWeight = FontWeight(600)))
         VerticalSpacer(height = 9.dp)
-        Box(
+        TextFieldCompose(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(
-                    color = Color.Black.copy(alpha = 0.05f),
-                    shape = MaterialTheme.shapes.large
+                .background(color = Color.White, shape = MaterialTheme.shapes.large),
+            value = value,
+            onValueChange = onValueChanged,
+            singleLine = false,
+            textStyle = textStyle,
+            visualTransformation = visualTransformation,
+            keyboardOptions = keyboardOptions,
+            enabled = enabled,
+            isError = isError,
+            placeholder = {
+                Text(text = placeHolder, style = MaterialTheme.typography.bodySmall)
+            },
+            colors = TextFieldDefaults.colors(
+                disabledContainerColor = Color.Transparent,
+                focusedContainerColor = Color.Transparent,
+                errorContainerColor = MaterialTheme.colorScheme.errorContainer,
+                unfocusedContainerColor = Color.Transparent,
+                selectionColors = TextSelectionColors(
+                    handleColor = Color.Red,
+                    backgroundColor = Color.Green
                 ),
-            contentAlignment = Alignment.Center
-        ) {
-            BasicTextField(
-                value = value,
-                onValueChange = onValueChanged,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                singleLine = singleLine,
-                textStyle = MaterialTheme.typography.bodySmall,
-                visualTransformation = visualTransformation,
-                keyboardOptions = keyboardOptions
+                focusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            )
+        )
+        val errorVisibleState = remember { MutableTransitionState(isError) }
+        AnimatedVisibility(visibleState = errorVisibleState) {
+            Text(
+                text = errorMessage,
+                style = MaterialTheme.typography.bodySmall.copy(color = Color.Red),
+                modifier = Modifier.padding(start = 10.dp)
             )
         }
     }

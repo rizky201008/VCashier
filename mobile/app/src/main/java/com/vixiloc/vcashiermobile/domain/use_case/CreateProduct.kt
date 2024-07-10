@@ -4,7 +4,7 @@ import com.vixiloc.vcashiermobile.utils.HttpHandler
 import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.data.remote.dto.products.toDomain
 import com.vixiloc.vcashiermobile.domain.model.products.CreateProductResponse
-import com.vixiloc.vcashiermobile.domain.model.products.CreateUpdateProductRequest
+import com.vixiloc.vcashiermobile.domain.model.products.CreateProductRequest
 import com.vixiloc.vcashiermobile.domain.model.products.toDto
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +18,7 @@ class CreateProduct(
     private val getToken: GetToken,
     private val httpHandler: HttpHandler
 ) {
-    operator fun invoke(data: CreateUpdateProductRequest): Flow<Resource<CreateProductResponse>> =
+    operator fun invoke(data: CreateProductRequest): Flow<Resource<CreateProductResponse>> =
         flow {
             val token = getToken().first()
             try {

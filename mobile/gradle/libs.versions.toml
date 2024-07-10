@@ -22,6 +22,7 @@ dataStore = "1.1.0"
 faCompose = "1.0.0"
 realmKotlin = "1.16.0"
 kotlinxCoroutines = "1.7.0"
+billyTheLittleLazyColumn = "0.2.7"
 
 [libraries]
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
@@ -53,6 +54,7 @@ data-store = { module = "androidx.datastore:datastore-preferences", version.ref 
 faCompose = { module = "com.github.Gurupreet:FontAwesomeCompose", version.ref = "faCompose" }
 io-realm-kotlin-libraryBase = { module = "io.realm.kotlin:library-base", version.ref = "realmKotlin" }
 org-jetbrains-kotlin-kotlinxCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+billyTheLittle-lazyColumn = { module = "com.github.BILLyTheLiTTle:LazyColumns", version.ref = "billyTheLittleLazyColumn" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

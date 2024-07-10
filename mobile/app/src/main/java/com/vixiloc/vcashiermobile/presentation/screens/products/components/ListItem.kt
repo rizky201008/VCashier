@@ -14,11 +14,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Key
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -56,10 +59,12 @@ import coil.size.Size
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
+import com.vixiloc.vcashiermobile.domain.model.products.Variation
 import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
 import com.vixiloc.vcashiermobile.presentation.components.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.OutlinedButton
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
+import com.vixiloc.vcashiermobile.presentation.screens.category.components.FilledIconButton
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 
 @Composable
@@ -314,6 +319,122 @@ fun ProductItem(
             modifier = Modifier.padding(horizontal = 10.dp)
         )
         VerticalSpacer(height = 10.dp)
+    }
+}
+
+@Composable
+fun VariationItem(modifier: Modifier = Modifier, variation: Variation) {
+    Box(
+        modifier = modifier
+            .padding(bottom = 12.dp)
+            .background(color = Color.White)
+            .padding(16.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                val rowModifier = Modifier.fillMaxWidth(0.6f)
+                Row(
+                    modifier = rowModifier,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Unit",
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.LightGray)
+                    )
+                    Text(
+                        text = variation.unit,
+                        modifier = Modifier.width(80.dp),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
+                    )
+                }
+                Row(
+                    modifier = rowModifier,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Harga",
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.LightGray)
+                    )
+                    Text(
+                        text = CurrencyFormatter.formatCurrency(variation.price),
+                        modifier = Modifier.width(80.dp),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
+                    )
+                }
+                Row(
+                    modifier = rowModifier,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Harga Grosir",
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.LightGray)
+                    )
+                    Text(
+                        text = CurrencyFormatter.formatCurrency(variation.priceGrocery),
+                        modifier = Modifier.width(80.dp),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
+                    )
+                }
+                Row(
+                    modifier = rowModifier,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Stok",
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.LightGray)
+                    )
+                    Text(
+                        text = "${variation.stock}",
+                        modifier = Modifier.width(80.dp),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
+                    )
+                }
+            }
+            Column {
+                FilledIconButton(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                            shape = MaterialTheme.shapes.small
+                        ),
+                    shape = MaterialTheme.shapes.small,
+                    icon = Icons.Outlined.Edit,
+                    onClick = {
+
+                    },
+                    iconSize = 16
+                )
+                VerticalSpacer(height = 8.dp)
+                FilledIconButton(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(
+                            color = Color.Red.copy(alpha = 0.2f),
+                            shape = MaterialTheme.shapes.small
+                        ),
+                    shape = MaterialTheme.shapes.small,
+                    icon = Icons.Outlined.Delete,
+                    iconTint = Color.Red,
+                    onClick = {
+
+                    },
+                    iconSize = 16
+                )
+            }
+        }
     }
 }
 

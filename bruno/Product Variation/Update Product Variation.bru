@@ -1,0 +1,27 @@
+meta {
+  name: Update Product Variation
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{BASE_URL}}product-variations
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "id" : 3,
+    "unit":"Ubah",
+    "stock" : 10,
+    "price" : 2309230,
+    "price_capital" : 10023,
+    "price_grocery" : 2323989832,
+    "price_grocery_capital" : 239829
+  }
+}

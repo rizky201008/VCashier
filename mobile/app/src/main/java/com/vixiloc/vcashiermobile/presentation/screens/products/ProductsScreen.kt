@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.navigation.NavController
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
@@ -90,7 +89,7 @@ fun ProductsScreen(
 
         FilledButton(
             onClick = {
-
+                onNavigate(MainRoutes.NavDrawerScreens.Products.CreateProduct)
             },
             text = "Tambah Produk",
             modifier = Modifier.constrainAs(addButton) {

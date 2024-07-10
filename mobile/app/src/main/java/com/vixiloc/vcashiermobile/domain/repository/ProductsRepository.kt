@@ -2,7 +2,7 @@ package com.vixiloc.vcashiermobile.domain.repository
 
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductImageResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
@@ -15,7 +15,7 @@ interface ProductsRepository {
 
     suspend fun createProduct(
         token: String,
-        data: CreateUpdateProductRequestDto
+        data: CreateProductRequestDto
     ): CreateProductResponseDto
 
     suspend fun addImage(
@@ -32,7 +32,7 @@ interface ProductsRepository {
 
     suspend fun updateProduct(
         token: String,
-        data: CreateUpdateProductRequestDto
+        data: CreateProductRequestDto
     ): UpdateProductResponseDto
 
     suspend fun getProduct(

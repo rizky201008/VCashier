@@ -11,7 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.utils.FileConverter
 import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.utils.Strings.TAG
-import com.vixiloc.vcashiermobile.domain.model.products.CreateUpdateProductRequest
+import com.vixiloc.vcashiermobile.domain.model.products.CreateProductRequest
 import com.vixiloc.vcashiermobile.domain.model.products.Variation
 import com.vixiloc.vcashiermobile.domain.use_case.CreateImage
 import com.vixiloc.vcashiermobile.domain.use_case.CreateProduct
@@ -119,7 +119,7 @@ class ProductsViewModel(
                     variationUnit = "",
                     variationPrice = "",
                     variationPriceGrocery = "",
-                    variationStock = ""
+                    variationStock = "",
                 )
             }
 
@@ -179,7 +179,7 @@ class ProductsViewModel(
 
     private fun processCreateProduct() {
         Log.d(TAG, "processCreateProduct: called")
-        val data = CreateUpdateProductRequest(
+        val data = CreateProductRequest(
             name = state.productName,
             description = state.productDescription,
             variations = state.variations,
@@ -245,7 +245,7 @@ class ProductsViewModel(
     }
 
     fun processUpdateProduct() {
-        val data = CreateUpdateProductRequest(
+        val data = CreateProductRequest(
             name = state.productName,
             description = state.productDescription,
             variations = state.variations,
@@ -322,7 +322,6 @@ class ProductsViewModel(
                             mapOf(it.name to it.id)
                         } ?: emptyList()
                     )
-                    Log.d(TAG, "processGetCategories: ${state.categories}")
                 }
 
                 is Resource.Error -> {

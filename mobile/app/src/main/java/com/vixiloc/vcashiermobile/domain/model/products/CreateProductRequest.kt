@@ -1,9 +1,9 @@
 package com.vixiloc.vcashiermobile.domain.model.products
 
-import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.VariationDto
 
-data class CreateUpdateProductRequest(
+data class CreateProductRequest(
     val description: String,
     val id: Int?,
     val name: String,
@@ -16,7 +16,8 @@ data class Variation(
     val priceGrocery: Int,
     val stock: Int,
     val unit: String,
-    val id: Int? = null
+    val id: Int? = null,
+    val priceCapital: Int? = null
 )
 
 fun Variation.toDto(): VariationDto {
@@ -24,12 +25,13 @@ fun Variation.toDto(): VariationDto {
         price = price,
         priceGrocery = priceGrocery,
         stock = stock,
-        unit = unit
+        unit = unit,
+        priceCapital = priceCapital,
     )
 }
 
-fun CreateUpdateProductRequest.toDto(): CreateUpdateProductRequestDto {
-    return CreateUpdateProductRequestDto(
+fun CreateProductRequest.toDto(): CreateProductRequestDto {
+    return CreateProductRequestDto(
         description = description,
         id = id,
         name = name,

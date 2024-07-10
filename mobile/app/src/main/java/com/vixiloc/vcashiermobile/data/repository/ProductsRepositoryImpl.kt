@@ -3,7 +3,7 @@ package com.vixiloc.vcashiermobile.data.repository
 import com.vixiloc.vcashiermobile.data.remote.ApiService
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductImageResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
@@ -18,7 +18,7 @@ class ProductsRepositoryImpl(private val apiService: ApiService) : ProductsRepos
 
     override suspend fun createProduct(
         token: String,
-        data: CreateUpdateProductRequestDto
+        data: CreateProductRequestDto
     ): CreateProductResponseDto {
         return apiService.createProduct("Bearer $token", data = data)
     }
@@ -33,7 +33,7 @@ class ProductsRepositoryImpl(private val apiService: ApiService) : ProductsRepos
 
     override suspend fun updateProduct(
         token: String,
-        data: CreateUpdateProductRequestDto
+        data: CreateProductRequestDto
     ): UpdateProductResponseDto {
         return apiService.updateProduct(token = "Bearer $token", data = data)
     }

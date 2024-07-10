@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.products
+package com.vixiloc.vcashiermobile.presentation.screens.products.update_product
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,19 +11,23 @@ import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
+import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
+import com.vixiloc.vcashiermobile.presentation.screens.products.ProductEvent
+import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CreateProductScreen(
+fun UpdateProductScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     viewModel: ProductsViewModel = koinViewModel(),
+    args: MainRoutes.NavDrawerScreens.Products.UpdateProduct
 ) {
     val state = viewModel.state
     val onEvent = viewModel::onEvent
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.processGetCategories()
+        viewModel.processGetProduct(id = args.id)
     }
 
     Column(
@@ -32,10 +36,6 @@ fun CreateProductScreen(
             .verticalScroll(state = rememberScrollState())
     ) {
 
-        ProductForm(
-            viewModel = viewModel,
-            type = FormType.CREATE
-        )
         Loading(modifier = Modifier, visible = state.isLoading)
 
         MessageAlert(

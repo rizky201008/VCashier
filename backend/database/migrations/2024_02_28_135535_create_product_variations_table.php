@@ -20,7 +20,6 @@ return new class extends Migration
             $table->bigInteger('price');
             $table->bigInteger('price_capital')->default(0);
             $table->bigInteger('price_grocery')->nullable();
-            $table->bigInteger('price_grocery_capital')->default(0);
             $table->timestamps();
         });
     }

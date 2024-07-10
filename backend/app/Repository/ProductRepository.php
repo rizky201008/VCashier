@@ -65,7 +65,6 @@ class ProductRepository
                     'price' => $variation['price'],
                     'price_capital' => $variation['price_capital'],
                     'price_grocery' => $variation['price_grocery'],
-                    'price_grocery_capital' => $variation['price_grocery_capital'],
                     'product_id' => $createdProduct->id
                 ]);
             }

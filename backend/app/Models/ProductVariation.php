@@ -17,8 +17,7 @@ class ProductVariation extends Model
         'stock',
         'price',
         'price_capital',
-        'price_grocery',
-        'price_grocery_capital'
+        'price_grocery'
     ];
 
     protected $hidden = [

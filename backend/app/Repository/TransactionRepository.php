@@ -75,18 +75,17 @@ class TransactionRepository
             $productVariation = $productRepository->getProductVariation($item['id']);
             if ($item['grocery']) {
                 $price = $productVariation->price_grocery;
-                $capital = $productVariation->price_grocery_capital;
             } else {
                 $price = $productVariation->price;
-                $capital = $productVariation->price_capital;
             }
+            $capital = $productVariation->price_capital;
             $transactionItems[] = [
                 'transaction_id' => $transactionId,
                 'product_variation_id' => $item['id'],
                 'quantity' => $item['quantity'],
                 'price' => $price,
                 'subtotal' => $this->getPriceByQuantity($item['quantity'], $productVariation->price),
-                'profit' => $this->getProfit($capital, $item['quantity']),
+                'profit' => $this->getProfit($capital, $item['quantity'],$price),
             ];
             $productRepository->decreaseStock($item['id'], $item['quantity']);
         }
@@ -94,9 +93,10 @@ class TransactionRepository
         return TransactionItem::insert($transactionItems);
     }
 
-    private function getProfit(int $capital, int $amount) : int
+    private function getProfit(int $capital, int $amount, int $price): int
     {
-        return  $capital * $amount;
+        $profit = $price - $capital;
+        return $profit * $amount;
     }
 
     public function getTransactionById(string $id)

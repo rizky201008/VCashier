@@ -17,8 +17,10 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('unit');
             $table->integer('stock');
-            $table->double('price');
-            $table->double('price_grocery')->nullable();
+            $table->bigInteger('price');
+            $table->bigInteger('price_capital')->default(0);
+            $table->bigInteger('price_grocery')->nullable();
+            $table->bigInteger('price_grocery_capital')->default(0);
             $table->timestamps();
         });
     }

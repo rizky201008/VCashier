@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreignIdFor(\App\Models\ProductVariation::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('quantity');
             $table->bigInteger('price');
+            $table->bigInteger('profit');
             $table->bigInteger('subtotal');
             $table->timestamps();
         });

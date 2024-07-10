@@ -18,6 +18,7 @@ class TransactionItem extends Model
         'quantity',
         'price',
         'subtotal',
+        'profit',
     ];
 
     public function transaction(): BelongsTo

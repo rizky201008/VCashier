@@ -16,7 +16,9 @@ class ProductVariation extends Model
         'unit',
         'stock',
         'price',
-        'price_grocery'
+        'price_capital',
+        'price_grocery',
+        'price_grocery_capital'
     ];
 
     protected $hidden = [

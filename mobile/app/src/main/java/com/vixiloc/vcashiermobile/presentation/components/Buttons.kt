@@ -95,7 +95,7 @@ fun PainterIconButton(
 fun FilledButton(
     onClick: () -> Unit,
     text: String,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     trailingIcon: Any? = null,

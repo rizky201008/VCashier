@@ -14,6 +14,7 @@ data class CreateProductState(
     val productDescription: String = "",
     val selectedCategory: CategoriesResponseItem? = null,
     val variations: List<Variation> = emptyList(),
+    val selectedVariation: Variation? = null,
     val image: Uri? = null,
     val productId: Int? = null,
     val variationPrice: String = "",
@@ -24,5 +25,7 @@ data class CreateProductState(
     val variationId: Int? = null,
     val showAddVariation: Boolean = false,
     val categories: List<CategoriesResponseItem> = emptyList(),
-    val alsoUpdateImage: Boolean = false
+    val alsoUpdateImage: Boolean = false,
+    val showEditVariation: Boolean = false,
+    val showDeleteVariation: Boolean = false
 )

@@ -56,19 +56,19 @@ class CreateProductViewModel(
                     }
 
                     InputName.VARIATION_PRICE -> {
-                        if (e.value.isNotEmpty() && e.value.isDigitsOnly()) {
+                        if (e.value.isDigitsOnly()) {
                             _state.value = state.value.copy(variationPrice = e.value)
                         }
                     }
 
                     InputName.VARIATION_PRICE_GROCERY -> {
-                        if (e.value.isNotEmpty() && e.value.isDigitsOnly()) {
+                        if (e.value.isDigitsOnly()) {
                             _state.value = state.value.copy(variationPriceGrocery = e.value)
                         }
                     }
 
                     InputName.VARIATION_STOCK -> {
-                        if (e.value.isNotEmpty() && e.value.isDigitsOnly()) {
+                        if (e.value.isDigitsOnly()) {
                             _state.value = state.value.copy(variationStock = e.value)
                         }
                     }
@@ -78,7 +78,7 @@ class CreateProductViewModel(
                     }
 
                     InputName.VARIATION_PRICE_CAPITAL -> {
-                        if (e.value.isNotEmpty() && e.value.isDigitsOnly()) {
+                        if (e.value.isDigitsOnly()) {
                             _state.value = state.value.copy(variationPriceCapital = e.value)
                         }
                     }
@@ -96,16 +96,71 @@ class CreateProductViewModel(
             is CreateProductEvent.ChangeImage -> {
                 _state.value = _state.value.copy(image = e.image)
             }
+
+            is CreateProductEvent.DeleteVariation -> {
+                deleteVariation()
+            }
+
+            is CreateProductEvent.UpdateVariation -> {
+                updateVariation()
+            }
+
+            is CreateProductEvent.ShowEditVariationDialog -> {
+                _state.value = state.value.copy(showEditVariation = e.show)
+                if (!e.show) clearVariationForm()
+            }
+
+            is CreateProductEvent.ShowDeleteVariationDialog -> {
+                _state.value = state.value.copy(showDeleteVariation = e.show)
+                if (!e.show) clearVariationForm()
+            }
+
+            is CreateProductEvent.SelectVariation -> {
+                _state.value = state.value.copy(selectedVariation = e.data)
+                fillVariationForm(e.data)
+            }
         }
     }
 
-    private fun addVariation() {
-        val variation = Variation(
-            price = state.value.variationPrice.toInt(),
-            priceGrocery = state.value.variationPriceGrocery.toInt(),
-            stock = state.value.variationStock.toInt(),
-            unit = state.value.variationUnit
+    private fun fillVariationForm(data: Variation) {
+        _state.value = _state.value.copy(
+            variationUnit = data.unit,
+            variationPrice = data.price.toString(),
+            variationPriceGrocery = data.priceGrocery.toString(),
+            variationStock = data.stock.toString(),
+            variationPriceCapital = data.price.toString()
         )
+    }
+
+    private fun updateVariation() {
+        val data = state.value.selectedVariation
+        val newData = generateVariationModel()
+        _state.value = _state.value.copy(
+            variations = state.value.variations.minus(data!!).plus(newData),
+            selectedVariation = null
+        )
+
+        clearVariationForm()
+    }
+
+    private fun generateVariationModel(): Variation = Variation(
+        price = state.value.variationPrice.toInt(),
+        priceGrocery = state.value.variationPriceGrocery.toInt(),
+        stock = state.value.variationStock.toInt(),
+        unit = state.value.variationUnit
+    )
+
+    private fun deleteVariation() {
+        val variation = state.value.selectedVariation
+        _state.value = _state.value.copy(
+            variations = state.value.variations.filter { it != variation },
+            selectedVariation = null
+        )
+        clearVariationForm()
+    }
+
+    private fun addVariation() {
+        val variation = generateVariationModel()
         _state.value = _state.value.copy(
             variations = state.value.variations.plus(variation),
         )

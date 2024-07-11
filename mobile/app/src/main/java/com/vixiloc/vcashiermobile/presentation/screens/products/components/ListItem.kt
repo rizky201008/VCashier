@@ -323,7 +323,12 @@ fun ProductItem(
 }
 
 @Composable
-fun VariationItem(modifier: Modifier = Modifier, variation: Variation) {
+fun VariationItem(
+    modifier: Modifier = Modifier,
+    variation: Variation,
+    onUpdate: (Variation) -> Unit,
+    onDelete: (Variation) -> Unit
+) {
     Box(
         modifier = modifier
             .padding(bottom = 12.dp)
@@ -413,7 +418,7 @@ fun VariationItem(modifier: Modifier = Modifier, variation: Variation) {
                     shape = MaterialTheme.shapes.small,
                     icon = Icons.Outlined.Edit,
                     onClick = {
-
+                        onUpdate(variation)
                     },
                     iconSize = 16
                 )
@@ -429,7 +434,7 @@ fun VariationItem(modifier: Modifier = Modifier, variation: Variation) {
                     icon = Icons.Outlined.Delete,
                     iconTint = Color.Red,
                     onClick = {
-
+                        onDelete(variation)
                     },
                     iconSize = 16
                 )

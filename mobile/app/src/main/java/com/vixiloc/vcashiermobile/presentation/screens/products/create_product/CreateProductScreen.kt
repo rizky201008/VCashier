@@ -71,7 +71,9 @@ import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.category.components.FilledIconButton
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.AddVariationDialog
+import com.vixiloc.vcashiermobile.presentation.screens.products.components.DeleteVariationDialog
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.DropdownMenu
+import com.vixiloc.vcashiermobile.presentation.screens.products.components.EditVariationDialog
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.VariationItem
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.CheckoutScreenEvent
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
@@ -267,7 +269,17 @@ fun CreateProductScreen(
                     modifier = Modifier.height(204.dp)
                 ) {
                     items(state.variations) { variation ->
-                        VariationItem(variation = variation)
+                        VariationItem(
+                            variation = variation,
+                            onUpdate = {
+                                onEvent(CreateProductEvent.SelectVariation(it))
+                                onEvent(CreateProductEvent.ShowEditVariationDialog(true))
+                            },
+                            onDelete = {
+                                onEvent(CreateProductEvent.SelectVariation(it))
+                                onEvent(CreateProductEvent.ShowDeleteVariationDialog(true))
+                            }
+                        )
                     }
                 }
                 VerticalSpacer(height = 300.dp)
@@ -320,6 +332,10 @@ fun CreateProductScreen(
             if (state.showAddVariation) {
                 AddVariationDialog(viewModel = viewModel)
             }
+            if (state.showEditVariation) {
+                EditVariationDialog(viewModel = viewModel)
+            }
+            DeleteVariationDialog(viewModel = viewModel)
         }
     }
 }

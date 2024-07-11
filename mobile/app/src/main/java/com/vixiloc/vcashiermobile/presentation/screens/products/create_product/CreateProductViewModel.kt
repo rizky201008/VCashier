@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.domain.model.products.CreateProductRequest
 import com.vixiloc.vcashiermobile.domain.model.products.Variation
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
-import com.vixiloc.vcashiermobile.presentation.screens.products.ProductEvent
 import com.vixiloc.vcashiermobile.utils.FileConverter
 import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.utils.Strings.TAG

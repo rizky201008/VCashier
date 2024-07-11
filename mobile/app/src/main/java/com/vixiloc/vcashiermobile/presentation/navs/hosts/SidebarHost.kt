@@ -40,7 +40,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
 import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.EmployeesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
-import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsScreen
+import com.vixiloc.vcashiermobile.presentation.screens.products.list_products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionsScreen
 import kotlinx.coroutines.launch
 

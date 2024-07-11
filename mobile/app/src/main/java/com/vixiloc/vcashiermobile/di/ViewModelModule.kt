@@ -7,7 +7,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryViewMode
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.EmployeesViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
-import com.vixiloc.vcashiermobile.presentation.screens.products.ProductsViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.products.list_products.ProductsViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.products.create_product.CreateProductViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.CheckoutScreenViewModel

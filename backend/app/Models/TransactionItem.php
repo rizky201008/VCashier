@@ -34,8 +34,8 @@ class TransactionItem extends Model
         );
     }
 
-    public function productVariation(): HasOne
+    public function productVariation(): BelongsTo
     {
-        return $this->hasOne(ProductVariation::class, 'id', 'product_variation_id');
+        return $this->belongsTo(ProductVariation::class, 'product_variation_id', 'id');
     }
 }

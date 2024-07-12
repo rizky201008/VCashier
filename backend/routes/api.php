@@ -27,6 +27,12 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::group(['middleware' => 'role:admin,warehouse'], function () {
+    });
+    Route::group(['middleware' => 'role:admin,cashier'], function () {
+    });
+    Route::group(['middleware' => 'role:admin'], function () {
+    });
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'getCategories']);
         Route::get('{id}', [CategoryController::class, 'getCategory']);

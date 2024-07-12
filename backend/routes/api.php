@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
+use App\Http\Controllers\ProductLogsController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -71,6 +72,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('methods', [PaymentController::class, 'getPaymentMethods']);
         Route::post('make-payment', [PaymentController::class, 'createTransactionPayment']);
         Route::post('create-va', [PaymentController::class, 'createVa']);
+    });
+    Route::prefix('product-logs')->group(function () {
+        Route::get('all', [ProductLogsController::class, 'getAllLogs']);
+        Route::post('add', [ProductLogsController::class, 'addLog']);
     });
 });
 

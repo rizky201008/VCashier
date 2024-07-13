@@ -1,9 +1,8 @@
 networks:
   vcashier:
     driver: bridge
-
-volumes:
-  pgsql:
+  postgresql:
+    external: true
 
 services:
   nginx:
@@ -18,23 +17,6 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-      - db
-    networks:
-      - vcashier
-
-  db:
-    image: postgres
-    container_name: pgsql_vcashier
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "${PGSQL_HOST_PORT}:${PGSQL_DOCKER_CONTAINER_PORT}"
-    volumes:
-      - pgsql:/var/lib/pgsql
-    environment:
-      POSTGRES_DB: vcashier
-      POSTGRES_USER: vcashier
-      POSTGRES_PASSWORD: ${PGSQL_DB_PASSWORD}
     networks:
       - vcashier
 
@@ -48,3 +30,4 @@ services:
       - ./backend:/var/www/app
     networks:
       - vcashier
+      - postgresql

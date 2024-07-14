@@ -84,8 +84,7 @@ fun TextField(
             ),
             trailingIcon = trailingIcon
         )
-        val errorVisibleState = remember { MutableTransitionState(isError) }
-        AnimatedVisibility(visibleState = errorVisibleState) {
+        if (isError) {
             Text(
                 text = errorMessage,
                 style = MaterialTheme.typography.bodySmall.copy(color = Color.Red),
@@ -216,7 +215,14 @@ private fun TextFieldPreview() {
                     .padding(horizontal = 24.dp),
                 contentAlignment = Alignment.Center
             ) {
-
+                TextField(
+                    value = "",
+                    onValueChanged = {},
+                    modifier = Modifier,
+                    title = "alksdjaklsdal",
+                    isError = true,
+                    errorMessage = "alkdsjalksdjoiuwqeoiu"
+                )
             }
         }
     }

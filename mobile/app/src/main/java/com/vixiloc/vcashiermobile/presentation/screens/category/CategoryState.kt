@@ -7,6 +7,7 @@ data class CategoryState(
     val error: String = "",
     val categories: List<CategoriesResponseItem> = emptyList(),
     val categoryName: String = "",
+    val categoryNameError: String = "",
     val categoryId: Int? = null,
     val success: String = "",
     val searchQuery: String = "",

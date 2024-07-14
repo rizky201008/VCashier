@@ -29,6 +29,7 @@ class CategoryViewModel(
     private val getCategories: GetCategories = useCaseManager.getCategoriesUseCase()
     private val createCategory: CreateCategory = useCaseManager.createCategoryUseCase()
     private val updateCategory: UpdateCategory = useCaseManager.updateCategoryUseCase()
+    private val validateNotBlankUseCase = useCaseManager.validateNotBlankUseCase()
 
     fun onEvent(e: CategoryEvent) {
         when (e) {
@@ -46,7 +47,7 @@ class CategoryViewModel(
             }
 
             is CategoryEvent.SubmitCreateCategory -> {
-                submitCreateCategory()
+                validateInput(false)
             }
 
             is CategoryEvent.PreFillFormData -> {
@@ -57,7 +58,7 @@ class CategoryViewModel(
             }
 
             is CategoryEvent.SubmitUpdateCategory -> {
-                submitUpdateCategory()
+                validateInput(true)
             }
 
             is CategoryEvent.SelectCategory -> {
@@ -77,11 +78,35 @@ class CategoryViewModel(
 
             is CategoryEvent.ShowCreateModal -> {
                 state = state.copy(showCreateModal = e.show)
+                if (!e.show) {
+                    clearInput()
+                }
             }
 
             is CategoryEvent.ShowUpdateModal -> {
                 state = state.copy(showUpdateModal = e.show)
+                if (!e.show) {
+                    clearInput()
+                }
             }
+        }
+    }
+
+    private fun validateInput(update: Boolean) {
+        val validatedName = validateNotBlankUseCase(state.categoryName)
+        val hasError = listOf(
+            validatedName
+        ).any { !it.successful }
+        if (hasError) {
+            state = state.copy(
+                categoryNameError = validatedName.errorMessage ?: ""
+            )
+            return
+        }
+        if (update) {
+            submitUpdateCategory()
+        } else {
+            submitCreateCategory()
         }
     }
 
@@ -120,8 +145,10 @@ class CategoryViewModel(
                 is Resource.Success -> {
                     state = state.copy(
                         isLoading = false,
-                        success = resource.data?.message ?: "Sukses menambahkan data"
+                        success = resource.data?.message ?: "Sukses mengubah data",
+                        showUpdateModal = false,
                     )
+                    clearInput()
                 }
             }
         }.launchIn(viewModelScope)
@@ -143,7 +170,12 @@ class CategoryViewModel(
 
                 is Resource.Success -> {
                     state =
-                        state.copy(isLoading = false, success = resource.data?.message ?: "Success")
+                        state.copy(
+                            isLoading = false,
+                            success = resource.data?.message ?: "Success",
+                            showCreateModal = false
+                        )
+                    clearInput()
                 }
             }
         }.launchIn(viewModelScope)
@@ -172,6 +204,14 @@ class CategoryViewModel(
 
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun clearInput() {
+        state = state.copy(
+            categoryName = "",
+            categoryId = null,
+            categoryNameError = ""
+        )
     }
 
     init {

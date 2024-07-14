@@ -81,12 +81,12 @@ fun InputCategoryDialog(
                 modifier = Modifier.fillMaxWidth(),
                 title = "",
                 placeHolder = "Masukkan kategori",
+                isError = state.categoryNameError.isNotBlank(),
+                errorMessage = state.categoryNameError
             )
             VerticalSpacer(height = 32.dp)
             FilledButton(
                 onClick = {
-                    onEvent(CategoryEvent.ShowCreateModal(false))
-                    onEvent(CategoryEvent.ShowUpdateModal(false))
                     if (type == InputType.CREATE) {
                         onEvent(CategoryEvent.SubmitCreateCategory)
                     } else {

@@ -173,4 +173,5 @@ class UseCaseManager(
 
     fun validateNotBlankUseCase() = ValidateNotBlank()
 
+    fun validateNotEmptyUseCase() = ValidateNotEmpty()
 }

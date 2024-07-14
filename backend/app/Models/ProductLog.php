@@ -17,4 +17,9 @@ class ProductLog extends Model
     {
         return $this->belongsTo(ProductVariation::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

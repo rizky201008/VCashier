@@ -10,7 +10,7 @@ class ProductLogsRepository
 {
     public function getAllLogs(): \Illuminate\Database\Eloquent\Collection
     {
-        return ProductLog::with(['productVariation', 'productVariation.product'])->latest()->get();
+        return ProductLog::with(['productVariation', 'productVariation.product', 'user'])->latest()->get();
     }
 
     public function addLog(array $data): void

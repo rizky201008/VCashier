@@ -171,4 +171,6 @@ class UseCaseManager(
         httpHandler = httpHandler()
     )
 
+    fun validateNotBlankUseCase() = ValidateNotBlank()
+
 }

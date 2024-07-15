@@ -20,6 +20,7 @@ class LoginViewModel(
 
     var state by mutableStateOf(LoginState())
     private val login: Login = useCaseManager.loginUseCase()
+    private val validateNotBlankUseCase = useCaseManager.validateNotBlankUseCase()
 
     fun onEvent(event: LoginEvent) {
         when (event) {
@@ -32,13 +33,38 @@ class LoginViewModel(
             }
 
             is LoginEvent.Login -> {
-                processLogin()
+                validateInput()
             }
 
             is LoginEvent.DismissAlertMessage -> {
                 state = state.copy(errorMessage = "")
             }
         }
+    }
+
+    private fun validateInput() {
+        val validatedEmail = validateNotBlankUseCase(state.email)
+        val validatedPassword = validateNotBlankUseCase(state.email)
+        val hasError = listOf(
+            validatedEmail,
+            validatedPassword
+        ).any { !it.successful }
+        if (hasError) {
+            state = state.copy(
+                emailError = validatedEmail.errorMessage ?: "",
+                passwordError = validatedPassword.errorMessage ?: ""
+            )
+            return
+        }
+        clearInputErrors()
+        processLogin()
+    }
+
+    private fun clearInputErrors() {
+        state = state.copy(
+            emailError = "",
+            passwordError = ""
+        )
     }
 
     private fun toggleLoading() {
@@ -51,7 +77,6 @@ class LoginViewModel(
             password = state.password
         )
         login(data).onEach { resource ->
-            Log.d(TAG, "processLogin: $resource")
             when (resource) {
                 is Resource.Loading -> {
                     toggleLoading()

@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.components
+package com.vixiloc.vcashiermobile.presentation.screens.product_log.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.guru.fontawesomecomposelib.FaIcon
 import com.guru.fontawesomecomposelib.FaIcons
+import com.vixiloc.vcashiermobile.domain.model.product_logs.ProductLogsResponseData
 import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
 import com.vixiloc.vcashiermobile.presentation.components.HorizontalSpacer
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
@@ -29,16 +30,15 @@ import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.utils.DateFormatter
 
 @Composable
-fun TransactionListItem(
+fun ProductLogListItem(
     modifier: Modifier = Modifier,
-    data: TransactionsData,
-    onClick: (TransactionsData) -> Unit
+    data: ProductLogsResponseData,
+    onClick: (ProductLogsResponseData) -> Unit
 ) {
-    val statusColor = when (data.transactionStatus) {
-        "completed" -> Color(0xFF45B004)
-        "pending" -> Color(0xFFE8A317)
-        "canceled" -> Color(0xFFFF0000)
-        else -> Color(0xFFE8A317)
+    val statusColor = when (data.type) {
+        "increase" -> Color(0xFF45B004)
+        "decrease" -> Color(0xFFFF0000)
+        else -> Color.Gray
     }
     Column(
         modifier = modifier
@@ -53,7 +53,7 @@ fun TransactionListItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = data.customer.name,
+                text = data.productVariation.product.name + " " + data.productVariation.unit,
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight(600))
             )
             Row {
@@ -68,7 +68,7 @@ fun TransactionListItem(
                         fontSize = 10.sp,
                         color = Color.Gray
                     ),
-                    text = DateFormatter.format(data.createdAt!!)
+                    text = DateFormatter.format(data.createdAt)
                 )
             }
         }
@@ -76,14 +76,14 @@ fun TransactionListItem(
 
         Text(
             text = buildAnnotatedString {
-                append("Status: ")
+                append("Tipe: ")
                 withStyle(
                     style = SpanStyle(
                         color = statusColor,
                         fontWeight = FontWeight.Bold
                     )
                 ) {
-                    append(data.transactionStatus.replaceFirstChar { it.uppercase() })
+                    append(data.type.replaceFirstChar { it.uppercase() })
                 }
             },
             style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp)
@@ -100,11 +100,12 @@ fun TransactionListItem(
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
             )
             Text(
-                text = CurrencyFormatter.formatCurrency(data.totalAmount),
+                text = CurrencyFormatter.formatCurrency(data.amount),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
-                )
+                ),
+                color = statusColor
             )
         }
     }

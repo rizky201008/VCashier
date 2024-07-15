@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.guru.fontawesomecomposelib.FaIcon
@@ -49,19 +50,7 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                             fontWeight = FontWeight(600)
                         )
                     )
-                },
-//                navigationIcon = {
-//                    IconButton(
-//                        onClick = { /*TODO*/ },
-//                        icon = Icons.Default.ArrowBackIosNew,
-//                        modifier = Modifier.border(
-//                            width = 0.5.dp,
-//                            color = Color.LightGray,
-//                            shape = CircleShape
-//                        ),
-//                        shape = CircleShape,
-//                    )
-//                }
+                }
             )
         }
     ) { pValue ->
@@ -80,7 +69,9 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                 modifier = Modifier,
                 title = "Email",
                 placeHolder = "Masukkan email anda",
-                textStyle = MaterialTheme.typography.titleMedium
+                textStyle = MaterialTheme.typography.titleMedium,
+                isError = state.emailError.isNotBlank(),
+                errorMessage = state.emailError
             )
             VerticalSpacer(height = 12.dp)
             TextField(
@@ -100,7 +91,10 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                             size = 16.dp
                         )
                     }
-                }
+                },
+                isError = state.passwordError.isNotBlank(),
+                errorMessage = state.passwordError,
+                visualTransformation = PasswordVisualTransformation()
             )
             VerticalSpacer(height = 52.dp)
             FilledButton(

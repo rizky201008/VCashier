@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -22,10 +20,8 @@ import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
-import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
-import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryEvent
 import com.vixiloc.vcashiermobile.presentation.screens.customer.components.CreateUpdateCustomerDialog
 import com.vixiloc.vcashiermobile.presentation.screens.customer.components.CustomerItem
 import com.vixiloc.vcashiermobile.presentation.screens.customer.components.InputType
@@ -41,9 +37,6 @@ fun CustomersScreen(
     val events = viewModel::onEvent
     val focusManager = LocalFocusManager.current
 
-    LaunchedEffect(Unit) {
-        viewModel.getAllCustomers()
-    }
     ConstraintLayout(modifier = modifier) {
         val (content, addButton) = createRefs()
 

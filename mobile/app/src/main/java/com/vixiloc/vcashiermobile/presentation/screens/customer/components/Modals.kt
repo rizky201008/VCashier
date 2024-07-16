@@ -85,6 +85,8 @@ fun CreateUpdateCustomerDialog(
                 modifier = Modifier.fillMaxWidth(),
                 title = "",
                 placeHolder = "Masukkan Nama Pelanggan",
+                isError = state.customerNameError.isNotBlank(),
+                errorMessage = state.customerNameError
             )
             VerticalSpacer(height = 10.dp)
             TextField(
@@ -99,13 +101,11 @@ fun CreateUpdateCustomerDialog(
             VerticalSpacer(height = 32.dp)
             FilledButton(
                 onClick = {
-                    if (type ==InputType.CREATE) {
+                    if (type == InputType.CREATE) {
                         onEvent(CustomerEvent.CreateCustomer)
                     } else {
                         onEvent(CustomerEvent.UpdateCustomer)
                     }
-                    onEvent(CustomerEvent.ShowCreateModal(false))
-                    onEvent(CustomerEvent.ShowUpdateModal(false))
                 },
                 text = if (type == InputType.CREATE) "Tambah" else "Ubah",
                 modifier = Modifier.fillMaxWidth(0.4f),

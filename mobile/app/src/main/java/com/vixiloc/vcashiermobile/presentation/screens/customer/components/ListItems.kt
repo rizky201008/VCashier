@@ -71,7 +71,7 @@ fun CustomerItem(
                             .padding(end = 4.dp)
                     )
                     Text(
-                        text = item.name,
+                        text = item.phoneNumber ?: "-",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }

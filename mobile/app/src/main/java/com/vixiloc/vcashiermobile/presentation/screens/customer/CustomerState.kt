@@ -9,6 +9,7 @@ data class CustomerState(
     val showError: Boolean = false,
     val showSuccess: Boolean = false,
     val customerName: String = "",
+    val customerNameError: String = "",
     val success: String = "",
     val customerId: Int? = null,
     val customerNumber: String = "",

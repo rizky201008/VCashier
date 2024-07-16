@@ -19,15 +19,15 @@ import kotlinx.coroutines.launch
 
 class CustomerViewModel(
     useCaseManager: UseCaseManager,
-    private var searchJob: Job? = null
 ) : ViewModel() {
-
+    private var searchJob: Job? = null
     private val _state = mutableStateOf(CustomerState())
     val state: State<CustomerState> = _state
 
     private val getCustomers: GetCustomers = useCaseManager.getCustomersUseCase()
     private val createCustomer: CreateCustomer = useCaseManager.createCustomerUseCase()
     private val updateCustomer: UpdateCustomer = useCaseManager.updateCustomerUseCase()
+    private val validateNotBlankUseCase = useCaseManager.validateNotBlankUseCase()
 
     fun onEvent(event: CustomerEvent) {
         when (event) {
@@ -38,16 +38,26 @@ class CustomerViewModel(
             is CustomerEvent.ShowSuccess -> {
                 _state.value = _state.value.copy(showSuccess = event.show)
                 if (!event.show) {
-                    getAllCustomers()
+                    viewModelScope.launch {
+                        getAllCustomers()
+                    }
                 }
             }
 
             is CustomerEvent.ShowUpdateModal -> {
                 _state.value = _state.value.copy(showUpdateModal = event.show)
+                if (!event.show) {
+                    clearInputs()
+                    clearInputErrors()
+                }
             }
 
             is CustomerEvent.ShowCreateModal -> {
                 _state.value = _state.value.copy(showCreateModal = event.show)
+                if (!event.show) {
+                    clearInputs()
+                    clearInputErrors()
+                }
             }
 
             is CustomerEvent.ChangeInput -> {
@@ -65,11 +75,11 @@ class CustomerViewModel(
             }
 
             is CustomerEvent.CreateCustomer -> {
-                proceessCreateCustomer()
+                validateInput(false)
             }
 
             is CustomerEvent.UpdateCustomer -> {
-                processUpdateCustomer()
+                validateInput(true)
             }
 
             is CustomerEvent.FillFormData -> {
@@ -86,11 +96,47 @@ class CustomerViewModel(
                     searchQuery = event.query
                 )
                 searchJob = viewModelScope.launch {
-                    delay(1000)
+                    delay(300)
                     searchCustomers()
                 }
             }
         }
+    }
+
+    private fun validateInput(update: Boolean) {
+        val validatedName = validateNotBlankUseCase(state.value.customerName)
+
+        val hasError = listOf(
+            validatedName
+        ).any { !it.successful }
+
+        if (hasError) {
+            _state.value = _state.value.copy(
+                customerNameError = validatedName.errorMessage ?: ""
+            )
+            return
+        }
+
+        clearInputErrors()
+
+        if (update) {
+            processUpdateCustomer()
+        } else {
+            proceessCreateCustomer()
+        }
+    }
+
+    private fun clearInputErrors() {
+        _state.value = _state.value.copy(
+            customerNameError = ""
+        )
+    }
+
+    private fun clearInputs() {
+        _state.value = _state.value.copy(
+            customerName = "",
+            customerNumber = ""
+        )
     }
 
     private fun processUpdateCustomer() {
@@ -114,8 +160,11 @@ class CustomerViewModel(
                         showSuccess = true,
                         customerId = null,
                         customerName = "",
-                        customerNumber = ""
+                        customerNumber = "",
+                        showUpdateModal = false
                     )
+                    clearInputs()
+                    clearInputErrors()
                 }
 
                 is Resource.Error -> {
@@ -132,32 +181,18 @@ class CustomerViewModel(
     private fun searchCustomers() {
         val stateValue = state.value
         val query = stateValue.searchQuery
-        if (query.isBlank()) {
-            getAllCustomers()
-        } else {
-            getCustomers().onEach { res ->
-                when (res) {
-                    is Resource.Loading -> {
-                        _state.value = _state.value.copy(isLoading = true, customers = emptyList())
+        viewModelScope.launch {
+            if (query.isBlank()) {
+                getAllCustomers()
+                return@launch
+            } else {
+                getAllCustomers()
+                _state.value = _state.value.copy(
+                    customers = stateValue.customers.filter {
+                        it.name.contains(query, ignoreCase = true)
                     }
-
-                    is Resource.Success -> {
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            customers = stateValue.customers.filter {
-                                it.name.contains(query, ignoreCase = true)
-                            })
-                    }
-
-                    is Resource.Error -> {
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            error = res.message ?: "An unexpected error occurred",
-                            showError = true
-                        )
-                    }
-                }
-            }.launchIn(viewModelScope)
+                )
+            }
         }
     }
 
@@ -179,8 +214,11 @@ class CustomerViewModel(
                         success = "Customer created successfully",
                         showSuccess = true,
                         customerName = "",
-                        customerNumber = ""
+                        customerNumber = "",
+                        showCreateModal = false
                     )
+                    clearInputs()
+                    clearInputErrors()
                 }
 
                 is Resource.Error -> {
@@ -194,8 +232,8 @@ class CustomerViewModel(
         }.launchIn(viewModelScope)
     }
 
-    fun getAllCustomers() {
-        getCustomers().onEach { res ->
+    private suspend fun getAllCustomers() {
+        getCustomers().collect { res ->
             when (res) {
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(isLoading = true, customers = emptyList())
@@ -214,6 +252,12 @@ class CustomerViewModel(
                     )
                 }
             }
-        }.launchIn(viewModelScope)
+        }
+    }
+
+    init {
+        viewModelScope.launch {
+            getAllCustomers()
+        }
     }
 }

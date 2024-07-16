@@ -1,16 +1,14 @@
 package com.vixiloc.vcashiermobile.presentation.screens.login
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vixiloc.vcashiermobile.utils.Resource
-import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import com.vixiloc.vcashiermobile.domain.model.auth.LoginRequest
 import com.vixiloc.vcashiermobile.domain.use_case.Login
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
+import com.vixiloc.vcashiermobile.utils.Resource
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -21,6 +19,7 @@ class LoginViewModel(
     var state by mutableStateOf(LoginState())
     private val login: Login = useCaseManager.loginUseCase()
     private val validateNotBlankUseCase = useCaseManager.validateNotBlankUseCase()
+    private val validateEmailUseCase = useCaseManager.validateEmailUseCase()
 
     fun onEvent(event: LoginEvent) {
         when (event) {
@@ -45,14 +44,17 @@ class LoginViewModel(
     private fun validateInput() {
         val validatedEmail = validateNotBlankUseCase(state.email)
         val validatedPassword = validateNotBlankUseCase(state.email)
+        val validatedEmail1 = validateEmailUseCase(state.email)
+
         val hasError = listOf(
             validatedEmail,
-            validatedPassword
+            validatedPassword,
+            validatedEmail1
         ).any { !it.successful }
         if (hasError) {
             state = state.copy(
-                emailError = validatedEmail.errorMessage ?: "",
-                passwordError = validatedPassword.errorMessage ?: ""
+                emailError = (validatedEmail.errorMessage ?: validatedEmail1.errorMessage) ?: "",
+                passwordError = validatedPassword.errorMessage ?: "",
             )
             return
         }

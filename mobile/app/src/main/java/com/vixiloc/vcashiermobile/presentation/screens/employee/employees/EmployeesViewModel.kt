@@ -19,6 +19,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     val getUsersUseCase = useCaseManager.getUsersUseCase()
     val registerUseCase = useCaseManager.registerUseCase()
     val resetPasswordUseCase = useCaseManager.resetPasswordUseCase()
+    val validateNotBlankUseCase = useCaseManager.validateNotBlankUseCase()
 
     fun onEvent(e: EmployeesEvent) {
         when (e) {
@@ -41,6 +42,10 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                 _state.value = state.value.copy(
                     showAddDialog = e.show
                 )
+                if (!e.show) {
+                    clearErrors()
+                    clearInputs()
+                }
             }
 
             is EmployeesEvent.ChangeInput -> {
@@ -72,7 +77,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             }
 
             is EmployeesEvent.AddEmployee -> {
-                createUser()
+                validateInputs()
             }
 
             is EmployeesEvent.ShowResetPasswordAlert -> {
@@ -122,6 +127,45 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
         }
     }
 
+    private fun validateInputs() {
+        val validatedName = validateNotBlankUseCase(state.value.name)
+        val validatedEmail = validateNotBlankUseCase(state.value.email)
+        val validatedPassword = validateNotBlankUseCase(state.value.password)
+
+        val hasError = listOf(
+            validatedName,
+            validatedEmail,
+            validatedPassword
+        ).any { !it.successful }
+
+        if (hasError) {
+            _state.value = _state.value.copy(
+                nameError = validatedName.errorMessage ?: "",
+                emailError = validatedEmail.errorMessage ?: "",
+                passwordError = validatedPassword.errorMessage ?: ""
+            )
+            return
+        }
+        clearErrors()
+        createUser()
+    }
+
+    private fun clearErrors() {
+        _state.value = _state.value.copy(
+            nameError = "",
+            emailError = "",
+            passwordError = ""
+        )
+    }
+
+    private fun clearInputs() {
+        _state.value = _state.value.copy(
+            name = "",
+            email = "",
+            password = ""
+        )
+    }
+
     private fun createUser() {
         viewModelScope.launch {
             val data = RegisterRequest(
@@ -141,10 +185,10 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                             success = res.data?.message ?: "",
                             isLoading = false,
                             showSuccessAlert = true,
-                            email = "",
-                            name = "",
-                            password = ""
+                            showAddDialog = false
                         )
+                        clearErrors()
+                        clearInputs()
                     }
 
                     is Resource.Error -> {

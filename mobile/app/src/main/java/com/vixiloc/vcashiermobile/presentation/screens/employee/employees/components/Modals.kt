@@ -79,6 +79,8 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
                 modifier = Modifier.fillMaxWidth(),
                 title = "",
                 placeHolder = "Masukkan name",
+                isError = state.nameError.isNotBlank(),
+                errorMessage = state.nameError
             )
             TextField(
                 value = state.email,
@@ -93,6 +95,8 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
                 modifier = Modifier.fillMaxWidth(),
                 title = "",
                 placeHolder = "Masukkan email",
+                isError = state.emailError.isNotBlank(),
+                errorMessage = state.emailError
             )
             TextField(
                 value = state.password,
@@ -107,7 +111,9 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
                 modifier = Modifier.fillMaxWidth(),
                 title = "",
                 placeHolder = "Masukkan password",
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                isError = state.passwordError.isNotBlank(),
+                errorMessage = state.passwordError
             )
             VerticalSpacer(height = 12.dp)
 
@@ -139,7 +145,6 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
             VerticalSpacer(height = 32.dp)
             FilledButton(
                 onClick = {
-                    onEvent(EmployeesEvent.ShowAddDialog(false))
                     onEvent(EmployeesEvent.AddEmployee)
                 },
                 text = "Tambah",

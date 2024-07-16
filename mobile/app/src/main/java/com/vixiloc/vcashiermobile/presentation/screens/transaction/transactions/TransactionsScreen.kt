@@ -41,9 +41,9 @@ import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.category.components.FilledIconButton
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.components.TransactionActionDialog
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.components.TransactionListItem
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.components.TransactionStatusChip
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionActionDialog
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionListItem
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionStatusChip
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 

@@ -51,6 +51,18 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    android.buildFeatures.buildConfig = true
+    flavorDimensions += "env"
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            buildConfigField("String", "BASE_URL", project.properties["BASE_URL"].toString())
+        }
+        create("prod") {
+            dimension = "env"
+            buildConfigField("String", "BASE_URL", project.properties["BASE_URL"].toString())
+        }
+    }
 }
 
 dependencies {

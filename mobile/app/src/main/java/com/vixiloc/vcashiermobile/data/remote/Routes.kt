@@ -1,8 +1,10 @@
 package com.vixiloc.vcashiermobile.data.remote
 
+import com.vixiloc.vcashiermobile.BuildConfig
+
 object Routes {
 
-    const val BASE_URL = "https://vc.vixiloc.com/api/"
+    const val BASE_URL = BuildConfig.BASE_URL
     private const val AUTH = "auth"
     const val LOGIN = "$AUTH/login"
     const val REGISTER = "$AUTH/register"

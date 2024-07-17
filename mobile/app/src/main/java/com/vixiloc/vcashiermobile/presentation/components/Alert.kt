@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
 @Composable
-fun Loading(modifier: Modifier, visible: Boolean = false) {
+fun Loading(modifier: Modifier = Modifier, visible: Boolean = false) {
     AnimatedVisibility(visible = visible, modifier = modifier) {
         Dialog(onDismissRequest = { }) {
             Card(

@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.employee.employees
+package com.vixiloc.vcashiermobile.presentation.screens.employee
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -27,8 +27,8 @@ import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
-import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.components.AddEmployeeDialog
-import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.components.EmployeeListItem
+import com.vixiloc.vcashiermobile.presentation.screens.employee.components.AddEmployeeDialog
+import com.vixiloc.vcashiermobile.presentation.screens.employee.components.EmployeeListItem
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 

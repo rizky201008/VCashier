@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.employee.employees.components
+package com.vixiloc.vcashiermobile.presentation.screens.employee.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,9 +24,9 @@ import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
-import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.EmployeesEvent
-import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.EmployeesViewModel
-import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.InputName
+import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesEvent
+import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.employee.InputName
 
 @Composable
 fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewModel) {

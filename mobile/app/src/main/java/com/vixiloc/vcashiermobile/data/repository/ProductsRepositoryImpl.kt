@@ -1,6 +1,9 @@
 package com.vixiloc.vcashiermobile.data.repository
 
 import com.vixiloc.vcashiermobile.data.remote.ApiService
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.CreateProductLogResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.CreateProductLogsRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.ProductLogsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductImageResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
@@ -40,6 +43,17 @@ class ProductsRepositoryImpl(private val apiService: ApiService) : ProductsRepos
 
     override suspend fun getProduct(token: String, id: String): ProductResponseDto {
         return apiService.getProduct("Bearer $token", id)
+    }
+
+    override suspend fun getProductLogs(token: String): ProductLogsResponseDto {
+        return apiService.getProductLogs("Bearer $token")
+    }
+
+    override suspend fun createProductLogs(
+        token: String,
+        data: CreateProductLogsRequestDto
+    ): CreateProductLogResponseDto {
+        return apiService.addProductLogs("Bearer $token", data)
     }
 
     override suspend fun updateImage(

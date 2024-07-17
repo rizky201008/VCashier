@@ -8,6 +8,8 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_CREATE_VA
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_MAKE
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_METHODS
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
+import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCT_LOGS_ADD
+import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCT_LOGS_ALL
 import com.vixiloc.vcashiermobile.data.remote.Routes.REGISTER
 import com.vixiloc.vcashiermobile.data.remote.Routes.RESET_PASSWORD
 import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
@@ -33,6 +35,9 @@ import com.vixiloc.vcashiermobile.data.remote.dto.payments.CreateVaResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.PaymentMethodsDto
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.CreateProductLogResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.CreateProductLogsRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.ProductLogsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
@@ -201,4 +206,17 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): ResetPasswordResponseDto
+
+    @GET(PRODUCT_LOGS_ALL)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun getProductLogs(
+        @Header("Authorization") token: String,
+    ): ProductLogsResponseDto
+
+    @POST(PRODUCT_LOGS_ADD)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun addProductLogs(
+        @Header("Authorization") token: String,
+        @Body data: CreateProductLogsRequestDto
+    ): CreateProductLogResponseDto
 }

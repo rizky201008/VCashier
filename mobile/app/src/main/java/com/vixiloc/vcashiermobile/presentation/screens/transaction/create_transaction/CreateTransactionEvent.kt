@@ -1,14 +1,14 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction
 
 import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
-import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
+import com.vixiloc.vcashiermobile.domain.model.products.ProductsResponseItems
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
 import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
 
 sealed class CreateTransactionEvent {
     data object DismissAlertMessage : CreateTransactionEvent()
     data object Refresh : CreateTransactionEvent()
-    data class AddVariation(val variation: ProductsVariation, val product: ProductResponseItems) :
+    data class AddVariation(val variation: ProductsVariation, val product: ProductsResponseItems) :
         CreateTransactionEvent()
 
     data object DismissAddToCartModal : CreateTransactionEvent()

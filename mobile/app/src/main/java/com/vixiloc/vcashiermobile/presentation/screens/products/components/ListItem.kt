@@ -16,14 +16,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material.icons.outlined.Key
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -53,14 +50,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import com.vixiloc.vcashiermobile.R
-import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
+import com.vixiloc.vcashiermobile.domain.model.products.ProductsResponseItems
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
 import com.vixiloc.vcashiermobile.domain.model.products.Variation
@@ -450,7 +446,7 @@ fun VariationItem(
 @Composable
 fun ProductItem(
     modifier: Modifier = Modifier,
-    data: ProductResponseItems,
+    data: ProductsResponseItems,
     variation: ProductsVariation
 ) {
     Column(

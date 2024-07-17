@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.employee.employees
+package com.vixiloc.vcashiermobile.presentation.screens.employee
 
 import com.vixiloc.vcashiermobile.domain.model.user.UsersResponseData
 

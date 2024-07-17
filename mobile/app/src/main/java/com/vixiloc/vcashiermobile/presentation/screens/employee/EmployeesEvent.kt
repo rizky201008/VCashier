@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.employee.employees
+package com.vixiloc.vcashiermobile.presentation.screens.employee
 
 sealed class EmployeesEvent {
     data class ShowSuccessAlert(val show: Boolean) : EmployeesEvent()

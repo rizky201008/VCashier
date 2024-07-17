@@ -55,6 +55,12 @@ sealed interface MainRoutes {
 
             @Serializable
             data class UpdateProduct(val id: String) : MainRoutes
+
+            @Serializable
+            data object ProductLog : MainRoutes
+
+            @Serializable
+            data object ProductLogAdd : MainRoutes
         }
 
         @Serializable

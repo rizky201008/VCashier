@@ -3,7 +3,7 @@ package com.vixiloc.vcashiermobile.data.remote.dto.products
 import com.google.gson.annotations.SerializedName
 import com.vixiloc.vcashiermobile.domain.model.products.Category
 import com.vixiloc.vcashiermobile.domain.model.products.Product
-import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
+import com.vixiloc.vcashiermobile.domain.model.products.ProductsResponseItems
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsResponse
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
 
@@ -108,8 +108,8 @@ fun CategoryDto.toDomain(): Category {
     )
 }
 
-fun ProductResponseItemsDto.toProductResponseItems(): ProductResponseItems {
-    return ProductResponseItems(
+fun ProductResponseItemsDto.toProductResponseItems(): ProductsResponseItems {
+    return ProductsResponseItems(
         name = name,
         imageUrl = imageUrl,
         description = description,

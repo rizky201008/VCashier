@@ -1,16 +1,13 @@
 package com.vixiloc.vcashiermobile.domain.model.products
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
-import com.vixiloc.vcashiermobile.data.remote.dto.products.CategoryDto
-import com.vixiloc.vcashiermobile.data.remote.dto.products.VariationDto
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
 @Parcelize
 data class ProductsResponse(
-    val data: List<ProductResponseItems?>? = null
+    val data: List<ProductsResponseItems?>? = null
 ) : Parcelable
 
 @Serializable
@@ -43,7 +40,7 @@ data class ProductsVariation (
 
 @Serializable
 @Parcelize
-data class ProductResponseItems(
+data class ProductsResponseItems(
     val category: Category,
     val description: String,
     val id: Int,

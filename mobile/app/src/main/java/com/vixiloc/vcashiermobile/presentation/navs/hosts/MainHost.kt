@@ -10,6 +10,8 @@ import androidx.navigation.toRoute
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginFormScreen
+import com.vixiloc.vcashiermobile.presentation.screens.product_log.list_logs.ProductLogScreen
+import com.vixiloc.vcashiermobile.presentation.screens.product_log.add_logs.AddProductLogScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.create_product.CreateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.update_product.UpdateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.CheckoutScreen
@@ -69,6 +71,12 @@ fun MainHost(
         composable<MainRoutes.NavDrawerScreens.Products.UpdateProduct> {
             val args = it.toRoute<MainRoutes.NavDrawerScreens.Products.UpdateProduct>()
             UpdateProductScreen(navController = navHostController, args = args)
+        }
+        composable<MainRoutes.NavDrawerScreens.Products.ProductLog> {
+            ProductLogScreen(navController = navHostController)
+        }
+        composable<MainRoutes.NavDrawerScreens.Products.ProductLogAdd> {
+            AddProductLogScreen(navController = navHostController)
         }
     }
 }

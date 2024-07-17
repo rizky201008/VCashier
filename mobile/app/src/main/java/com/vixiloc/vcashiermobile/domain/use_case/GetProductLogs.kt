@@ -1,36 +1,27 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
-import android.util.Log
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.toDomain
+import com.vixiloc.vcashiermobile.domain.model.product_logs.ProductLogsResponseData
+import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import com.vixiloc.vcashiermobile.utils.HttpHandler
 import com.vixiloc.vcashiermobile.utils.Resource
-import com.vixiloc.vcashiermobile.utils.Strings.TAG
-import com.vixiloc.vcashiermobile.data.remote.dto.products.toProductResponseItems
-import com.vixiloc.vcashiermobile.domain.model.products.ProductsResponseItems
-import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 
-class GetProducts(
+class GetProductLogs(
     private val repository: ProductsRepository,
     private val getToken: GetToken,
     private val httpHandler: HttpHandler
 ) {
-
-    operator fun invoke(): Flow<Resource<List<ProductsResponseItems>>> = flow {
-        Log.d(TAG, "invoke: dipanggil")
+    operator fun invoke(): Flow<Resource<List<ProductLogsResponseData>>> = flow {
+        val token = getToken().first()
+        emit(Resource.Loading())
         try {
-            emit(Resource.Loading())
-            val token: String = getToken().first()
-            val response = repository.getProducts(token).data
-
-            val data = response.map {
-                it.toProductResponseItems()
-            }
-
-            emit(Resource.Success(data))
+            val response = repository.getProductLogs(token)
+            emit(Resource.Success(response.data.map { it.toDomain() }))
         } catch (e: HttpException) {
             val errorMessage = httpHandler.handleHttpException(e)
             emit(Resource.Error(errorMessage))

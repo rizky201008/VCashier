@@ -3,6 +3,7 @@ package com.vixiloc.vcashiermobile.presentation.screens.product_log.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,7 +24,8 @@ import androidx.compose.ui.unit.sp
 import com.guru.fontawesomecomposelib.FaIcon
 import com.guru.fontawesomecomposelib.FaIcons
 import com.vixiloc.vcashiermobile.domain.model.product_logs.ProductLogsResponseData
-import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
+import com.vixiloc.vcashiermobile.domain.model.products.ProductsResponseItems
+import com.vixiloc.vcashiermobile.domain.model.products.ProductsVariation
 import com.vixiloc.vcashiermobile.presentation.components.HorizontalSpacer
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
@@ -83,7 +85,7 @@ fun ProductLogListItem(
                         fontWeight = FontWeight.Bold
                     )
                 ) {
-                    append(data.type.replaceFirstChar { it.uppercase() })
+                    append((if (data.type == "increase") "Tambah" else "Kurangi"))
                 }
             },
             style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp)
@@ -106,6 +108,39 @@ fun ProductLogListItem(
                     color = MaterialTheme.colorScheme.primary
                 ),
                 color = statusColor
+            )
+        }
+    }
+}
+
+@Composable
+fun ProductListItem(
+    modifier: Modifier = Modifier,
+    variation: ProductsVariation,
+    data: ProductsResponseItems,
+    onClick: (ProductsVariation) -> Unit
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding()
+            .background(color = Color.White, shape = MaterialTheme.shapes.medium)
+            .clip(MaterialTheme.shapes.medium)
+            .clickable { onClick(variation) }
+            .padding(12.dp)
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = data.name + " " + variation.unit,
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                text = "Stok: " + variation.stock,
+                style = MaterialTheme.typography.bodySmall
+            )
+            Text(
+                text = "Tekan untuk menambahkan log",
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }

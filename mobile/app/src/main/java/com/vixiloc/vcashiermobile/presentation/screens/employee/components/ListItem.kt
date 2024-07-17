@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.employee.employees.components
+package com.vixiloc.vcashiermobile.presentation.screens.employee.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

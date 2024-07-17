@@ -176,4 +176,18 @@ class UseCaseManager(
     fun validateNotEmptyUseCase() = ValidateNotEmpty()
 
     fun validateEmailUseCase() = ValidateEmail()
+
+    fun getProductLogsUseCase() = GetProductLogs(
+        repository = productsRepository,
+        getToken = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
+
+    fun validateIsNumberUseCase() = ValidateOnlyNumber()
+
+    fun createProductLogsUseCase() = CreateProductLogs(
+        repository = productsRepository,
+        token = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
 }

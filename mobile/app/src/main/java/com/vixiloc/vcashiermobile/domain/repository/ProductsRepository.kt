@@ -1,5 +1,8 @@
 package com.vixiloc.vcashiermobile.domain.repository
 
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.CreateProductLogResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.CreateProductLogsRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.ProductLogsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductImageResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
@@ -40,4 +43,10 @@ interface ProductsRepository {
         id: String
     ): ProductResponseDto
 
+    suspend fun getProductLogs(token: String): ProductLogsResponseDto
+
+    suspend fun createProductLogs(
+        token: String,
+        data: CreateProductLogsRequestDto
+    ): CreateProductLogResponseDto
 }

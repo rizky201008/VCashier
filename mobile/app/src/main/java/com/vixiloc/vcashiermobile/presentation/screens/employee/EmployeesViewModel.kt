@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.employee.employees
+package com.vixiloc.vcashiermobile.presentation.screens.employee
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

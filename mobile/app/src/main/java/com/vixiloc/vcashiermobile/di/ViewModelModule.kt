@@ -5,8 +5,10 @@ import com.vixiloc.vcashiermobile.utils.FileConverter
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerViewModel
-import com.vixiloc.vcashiermobile.presentation.screens.employee.employees.EmployeesViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.product_log.add_logs.AddProductLogViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.product_log.list_logs.ProductLogViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.products.list_products.ProductsViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.products.create_product.CreateProductViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionViewModel
@@ -37,6 +39,10 @@ val viewModelModule = module {
     viewModel {
         provideCreateProductViewModel(get(), get())
     }
+    viewModel {
+        provideProductLogViewModel(get())
+    }
+    viewModel { provideAddProductLogViewModel(get()) }
 }
 
 fun provideLoginViewModel(useCaseManager: UseCaseManager): LoginViewModel {
@@ -104,3 +110,9 @@ fun provideCreateProductViewModel(useCaseManager: UseCaseManager, context: Conte
         useCaseManager = useCaseManager,
         fileConverter = FileConverter(context = context)
     )
+
+fun provideProductLogViewModel(useCaseManager: UseCaseManager) =
+    ProductLogViewModel(useCaseManager = useCaseManager)
+
+fun provideAddProductLogViewModel(useCaseManager: UseCaseManager) =
+    AddProductLogViewModel(useCaseManager = useCaseManager)

@@ -43,19 +43,13 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.guru.fontawesomecomposelib.FaIcon
 import com.guru.fontawesomecomposelib.FaIcons
-import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
-import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
-import com.vixiloc.vcashiermobile.domain.model.products.ProductResponseItems
+import com.vixiloc.vcashiermobile.domain.model.products.ProductsResponseItems
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
-import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
-import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryEvent
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.ProductItem
-import com.vixiloc.vcashiermobile.presentation.screens.products.components.ProductItemOld
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionEvent
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -121,8 +115,15 @@ fun ProductsScreen(modifier: Modifier = Modifier, onNavigate: (MainRoutes) -> Un
                     }
                 }
 
-                IconButton(onClick = { /*TODO*/ }) {
-                    FaIcon(faIcon = FaIcons.List, size = 24.dp)
+                Row {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        FaIcon(faIcon = FaIcons.List, size = 24.dp)
+                    }
+                    IconButton(onClick = {
+                        onNavigate(MainRoutes.NavDrawerScreens.Products.ProductLog)
+                    }) {
+                        FaIcon(faIcon = FaIcons.History, size = 24.dp)
+                    }
                 }
             }
 
@@ -152,7 +153,7 @@ fun ProductsScreen(modifier: Modifier = Modifier, onNavigate: (MainRoutes) -> Un
                     verticalArrangement = Arrangement.spacedBy(24.dp),
                     horizontalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
-                    items(state.products) { product: ProductResponseItems ->
+                    items(state.products) { product: ProductsResponseItems ->
                         product.variations.forEach { variation ->
                             ProductItem(
                                 data = product,

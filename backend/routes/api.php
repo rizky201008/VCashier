@@ -41,7 +41,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete('{id}', [CategoryController::class, 'deleteCategory']);
     });
     Route::prefix('products')->group(function () {
-        Route::get('{id}', [ProductController::class, 'getProduct']);
         Route::post('/', [ProductController::class, 'createProduct']);
         Route::put('/', [ProductController::class, 'updateProduct']);
         Route::delete('{id}', [ProductController::class, 'deleteProduct']);
@@ -85,6 +84,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 Route::get('products', [ProductController::class, 'getProducts']);
+Route::get('products/{id}', [ProductController::class, 'getProduct']);
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);

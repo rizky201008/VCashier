@@ -1,4 +1,4 @@
-FROM php:8.3.9RC1-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 LABEL author="Rizky Agung Prayogi" company="Vixiloc" website="https://vixiloc.com"
 
@@ -25,3 +25,5 @@ RUN php artisan storage:link
 RUN chown -R www-data:www-data /var/www/app/storage
 
 USER www-data
+EXPOSE 9000
+CMD ["php-fpm"]

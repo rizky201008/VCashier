@@ -75,6 +75,13 @@ class ProductController extends Controller
 
     public function getProduct($id)
     {
+        $validation = Validator::make(['id' => $id], [
+            'id' => 'required|exists:products,id'
+        ]);
+
+        if ($validation->fails()) {
+            throw new Exception($validation->messages()->first());
+        }
         return response()->json($this->productRepository->getProduct($id));
     }
 

@@ -43,7 +43,7 @@ class LoginViewModel(
 
     private fun validateInput() {
         val validatedEmail = validateNotBlankUseCase(state.email)
-        val validatedPassword = validateNotBlankUseCase(state.email)
+        val validatedPassword = validateNotBlankUseCase(state.password)
         val validatedEmail1 = validateEmailUseCase(state.email)
 
         val hasError = listOf(

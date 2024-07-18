@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.navs.hosts
+package com.vixiloc.vcashiermobile.presentation.navs.hosts.sidebar
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -32,28 +32,38 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.guru.fontawesomecomposelib.FaIcons
 import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.domain.model.listDrawer
+import com.vixiloc.vcashiermobile.presentation.components.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.FilledButton
+import com.vixiloc.vcashiermobile.presentation.components.IconButton
+import com.vixiloc.vcashiermobile.presentation.components.Loading
+import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.PainterIconButton
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
+import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesEvent
 import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.list_products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionsScreen
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SidebarHost(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
-    onNavigate: (MainRoutes) -> Unit
+    onNavigate: (MainRoutes) -> Unit,
+    viewModel: SidebarViewModel
 ) {
+    val state = viewModel.state.value
+    val onEvent = viewModel::onEvent
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val currentTitle = remember { mutableStateOf("Home") }
 
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -64,7 +74,7 @@ fun SidebarHost(
         }
 
         matchedItem?.let {
-            currentTitle.value = it.name
+            onEvent(SidebarEvent.ChangePageTitle(it.name))
         }
     }
 
@@ -85,10 +95,10 @@ fun SidebarHost(
                     NavigationDrawerItem(
                         icon = { Icon(item.icon, contentDescription = null) },
                         label = { Text(item.name) },
-                        selected = item.name == currentTitle.value,
+                        selected = item.name == state.pageTitle,
                         onClick = {
                             scope.launch { drawerState.close() }
-                            currentTitle.value = item.name
+                            onEvent(SidebarEvent.ChangePageTitle(item.name))
                             navHostController.navigate(item.route) {
                                 popUpTo(navHostController.graph.findStartDestination().id)
                                 launchSingleTop = true
@@ -105,18 +115,27 @@ fun SidebarHost(
                     CenterAlignedTopAppBar(
                         title = {
                             Text(
-                                text = currentTitle.value,
+                                text = state.pageTitle,
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     color = MaterialTheme.colorScheme.primary,
                                     fontWeight = FontWeight(600)
                                 )
                             )
-                        }, navigationIcon = {
+                        },
+                        navigationIcon = {
                             PainterIconButton(
                                 onClick = {
                                     scope.launch { drawerState.open() }
                                 },
                                 icon = painterResource(id = R.drawable.hamburger_icon)
+                            )
+                        },
+                        actions = {
+                            IconButton(
+                                onClick = {
+                                    onEvent(SidebarEvent.ShowLogoutDialog(true))
+                                },
+                                icon = FaIcons.SignOutAlt
                             )
                         },
                         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -142,7 +161,7 @@ fun SidebarHost(
                             onNavigate = onNavigate,
                             navController = navHostController,
                             onTitleChange = { title ->
-                                currentTitle.value = title
+                                onEvent(SidebarEvent.ChangePageTitle(title))
                             }
                         )
                     }
@@ -169,6 +188,58 @@ fun SidebarHost(
                         )
                     }
                 }
+                MessageAlert(
+                    type = AlertType.WARNING,
+                    message = "Anda yakin ingin logout?",
+                    title = "Logout",
+                    visible = state.showLogoutDialog,
+                    modifier = Modifier,
+                    confirmButton = {
+                        FilledButton(
+                            onClick = {
+                                onEvent(SidebarEvent.Logout)
+                            },
+                            text = "Ya",
+                            modifier = Modifier
+                        )
+                    },
+                    dismissButton = {
+                        FilledButton(
+                            onClick = {
+                                onEvent(SidebarEvent.ShowLogoutDialog(false))
+                            },
+                            text = "Batal",
+                            modifier = Modifier
+                        )
+                    },
+                    onDismiss = {
+                        onEvent(SidebarEvent.ShowLogoutDialog(false))
+                    }
+                )
+                Loading(modifier = Modifier, visible = state.isLoading)
+
+                MessageAlert(
+                    type = AlertType.SUCCESS,
+                    message = state.success,
+                    title = "Sukses",
+                    modifier = Modifier,
+                    visible = state.showSuccess,
+                    onDismiss = {
+                        onEvent(SidebarEvent.ShowSuccess(false))
+                        navHostController.popBackStack()
+                        onNavigate(MainRoutes.LoginScreen)
+                    }
+                )
+                MessageAlert(
+                    type = AlertType.ERROR,
+                    message = state.error,
+                    title = "Error",
+                    modifier = Modifier,
+                    visible = state.showError,
+                    onDismiss = {
+                        onEvent(SidebarEvent.ShowError(false))
+                    }
+                )
             }
         }
     )

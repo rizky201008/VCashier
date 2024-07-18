@@ -3,6 +3,7 @@ package com.vixiloc.vcashiermobile.di
 import android.content.Context
 import com.vixiloc.vcashiermobile.utils.FileConverter
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
+import com.vixiloc.vcashiermobile.presentation.navs.hosts.sidebar.SidebarViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesViewModel
@@ -43,6 +44,7 @@ val viewModelModule = module {
         provideProductLogViewModel(get())
     }
     viewModel { provideAddProductLogViewModel(get()) }
+    viewModel { provideSidebarViewModel(get()) }
 }
 
 fun provideLoginViewModel(useCaseManager: UseCaseManager): LoginViewModel {
@@ -116,3 +118,6 @@ fun provideProductLogViewModel(useCaseManager: UseCaseManager) =
 
 fun provideAddProductLogViewModel(useCaseManager: UseCaseManager) =
     AddProductLogViewModel(useCaseManager = useCaseManager)
+
+fun provideSidebarViewModel(useCaseManager: UseCaseManager) =
+    SidebarViewModel(useCaseManager = useCaseManager)

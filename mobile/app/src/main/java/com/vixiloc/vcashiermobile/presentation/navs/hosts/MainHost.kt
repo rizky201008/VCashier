@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
+import com.vixiloc.vcashiermobile.presentation.navs.hosts.sidebar.SidebarHost
+import com.vixiloc.vcashiermobile.presentation.navs.hosts.sidebar.SidebarViewModel
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginFormScreen
 import com.vixiloc.vcashiermobile.presentation.screens.product_log.list_logs.ProductLogScreen
@@ -19,6 +21,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.Sear
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentScreen
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MainHost(
@@ -26,6 +29,7 @@ fun MainHost(
     navHostController: NavHostController
 ) {
     val sidebarNavController = rememberNavController()
+    val sideBarViewModel: SidebarViewModel = koinViewModel()
     NavHost(navController = navHostController, startDestination = MainRoutes.SplashScreen) {
         composable<MainRoutes.SplashScreen> {
             WelcomeScreen(navHostController = navHostController)
@@ -45,10 +49,16 @@ fun MainHost(
         composable<MainRoutes.NavDrawerScreens> {
             SidebarHost(
                 navHostController = sidebarNavController,
-                onNavigate = {
-                    navHostController.navigate(it)
+                onNavigate = { nav ->
+                    if (nav == MainRoutes.LoginScreen) {
+                        navHostController.popBackStack()
+                        navHostController.navigate(nav)
+                        return@SidebarHost
+                    }
+                    navHostController.navigate(nav)
                 },
-                modifier = modifier
+                modifier = modifier,
+                viewModel = sideBarViewModel
             )
         }
         composable<MainRoutes.NavDrawerScreens.Transactions.SearchCustomer> {

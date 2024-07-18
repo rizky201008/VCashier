@@ -11,10 +11,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.guru.fontawesomecomposelib.FaIcon
@@ -74,6 +79,7 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                 errorMessage = state.emailError
             )
             VerticalSpacer(height = 12.dp)
+            var showPassword by remember { mutableStateOf(false) }
             TextField(
                 value = state.password,
                 onValueChanged = {
@@ -84,9 +90,11 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                 placeHolder = "Masukkan kata sandi anda",
                 textStyle = MaterialTheme.typography.titleMedium,
                 trailingIcon = {
-                    IconButtonCompose(onClick = { /*TODO*/ }) {
+                    IconButtonCompose(onClick = {
+                        showPassword = !showPassword
+                    }) {
                         FaIcon(
-                            faIcon = FaIcons.EyeSlash,
+                            faIcon = if (showPassword) FaIcons.Eye else FaIcons.EyeSlash,
                             tint = MaterialTheme.colorScheme.primary,
                             size = 16.dp
                         )
@@ -94,7 +102,7 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                 },
                 isError = state.passwordError.isNotBlank(),
                 errorMessage = state.passwordError,
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation()
             )
             VerticalSpacer(height = 52.dp)
             FilledButton(

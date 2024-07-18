@@ -7,6 +7,7 @@ object Routes {
     const val BASE_URL = BuildConfig.BASE_URL
     private const val AUTH = "auth"
     const val LOGIN = "$AUTH/login"
+    const val LOGOUT = "$AUTH/logout"
     const val REGISTER = "$AUTH/register"
     const val PRODUCTS = "products"
     const val CATEGORIES = "categories"

@@ -28,6 +28,13 @@ class UseCaseManager(
     fun registerUseCase() =
         Register(repository = authRepository, httpHandler = httpHandler(), saveToken = saveToken())
 
+    fun logoutUseCase() = Logout(
+        repository = authRepository,
+        token = getTokenUseCase(),
+        saveToken = saveToken(),
+        httpHandler = httpHandler()
+    )
+
     fun getTokenUseCase() = GetToken(repository = dataStoreRepository)
     fun getProductsUseCase() = GetProducts(
         repository = productsRepository,

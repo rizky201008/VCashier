@@ -4,6 +4,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.ADD_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
 import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
+import com.vixiloc.vcashiermobile.data.remote.Routes.LOGOUT
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_CREATE_VA
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_MAKE
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_METHODS
@@ -28,6 +29,7 @@ import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestD
 import com.vixiloc.vcashiermobile.data.remote.dto.customers.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRegisterResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.LogoutResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.ResetPasswordResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.CreateVaRequestDto
@@ -66,6 +68,10 @@ interface ApiService {
     @POST(REGISTER)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun register(@Body data: RegisterRequestDto): LoginRegisterResponseDto
+
+    @POST(LOGOUT)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun logout(@Header("Authorization") token: String): LogoutResponseDto
 
     @GET(PRODUCTS)
     @Headers("Content-Type: application/json", "Accept: application/json")

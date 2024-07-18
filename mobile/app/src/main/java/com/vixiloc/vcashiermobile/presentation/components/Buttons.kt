@@ -36,7 +36,7 @@ import androidx.compose.material3.OutlinedButton as OutlinedButtonCompose
 @Composable
 fun IconButton(
     onClick: () -> Unit,
-    icon: ImageVector,
+    icon: Any,
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.small,
     filled: Boolean = false,
@@ -53,12 +53,22 @@ fun IconButton(
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            modifier = Modifier.size(containerSize / 2.5f),
-            tint = if (filled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
-        )
+        val iconsize = containerSize / 1.5f
+        when (icon) {
+            is FaIconType -> FaIcon(
+                faIcon = icon,
+                size = iconsize,
+                modifier = Modifier,
+                tint = if (filled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+            )
+
+            is ImageVector -> Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.size(iconsize),
+                tint = if (filled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+            )
+        }
     }
 }
 

@@ -32,3 +32,12 @@ services:
       - ./backend:/var/www/app
       - ./backend/vendor:/var/www/app/vendor
       - ./backend/public:/var/www/app/public
+
+  web:
+    image: vixiloc/vcashier-fe
+    container_name: web_vcashier
+    restart: unless-stopped
+    networks:
+      - vcashier
+    ports:
+      - "3333:3000"

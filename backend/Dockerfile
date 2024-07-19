@@ -18,7 +18,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Jalankan composer install
 RUN composer install
-
+RUN php artisan storage:unlink
 RUN php artisan storage:link
 
 # Ubah hak akses direktori (opsional)

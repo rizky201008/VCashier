@@ -30,3 +30,5 @@ services:
       - postgresql
     volumes:
       - ./backend:/var/www/app
+      - ./backend/vendor:/var/www/app/vendor
+      - ./backend/public:/var/www/app/public

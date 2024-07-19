@@ -2,7 +2,6 @@ FROM php:8.3-fpm-alpine
 
 LABEL author="Rizky Agung Prayogi" company="Vixiloc" website="https://vixiloc.com"
 
-
 RUN apk update && apk add \
     nano \
     postgresql-dev \
@@ -15,6 +14,9 @@ WORKDIR /var/www/app
 COPY . .
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+# Menambahkan variabel lingkungan untuk Composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Jalankan composer install
 RUN composer install

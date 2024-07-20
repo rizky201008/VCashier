@@ -95,7 +95,7 @@ fun PainterIconButton(
         Icon(
             painter = icon,
             contentDescription = null,
-            modifier = Modifier.size(containerSize / 2.5f),
+            modifier = Modifier.size(containerSize / 1.5f),
             tint = if (filled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
         )
     }

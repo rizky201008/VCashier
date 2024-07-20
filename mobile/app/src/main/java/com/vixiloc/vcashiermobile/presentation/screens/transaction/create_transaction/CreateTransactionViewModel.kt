@@ -35,7 +35,9 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
         when (event) {
 
             is CreateTransactionEvent.Refresh -> {
-                getProducts()
+                viewModelScope.launch {
+                    getProducts()
+                }
             }
 
             is CreateTransactionEvent.AddVariation -> {
@@ -75,14 +77,17 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
     private fun searchProducts() {
         val query = state.value.searchQuery
-        if (query.isBlank()) {
-            getProducts()
-        } else {
-            _state.value = _state.value.copy(
-                products = state.value.products.filter {
-                    it.name.contains(query, ignoreCase = true)
-                }
-            )
+        viewModelScope.launch {
+            if (query.isBlank()) {
+                getProducts()
+            } else {
+                getProducts()
+                _state.value = _state.value.copy(
+                    products = state.value.products.filter {
+                        it.name.contains(query, ignoreCase = true)
+                    }
+                )
+            }
         }
     }
 
@@ -102,38 +107,23 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
     private fun updateCategory(category: CategoriesResponseItem?) {
         _state.value = state.value.copy(selectedCategory = category)
-        if (category == null) {
-            getProducts()
-        } else {
-            getProductsUseCase().onEach { resource ->
-                when (resource) {
-                    is Resource.Loading -> {
-                        _state.value = state.value.copy(isLoading = true)
-                    }
-
-                    is Resource.Success -> {
-                        val filteredProducts = resource.data?.filter {
-                            it.category == category.toCategory()
-                        }
-                        _state.value = _state.value.copy(
-                            products = filteredProducts ?: emptyList(),
-                            isLoading = false,
-                        )
-                    }
-
-                    is Resource.Error -> {
-                        _state.value = state.value.copy(
-                            isLoading = false,
-                            error = resource.message ?: "An unexpected error occurred"
-                        )
-                    }
+        viewModelScope.launch {
+            if (category == null) {
+                getProducts()
+            } else {
+                val filteredProducts = state.value.products.filter {
+                    it.category == category.toCategory()
                 }
-            }.launchIn(viewModelScope)
+                _state.value = state.value.copy(
+                    products = filteredProducts,
+                    isLoading = false,
+                )
+            }
         }
     }
 
-    private fun getProducts() {
-        getProductsUseCase().onEach { resource ->
+    private suspend fun getProducts() {
+        getProductsUseCase().collect { resource ->
             when (resource) {
                 is Resource.Loading -> {
                     _state.value = state.value.copy(isLoading = true)
@@ -153,7 +143,7 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                     )
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun getCategories() {
@@ -183,7 +173,9 @@ class CreateTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     }
 
     init {
-        getProducts()
+        viewModelScope.launch {
+            getProducts()
+        }
         getCartItems()
         getCategories()
     }

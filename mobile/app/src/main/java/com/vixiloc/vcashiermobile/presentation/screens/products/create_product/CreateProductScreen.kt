@@ -1,8 +1,4 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package com.vixiloc.vcashiermobile.presentation.screens.products.create_product
-
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -68,20 +64,18 @@ import com.vixiloc.vcashiermobile.presentation.components.LongTextField
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
-import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.category.components.FilledIconButton
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.AddVariationDialog
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.DeleteVariationDialog
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.DropdownMenu
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.EditVariationDialog
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.VariationItem
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.CheckoutScreenEvent
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(
     ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class,
-    ExperimentalComposeUiApi::class
+    ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class
 )
 @Composable
 fun CreateProductScreen(
@@ -282,6 +276,7 @@ fun CreateProductScreen(
                         )
                     }
                 }
+                Loading(modifier = Modifier, visible = state.isLoading)
                 VerticalSpacer(height = 300.dp)
             }
             Box(
@@ -328,7 +323,6 @@ fun CreateProductScreen(
                     onEvent(CreateProductEvent.ShowSuccessMessage(false))
                 }
             )
-            Loading(modifier = Modifier, visible = state.isLoading)
             if (state.showAddVariation) {
                 AddVariationDialog(viewModel = viewModel)
             }

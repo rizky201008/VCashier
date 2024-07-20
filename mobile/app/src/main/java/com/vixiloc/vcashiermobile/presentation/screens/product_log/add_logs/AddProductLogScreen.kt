@@ -82,6 +82,9 @@ fun AddProductLogScreen(
             )
             VerticalSpacer(height = 24.dp)
             LazyColumn {
+                item {
+                    Loading(visible = state.isLoading)
+                }
                 items(state.products) { product ->
                     product.variations.forEach { variation ->
                         ProductListItem(
@@ -99,7 +102,7 @@ fun AddProductLogScreen(
                     VerticalSpacer(height = 300.dp)
                 }
             }
-            Loading(visible = state.isLoading)
+
             AddLogDialog(viewModel = viewModel)
         }
     }

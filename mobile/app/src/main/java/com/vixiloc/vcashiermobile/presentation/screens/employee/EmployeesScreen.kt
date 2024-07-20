@@ -54,6 +54,9 @@ fun EmployeesScreen(modifier: Modifier = Modifier) {
             LazyColumn(
                 modifier = Modifier.height((state.users.size * 100).dp)
             ) {
+                item {
+                    Loading(modifier = Modifier, visible = state.isLoading)
+                }
                 items(state.users) { item: UsersResponseData ->
                     EmployeeListItem(
                         item = item,
@@ -89,8 +92,6 @@ fun EmployeesScreen(modifier: Modifier = Modifier) {
                 contentPadding = PaddingValues(15.dp)
             )
         }
-
-        Loading(modifier = Modifier, visible = state.isLoading)
 
         MessageAlert(
             type = AlertType.SUCCESS,

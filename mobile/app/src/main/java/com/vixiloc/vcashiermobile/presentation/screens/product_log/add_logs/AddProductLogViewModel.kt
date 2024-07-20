@@ -2,7 +2,6 @@ package com.vixiloc.vcashiermobile.presentation.screens.product_log.add_logs
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.domain.model.product_logs.CreateProductLogsRequest

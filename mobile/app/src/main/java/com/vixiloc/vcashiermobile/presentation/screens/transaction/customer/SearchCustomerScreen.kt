@@ -78,6 +78,9 @@ fun SearchCustomerScreen(modifier: Modifier = Modifier, navController: NavContro
                 placeHolder = "Cari pengguna",
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             )
+
+            Loading(modifier = Modifier, visible = state.isLoading)
+
             LazyColumn {
                 items(state.customers) { customer ->
                     CustomerListItem(
@@ -92,7 +95,6 @@ fun SearchCustomerScreen(modifier: Modifier = Modifier, navController: NavContro
                     )
                 }
             }
-            Loading(modifier = Modifier, visible = state.isLoading)
 
             MessageAlert(
                 type = AlertType.SUCCESS,

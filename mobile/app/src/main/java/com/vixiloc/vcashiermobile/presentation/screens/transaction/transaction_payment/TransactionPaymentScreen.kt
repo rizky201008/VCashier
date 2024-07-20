@@ -155,6 +155,8 @@ fun TransactionPaymentScreen(
                         )
                     }
                 }
+
+                Loading(modifier = Modifier, visible = state.isLoading)
             }
 
             Box(
@@ -178,8 +180,6 @@ fun TransactionPaymentScreen(
                     textStyle = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight(600))
                 )
             }
-
-            Loading(modifier = Modifier, visible = state.isLoading)
 
             MessageAlert(
                 type = AlertType.SUCCESS,

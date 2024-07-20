@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
@@ -52,7 +51,9 @@ fun CustomersScreen(
                 }
         ) {
             SearchTextField(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 32.dp),
                 value = state.searchQuery,
                 onValueChanged = {
                     events(CustomerEvent.InputSearchValue(it))
@@ -66,6 +67,7 @@ fun CustomersScreen(
                     .fillMaxWidth()
                     .height(500.dp)
             ) {
+                item { Loading(modifier = Modifier, visible = state.isLoading) }
                 items(state.customers) { customer: CustomerResponseItem ->
                     CustomerItem(
                         item = customer,
@@ -98,8 +100,6 @@ fun CustomersScreen(
                 end.linkTo(parent.end, margin = 10.dp)
                 width = Dimension.matchParent
             })
-
-        Loading(modifier = Modifier, visible = state.isLoading)
 
         MessageAlert(
             type = AlertType.ERROR,

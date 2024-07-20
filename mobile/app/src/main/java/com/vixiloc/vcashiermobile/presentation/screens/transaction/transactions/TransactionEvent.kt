@@ -5,7 +5,6 @@ import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
 
 sealed class TransactionEvent {
     data object Refresh : TransactionEvent()
-    data class SelectProduct(val product: ProductsResponseItems) : TransactionEvent()
     data object DismissAlertMessage : TransactionEvent()
     data class OnSearchChanged(val query: String) : TransactionEvent()
     data class SelectStatus(val status: String) : TransactionEvent()

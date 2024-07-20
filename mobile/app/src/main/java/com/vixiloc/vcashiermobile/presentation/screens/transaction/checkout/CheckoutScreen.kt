@@ -139,6 +139,8 @@ fun CheckoutScreen(
                         navigator.navigate(MainRoutes.NavDrawerScreens.Transactions.SearchCustomer)
                     }, modifier = customerModifier)
                 }
+
+                Loading(modifier = Modifier, visible = state.isLoading)
             }
 
             Box(
@@ -193,8 +195,6 @@ fun CheckoutScreen(
                     onDismiss = { onEvent(CheckoutScreenEvent.DismissErrorAlert) }
                 )
             }
-
-            Loading(modifier = Modifier, visible = state.isLoading)
         }
     }
 }

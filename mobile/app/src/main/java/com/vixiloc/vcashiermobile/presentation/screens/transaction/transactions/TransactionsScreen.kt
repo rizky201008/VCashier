@@ -66,8 +66,6 @@ fun TransactionsScreen(
         "completed",
         "draft"
     )
-    val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp.dp
 
     ConstraintLayout(
         modifier = modifier
@@ -106,30 +104,19 @@ fun TransactionsScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp)
             ) {
-                Row(
+                SearchTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    SearchTextField(
-                        modifier = Modifier.width(screenWidth / 1.5f),
-                        value = state.searchQuery,
-                        onValueChanged = {
-                            onEvent(TransactionEvent.OnSearchChanged(it))
-                        },
-                        placeHolder = "Cari pelanggan",
-                        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-                    )
-                    FilledIconButton(
-                        modifier = Modifier.background(
-                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-                            shape = MaterialTheme.shapes.medium
-                        ),
-                        icon = Icons.Outlined.FilterAlt, onClick = {}
-                    )
-                }
+                    value = state.searchQuery,
+                    onValueChanged = {
+                        onEvent(TransactionEvent.OnSearchChanged(it))
+                    },
+                    placeHolder = "Cari pelanggan",
+                    keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                )
 
                 VerticalSpacer(height = 32.dp)
+
+                Loading(modifier = Modifier, visible = state.isLoading)
 
                 LazyColumn(modifier = Modifier.weight(1f)) {
                     items(state.transactions) { transaction: TransactionsData ->
@@ -175,8 +162,6 @@ fun TransactionsScreen(
                 contentPadding = PaddingValues(15.dp)
             )
         }
-
-        Loading(modifier = Modifier, visible = state.isLoading)
 
         MessageAlert(
             type = AlertType.SUCCESS,

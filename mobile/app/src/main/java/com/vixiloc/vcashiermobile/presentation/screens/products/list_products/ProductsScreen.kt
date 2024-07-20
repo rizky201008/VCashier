@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -34,8 +35,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,9 +44,11 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.guru.fontawesomecomposelib.FaIcon
 import com.guru.fontawesomecomposelib.FaIcons
+import com.vixiloc.vcashiermobile.R
 import com.vixiloc.vcashiermobile.domain.model.products.ProductsResponseItems
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
+import com.vixiloc.vcashiermobile.presentation.components.PainterIconButton
 import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
@@ -58,7 +61,6 @@ fun ProductsScreen(modifier: Modifier = Modifier, onNavigate: (MainRoutes) -> Un
     val viewModel: ProductsViewModel = koinViewModel()
     val state = viewModel.state.value
     val events = viewModel::onEvent
-    val context = LocalContext.current
     var menuExpanded by remember { mutableStateOf(false) }
     val config = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
@@ -116,14 +118,11 @@ fun ProductsScreen(modifier: Modifier = Modifier, onNavigate: (MainRoutes) -> Un
                 }
 
                 Row {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        FaIcon(faIcon = FaIcons.List, size = 24.dp)
-                    }
-                    IconButton(onClick = {
-                        onNavigate(MainRoutes.NavDrawerScreens.Products.ProductLog)
-                    }) {
-                        FaIcon(faIcon = FaIcons.History, size = 24.dp)
-                    }
+                    PainterIconButton(
+                        onClick = { onNavigate(MainRoutes.NavDrawerScreens.Products.ProductLog) },
+                        icon = painterResource(id = R.drawable.product_log),
+                        containerSize = 40.dp
+                    )
                 }
             }
 
@@ -143,6 +142,7 @@ fun ProductsScreen(modifier: Modifier = Modifier, onNavigate: (MainRoutes) -> Un
                     keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                 )
 
+                Loading(modifier = Modifier, visible = state.isLoading)
                 VerticalSpacer(height = 37.dp)
 
                 LazyVerticalGrid(
@@ -154,12 +154,12 @@ fun ProductsScreen(modifier: Modifier = Modifier, onNavigate: (MainRoutes) -> Un
                     horizontalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
                     items(state.products) { product: ProductsResponseItems ->
-                        product.variations.forEach { variation ->
-                            ProductItem(
-                                data = product,
-                                variation = variation,
-                            )
-                        }
+                        ProductItem(
+                            data = product,
+                            onClick = {
+                                onNavigate(MainRoutes.NavDrawerScreens.Products.UpdateProduct(id = product.id.toString()))
+                            }
+                        )
                     }
                     item {
                         VerticalSpacer(height = 200.dp)
@@ -193,7 +193,6 @@ fun ProductsScreen(modifier: Modifier = Modifier, onNavigate: (MainRoutes) -> Un
                 contentPadding = PaddingValues(15.dp)
             )
         }
-        Loading(modifier = Modifier, visible = state.isLoading)
     }
 }
 

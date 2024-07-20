@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.R
+import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import org.koin.androidx.compose.koinViewModel
 
@@ -74,6 +75,8 @@ fun WelcomeScreen(
                     color = MaterialTheme.colorScheme.primary
                 )
             )
+
+            Loading(modifier = Modifier, visible = true)
         }
     }
 }

@@ -83,7 +83,7 @@ class ProductsViewModel(
         }
     }
 
-    fun getCategories() {
+    private fun getCategories() {
         getCategoriesUseCase().onEach { res ->
             when (res) {
                 is Resource.Loading -> {

@@ -66,6 +66,7 @@ fun CategoriesScreen(
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             )
             VerticalSpacer(height = 32.dp)
+            Loading(modifier = Modifier, visible = state.isLoading)
             LazyColumn {
                 items(state.categories) { category ->
                     CategoryListItem(
@@ -99,8 +100,6 @@ fun CategoriesScreen(
                 contentPadding = PaddingValues(15.dp)
             )
         }
-
-        Loading(modifier = Modifier, visible = state.isLoading)
 
         MessageAlert(
             type = AlertType.ERROR,

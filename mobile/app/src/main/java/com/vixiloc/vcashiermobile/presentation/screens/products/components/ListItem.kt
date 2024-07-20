@@ -447,14 +447,16 @@ fun VariationItem(
 fun ProductItem(
     modifier: Modifier = Modifier,
     data: ProductsResponseItems,
-    variation: ProductsVariation
+    onClick: (ProductsResponseItems) -> Unit
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(color = Color.White, shape = MaterialTheme.shapes.medium)
             .clip(MaterialTheme.shapes.medium)
-            .clickable { }
+            .clickable {
+                onClick(data)
+            }
     ) {
         AsyncImage(
             model = data.imageUrl,
@@ -481,19 +483,11 @@ fun ProductItem(
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight(700))
             )
             Text(
-                text = variation.unit,
+                text = data.category.name,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontSize = 10.sp
-                )
-            )
-            VerticalSpacer(height = 14.dp)
-            Text(
-                text = CurrencyFormatter.formatCurrency(variation.price),
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontWeight = FontWeight(700),
-                    color = MaterialTheme.colorScheme.primary
                 )
             )
         }

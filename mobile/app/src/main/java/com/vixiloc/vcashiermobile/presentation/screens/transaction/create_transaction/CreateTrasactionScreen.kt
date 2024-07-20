@@ -132,6 +132,7 @@ fun CreateTransactionScreen(
             })
         )
         VerticalSpacer(height = 37.dp)
+        Loading(modifier = Modifier, visible = state.isLoading)
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
@@ -164,6 +165,9 @@ fun CreateTransactionScreen(
                 item {
                     VerticalSpacer(height = 100.dp)
                 }
+                item {
+                    VerticalSpacer(height = 100.dp)
+                }
             }
 
             FloatingTransactionButton(
@@ -182,8 +186,6 @@ fun CreateTransactionScreen(
                 icon = Icons.Outlined.ShoppingCart
             )
         }
-
-        Loading(modifier = Modifier, visible = state.isLoading)
 
         MessageAlert(
             type = AlertType.SUCCESS,

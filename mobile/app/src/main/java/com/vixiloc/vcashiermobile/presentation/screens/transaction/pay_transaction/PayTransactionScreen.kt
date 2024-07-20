@@ -166,6 +166,8 @@ fun PayTransactionScreen(
 
                 HorizontalDivider(modifier = Modifier.padding(bottom = 10.dp))
 
+                Loading(modifier = Modifier, visible = state.isLoading)
+
                 if (state.transactionData?.paymentStatus == "paid") {
                     VerticalSpacer(height = 93.dp)
                     Image(
@@ -259,9 +261,6 @@ fun PayTransactionScreen(
                     contentPadding = PaddingValues(15.dp)
                 )
             }
-
-
-            Loading(modifier = Modifier, visible = state.isLoading)
 
             MessageAlert(
                 type = AlertType.SUCCESS,

@@ -105,6 +105,7 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                 visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation()
             )
             VerticalSpacer(height = 52.dp)
+            Loading(modifier = Modifier, visible = state.isLoading)
             FilledButton(
                 text = "Login",
                 onClick = {
@@ -114,7 +115,6 @@ fun LoginFormScreen(modifier: Modifier = Modifier, navHostController: NavHostCon
                 textStyle = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight(600))
             )
 
-            Loading(modifier = Modifier, visible = state.isLoading)
             if (state.isLoading) keyboardController?.hide()
             if (state.loginSuccess) {
                 LaunchedEffect(key1 = Unit) {

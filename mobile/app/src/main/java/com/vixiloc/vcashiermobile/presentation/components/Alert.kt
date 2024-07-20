@@ -1,7 +1,10 @@
 package com.vixiloc.vcashiermobile.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,27 +31,12 @@ import androidx.compose.ui.window.Dialog
 
 @Composable
 fun Loading(modifier: Modifier = Modifier, visible: Boolean = false) {
-    AnimatedVisibility(visible = visible, modifier = modifier) {
-        Dialog(onDismissRequest = { }) {
-            Card(
+    AnimatedVisibility(visible = visible, modifier = modifier, enter = fadeIn(), exit = fadeOut()) {
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-            ) {
-                Text(
-                    text = "Sedang dimuat",
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = 10.dp),
-                    style = MaterialTheme.typography.titleMedium,
-                )
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = 10.dp)
-                )
-            }
+                    .padding(vertical = 10.dp)
+            )
         }
     }
 }
@@ -108,12 +96,6 @@ enum class AlertType {
 @Composable
 private fun AlertPreview() {
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
-        MessageAlert(
-            message = "Password Salah",
-            title = "Error",
-            modifier = Modifier,
-            visible = true,
-            type = AlertType.ERROR,
-        )
+        Loading(visible = true)
     }
 }

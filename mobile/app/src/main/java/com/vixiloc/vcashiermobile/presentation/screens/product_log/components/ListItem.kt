@@ -102,7 +102,7 @@ fun ProductLogListItem(
                 style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
             )
             Text(
-                text = CurrencyFormatter.formatCurrency(data.amount),
+                text = data.amount.toString(),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary

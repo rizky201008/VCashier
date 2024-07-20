@@ -120,4 +120,30 @@ class TransactionRepository
     {
         return $quantity <= $stock;
     }
+
+    public function transactionReports() : array
+    {
+        return [
+            "monthly_transaction" => 10000,
+            "monthly_profit" => 1023923,
+            "weekly_transaction" => 1000,
+            "weekly_profit" => 102392,
+            "daily_transaction" => 100,
+            "daily_profit" => 1023,
+            "monthly_transaction_chart" => [
+                "January" => 1000,
+                "February" => 2000,
+                "March" => 3000,
+                "April" => 4000,
+                "May" => 5000,
+                "June" => 6000,
+                "July" => 7000,
+                "August" => 8000,
+                "September" => 9000,
+                "October" => 10000,
+                "November" => 11000,
+                "December" => 12000
+            ],
+        ];
+    }
 }

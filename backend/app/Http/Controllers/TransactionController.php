@@ -22,7 +22,7 @@ class TransactionController extends Controller
     {
         $status = $request->query('status');
         $paymentStatus = $request->query('payment_status');
-        return response()->json($this->transactionRepository->getTransactions($status,$paymentStatus));
+        return response()->json($this->transactionRepository->getTransactions($status, $paymentStatus));
     }
 
     public function getTransaction(string $id): JsonResponse
@@ -50,5 +50,10 @@ class TransactionController extends Controller
         $data['transaction_status'] = 'draft';
 
         return response()->json($this->transactionRepository->processTransaction($data));
+    }
+
+    public function transactionReports(): JsonResponse
+    {
+        return response()->json($this->transactionRepository->transactionReports());
     }
 }

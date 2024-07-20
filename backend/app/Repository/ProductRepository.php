@@ -79,7 +79,7 @@ class ProductRepository
         }
     }
 
-    function updateProduct($data, $productId): void
+    function updateProduct(array $data, $productId): void
     {
         $product = Product::find($productId);
 
@@ -87,7 +87,7 @@ class ProductRepository
 
         try {
 
-            $product->update($data->all());
+            $product->update($data);
 
             DB::commit();
 

@@ -47,18 +47,4 @@ class CategoryController extends Controller
 
         return response()->json(['message' => 'Category updated successfully'], 200);
     }
-
-    public function deleteCategory($id)
-    {
-        $validated = Validator::make(['id' => $id], [
-            'id' => 'required|integer|exists:categories,id|gt:1',
-        ]);
-
-        if ($validated->fails()) {
-            return response()->json(['message' => "Err : " . $validated->errors()->first()], 404);
-        }
-
-        $this->categoryRepository->deleteCategory($id);
-        return response()->json(['message' => 'Category deleted successfully'], 200);
-    }
 }

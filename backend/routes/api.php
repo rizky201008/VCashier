@@ -38,12 +38,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('{id}', [CategoryController::class, 'getCategory']);
         Route::post('/', [CategoryController::class, 'createCategory']);
         Route::put('/', [CategoryController::class, 'updateCategory']);
-        Route::delete('{id}', [CategoryController::class, 'deleteCategory']);
     });
     Route::prefix('products')->group(function () {
         Route::post('/', [ProductController::class, 'createProduct']);
         Route::put('/', [ProductController::class, 'updateProduct']);
-        Route::delete('{id}', [ProductController::class, 'deleteProduct']);
     });
     Route::prefix('product-variations')->group(function () {
         Route::put('/', [ProductController::class, 'updateProductVariation']);
@@ -57,7 +55,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/', [CustomerController::class, 'getCustomers']);
         Route::post('/', [CustomerController::class, 'createCustomer']);
         Route::get('/{id}', [CustomerController::class, 'getCustomer']);
-        Route::delete('/{id}', [CustomerController::class, 'deleteCustomer']);
         Route::put('/', [CustomerController::class, 'updateCustomer']);
     });
     Route::prefix('transactions')->group(function () {
@@ -69,7 +66,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('role', [UserController::class, 'getRole']);
         Route::get('validate', [UserController::class, 'validateToken']);
         Route::get('lists', [UserController::class, 'allUsers']);
-        Route::delete('delete/{id}', [UserController::class, 'deleteUser']);
         Route::post("reset-password/{id}", [UserController::class, 'resetPassword'])->middleware('auth:sanctum');
     });
     Route::prefix('payment')->group(function () {

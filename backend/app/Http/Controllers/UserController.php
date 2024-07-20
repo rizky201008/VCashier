@@ -28,14 +28,6 @@ class UserController extends Controller
             'data' => User::all()
         ]);
     }
-
-    public function deleteUser($id): JsonResponse {
-        User::find($id)->delete();
-        return response()->json([
-            'message' => 'User deleted'
-        ]);
-    }
-
     function resetPassword($id): JsonResponse
     {
         try {

@@ -37,7 +37,7 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        $this->productRepository->updateProduct($request, $request->id);
+        $this->productRepository->updateProduct($request->all(), $request->id);
         return response()->json([
             'message' => 'Product updated successfully'
         ]);
@@ -58,19 +58,6 @@ class ProductController extends Controller
     public function getProductVariation($id)
     {
         return response()->json($this->productRepository->getProductVariation($id));
-    }
-
-    public function deleteProduct($id)
-    {
-        $validator = Validator::make(['id' => $id], [
-            'id' => 'required|exists:products,id'
-        ]);
-
-        if ($validator->fails()) {
-            throw new Exception($validator->messages()->first());
-        }
-
-        return response()->json($this->productRepository->deleteProduct($id));
     }
 
     public function getProduct($id)

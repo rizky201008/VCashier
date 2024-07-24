@@ -10,20 +10,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.FilterAlt
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,10 +36,9 @@ import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
-import com.vixiloc.vcashiermobile.presentation.screens.category.components.FilledIconButton
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionActionDialog
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionListItem
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.TransactionStatusChip
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.components.TransactionActionDialog
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 

@@ -9,4 +9,5 @@ sealed class TransactionEvent {
     data class OnSearchChanged(val query: String) : TransactionEvent()
     data class SelectStatus(val status: String) : TransactionEvent()
     data class ShowTransactionAction(val show: Boolean, val data: TransactionsData?) : TransactionEvent()
+    data class CancelTransaction(val data: TransactionsData) : TransactionEvent()
 }

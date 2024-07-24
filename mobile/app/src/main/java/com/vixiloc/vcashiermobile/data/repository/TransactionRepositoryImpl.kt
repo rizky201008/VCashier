@@ -6,7 +6,10 @@ import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransaction
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionResponseDto
 import com.vixiloc.vcashiermobile.domain.model.transactions.CartItems
+import com.vixiloc.vcashiermobile.domain.model.transactions.UpdateTransactionResponse
 import com.vixiloc.vcashiermobile.domain.repository.TransactionRepository
 import io.realm.kotlin.Realm
 import kotlinx.coroutines.flow.Flow
@@ -44,6 +47,13 @@ class TransactionRepositoryImpl(
 
     override suspend fun clearCartItems() {
         cartItemsDao.clearCartItems()
+    }
+
+    override suspend fun updateTransaction(
+        token: String,
+        data: UpdateTransactionRequestDto
+    ): UpdateTransactionResponseDto {
+        return api.updateTransaction(token = "Bearer $token", data = data)
     }
 
     override suspend fun addToCart(data: CartItems) {

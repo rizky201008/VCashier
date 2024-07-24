@@ -52,8 +52,11 @@ import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsRespo
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.users.UsersResponseDto
 import com.vixiloc.vcashiermobile.domain.model.products.UpdateProductVariationRequest
+import com.vixiloc.vcashiermobile.domain.model.transactions.UpdateTransactionResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -187,6 +190,13 @@ interface ApiService {
         @Query("status") status: String = "",
         @Query("payment_status") paymentStatus: String = "",
     ): TransactionsResponseDto
+
+    @PUT(TRANSACTIONS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun updateTransaction(
+        @Header("Authorization") token: String,
+        @Body data: UpdateTransactionRequestDto
+    ): UpdateTransactionResponseDto
 
     @GET("$TRANSACTIONS/{id}")
     @Headers("Content-Type: application/json", "Accept: application/json")

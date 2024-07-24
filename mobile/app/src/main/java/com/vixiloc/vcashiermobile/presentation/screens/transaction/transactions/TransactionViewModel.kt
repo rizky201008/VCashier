@@ -4,6 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vixiloc.vcashiermobile.domain.model.transactions.TransactionsData
+import com.vixiloc.vcashiermobile.domain.model.transactions.UpdateTransactionRequest
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.GetTransactions
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
@@ -18,10 +20,11 @@ class TransactionViewModel(
     useCaseManager: UseCaseManager
 ) : ViewModel() {
 
-    val _state = mutableStateOf(TransactionState())
+    private val _state = mutableStateOf(TransactionState())
     val state: State<TransactionState> = _state
     private val getProductsUseCase: GetProducts = useCaseManager.getProductsUseCase()
     private val getTransactionsUseCase: GetTransactions = useCaseManager.getTransactionsUseCase()
+    private val updateTransactionUseCase = useCaseManager.updateTransactionUseCase()
     private var searchJob: Job? = null
 
     fun onEvent(event: TransactionEvent) {
@@ -53,7 +56,42 @@ class TransactionViewModel(
             is TransactionEvent.SelectStatus -> {
                 filterTransactionsStatus(event.status)
             }
+
+            is TransactionEvent.CancelTransaction -> {
+                cancelTransaction(event.data)
+            }
         }
+    }
+
+    private fun cancelTransaction(data: TransactionsData) {
+        val reqData = UpdateTransactionRequest(
+            id = data.id,
+            transactionStatus = "canceled"
+        )
+        updateTransactionUseCase(reqData).onEach { res ->
+            when (res) {
+                is Resource.Loading -> {
+                    _state.value =
+                        state.value.copy(isLoading = true, showTransactionAction = false)
+                }
+
+                is Resource.Success -> {
+                    _state.value = state.value.copy(
+                        isLoading = false,
+                        success = "Transaction canceled successfully"
+                    )
+                    getTransactions()
+                }
+
+                is Resource.Error -> {
+                    _state.value = state.value.copy(
+                        isLoading = false,
+                        error = res.message ?: "An unexpected error occurred"
+                    )
+                }
+
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun searchTransactions() {

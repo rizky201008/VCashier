@@ -80,8 +80,10 @@ fun AddVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductVi
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Nama variasi",
                 placeHolder = "Nama variasi",
+                isError = state.variationUnitError.isNotBlank(),
+                errorMessage = state.variationUnitError
             )
             TextField(
                 value = state.variationPriceCapital,
@@ -94,11 +96,13 @@ fun AddVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductVi
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Harga modal",
                 placeHolder = "Masukkan harga modal",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
-                )
+                ),
+                isError = state.variationPriceCapitalError.isNotBlank(),
+                errorMessage = state.variationPriceCapitalError
             )
             TextField(
                 value = state.variationPrice,
@@ -111,11 +115,13 @@ fun AddVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductVi
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Harga normal",
                 placeHolder = "Masukkan harga normal",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
-                )
+                ),
+                isError = state.variationPriceError.isNotBlank(),
+                errorMessage = state.variationPriceError
             )
             TextField(
                 value = state.variationPriceGrocery,
@@ -128,11 +134,13 @@ fun AddVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductVi
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Harga grosir",
                 placeHolder = "Masukkan harga grosir",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
-                )
+                ),
+                isError = state.variationPriceGroceryError.isNotBlank(),
+                errorMessage = state.variationPriceGroceryError
             )
             TextField(
                 value = state.variationStock,
@@ -145,11 +153,13 @@ fun AddVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductVi
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Stok",
                 placeHolder = "Masukkan stok",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
-                )
+                ),
+                isError = state.variationStockError.isNotBlank(),
+                errorMessage = state.variationStockError
             )
             VerticalSpacer(height = 32.dp)
             FilledButton(
@@ -214,8 +224,10 @@ fun EditVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductV
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Nama variasi",
                 placeHolder = "Nama variasi",
+                isError = state.variationUnitError.isNotBlank(),
+                errorMessage = state.variationUnitError
             )
             TextField(
                 value = state.variationPriceCapital,
@@ -228,11 +240,13 @@ fun EditVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductV
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Harga modal",
                 placeHolder = "Masukkan harga modal",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
-                )
+                ),
+                isError = state.variationPriceCapitalError.isNotBlank(),
+                errorMessage = state.variationPriceCapitalError
             )
             TextField(
                 value = state.variationPrice,
@@ -245,11 +259,13 @@ fun EditVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductV
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Harga normal",
                 placeHolder = "Masukkan harga normal",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
-                )
+                ),
+                isError = state.variationPriceError.isNotBlank(),
+                errorMessage = state.variationPriceError
             )
             TextField(
                 value = state.variationPriceGrocery,
@@ -262,11 +278,13 @@ fun EditVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductV
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Harga grosir",
                 placeHolder = "Masukkan harga grosir",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
-                )
+                ),
+                isError = state.variationPriceGroceryError.isNotBlank(),
+                errorMessage = state.variationPriceGroceryError
             )
             TextField(
                 value = state.variationStock,
@@ -279,11 +297,13 @@ fun EditVariationDialog(modifier: Modifier = Modifier, viewModel: CreateProductV
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Stok",
                 placeHolder = "Masukkan stok",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
-                )
+                ),
+                isError = state.variationStockError.isNotBlank(),
+                errorMessage = state.variationStockError
             )
             VerticalSpacer(height = 32.dp)
             FilledButton(

@@ -31,7 +31,7 @@ val viewModelModule = module {
     viewModel { provideTransactionViewModel(get()) }
     viewModel { provideCategoryViewModel(get()) }
     viewModel { provideCustomerViewModel(get()) }
-    viewModel { provideProductViewModel(androidContext(), get()) }
+    viewModel { provideProductViewModel(get()) }
     viewModel { provideTransactionPaymentViewModel(get()) }
     viewModel { providePayTransactionViewModel(get()) }
     viewModel { provideCreateTransactionViewModel(get()) }
@@ -82,11 +82,9 @@ fun provideCustomerViewModel(
 }
 
 fun provideProductViewModel(
-    context: Context,
     useCaseManager: UseCaseManager,
 ): ProductsViewModel {
     return ProductsViewModel(
-        fileConverter = FileConverter(context = context),
         useCaseManager = useCaseManager
     )
 }

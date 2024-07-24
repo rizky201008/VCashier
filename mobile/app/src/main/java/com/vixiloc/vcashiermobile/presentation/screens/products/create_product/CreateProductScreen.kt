@@ -1,4 +1,5 @@
 package com.vixiloc.vcashiermobile.presentation.screens.products.create_product
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -199,7 +200,9 @@ fun CreateProductScreen(
                         onEvent(CreateProductEvent.ChangeInput(InputName.PRODUCT_NAME, it))
                     },
                     modifier = Modifier,
-                    title = "Nama Produk"
+                    title = "Nama Produk",
+                    isError = state.productNameError.isNotBlank(),
+                    errorMessage = state.productNameError
                 )
                 VerticalSpacer(height = 24.dp)
                 LongTextField(
@@ -208,7 +211,9 @@ fun CreateProductScreen(
                         onEvent(CreateProductEvent.ChangeInput(InputName.PRODUCT_DESCRIPTION, it))
                     },
                     modifier = Modifier,
-                    title = "Deskripsi Produk"
+                    title = "Deskripsi Produk",
+                    isError = state.productDescriptionError.isNotBlank(),
+                    errorMessage = state.productDescriptionError
                 )
 
                 var expanded by remember { mutableStateOf(false) }
@@ -321,6 +326,7 @@ fun CreateProductScreen(
                 visible = state.showSuccess,
                 onDismiss = {
                     onEvent(CreateProductEvent.ShowSuccessMessage(false))
+                    navController.navigateUp()
                 }
             )
             if (state.showAddVariation) {

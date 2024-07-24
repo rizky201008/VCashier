@@ -6,19 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.domain.model.categories.CategoriesResponseItem
 import com.vixiloc.vcashiermobile.domain.model.categories.toCategory
-import com.vixiloc.vcashiermobile.utils.FileConverter
-import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.domain.use_case.GetCategories
 import com.vixiloc.vcashiermobile.domain.use_case.GetProducts
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.vixiloc.vcashiermobile.utils.Resource
+import kotlinx.coroutines.launch
 
 class ProductsViewModel(
-    private val fileConverter: FileConverter,
     useCaseManager: UseCaseManager
 ) : ViewModel() {
-    val _state = mutableStateOf(ProductState())
+    private val _state = mutableStateOf(ProductState())
     val state: State<ProductState> = _state
 
     private val getProductsUseCase: GetProducts = useCaseManager.getProductsUseCase()
@@ -41,10 +38,17 @@ class ProductsViewModel(
             is ProductEvent.SelectCategory -> {
                 updateCategory(e.category)
             }
+
+            is ProductEvent.Refresh -> {
+                viewModelScope.launch {
+                    getCategories()
+                    getProducts()
+                }
+            }
         }
     }
 
-    val defaultCategory = CategoriesResponseItem(
+    private val defaultCategory = CategoriesResponseItem(
         id = 0,
         name = "Semua Kategori"
     )
@@ -53,38 +57,24 @@ class ProductsViewModel(
         _state.value = _state.value.copy(
             selectedCategory = category ?: defaultCategory
         )
-        if (category == null) {
-            getProducts()
-        } else {
-            getProductsUseCase().onEach { res ->
-                when (res) {
-                    is Resource.Loading -> {
-                        _state.value = _state.value.copy(isLoading = true)
-                    }
-
-                    is Resource.Success -> {
-                        val filteredProducts = res.data?.filter {
-                            it.category == category.toCategory()
-                        } ?: emptyList()
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            products = filteredProducts
-                        )
-                    }
-
-                    is Resource.Error -> {
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            error = res.message ?: "An unexpected error occurred"
-                        )
-                    }
+        viewModelScope.launch {
+            if (category == null) {
+                getProducts()
+            } else {
+                getProducts()
+                val filteredProducts = state.value.products.filter {
+                    it.category == category.toCategory()
                 }
-            }.launchIn(viewModelScope)
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    products = filteredProducts
+                )
+            }
         }
     }
 
-    private fun getCategories() {
-        getCategoriesUseCase().onEach { res ->
+    private suspend fun getCategories() {
+        getCategoriesUseCase().collect { res ->
             when (res) {
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(isLoading = true)
@@ -104,11 +94,11 @@ class ProductsViewModel(
                     )
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
-    private fun getProducts() {
-        getProductsUseCase().onEach { res ->
+    private suspend fun getProducts() {
+        getProductsUseCase().collect { res ->
             when (res) {
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(isLoading = true)
@@ -128,11 +118,13 @@ class ProductsViewModel(
                     )
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     init {
-        getCategories()
-        getProducts()
+        viewModelScope.launch {
+            getCategories()
+            getProducts()
+        }
     }
 }

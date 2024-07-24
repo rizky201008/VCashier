@@ -15,6 +15,7 @@ import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class CreateProductViewModel(
     useCaseManager: UseCaseManager,
@@ -23,7 +24,9 @@ class CreateProductViewModel(
     val getCategoriesUseCase = useCaseManager.getCategoriesUseCase()
     val createProductUseCase = useCaseManager.createProductUseCase()
     val createImageUseCase = useCaseManager.createImageUseCase()
-    val _state = mutableStateOf(CreateProductState())
+    val validateNotBlankUseCase = useCaseManager.validateNotBlankUseCase()
+    val validateNotEmptyUseCase = useCaseManager.validateNotEmptyUseCase()
+    private val _state = mutableStateOf(CreateProductState())
     val state: State<CreateProductState> = _state
 
     fun onEvent(e: CreateProductEvent) {
@@ -41,7 +44,7 @@ class CreateProductViewModel(
             }
 
             is CreateProductEvent.AddVariation -> {
-                addVariation()
+                validateVariationInputs(false)
             }
 
             is CreateProductEvent.ChangeInput -> {
@@ -89,7 +92,7 @@ class CreateProductViewModel(
             }
 
             is CreateProductEvent.CreateProduct -> {
-                createProduct()
+                validateProductInputs()
             }
 
             is CreateProductEvent.ChangeImage -> {
@@ -101,7 +104,7 @@ class CreateProductViewModel(
             }
 
             is CreateProductEvent.UpdateVariation -> {
-                updateVariation()
+                validateVariationInputs(true)
             }
 
             is CreateProductEvent.ShowEditVariationDialog -> {
@@ -201,16 +204,9 @@ class CreateProductViewModel(
         }.launchIn(viewModelScope)
     }
 
-    private fun createProduct() {
-        val data = CreateProductRequest(
-            name = state.value.productName,
-            description = state.value.productDescription,
-            variations = state.value.variations,
-            categoryId = state.value.selectedCategory?.id ?: 0,
-            id = null
-        )
+    private suspend fun createProduct(data: CreateProductRequest) {
 
-        createProductUseCase(data = data).onEach { resource ->
+        createProductUseCase(data = data).collect { resource ->
             when (resource) {
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(isLoading = true)
@@ -228,7 +224,6 @@ class CreateProductViewModel(
                         _state.value = _state.value.copy(
                             showSuccess = false
                         )
-                        createImage()
                     }
                 }
 
@@ -240,16 +235,16 @@ class CreateProductViewModel(
                     )
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
-    private fun createImage() {
+    private suspend fun createImage() {
         val file = fileConverter.uriToMultipartBody(uri = state.value.image, name = null)
         Log.d(TAG, "createImage: $file")
         createImageUseCase(
             productId = state.value.productId.toString(),
             image = file
-        ).onEach { resource ->
+        ).collect { resource ->
             when (resource) {
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(isLoading = true)
@@ -271,7 +266,85 @@ class CreateProductViewModel(
                     )
                 }
             }
-        }.launchIn(viewModelScope)
+        }
+    }
+
+    private fun validateVariationInputs(update: Boolean) {
+        val variationPrice = state.value.variationPrice
+        val variationPriceGrocery = state.value.variationPriceGrocery
+        val variationStock = state.value.variationStock
+        val variationUnit = state.value.variationUnit
+        val variationPriceCapital = state.value.variationPriceCapital
+
+        val variationPriceValidated = validateNotBlankUseCase(variationPrice)
+        val variationPriceGroceryValidated = validateNotBlankUseCase(variationPriceGrocery)
+        val variationStockValidated = validateNotBlankUseCase(variationStock)
+        val variationUnitValidated = validateNotBlankUseCase(variationUnit)
+        val variationPriceCapitalValidated = validateNotBlankUseCase(variationPriceCapital)
+
+        val hasError = listOf(
+            variationPriceValidated,
+            variationPriceGroceryValidated,
+            variationStockValidated,
+            variationUnitValidated,
+            variationPriceCapitalValidated
+        ).any { !it.successful }
+
+        if (hasError) {
+            _state.value = state.value.copy(
+                variationPriceError = variationPriceValidated.errorMessage ?: "",
+                variationPriceGroceryError = variationPriceGroceryValidated.errorMessage ?: "",
+                variationStockError = variationStockValidated.errorMessage ?: "",
+                variationUnitError = variationUnitValidated.errorMessage ?: "",
+                variationPriceCapitalError = variationPriceCapitalValidated.errorMessage ?: ""
+            )
+            return
+        }
+
+        if (update) {
+            updateVariation()
+            return
+        }
+        addVariation()
+    }
+
+    private fun validateProductInputs() {
+        val productName = state.value.productName
+        val productDescription = state.value.productDescription
+        val variations = state.value.variations
+
+        val productNameValidated = validateNotBlankUseCase(productName)
+        val productDescriptionValidated = validateNotBlankUseCase(productDescription)
+        val variationsValidated = validateNotEmptyUseCase(variations)
+
+        val hasError = listOf(
+            productNameValidated,
+            productDescriptionValidated,
+            variationsValidated
+        ).any { !it.successful }
+
+        if (hasError) {
+            _state.value = state.value.copy(
+                productNameError = productNameValidated.errorMessage ?: "",
+                productDescriptionError = productDescriptionValidated.errorMessage ?: "",
+                error = if (variationsValidated.errorMessage != null) "Wajib menambahkan minimal 1 variasi" else "",
+                showError = variationsValidated.errorMessage != null
+            )
+            return
+        }
+
+        val data = CreateProductRequest(
+            name = state.value.productName,
+            description = state.value.productDescription,
+            variations = state.value.variations,
+            categoryId = state.value.selectedCategory?.id ?: 0,
+            id = null
+        )
+
+        viewModelScope.launch {
+            createProduct(data)
+            createImage()
+        }
     }
 
     init {

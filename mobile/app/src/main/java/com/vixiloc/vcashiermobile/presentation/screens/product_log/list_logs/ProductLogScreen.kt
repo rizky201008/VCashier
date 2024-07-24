@@ -55,7 +55,7 @@ fun ProductLogScreen(
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.White),
                 title = {
                     Text(
-                        text = "Log Produk",
+                        text = "Log perubahan stok",
                         style = MaterialTheme.typography.titleMedium.copy(
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight(600)

@@ -78,7 +78,7 @@ fun AddLogDialog(
                         onEvent(AddProductLogEvent.ChangeInput(InputName.Info, it))
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    title = "",
+                    title = "Keterangan",
                     placeHolder = "Masukkan keterangan",
                     isError = state.logInfoError.isNotBlank(),
                     errorMessage = state.logInfoError
@@ -91,7 +91,7 @@ fun AddLogDialog(
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    title = "",
+                    title = "Jumlah stok",
                     placeHolder = "Masukkan jumlah stok",
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     isError = state.logAmountError.isNotBlank(),

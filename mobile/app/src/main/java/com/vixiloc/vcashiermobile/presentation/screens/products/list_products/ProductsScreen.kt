@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,6 +66,10 @@ fun ProductsScreen(modifier: Modifier = Modifier, onNavigate: (MainRoutes) -> Un
     val config = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
     val screenWidth = config.screenWidthDp.dp
+
+    LaunchedEffect(key1 = Unit) {
+        events(ProductEvent.Refresh)
+    }
 
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (mainContent, bottomButton) = createRefs()

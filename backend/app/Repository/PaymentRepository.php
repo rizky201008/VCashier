@@ -116,7 +116,7 @@ class PaymentRepository
             MidtransConfig::$isProduction = false;
             MidtransConfig::$isSanitized = true;
             MidtransConfig::$is3ds = true;
-            MidtransConfig::$overrideNotifUrl = env("BASE_URL");
+            MidtransConfig::$overrideNotifUrl = env("BASE_URL").'/api/midtrans';
             MidtransConfig::$curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;
             MidtransConfig::$curlOptions[CURLOPT_SSL_VERIFYPEER] = 0;
             MidtransConfig::$curlOptions[CURLOPT_HTTPHEADER] = [];

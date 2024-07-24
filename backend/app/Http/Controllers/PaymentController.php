@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Repository\PaymentRepository;
 use Illuminate\Http\JsonResponse;
+use Midtrans\Config as MidtransConfig;
 
 class PaymentController extends Controller
 {
@@ -51,9 +52,22 @@ class PaymentController extends Controller
 
     public function midtrans(Request $request): JsonResponse
     {
-        $data = $request->all();
-        $trxId = $data['order_id'];
-        $status = $data['transaction_status'];
+        $data = $request;
+
+        $this->updateStatus($data);
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'success'
+            ]
+        );
+    }
+
+    private function updateStatus($data)
+    {
+        $trxId = $data->order_id;
+        $status = $data->transaction_status;
 
         $transaction = Transaction::find($trxId);
 
@@ -76,7 +90,17 @@ class PaymentController extends Controller
             default:
                 break;
         }
+    }
 
+    public function checkStatus($id)
+    {
+        MidtransConfig::$serverKey = env("MIDTRANS_SERVER_KEY");
+        MidtransConfig::$isProduction = env("MIDTRANS_PRODUCTION");
+        MidtransConfig::$curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;
+        MidtransConfig::$curlOptions[CURLOPT_SSL_VERIFYPEER] = 0;
+        MidtransConfig::$curlOptions[CURLOPT_HTTPHEADER] = [];
+        $response = \Midtrans\Transaction::status($id);
+        $this->updateStatus($response);
         return response()->json(
             [
                 'status' => 'success',

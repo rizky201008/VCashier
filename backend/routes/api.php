@@ -72,13 +72,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('methods', [PaymentController::class, 'getPaymentMethods']);
         Route::post('make-payment', [PaymentController::class, 'createTransactionPayment']);
         Route::post('create-va', [PaymentController::class, 'createVa']);
+//        Route::get('check-status/{id}',[PaymentController::class, 'checkStatus']);
     });
     Route::prefix('product-logs')->group(function () {
         Route::get('all', [ProductLogsController::class, 'getAllLogs']);
         Route::post('add', [ProductLogsController::class, 'addLog']);
     });
 });
-
+Route::get('payment/check-status/{id}',[PaymentController::class, 'checkStatus']);
 Route::get('products', [ProductController::class, 'getProducts']);
 Route::get('products/{id}', [ProductController::class, 'getProduct']);
 Route::post('midtrans', [PaymentController::class, 'midtrans']);

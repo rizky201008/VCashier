@@ -146,4 +146,13 @@ class TransactionRepository
             ],
         ];
     }
+
+    public function updateTransaction(array $data): array
+    {
+        $transaction = Transaction::find($data['id']);
+        $transaction->update($data);
+        return [
+            'message' => 'Transaction updated'
+        ];
+    }
 }

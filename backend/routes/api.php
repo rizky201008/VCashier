@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/', [TransactionController::class, 'getTransactions']);
         Route::get('/{id}', [TransactionController::class, 'getTransaction']);
         Route::post('/', [TransactionController::class, 'createTransaction']);
+        Route::put('/', [TransactionController::class, 'updateTransaction']);
     });
     Route::prefix('users')->group(function () {
         Route::get('role', [UserController::class, 'getRole']);

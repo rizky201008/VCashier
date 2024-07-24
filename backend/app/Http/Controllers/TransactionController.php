@@ -52,6 +52,11 @@ class TransactionController extends Controller
         return response()->json($this->transactionRepository->processTransaction($data));
     }
 
+    public function updateTransaction(Request $request): JsonResponse
+    {
+        return response()->json($this->transactionRepository->updateTransaction($request->all()));
+    }
+
     public function transactionReports(): JsonResponse
     {
         return response()->json($this->transactionRepository->transactionReports());

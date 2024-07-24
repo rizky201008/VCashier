@@ -98,7 +98,7 @@ class PaymentRepository
         foreach ($transaction->items as $item) {
             $data['item_details'][] = [
                 'id' => "$item->id",
-                'price' => $item->subtotal,
+                'price' => $item->price,
                 'quantity' => $item->quantity,
                 'name' => $item->productVariation->product->name . ' ' . $item->productVariation->unit
             ];

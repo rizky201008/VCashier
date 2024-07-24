@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::get('products', [ProductController::class, 'getProducts']);
 Route::get('products/{id}', [ProductController::class, 'getProduct']);
+Route::post('midtrans', [PaymentController::class, 'midtrans']);
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);

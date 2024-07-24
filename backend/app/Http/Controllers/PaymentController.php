@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Repository\PaymentRepository;
 use Illuminate\Http\JsonResponse;
@@ -46,5 +47,41 @@ class PaymentController extends Controller
             'message' => 'VA created',
             'va' => $va
         ]);
+    }
+
+    public function midtrans(Request $request): JsonResponse
+    {
+        $data = $request->all();
+        $trxId = $data['order_id'];
+        $status = $data['transaction_status'];
+
+        $transaction = Transaction::find($trxId);
+
+        switch ($status) {
+            case 'settlement':
+                $transaction->update([
+                    'payment_status' => 'paid',
+                    'transaction_status' => 'completed'
+                ]);
+                break;
+
+            case 'cancel':
+            case 'expire':
+                $transaction->update([
+                    'payment_status' => 'canceled',
+                    'transaction_status' => 'canceled'
+                ]);
+                break;
+
+            default:
+                break;
+        }
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'success'
+            ]
+        );
     }
 }

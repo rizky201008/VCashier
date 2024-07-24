@@ -61,7 +61,6 @@ fun TransactionsScreen(
     val status: List<String> = listOf(
         "semua",
         "pending",
-        "shipping",
         "canceled",
         "completed",
         "draft"

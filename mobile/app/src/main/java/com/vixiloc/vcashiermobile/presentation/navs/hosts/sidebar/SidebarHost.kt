@@ -18,8 +18,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,13 +42,11 @@ import com.vixiloc.vcashiermobile.presentation.components.PainterIconButton
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoriesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomersScreen
-import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesEvent
 import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.list_products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionsScreen
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

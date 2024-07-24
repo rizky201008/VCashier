@@ -8,7 +8,10 @@ import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductIm
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -35,8 +38,13 @@ interface ProductsRepository {
 
     suspend fun updateProduct(
         token: String,
-        data: CreateProductRequestDto
+        data: UpdateProductRequestDto
     ): UpdateProductResponseDto
+
+    suspend fun updateVariation(
+        token: String,
+        data: UpdateProductVariationRequestDto
+    ): UpdateProductVariationResponseDto
 
     suspend fun getProduct(
         token: String,

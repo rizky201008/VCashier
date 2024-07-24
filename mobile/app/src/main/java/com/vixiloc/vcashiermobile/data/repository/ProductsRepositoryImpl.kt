@@ -9,7 +9,10 @@ import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductIm
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationResponseDto
 import com.vixiloc.vcashiermobile.domain.repository.ProductsRepository
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,7 +39,7 @@ class ProductsRepositoryImpl(private val apiService: ApiService) : ProductsRepos
 
     override suspend fun updateProduct(
         token: String,
-        data: CreateProductRequestDto
+        data: UpdateProductRequestDto
     ): UpdateProductResponseDto {
         return apiService.updateProduct(token = "Bearer $token", data = data)
     }
@@ -62,5 +65,12 @@ class ProductsRepositoryImpl(private val apiService: ApiService) : ProductsRepos
         newImage: MultipartBody.Part
     ): CreateUpdateProductImageResponseDto {
         return apiService.updateImage("Bearer $token", productId = productId, newImage = newImage)
+    }
+
+    override suspend fun updateVariation(
+        token: String,
+        data: UpdateProductVariationRequestDto
+    ): UpdateProductVariationResponseDto {
+        return apiService.updateVariation("Bearer $token", data)
     }
 }

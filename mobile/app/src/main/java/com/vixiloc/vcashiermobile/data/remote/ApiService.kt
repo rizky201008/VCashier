@@ -3,8 +3,10 @@ package com.vixiloc.vcashiermobile.data.remote
 import com.vixiloc.vcashiermobile.data.remote.Routes.ADD_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
 import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
+import com.vixiloc.vcashiermobile.data.remote.Routes.GET_PRODUCT
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGOUT
+import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_CHECK_STATUS
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_CREATE_VA
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_MAKE
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_METHODS
@@ -16,6 +18,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.RESET_PASSWORD
 import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.USERS_LIST
+import com.vixiloc.vcashiermobile.data.remote.Routes.VARIATIONS
 import com.vixiloc.vcashiermobile.data.remote.dto.categories.CategoriesResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionRequestDto
@@ -32,6 +35,7 @@ import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRegisterResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LogoutResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.ResetPasswordResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.payments.CheckPaymentStatusResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.CreateVaRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.CreateVaResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.MakePaymentRequestDto
@@ -42,10 +46,14 @@ import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.CreateProductLogs
 import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.ProductLogsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.users.UsersResponseDto
+import com.vixiloc.vcashiermobile.domain.model.products.UpdateProductVariationRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -79,7 +87,7 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): ProductsResponseDto
 
-    @GET("$PRODUCTS/{id}")
+    @GET(GET_PRODUCT)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun getProduct(
         @Header("Authorization") token: String,
@@ -97,8 +105,15 @@ interface ApiService {
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun updateProduct(
         @Header("Authorization") token: String,
-        @Body data: CreateProductRequestDto
+        @Body data: UpdateProductRequestDto
     ): UpdateProductResponseDto
+
+    @PUT(VARIATIONS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun updateVariation(
+        @Header("Authorization") token: String,
+        @Body data: UpdateProductVariationRequestDto
+    ): UpdateProductVariationResponseDto
 
     @Multipart
     @POST(ADD_IMAGE)
@@ -199,6 +214,13 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body data: CreateVaRequestDto
     ): CreateVaResponseDto
+
+    @GET(PAYMENT_CHECK_STATUS)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun checkPaymentStatus(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): CheckPaymentStatusResponseDto
 
     @GET(USERS_LIST)
     @Headers("Content-Type: application/json", "Accept: application/json")

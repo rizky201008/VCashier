@@ -35,8 +35,8 @@ import androidx.compose.material3.TextField as TextFieldCompose
 fun TextField(
     value: String,
     onValueChanged: (String) -> Unit,
-    modifier: Modifier,
-    title: String,
+    modifier: Modifier = Modifier,
+    title: String? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     textStyle: TextStyle = MaterialTheme.typography.bodySmall,
@@ -51,8 +51,10 @@ fun TextField(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        Text(text = title, style = textStyle.copy(fontWeight = FontWeight(600)))
-        VerticalSpacer(height = 9.dp)
+        title?.let {
+            Text(text = it, style = textStyle.copy(fontWeight = FontWeight(600)))
+            VerticalSpacer(height = 9.dp)
+        }
         TextFieldCompose(
             modifier = Modifier
                 .fillMaxWidth()

@@ -32,6 +32,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.domain.model.customers.CustomerResponseItem
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
+import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.FloatingTransactionButton
 import com.vixiloc.vcashiermobile.presentation.components.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
@@ -155,14 +156,15 @@ fun CheckoutScreen(
                     .padding(horizontal = 24.dp, vertical = 14.dp),
                 contentAlignment = Alignment.Center
             ) {
-                FloatingTransactionButton(
-                    modifier = Modifier,
+                FilledButton(
                     onClick = {
                         onEvent(CheckoutScreenEvent.CreateTransaction)
                     },
-                    icon = Icons.Outlined.ShoppingCart,
-                    textStart = "${state.cartItems.count()} Item",
-                    textEnd = CurrencyFormatter.formatCurrency(state.cartItems.sumOf { it.price })
+                    text = "Pembayaran",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                    ,
+                    textStyle = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight(600))
                 )
             }
 

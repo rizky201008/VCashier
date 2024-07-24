@@ -108,6 +108,12 @@ class UseCaseManager(
         httpHandler = httpHandler()
     )
 
+    fun updateProductVariationUseCase() = UpdateProductVariation(
+        repository = productsRepository,
+        getToken = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
+
     fun createTransactionUseCase() = CreateTransaction(
         repository = transactionRepository,
         getToken = getTokenUseCase(),
@@ -194,6 +200,12 @@ class UseCaseManager(
 
     fun createProductLogsUseCase() = CreateProductLogs(
         repository = productsRepository,
+        token = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
+
+    fun checkPaymentStatusUseCase() = CheckPaymentStatus(
+        repository = paymentsRepository,
         token = getTokenUseCase(),
         httpHandler = httpHandler()
     )

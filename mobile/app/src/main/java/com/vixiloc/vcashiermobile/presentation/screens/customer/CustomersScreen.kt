@@ -1,5 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.screens.customer
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -47,7 +48,6 @@ fun CustomersScreen(
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    bottom.linkTo(addButton.top)
                 }
         ) {
             SearchTextField(
@@ -89,17 +89,23 @@ fun CustomersScreen(
             }
         }
 
-        FilledButton(
-            onClick = {
-                events(CustomerEvent.ShowCreateModal(true))
-            },
-            text = "Tambah Pelanggan",
+        Box(
             modifier = Modifier.constrainAs(addButton) {
-                top.linkTo(parent.bottom)
+                bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start, margin = 10.dp)
                 end.linkTo(parent.end, margin = 10.dp)
                 width = Dimension.matchParent
             })
+        {
+            FilledButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    events(CustomerEvent.ShowCreateModal(true))
+                },
+                text = "Tambah Pelanggan",
+            )
+
+        }
 
         MessageAlert(
             type = AlertType.ERROR,

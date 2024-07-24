@@ -65,11 +65,11 @@ import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.TextField
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.screens.category.components.FilledIconButton
-import com.vixiloc.vcashiermobile.presentation.screens.products.components.AddVariationDialog
-import com.vixiloc.vcashiermobile.presentation.screens.products.components.DeleteVariationDialog
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.DropdownMenu
-import com.vixiloc.vcashiermobile.presentation.screens.products.components.EditVariationDialog
 import com.vixiloc.vcashiermobile.presentation.screens.products.components.VariationItem
+import com.vixiloc.vcashiermobile.presentation.screens.products.create_product.components.AddVariationDialog
+import com.vixiloc.vcashiermobile.presentation.screens.products.create_product.components.DeleteVariationDialog
+import com.vixiloc.vcashiermobile.presentation.screens.products.create_product.components.EditVariationDialog
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 

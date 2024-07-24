@@ -29,7 +29,7 @@ data class VariationDto(
     @SerializedName("id")
     val id: Int? = null,
     @SerializedName("price_capital")
-    val priceCapital: Int? = null
+    val priceCapital: Int
 )
 
 fun VariationDto.toDomain(): Variation {
@@ -38,6 +38,7 @@ fun VariationDto.toDomain(): Variation {
         priceGrocery = priceGrocery,
         stock = stock,
         unit = unit,
-        id = id
+        id = id,
+        priceCapital = priceCapital
     )
 }

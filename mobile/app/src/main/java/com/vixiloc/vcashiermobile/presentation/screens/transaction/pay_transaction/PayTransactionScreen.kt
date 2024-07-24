@@ -2,8 +2,6 @@ package com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transact
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,7 +47,6 @@ import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
-import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryEvent
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -63,7 +60,7 @@ fun PayTransactionScreen(
     val id = navArgs.id
     val viewModel: PayTransactionViewModel = koinViewModel()
     val state = viewModel.state.value
-    val onEvent = viewModel::oneEvent
+    val onEvent = viewModel::onEvent
     val config = LocalConfiguration.current
     val screenWidth = config.screenWidthDp.dp
     val halfScreenWidth = (config.screenWidthDp / 2).dp
@@ -253,7 +250,7 @@ fun PayTransactionScreen(
             ) {
                 FilledButton(
                     onClick = {
-
+                        onEvent(PayTransactionEvent.CheckPaymentStatus(id))
                     },
                     text = "Cek Status",
                     modifier = Modifier.fillMaxWidth(),

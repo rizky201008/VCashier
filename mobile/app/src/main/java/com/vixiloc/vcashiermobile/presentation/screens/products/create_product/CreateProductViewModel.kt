@@ -146,7 +146,8 @@ class CreateProductViewModel(
         price = state.value.variationPrice.toInt(),
         priceGrocery = state.value.variationPriceGrocery.toInt(),
         stock = state.value.variationStock.toInt(),
-        unit = state.value.variationUnit
+        unit = state.value.variationUnit,
+        priceCapital = state.value.variationPriceCapital.toInt()
     )
 
     private fun deleteVariation() {

@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -170,10 +171,11 @@ fun CreateTransactionScreen(
                 }
             }
 
-            FloatingTransactionButton(
+            FilledButton(
                 onClick = {
                     onNavigate(MainRoutes.NavDrawerScreens.Transactions.Checkout)
                 },
+                text = "Checkout",
                 modifier = Modifier
                     .fillMaxWidth()
                     .constrainAs(cartInfo) {
@@ -181,9 +183,7 @@ fun CreateTransactionScreen(
                         end.linkTo(products.end)
                         bottom.linkTo(products.bottom, margin = 24.dp)
                     },
-                textStart = "${state.cartItems.count()} Item",
-                textEnd = CurrencyFormatter.formatCurrency(state.cartItems.sumOf { it.price }),
-                icon = Icons.Outlined.ShoppingCart
+                textStyle = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight(600))
             )
         }
 

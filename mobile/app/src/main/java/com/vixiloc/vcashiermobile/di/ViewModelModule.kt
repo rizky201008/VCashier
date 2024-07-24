@@ -12,6 +12,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.product_log.add_logs.AddP
 import com.vixiloc.vcashiermobile.presentation.screens.product_log.list_logs.ProductLogViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.products.list_products.ProductsViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.products.create_product.CreateProductViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.products.update_product.UpdateProductViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.CheckoutScreenViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionViewModel
@@ -45,6 +46,7 @@ val viewModelModule = module {
     }
     viewModel { provideAddProductLogViewModel(get()) }
     viewModel { provideSidebarViewModel(get()) }
+    viewModel { provideUpdateProductViewModel(get(), androidContext()) }
 }
 
 fun provideLoginViewModel(useCaseManager: UseCaseManager): LoginViewModel {
@@ -121,3 +123,6 @@ fun provideAddProductLogViewModel(useCaseManager: UseCaseManager) =
 
 fun provideSidebarViewModel(useCaseManager: UseCaseManager) =
     SidebarViewModel(useCaseManager = useCaseManager)
+
+fun provideUpdateProductViewModel(useCaseManager: UseCaseManager, context: Context) =
+    UpdateProductViewModel(ucm = useCaseManager, fileConverter = FileConverter(context = context))

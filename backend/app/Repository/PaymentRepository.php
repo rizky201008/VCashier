@@ -113,7 +113,7 @@ class PaymentRepository
 
         try {
             MidtransConfig::$serverKey = env("MIDTRANS_SERVER_KEY");
-            MidtransConfig::$isProduction = false;
+            MidtransConfig::$isProduction = env("MIDTRANS_PRODUCTION");
             MidtransConfig::$isSanitized = true;
             MidtransConfig::$is3ds = true;
             MidtransConfig::$overrideNotifUrl = env("BASE_URL").'/api/midtrans';

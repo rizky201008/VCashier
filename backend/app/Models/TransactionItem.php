@@ -26,14 +26,6 @@ class TransactionItem extends Model
         return $this->belongsTo(Transaction::class);
     }
 
-    protected function price(): Attribute
-    {
-        return Attribute::make(
-            get: fn(string $value) => "Rp" . number_format($value, 0, ',', '.'),
-            set: fn(string $value) => (int)preg_replace("/[^0-9]/", "", $value)
-        );
-    }
-
     public function productVariation(): BelongsTo
     {
         return $this->belongsTo(ProductVariation::class, 'product_variation_id', 'id');

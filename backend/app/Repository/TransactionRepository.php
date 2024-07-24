@@ -84,7 +84,7 @@ class TransactionRepository
                 'product_variation_id' => $item['id'],
                 'quantity' => $item['quantity'],
                 'price' => $price,
-                'subtotal' => $this->getPriceByQuantity($item['quantity'], $productVariation->price),
+                'subtotal' => $this->getPriceByQuantity($item['quantity'], $price),
                 'profit' => $this->getProfit($capital, $item['quantity'],$price),
             ];
             $productRepository->decreaseStock($item['id'], $item['quantity']);

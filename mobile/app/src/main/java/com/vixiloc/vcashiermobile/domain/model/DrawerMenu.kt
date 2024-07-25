@@ -18,7 +18,12 @@ data class DrawerMenu(
 )
 
 val listDrawer = listOf(
-    DrawerMenu(name = "Home", icon = Icons.Outlined.Home, route = MainRoutes.NavDrawerScreens.Home),
+    DrawerMenu(
+        name = "Home",
+        icon = Icons.Outlined.Home,
+        route = MainRoutes.NavDrawerScreens.Home,
+        role = listOf("admin", "cashier", "warehouse")
+    ),
     DrawerMenu(
         name = "Transaksi",
         icon = Icons.AutoMirrored.Outlined.ViewList,

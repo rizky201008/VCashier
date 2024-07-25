@@ -41,6 +41,10 @@ class SidebarViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             is SidebarEvent.ChangePageTitle -> {
                 _state.value = state.value.copy(pageTitle = event.title)
             }
+
+            is SidebarEvent.SetLogoutSuccess -> {
+                _state.value = state.value.copy(logoutSuccess = event.success)
+            }
         }
     }
 

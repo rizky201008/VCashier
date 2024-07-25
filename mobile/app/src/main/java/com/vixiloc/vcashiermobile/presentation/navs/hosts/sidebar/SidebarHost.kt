@@ -213,6 +213,7 @@ fun SidebarHost(
 
                 if (state.logoutSuccess) {
                     LaunchedEffect(key1 = Unit) {
+                        onEvent(SidebarEvent.SetLogoutSuccess(false))
                         navHostController.popBackStack()
                         onNavigate(MainRoutes.LoginScreen)
                     }

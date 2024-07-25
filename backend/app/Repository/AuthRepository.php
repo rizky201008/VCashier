@@ -26,7 +26,8 @@ class AuthRepository
 
             return response()->json([
                 'message' => 'Login success',
-                'token' => $token
+                'token' => $token,
+                'role' => $user->role
             ]);
         } else {
             return response()->json([
@@ -39,12 +40,13 @@ class AuthRepository
     {
         $created = $this->createUser($data);
 
-        $ability = ($created->role == 'admin') ? 'admin' : 'password';
+        $ability = $created->role;
         $token = $created->createToken('access-token', [$ability]);
 
         return response()->json([
             'message' => 'Create account success',
-            'token' => $token->plainTextToken
+            'token' => $token->plainTextToken,
+            'role' => $created->role
         ], 200);
     }
 

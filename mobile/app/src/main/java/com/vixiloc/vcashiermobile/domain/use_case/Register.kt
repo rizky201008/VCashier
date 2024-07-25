@@ -1,14 +1,14 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
 import android.util.Log
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.toDomain
+import com.vixiloc.vcashiermobile.domain.model.auth.RegisterRequest
+import com.vixiloc.vcashiermobile.domain.model.auth.RegisterResponse
+import com.vixiloc.vcashiermobile.domain.model.auth.toDto
+import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import com.vixiloc.vcashiermobile.utils.HttpHandler
 import com.vixiloc.vcashiermobile.utils.Resource
 import com.vixiloc.vcashiermobile.utils.Strings.TAG
-import com.vixiloc.vcashiermobile.data.remote.dto.auth.toDomain
-import com.vixiloc.vcashiermobile.domain.model.auth.LoginRegisterResponse
-import com.vixiloc.vcashiermobile.domain.model.auth.RegisterRequest
-import com.vixiloc.vcashiermobile.domain.model.auth.toDto
-import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
@@ -20,7 +20,7 @@ class Register(
     private val saveToken: SaveToken
 ) {
 
-    operator fun invoke(data: RegisterRequest): Flow<Resource<LoginRegisterResponse>> = flow {
+    operator fun invoke(data: RegisterRequest): Flow<Resource<RegisterResponse>> = flow {
         try {
             Log.d(TAG, "login invoke: called")
             emit(Resource.Loading())

@@ -4,6 +4,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.ADD_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
 import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
 import com.vixiloc.vcashiermobile.data.remote.Routes.GET_PRODUCT
+import com.vixiloc.vcashiermobile.data.remote.Routes.GET_ROLE
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGOUT
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_CHECK_STATUS
@@ -31,9 +32,10 @@ import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductIm
 import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.customers.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRegisterResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LogoutResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.ResetPasswordResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.CheckPaymentStatusResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.CreateVaRequestDto
@@ -54,9 +56,8 @@ import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariatio
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.users.GetRoleResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.users.UsersResponseDto
-import com.vixiloc.vcashiermobile.domain.model.products.UpdateProductVariationRequest
-import com.vixiloc.vcashiermobile.domain.model.transactions.UpdateTransactionResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -74,11 +75,11 @@ interface ApiService {
 
     @POST(LOGIN)
     @Headers("Content-Type: application/json", "Accept: application/json")
-    suspend fun login(@Body data: LoginRequestDto): LoginRegisterResponseDto
+    suspend fun login(@Body data: LoginRequestDto): LoginResponseDto
 
     @POST(REGISTER)
     @Headers("Content-Type: application/json", "Accept: application/json")
-    suspend fun register(@Body data: RegisterRequestDto): LoginRegisterResponseDto
+    suspend fun register(@Body data: RegisterRequestDto): RegisterResponseDto
 
     @POST(LOGOUT)
     @Headers("Content-Type: application/json", "Accept: application/json")
@@ -110,6 +111,12 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body data: UpdateProductRequestDto
     ): UpdateProductResponseDto
+
+    @GET(GET_ROLE)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun getRole(
+        @Header("Authorization") token: String,
+    ): GetRoleResponseDto
 
     @PUT(VARIATIONS)
     @Headers("Content-Type: application/json", "Accept: application/json")

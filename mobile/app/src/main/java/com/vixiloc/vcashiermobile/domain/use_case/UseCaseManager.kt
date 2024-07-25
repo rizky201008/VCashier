@@ -23,7 +23,12 @@ class UseCaseManager(
     fun httpHandler() = HttpHandler()
     private fun saveToken() = SaveToken(repository = dataStoreRepository)
     fun loginUseCase() =
-        Login(repository = authRepository, httpHandler = httpHandler(), saveToken = saveToken())
+        Login(
+            repository = authRepository,
+            httpHandler = httpHandler(),
+            saveToken = saveToken(),
+            saveRole = saveRoleUseCase()
+        )
 
     fun registerUseCase() =
         Register(repository = authRepository, httpHandler = httpHandler(), saveToken = saveToken())
@@ -32,7 +37,8 @@ class UseCaseManager(
         repository = authRepository,
         token = getTokenUseCase(),
         saveToken = saveToken(),
-        httpHandler = httpHandler()
+        httpHandler = httpHandler(),
+        saveRole = saveRoleUseCase()
     )
 
     fun getTokenUseCase() = GetToken(repository = dataStoreRepository)
@@ -214,5 +220,20 @@ class UseCaseManager(
         repository = transactionRepository,
         getToken = getTokenUseCase(),
         httpHandler = httpHandler()
+    )
+
+    fun getRolesUseCase() = GetRole(
+        repository = dataStoreRepository,
+    )
+
+    fun saveRoleUseCase() = SaveRole(
+        repository = dataStoreRepository
+    )
+
+    fun fetchRoleUseCase() = FetchRole(
+        repository = userRepository,
+        httpHandler = httpHandler(),
+        getToken = getTokenUseCase(),
+        saveRole = saveRoleUseCase()
     )
 }

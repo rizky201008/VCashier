@@ -1,19 +1,24 @@
 package com.vixiloc.vcashiermobile.presentation.navs.hosts.sidebar
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vixiloc.vcashiermobile.domain.model.getListDrawer
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import com.vixiloc.vcashiermobile.utils.Resource
+import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class SidebarViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
     private val _state = mutableStateOf(SidebarState())
     val state: State<SidebarState> = _state
     val logoutUseCase = useCaseManager.logoutUseCase()
+    val getRolesUseCase = useCaseManager.getRolesUseCase()
 
     fun onEvent(event: SidebarEvent) {
         when (event) {
@@ -60,5 +65,18 @@ class SidebarViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun getRoles() {
+        viewModelScope.launch {
+            getRolesUseCase().collect { role ->
+                val listDrawer = getListDrawer(role)
+                _state.value = state.value.copy(role = role, listDrawer = listDrawer)
+            }
+        }
+    }
+
+    init {
+        getRoles()
     }
 }

@@ -52,10 +52,10 @@ fun MainHost(
                 onNavigate = { nav ->
                     if (nav == MainRoutes.LoginScreen) {
                         navHostController.popBackStack()
+                        navHostController.navigate(MainRoutes.SplashScreen)
+                    } else {
                         navHostController.navigate(nav)
-                        return@SidebarHost
                     }
-                    navHostController.navigate(nav)
                 },
                 modifier = modifier,
                 viewModel = sideBarViewModel

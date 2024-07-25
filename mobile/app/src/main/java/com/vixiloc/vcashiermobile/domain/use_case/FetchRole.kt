@@ -1,32 +1,28 @@
 package com.vixiloc.vcashiermobile.domain.use_case
 
-import android.util.Log
+import com.vixiloc.vcashiermobile.data.remote.dto.users.toDomain
+import com.vixiloc.vcashiermobile.domain.model.user.GetRoleResponse
+import com.vixiloc.vcashiermobile.domain.repository.UserRepository
 import com.vixiloc.vcashiermobile.utils.HttpHandler
 import com.vixiloc.vcashiermobile.utils.Resource
-import com.vixiloc.vcashiermobile.utils.Strings.TAG
-import com.vixiloc.vcashiermobile.data.remote.dto.auth.toDomain
-import com.vixiloc.vcashiermobile.domain.model.auth.LoginRequest
-import com.vixiloc.vcashiermobile.domain.model.auth.LoginResponse
-import com.vixiloc.vcashiermobile.domain.model.auth.toLoginRequestDto
-import com.vixiloc.vcashiermobile.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 
-class Login(
-    private val repository: AuthRepository,
+class FetchRole(
+    private val repository: UserRepository,
     private val httpHandler: HttpHandler,
-    private val saveToken: SaveToken,
+    private val getToken: GetToken,
     private val saveRole: SaveRole
 ) {
+    operator fun invoke(): Flow<Resource<GetRoleResponse>> = flow {
+        val token = getToken().first()
 
-    operator fun invoke(data: LoginRequest): Flow<Resource<LoginResponse>> = flow {
         try {
-            Log.d(TAG, "login invoke: called")
             emit(Resource.Loading())
-            val response = repository.login(data = data.toLoginRequestDto())
-            saveToken(response.token)
+            val response = repository.getRole(token)
             saveRole(response.role)
             emit(Resource.Success(response.toDomain()))
         } catch (e: HttpException) {

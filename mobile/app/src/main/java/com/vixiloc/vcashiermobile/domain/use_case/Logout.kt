@@ -15,6 +15,7 @@ class Logout(
     private val repository: AuthRepository,
     private val token: GetToken,
     private val saveToken: SaveToken,
+    private val saveRole: SaveRole,
     private val httpHandler: HttpHandler
 ) {
     operator fun invoke(): Flow<Resource<LogoutResponse>> = flow {
@@ -23,6 +24,7 @@ class Logout(
         try {
             val response = repository.logout(token)
             saveToken("")
+            saveRole("")
             emit(Resource.Success(response.toDomain()))
         } catch (e: HttpException) {
             val errorMessage = httpHandler.handleHttpException(e)

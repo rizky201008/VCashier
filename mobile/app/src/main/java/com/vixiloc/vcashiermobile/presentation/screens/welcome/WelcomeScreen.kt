@@ -20,8 +20,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.R
+import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.Loading
+import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionEvent
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -76,7 +79,17 @@ fun WelcomeScreen(
                 )
             )
 
-            Loading(modifier = Modifier, visible = true)
+            Loading(modifier = Modifier, visible = state.isLoading)
+            MessageAlert(
+                type = AlertType.ERROR,
+                message = state.error,
+                title = "Error",
+                modifier = Modifier,
+                visible = state.showError,
+                onDismiss = {
+                    viewModel.showError(false)
+                }
+            )
         }
     }
 }

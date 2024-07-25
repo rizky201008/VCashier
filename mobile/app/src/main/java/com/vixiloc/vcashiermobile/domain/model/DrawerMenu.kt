@@ -13,7 +13,8 @@ import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 data class DrawerMenu(
     val name: String,
     val icon: ImageVector,
-    val route: MainRoutes
+    val route: MainRoutes,
+    val role: List<String> = listOf("admin")
 )
 
 val listDrawer = listOf(
@@ -21,26 +22,48 @@ val listDrawer = listOf(
     DrawerMenu(
         name = "Transaksi",
         icon = Icons.AutoMirrored.Outlined.ViewList,
-        route = MainRoutes.NavDrawerScreens.Transactions
+        route = MainRoutes.NavDrawerScreens.Transactions,
+        role = listOf("admin", "cashier")
     ),
     DrawerMenu(
         name = "Kategori",
         icon = Icons.Outlined.ShoppingCart,
-        route = MainRoutes.NavDrawerScreens.Categories
+        route = MainRoutes.NavDrawerScreens.Categories,
+        role = listOf("admin", "warehouse")
     ),
     DrawerMenu(
         name = "Pelanggan",
         icon = Icons.Outlined.Person,
-        route = MainRoutes.NavDrawerScreens.Customers
+        route = MainRoutes.NavDrawerScreens.Customers,
+        role = listOf("admin", "cashier")
     ),
     DrawerMenu(
         name = "Produk",
         icon = Icons.Outlined.Square,
-        route = MainRoutes.NavDrawerScreens.Products
+        route = MainRoutes.NavDrawerScreens.Products,
+        role = listOf("admin", "warehouse")
     ),
     DrawerMenu(
         name = "Pegawai",
         icon = Icons.Outlined.PeopleOutline,
-        route = MainRoutes.NavDrawerScreens.Employees
+        route = MainRoutes.NavDrawerScreens.Employees,
+        role = listOf("admin")
     )
 )
+
+fun getListDrawer(role: String): List<DrawerMenu> {
+    return when (role) {
+        "admin" -> listDrawer
+        "cashier" -> listDrawer.filter {
+            it.role.contains("cashier")
+        }
+
+        "warehouse" -> listDrawer.filter {
+            it.role.contains("warehouse")
+        }
+
+        else -> {
+            emptyList()
+        }
+    }
+}

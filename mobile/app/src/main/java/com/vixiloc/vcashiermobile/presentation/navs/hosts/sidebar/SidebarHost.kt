@@ -32,7 +32,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.guru.fontawesomecomposelib.FaIcons
 import com.vixiloc.vcashiermobile.R
-import com.vixiloc.vcashiermobile.domain.model.listDrawer
+import com.vixiloc.vcashiermobile.domain.model.getListDrawer
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.IconButton
@@ -65,7 +65,7 @@ fun SidebarHost(
     val currentRoute = navBackStackEntry?.destination?.route
 
     currentRoute?.let { route ->
-        val matchedItem = listDrawer.find {
+        val matchedItem = state.listDrawer.find {
             it.name == route
         }
 
@@ -87,7 +87,7 @@ fun SidebarHost(
                         .align(Alignment.End)
                 )
                 Spacer(Modifier.height(12.dp))
-                listDrawer.forEach { item ->
+                state.listDrawer.forEach { item ->
                     NavigationDrawerItem(
                         icon = { Icon(item.icon, contentDescription = null) },
                         label = { Text(item.name) },

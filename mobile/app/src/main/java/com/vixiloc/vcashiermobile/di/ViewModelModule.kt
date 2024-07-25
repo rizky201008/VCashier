@@ -7,6 +7,7 @@ import com.vixiloc.vcashiermobile.presentation.navs.hosts.sidebar.SidebarViewMod
 import com.vixiloc.vcashiermobile.presentation.screens.category.CategoryViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.customer.CustomerViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.home.HomeViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.login.LoginViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.product_log.add_logs.AddProductLogViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.product_log.list_logs.ProductLogViewModel
@@ -47,6 +48,7 @@ val viewModelModule = module {
     viewModel { provideAddProductLogViewModel(get()) }
     viewModel { provideSidebarViewModel(get()) }
     viewModel { provideUpdateProductViewModel(get(), androidContext()) }
+    viewModel { provideHomeViewModel(get()) }
 }
 
 fun provideLoginViewModel(useCaseManager: UseCaseManager): LoginViewModel {
@@ -124,3 +126,6 @@ fun provideSidebarViewModel(useCaseManager: UseCaseManager) =
 
 fun provideUpdateProductViewModel(useCaseManager: UseCaseManager, context: Context) =
     UpdateProductViewModel(ucm = useCaseManager, fileConverter = FileConverter(context = context))
+
+fun provideHomeViewModel(useCaseManager: UseCaseManager) =
+    HomeViewModel(ucm = useCaseManager)

@@ -30,6 +30,9 @@ sealed interface MainRoutes {
 
             @Serializable
             data class MakePayment(val transactionId: String) : MainRoutes
+
+            @Serializable
+            data object CreateTransaction : MainRoutes
         }
 
         @Serializable

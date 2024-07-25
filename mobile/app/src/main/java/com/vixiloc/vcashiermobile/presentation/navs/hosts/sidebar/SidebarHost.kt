@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -147,18 +148,14 @@ fun SidebarHost(
                 ) {
                     composable<MainRoutes.NavDrawerScreens.Home> {
                         HomeScreen(
-                            modifier = screenModifier,
-                            onNavigate = onNavigate
+                            modifier = screenModifier
                         )
                     }
                     composable<MainRoutes.NavDrawerScreens.Transactions> {
                         TransactionsScreen(
                             modifier = screenModifier,
                             onNavigate = onNavigate,
-                            navController = navHostController,
-                            onTitleChange = { title ->
-                                onEvent(SidebarEvent.ChangePageTitle(title))
-                            }
+                            navController = navHostController
                         )
                     }
                     composable<MainRoutes.NavDrawerScreens.Categories> {
@@ -214,18 +211,12 @@ fun SidebarHost(
                 )
                 Loading(modifier = Modifier, visible = state.isLoading)
 
-                MessageAlert(
-                    type = AlertType.SUCCESS,
-                    message = state.success,
-                    title = "Sukses",
-                    modifier = Modifier,
-                    visible = state.showSuccess,
-                    onDismiss = {
-                        onEvent(SidebarEvent.ShowSuccess(false))
+                if (state.logoutSuccess) {
+                    LaunchedEffect(key1 = Unit) {
                         navHostController.popBackStack()
                         onNavigate(MainRoutes.LoginScreen)
                     }
-                )
+                }
                 MessageAlert(
                     type = AlertType.ERROR,
                     message = state.error,

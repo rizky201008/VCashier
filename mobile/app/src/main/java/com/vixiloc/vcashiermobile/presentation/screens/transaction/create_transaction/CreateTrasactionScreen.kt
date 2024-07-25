@@ -38,6 +38,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavHostController
 import com.guru.fontawesomecomposelib.FaIcon
 import com.guru.fontawesomecomposelib.FaIcons
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
@@ -56,9 +57,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CreateTransactionScreen(
     modifier: Modifier = Modifier,
-    viewModel: CreateTransactionViewModel = koinViewModel(),
-    onNavigate: (MainRoutes) -> Unit
+    navHostController: NavHostController
 ) {
+    val viewModel: CreateTransactionViewModel = koinViewModel()
     val state = viewModel.state.value
     val onEvent = viewModel::onEvent
     val config = LocalConfiguration.current
@@ -173,7 +174,7 @@ fun CreateTransactionScreen(
 
             FilledButton(
                 onClick = {
-                    onNavigate(MainRoutes.NavDrawerScreens.Transactions.Checkout)
+                    navHostController.navigate(MainRoutes.NavDrawerScreens.Transactions.CreateTransaction)
                 },
                 text = "Checkout",
                 modifier = Modifier

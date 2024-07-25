@@ -16,8 +16,7 @@ import retrofit2.HttpException
 
 class Register(
     private val repository: AuthRepository,
-    private val httpHandler: HttpHandler,
-    private val saveToken: SaveToken
+    private val httpHandler: HttpHandler
 ) {
 
     operator fun invoke(data: RegisterRequest): Flow<Resource<RegisterResponse>> = flow {
@@ -25,7 +24,6 @@ class Register(
             Log.d(TAG, "login invoke: called")
             emit(Resource.Loading())
             val response = repository.register(data = data.toDto())
-            response.token?.let { saveToken(it) }
             emit(Resource.Success(response.toDomain()))
         } catch (e: HttpException) {
             val errorMessage = httpHandler.handleHttpException(e)

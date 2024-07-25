@@ -9,6 +9,7 @@ data class SidebarState(
     val success: String = "",
     val showSuccess: Boolean = false,
     val showLogoutDialog: Boolean = false,
+    val logoutSuccess: Boolean = false,
     val pageTitle: String = "Home",
     val role: String = "",
     val listDrawer: List<DrawerMenu> = emptyList()

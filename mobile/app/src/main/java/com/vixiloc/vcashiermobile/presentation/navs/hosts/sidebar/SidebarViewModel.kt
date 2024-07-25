@@ -54,7 +54,7 @@ class SidebarViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                 is Resource.Success -> {
                     _state.value = state.value.copy(
                         isLoading = false,
-                        showSuccess = true,
+                        logoutSuccess = true,
                         showLogoutDialog = false,
                         success = res.data?.message ?: "Sukses logout!"
                     )

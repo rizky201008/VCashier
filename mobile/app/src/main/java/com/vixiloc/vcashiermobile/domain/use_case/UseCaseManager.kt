@@ -31,7 +31,7 @@ class UseCaseManager(
         )
 
     fun registerUseCase() =
-        Register(repository = authRepository, httpHandler = httpHandler(), saveToken = saveToken())
+        Register(repository = authRepository, httpHandler = httpHandler())
 
     fun logoutUseCase() = Logout(
         repository = authRepository,

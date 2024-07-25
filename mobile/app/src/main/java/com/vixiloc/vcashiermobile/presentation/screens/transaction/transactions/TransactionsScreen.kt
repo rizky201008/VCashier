@@ -46,8 +46,7 @@ import org.koin.androidx.compose.koinViewModel
 fun TransactionsScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    onNavigate: (MainRoutes) -> Unit,
-    onTitleChange: (String) -> Unit
+    onNavigate: (MainRoutes) -> Unit
 ) {
     val viewModel: TransactionViewModel = koinViewModel()
     val state = viewModel.state.value
@@ -147,8 +146,7 @@ fun TransactionsScreen(
         ) {
             FilledButton(
                 onClick = {
-                    navController.navigate(MainRoutes.NavDrawerScreens.Home)
-                    onTitleChange("Home")
+                    navController.navigate(MainRoutes.NavDrawerScreens.Transactions.CreateTransaction)
                 },
                 text = "Buat Transaksi",
                 modifier = Modifier.fillMaxWidth(),

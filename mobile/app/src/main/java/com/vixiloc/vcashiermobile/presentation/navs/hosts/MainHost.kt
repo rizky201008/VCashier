@@ -17,6 +17,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.product_log.add_logs.AddP
 import com.vixiloc.vcashiermobile.presentation.screens.products.create_product.CreateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.update_product.UpdateProductScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.CheckoutScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.SearchCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentScreen
@@ -87,6 +88,9 @@ fun MainHost(
         }
         composable<MainRoutes.NavDrawerScreens.Products.ProductLogAdd> {
             AddProductLogScreen(navController = navHostController)
+        }
+        composable<MainRoutes.NavDrawerScreens.Transactions.CreateTransaction> {
+            CreateTransactionScreen(navHostController = navHostController)
         }
     }
 }

@@ -1,9 +1,9 @@
-package com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment
+package com.vixiloc.vcashiermobile.presentation.screens.transaction.process_payment
 
 import com.vixiloc.vcashiermobile.domain.model.payments.MakePaymentResponse
 import com.vixiloc.vcashiermobile.domain.model.payments.PaymentMethodData
 
-data class TransactionPaymentState(
+data class ProcessPaymentState(
     val isLoading: Boolean = false,
     val error: String = "",
     val success: String = "",

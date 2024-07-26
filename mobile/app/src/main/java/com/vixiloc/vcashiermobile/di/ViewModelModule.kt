@@ -19,7 +19,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.Chec
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.SearchCustomerViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionViewModel
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.process_payment.ProcessPaymentViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -92,7 +92,7 @@ fun provideProductViewModel(
 }
 
 fun provideTransactionPaymentViewModel(useCaseManager: UseCaseManager) =
-    TransactionPaymentViewModel(useCaseManager = useCaseManager)
+    ProcessPaymentViewModel(useCaseManager = useCaseManager)
 
 fun providePayTransactionViewModel(useCaseManager: UseCaseManager) =
     PayTransactionViewModel(useCaseManager = useCaseManager)

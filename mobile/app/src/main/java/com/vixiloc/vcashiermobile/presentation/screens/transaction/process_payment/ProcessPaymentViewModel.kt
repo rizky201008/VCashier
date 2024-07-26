@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment
+package com.vixiloc.vcashiermobile.presentation.screens.transaction.process_payment
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -15,32 +15,32 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class TransactionPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() {
-    private val _state = mutableStateOf(TransactionPaymentState())
-    val state: State<TransactionPaymentState> = _state
+class ProcessPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() {
+    private val _state = mutableStateOf(ProcessPaymentState())
+    val state: State<ProcessPaymentState> = _state
 
-    fun onEvent(event: TransactionPaymentEvent) {
+    fun onEvent(event: ProcessPaymentEvent) {
         when (event) {
 
-            is TransactionPaymentEvent.DismissAlertMessage -> {
+            is ProcessPaymentEvent.DismissAlertMessage -> {
                 _state.value = _state.value.copy(error = "", success = "")
             }
 
-            is TransactionPaymentEvent.InsertTransactionTotal -> {
+            is ProcessPaymentEvent.InsertTransactionTotal -> {
                 _state.value = _state.value.copy(transactionTotal = event.total)
             }
 
-            is TransactionPaymentEvent.UpdatePaymentAmount -> {
+            is ProcessPaymentEvent.UpdatePaymentAmount -> {
                 if (event.amount.isDigitsOnly() && event.amount.isNotBlank()) {
                     _state.value = _state.value.copy(paymentAmount = event.amount.toInt())
                 }
             }
 
-            is TransactionPaymentEvent.SelectPaymentMethod -> {
+            is ProcessPaymentEvent.SelectPaymentMethod -> {
                 _state.value = _state.value.copy(paymentMethod = event.method)
             }
 
-            is TransactionPaymentEvent.SubmitTransactionPayment -> {
+            is ProcessPaymentEvent.SubmitTransactionPayment -> {
                 makePayment()
             }
         }

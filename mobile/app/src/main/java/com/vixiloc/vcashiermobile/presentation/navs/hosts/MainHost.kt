@@ -20,7 +20,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.transaction.checkout.Chec
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transaction.CreateTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.SearchCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionScreen
-import com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment.TransactionPaymentScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.process_payment.TransactionPaymentScreen
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeScreen
 import org.koin.androidx.compose.koinViewModel
 

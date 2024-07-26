@@ -1,4 +1,4 @@
-package com.vixiloc.vcashiermobile.presentation.screens.transaction.transaction_payment
+package com.vixiloc.vcashiermobile.presentation.screens.transaction.process_payment
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -50,7 +50,7 @@ fun TransactionPaymentScreen(
     navigator: NavHostController,
     navArgs: MainRoutes.NavDrawerScreens.Transactions.MakePayment,
 ) {
-    val viewModel: TransactionPaymentViewModel = koinViewModel()
+    val viewModel: ProcessPaymentViewModel = koinViewModel()
     val onEvent = viewModel::onEvent
     val state = viewModel.state.value
 
@@ -100,7 +100,7 @@ fun TransactionPaymentScreen(
                     modifier = Modifier,
                     value = state.paymentAmount.toString(),
                     onValueChanged = {
-                        onEvent(TransactionPaymentEvent.UpdatePaymentAmount(it))
+                        onEvent(ProcessPaymentEvent.UpdatePaymentAmount(it))
                     },
                     title = "Nominal Pembayaran",
                     textStyle = MaterialTheme.typography.titleMedium.copy(color = Color.Black),
@@ -113,7 +113,7 @@ fun TransactionPaymentScreen(
                         checked = state.paymentAmount == state.transactionTotal,
                         onCheckedChange = {
                             if (it) {
-                                onEvent(TransactionPaymentEvent.UpdatePaymentAmount((state.transactionTotal).toString()))
+                                onEvent(ProcessPaymentEvent.UpdatePaymentAmount((state.transactionTotal).toString()))
                             }
                         })
                     Text(
@@ -148,7 +148,7 @@ fun TransactionPaymentScreen(
                     items(state.paymentMethods) { paymentMethod ->
                         PaymentMethodItem(
                             onClick = {
-                                onEvent(TransactionPaymentEvent.SelectPaymentMethod(paymentMethod))
+                                onEvent(ProcessPaymentEvent.SelectPaymentMethod(paymentMethod))
                             },
                             paymentMethods = paymentMethod,
                             selected = state.paymentMethod == paymentMethod
@@ -174,7 +174,7 @@ fun TransactionPaymentScreen(
                 FilledButton(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        onEvent(TransactionPaymentEvent.SubmitTransactionPayment)
+                        onEvent(ProcessPaymentEvent.SubmitTransactionPayment)
                     },
                     text = "Bayar Sekarang",
                     textStyle = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight(600))
@@ -188,7 +188,7 @@ fun TransactionPaymentScreen(
                 modifier = Modifier,
                 visible = state.success.isNotEmpty(),
                 onDismiss = {
-                    onEvent(TransactionPaymentEvent.DismissAlertMessage)
+                    onEvent(ProcessPaymentEvent.DismissAlertMessage)
                     navigator.popBackStack()
                     navigator.navigate(
                         MainRoutes.NavDrawerScreens.Transactions.PayTransaction(
@@ -204,7 +204,7 @@ fun TransactionPaymentScreen(
                 modifier = Modifier,
                 visible = state.error.isNotEmpty(),
                 onDismiss = {
-                    onEvent(TransactionPaymentEvent.DismissAlertMessage)
+                    onEvent(ProcessPaymentEvent.DismissAlertMessage)
                 }
             )
         }

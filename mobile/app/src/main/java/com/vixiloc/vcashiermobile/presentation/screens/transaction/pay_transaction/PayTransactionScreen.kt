@@ -281,8 +281,6 @@ fun PayTransactionScreen(
             )
         }
     }
-
-
 }
 
 @Preview

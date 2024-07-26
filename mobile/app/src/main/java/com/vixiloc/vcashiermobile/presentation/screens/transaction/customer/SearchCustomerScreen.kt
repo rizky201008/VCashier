@@ -28,6 +28,7 @@ import com.vixiloc.vcashiermobile.presentation.components.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.Loading
 import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.SearchTextField
+import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.components.CustomerListItem
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
@@ -79,12 +80,14 @@ fun SearchCustomerScreen(modifier: Modifier = Modifier, navController: NavContro
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             )
 
+            VerticalSpacer(height = 12.dp)
+
             Loading(modifier = Modifier, visible = state.isLoading)
 
             LazyColumn {
                 items(state.customers) { customer ->
                     CustomerListItem(
-                        modifier = Modifier.padding(vertical = 12.dp),
+                        modifier = Modifier,
                         item = customer,
                         onClick = {
                             navController.popBackStack()
@@ -93,6 +96,7 @@ fun SearchCustomerScreen(modifier: Modifier = Modifier, navController: NavContro
                                 ?.set("customer", it)
                         }
                     )
+                    VerticalSpacer(height = 12.dp)
                 }
             }
 

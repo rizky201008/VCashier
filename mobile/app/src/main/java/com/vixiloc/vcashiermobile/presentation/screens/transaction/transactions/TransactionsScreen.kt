@@ -146,7 +146,7 @@ fun TransactionsScreen(
         ) {
             FilledButton(
                 onClick = {
-                    navController.navigate(MainRoutes.NavDrawerScreens.Transactions.CreateTransaction)
+                    onNavigate(MainRoutes.NavDrawerScreens.Transactions.CreateTransaction)
                 },
                 text = "Buat Transaksi",
                 modifier = Modifier.fillMaxWidth(),

@@ -120,7 +120,6 @@ class PayTransactionViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             when (res) {
                 is Resource.Success -> {
                     _state.value = state.value.copy(
-                        success = res.data?.message ?: "",
                         isLoading = false
                     )
                     getTransaction(id)

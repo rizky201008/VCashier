@@ -12,6 +12,8 @@ class TransactionItem extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'transaction_id',
         'product_variation_id',
@@ -23,7 +25,7 @@ class TransactionItem extends Model
 
     public function transaction(): BelongsTo
     {
-        return $this->belongsTo(Transaction::class);
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
     }
 
     public function productVariation(): BelongsTo

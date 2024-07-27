@@ -58,10 +58,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::put('/', [CustomerController::class, 'updateCustomer']);
     });
     Route::prefix('transactions')->group(function () {
-        Route::get('/', [TransactionController::class, 'getTransactions']);
-        Route::get('/{id}', [TransactionController::class, 'getTransaction']);
-        Route::post('/', [TransactionController::class, 'createTransaction']);
-        Route::put('/', [TransactionController::class, 'updateTransaction']);
+        Route::get('all-transactions', [TransactionController::class, 'getTransactions']);
+        Route::get('get-transaction/{id}', [TransactionController::class, 'getTransaction']);
+        Route::post('create-transaction', [TransactionController::class, 'createTransaction']);
+        Route::put('update-transaction', [TransactionController::class, 'updateTransaction']);
+        Route::get('reports', [TransactionController::class, 'transactionReport']);
     });
     Route::prefix('users')->group(function () {
         Route::get('role', [UserController::class, 'getRole']);
@@ -73,7 +74,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('methods', [PaymentController::class, 'getPaymentMethods']);
         Route::post('make-payment', [PaymentController::class, 'createTransactionPayment']);
         Route::post('create-va', [PaymentController::class, 'createVa']);
-        Route::get('check-status/{id}',[PaymentController::class, 'checkStatus']);
+        Route::get('check-status/{id}', [PaymentController::class, 'checkStatus']);
     });
     Route::prefix('product-logs')->group(function () {
         Route::get('all', [ProductLogsController::class, 'getAllLogs']);

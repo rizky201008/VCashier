@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TransactionItem;
 use App\Repository\TransactionRepository;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -57,8 +59,19 @@ class TransactionController extends Controller
         return response()->json($this->transactionRepository->updateTransaction($request->all()));
     }
 
-    public function transactionReports(): JsonResponse
+    public function transactionReport(): JsonResponse
     {
-        return response()->json($this->transactionRepository->transactionReports());
+        $today = Carbon::today();
+
+        $todayOmzet = TransactionItem::whereDate('created_at', $today)
+            ->sum('subtotal');
+
+        $todayProfit = TransactionItem::whereDate('created_at', $today)
+            ->sum('profit');
+
+        return response()->json([
+            'today_omzet' => $todayOmzet,
+            'today_profit' => $todayProfit,
+        ]);
     }
 }

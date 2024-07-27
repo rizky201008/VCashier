@@ -13,9 +13,8 @@ class Transaction extends Model
     use HasFactory;
 
     public $incrementing = false;
-
+    protected $primaryKey = 'id';
     protected $keyType = 'string';
-
 
 
     protected $fillable = [
@@ -30,7 +29,8 @@ class Transaction extends Model
         'payment_amount',
     ];
 
-    public static function booted() {
+    public static function booted()
+    {
         static::creating(function ($model) {
             $model->id = Str::uuid();
         });

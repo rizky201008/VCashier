@@ -17,7 +17,7 @@ class TransactionRepository
         try {
             $transaction = $this->saveTransaction($data);
             $this->saveTransactionItems($data, $transaction->id);
-
+            $this->createLog($data);
             DB::commit();
 
             return [
@@ -86,6 +86,7 @@ class TransactionRepository
                 'price' => $price,
                 'subtotal' => $this->getPriceByQuantity($item['quantity'], $price),
                 'profit' => $this->getProfit($capital, $item['quantity'],$price),
+                'created_at' => now(),
             ];
             $productRepository->decreaseStock($item['id'], $item['quantity']);
         }
@@ -121,32 +122,6 @@ class TransactionRepository
         return $quantity <= $stock;
     }
 
-    public function transactionReports() : array
-    {
-        return [
-            "monthly_transaction" => 10000,
-            "monthly_profit" => 1023923,
-            "weekly_transaction" => 1000,
-            "weekly_profit" => 102392,
-            "daily_transaction" => 100,
-            "daily_profit" => 1023,
-            "monthly_transaction_chart" => [
-                "January" => 1000,
-                "February" => 2000,
-                "March" => 3000,
-                "April" => 4000,
-                "May" => 5000,
-                "June" => 6000,
-                "July" => 7000,
-                "August" => 8000,
-                "September" => 9000,
-                "October" => 10000,
-                "November" => 11000,
-                "December" => 12000
-            ],
-        ];
-    }
-
     public function updateTransaction(array $data): array
     {
         $transaction = Transaction::find($data['id']);
@@ -154,5 +129,20 @@ class TransactionRepository
         return [
             'message' => 'Transaction updated'
         ];
+    }
+
+    private function createLog(array $data)
+    {
+        $productLog = new ProductLogsRepository();
+
+        foreach ($data['items'] as $item) {
+            $productLog->addLog([
+                'product_variation_id' => $item['id'],
+                'amount' => $item['quantity'],
+                'type' => 'decrease',
+                'information' => 'Transaction',
+                'user_id' => $data['user_id']
+            ]);
+        }
     }
 }

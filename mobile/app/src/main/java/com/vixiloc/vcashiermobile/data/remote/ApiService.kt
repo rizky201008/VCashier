@@ -1,10 +1,13 @@
 package com.vixiloc.vcashiermobile.data.remote
 
 import com.vixiloc.vcashiermobile.data.remote.Routes.ADD_IMAGE
+import com.vixiloc.vcashiermobile.data.remote.Routes.ALL_TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.CATEGORIES
+import com.vixiloc.vcashiermobile.data.remote.Routes.CREATE_TRANSACTION
 import com.vixiloc.vcashiermobile.data.remote.Routes.CUSTOMERS
 import com.vixiloc.vcashiermobile.data.remote.Routes.GET_PRODUCT
 import com.vixiloc.vcashiermobile.data.remote.Routes.GET_ROLE
+import com.vixiloc.vcashiermobile.data.remote.Routes.GET_TRANSACTION
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGIN
 import com.vixiloc.vcashiermobile.data.remote.Routes.LOGOUT
 import com.vixiloc.vcashiermobile.data.remote.Routes.PAYMENT_CHECK_STATUS
@@ -16,27 +19,22 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCT_LOGS_ADD
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCT_LOGS_ALL
 import com.vixiloc.vcashiermobile.data.remote.Routes.REGISTER
 import com.vixiloc.vcashiermobile.data.remote.Routes.RESET_PASSWORD
-import com.vixiloc.vcashiermobile.data.remote.Routes.TRANSACTIONS
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
+import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_TRANSACTION
 import com.vixiloc.vcashiermobile.data.remote.Routes.USERS_LIST
 import com.vixiloc.vcashiermobile.data.remote.Routes.VARIATIONS
-import com.vixiloc.vcashiermobile.data.remote.dto.categories.CategoriesResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.customers.CreateUpdateCustomerRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.customers.CreateUpdateCustomerResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductImageResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.customers.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LogoutResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.RegisterResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.ResetPasswordResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CategoriesResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.categories.CreateUpdateCategoryResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.customers.CreateUpdateCustomerRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.customers.CreateUpdateCustomerResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.customers.CustomerResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.CheckPaymentStatusResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.CreateVaRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.payments.CreateVaResponseDto
@@ -46,14 +44,19 @@ import com.vixiloc.vcashiermobile.data.remote.dto.payments.PaymentMethodsDto
 import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.CreateProductLogResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.CreateProductLogsRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.product_logs.ProductLogsResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateProductResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.products.CreateUpdateProductImageResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.ProductsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductRequestDto
-import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
-import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.users.GetRoleResponseDto
@@ -183,14 +186,14 @@ interface ApiService {
         @Body data: CreateUpdateCustomerRequestDto
     ): CreateUpdateCustomerResponseDto
 
-    @POST(TRANSACTIONS)
+    @POST(CREATE_TRANSACTION)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun createTransaction(
         @Header("Authorization") token: String,
         @Body data: CreateTransactionRequestDto
     ): CreateTransactionResponseDto
 
-    @GET(TRANSACTIONS)
+    @GET(ALL_TRANSACTIONS)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun getTransactions(
         @Header("Authorization") token: String,
@@ -198,14 +201,14 @@ interface ApiService {
         @Query("payment_status") paymentStatus: String = "",
     ): TransactionsResponseDto
 
-    @PUT(TRANSACTIONS)
+    @PUT(UPDATE_TRANSACTION)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun updateTransaction(
         @Header("Authorization") token: String,
         @Body data: UpdateTransactionRequestDto
     ): UpdateTransactionResponseDto
 
-    @GET("$TRANSACTIONS/{id}")
+    @GET(GET_TRANSACTION)
     @Headers("Content-Type: application/json", "Accept: application/json")
     suspend fun getTransaction(
         @Header("Authorization") token: String,

@@ -4,6 +4,7 @@ import com.vixiloc.vcashiermobile.data.local.realm.CartItemsDao
 import com.vixiloc.vcashiermobile.data.remote.ApiService
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.ReportsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionRequestDto
@@ -54,6 +55,10 @@ class TransactionRepositoryImpl(
         data: UpdateTransactionRequestDto
     ): UpdateTransactionResponseDto {
         return api.updateTransaction(token = "Bearer $token", data = data)
+    }
+
+    override suspend fun reportTransaction(token: String): ReportsResponseDto {
+        return api.getTransactionReport(token = "Bearer $token")
     }
 
     override suspend fun addToCart(data: CartItems) {

@@ -236,4 +236,10 @@ class UseCaseManager(
         getToken = getTokenUseCase(),
         saveRole = saveRoleUseCase()
     )
+
+    fun getReportUseCase() = TransactionReport(
+        repository = transactionRepository,
+        token = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
 }

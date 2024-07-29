@@ -2,6 +2,7 @@ package com.vixiloc.vcashiermobile.domain.repository
 
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.ReportsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionRequestDto
@@ -33,4 +34,5 @@ interface TransactionRepository {
         token: String,
         data: UpdateTransactionRequestDto
     ): UpdateTransactionResponseDto
+    suspend fun reportTransaction(token: String): ReportsResponseDto
 }

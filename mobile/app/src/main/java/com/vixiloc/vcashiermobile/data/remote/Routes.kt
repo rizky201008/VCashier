@@ -23,6 +23,7 @@ object Routes {
     const val GET_TRANSACTION = "$TRANSACTIONS/get-transaction/{id}"
     const val CREATE_TRANSACTION = "$TRANSACTIONS/create-transaction"
     const val UPDATE_TRANSACTION = "$TRANSACTIONS/update-transaction"
+    const val REPORT_TRANSACTION = "$TRANSACTIONS/reports"
     private const val PRODUCT_IMAGES = "product-images"
     const val ADD_IMAGE = "${PRODUCT_IMAGES}/add"
     const val UPDATE_IMAGE = "${PRODUCT_IMAGES}/update"

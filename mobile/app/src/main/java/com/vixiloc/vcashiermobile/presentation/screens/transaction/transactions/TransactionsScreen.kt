@@ -124,7 +124,7 @@ fun TransactionsScreen(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = {
-                        /*TODO*/
+                        onNavigate(MainRoutes.NavDrawerScreens.Transactions.Reports)
                     }) {
                         Text(
                             text = "Laporan penjualan ",

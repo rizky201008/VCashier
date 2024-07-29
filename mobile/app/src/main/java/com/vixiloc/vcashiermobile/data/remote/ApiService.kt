@@ -18,6 +18,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCTS
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCT_LOGS_ADD
 import com.vixiloc.vcashiermobile.data.remote.Routes.PRODUCT_LOGS_ALL
 import com.vixiloc.vcashiermobile.data.remote.Routes.REGISTER
+import com.vixiloc.vcashiermobile.data.remote.Routes.REPORT_TRANSACTION
 import com.vixiloc.vcashiermobile.data.remote.Routes.RESET_PASSWORD
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_TRANSACTION
@@ -55,6 +56,7 @@ import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariatio
 import com.vixiloc.vcashiermobile.data.remote.dto.products.UpdateProductVariationResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.CreateTransactionResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.transactions.ReportsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionRequestDto
@@ -214,6 +216,12 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): TransactionResponseDto
+
+    @GET(REPORT_TRANSACTION)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun getTransactionReport(
+        @Header("Authorization") token: String
+    ): ReportsResponseDto
 
     @GET(PAYMENT_METHODS)
     @Headers("Content-Type: application/json", "Accept: application/json")

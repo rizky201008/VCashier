@@ -21,6 +21,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transa
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.SearchCustomerScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.process_payment.TransactionPaymentScreen
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.report.ReportScreen
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -91,6 +92,10 @@ fun MainHost(
         }
         composable<MainRoutes.NavDrawerScreens.Transactions.CreateTransaction> {
             CreateTransactionScreen(navHostController = navHostController)
+        }
+
+        composable<MainRoutes.NavDrawerScreens.Transactions.Reports> {
+            ReportScreen(navHostController = navHostController)
         }
     }
 }

@@ -20,6 +20,7 @@ import com.vixiloc.vcashiermobile.presentation.screens.transaction.create_transa
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.customer.SearchCustomerViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.pay_transaction.PayTransactionViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.process_payment.ProcessPaymentViewModel
+import com.vixiloc.vcashiermobile.presentation.screens.transaction.report.ReportViewModel
 import com.vixiloc.vcashiermobile.presentation.screens.welcome.WelcomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -49,6 +50,7 @@ val viewModelModule = module {
     viewModel { provideSidebarViewModel(get()) }
     viewModel { provideUpdateProductViewModel(get(), androidContext()) }
     viewModel { provideHomeViewModel(get()) }
+    viewModel { provideReportViewModel(get()) }
 }
 
 fun provideLoginViewModel(useCaseManager: UseCaseManager): LoginViewModel {
@@ -129,3 +131,6 @@ fun provideUpdateProductViewModel(useCaseManager: UseCaseManager, context: Conte
 
 fun provideHomeViewModel(useCaseManager: UseCaseManager) =
     HomeViewModel(ucm = useCaseManager)
+
+fun provideReportViewModel(useCaseManager: UseCaseManager) =
+    ReportViewModel(ucm = useCaseManager)

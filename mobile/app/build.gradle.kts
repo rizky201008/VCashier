@@ -56,7 +56,7 @@ android {
     productFlavors {
         create("dev") {
             dimension = "env"
-            buildConfigField("String", "BASE_URL", project.properties["BASE_URL"].toString())
+            buildConfigField("String", "BASE_URL", project.properties["BASE_URL_DEV"].toString())
         }
         create("prod") {
             dimension = "env"

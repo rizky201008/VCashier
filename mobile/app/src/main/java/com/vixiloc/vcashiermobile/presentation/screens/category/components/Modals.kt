@@ -60,7 +60,7 @@ fun InputCategoryDialog(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Tambah Kategori",
+                    text = if (type == InputType.CREATE) "Tambah" else "Ubah" + " Kategori",
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight(600)

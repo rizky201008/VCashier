@@ -63,7 +63,7 @@ fun CreateUpdateCustomerDialog(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Tambah Pelanggan",
+                    text = if (type == InputType.CREATE) "Tambah" else "Ubah" + " Pelanggan",
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight(600)

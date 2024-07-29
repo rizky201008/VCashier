@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TransactionController extends Controller
@@ -80,31 +79,10 @@ class TransactionController extends Controller
             ->limit(5)
             ->get();
 
-        $data = [];
-        $days = range(0, 6);
-
-        $weekly = DB::table('transactions')
-            ->select(DB::raw('EXTRACT(DOW FROM created_at) AS day'),
-                DB::raw('COUNT(*) AS total_transactions'))
-            ->groupBy(DB::raw('EXTRACT(DOW FROM created_at)'))
-            ->orderByRaw('EXTRACT(DOW FROM created_at)')
-            ->get();
-
-        foreach($days as $day) {
-            $transaction = $weekly->where('day', $day)->first();
-
-            if($transaction) {
-                $data[] = ['day' => $transaction->day, 'total_transactions' => $transaction->total_transactions];
-            } else {
-                $data[] = ['day' => "$day", 'total_transactions' => 0];
-            }
-        }
-
         return response()->json([
             'today_omzet' => $todayOmzet,
             'today_profit' => $todayProfit,
-            'latest_transaction' => $latestTransaction,
-            'weekly' => $data
+            'latest_transaction' => $latestTransaction
         ]);
     }
 }

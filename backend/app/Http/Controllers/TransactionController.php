@@ -74,7 +74,7 @@ class TransactionController extends Controller
         })->whereDate('created_at', $today)->sum('profit');
 
         // Query untuk mendapatkan 5 transaksi terbaru dengan status completed
-        $latestTransaction = Transaction::with(['customer'])->where('transaction_status', 'completed')
+        $latestTransaction = Transaction::with(['customer', 'items'])->where('transaction_status', 'completed')
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();

@@ -17,13 +17,14 @@ data class DrawerMenu(
     val role: List<String> = listOf("admin")
 )
 
+//DrawerMenu(
+//        name = "Home",
+//        icon = Icons.Outlined.Home,
+//        route = MainRoutes.NavDrawerScreens.Home,
+//        role = listOf("admin", "cashier", "warehouse")
+//    )
+
 val listDrawer = listOf(
-    DrawerMenu(
-        name = "Home",
-        icon = Icons.Outlined.Home,
-        route = MainRoutes.NavDrawerScreens.Home,
-        role = listOf("admin", "cashier", "warehouse")
-    ),
     DrawerMenu(
         name = "Transaksi",
         icon = Icons.AutoMirrored.Outlined.ViewList,

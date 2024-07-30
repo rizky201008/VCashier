@@ -30,8 +30,6 @@ fun MainHost(
     modifier: Modifier = Modifier,
     navHostController: NavHostController
 ) {
-    val sidebarNavController = rememberNavController()
-    val sideBarViewModel: SidebarViewModel = koinViewModel()
     NavHost(navController = navHostController, startDestination = MainRoutes.SplashScreen) {
         composable<MainRoutes.SplashScreen> {
             WelcomeScreen(navHostController = navHostController)
@@ -49,12 +47,14 @@ fun MainHost(
             PayTransactionScreen(navigator = navHostController, navArgs = args)
         }
         composable<MainRoutes.NavDrawerScreens> {
+            val sidebarNavController = rememberNavController()
+            val sideBarViewModel: SidebarViewModel = koinViewModel()
             SidebarHost(
                 navHostController = sidebarNavController,
                 onNavigate = { nav ->
-                    if (nav == MainRoutes.LoginScreen) {
+                    if (nav == MainRoutes.SplashScreen) {
                         navHostController.popBackStack()
-                        navHostController.navigate(MainRoutes.SplashScreen)
+                        navHostController.navigate(nav)
                     } else {
                         navHostController.navigate(nav)
                     }

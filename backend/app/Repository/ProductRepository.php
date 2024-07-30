@@ -43,6 +43,12 @@ class ProductRepository
         $productVariation->stock -= $quantity;
         $productVariation->save();
     }
+    public function increaseStock(int $productVariationId, int $quantity)
+    {
+        $productVariation = $this->getProductVariation($productVariationId);
+        $productVariation->stock += $quantity;
+        $productVariation->save();
+    }
 
     function createProduct($data): JsonResponse
     {
@@ -105,27 +111,6 @@ class ProductRepository
             $productVariation = ProductVariation::find($data['id']);
             $productVariation->update($data);
             DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-
-            throw new \Exception($th->getMessage());
-        }
-    }
-
-    function deleteProduct($id): array
-    {
-        DB::beginTransaction();
-
-        try {
-            $product = $this->product->where('id', $id)->first();
-            $product->variations()->delete();
-            $product->images()->delete();
-            $product->delete();
-
-            DB::commit();
-            return [
-                'message' => 'Product deleted successfully'
-            ];
         } catch (\Throwable $th) {
             DB::rollBack();
 

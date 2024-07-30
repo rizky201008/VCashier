@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\ProductVariation;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Exception;
@@ -85,7 +86,7 @@ class TransactionRepository
                 'quantity' => $item['quantity'],
                 'price' => $price,
                 'subtotal' => $this->getPriceByQuantity($item['quantity'], $price),
-                'profit' => $this->getProfit($capital, $item['quantity'],$price),
+                'profit' => $this->getProfit($capital, $item['quantity'], $price),
                 'created_at' => now(),
             ];
             $productRepository->decreaseStock($item['id'], $item['quantity']);
@@ -124,7 +125,15 @@ class TransactionRepository
 
     public function updateTransaction(array $data): array
     {
+        $productRepository = new ProductRepository();
         $transaction = Transaction::find($data['id']);
+        if ($data['transaction_status'] == "canceled") {
+            foreach ($transaction->items as $item) {
+                ProductVariation::find($item->product_variation_id)->update(['information' => 'Cancel transaksi', 'type' => 'increase', 'amount' => $item->quantity, 'product_variation_id' => $item->product_variation_id, 'user_id' => $data['user_id']]);
+                $productRepository->increaseStock($item->product_variation_id, $item->quantity);
+            }
+        }
+
         $transaction->update($data);
         return [
             'message' => 'Transaction updated'

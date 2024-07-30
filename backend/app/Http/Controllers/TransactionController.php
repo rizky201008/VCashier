@@ -56,7 +56,9 @@ class TransactionController extends Controller
 
     public function updateTransaction(Request $request): JsonResponse
     {
-        return response()->json($this->transactionRepository->updateTransaction($request->all()));
+        $data = $request->all();
+        $data['user_id'] = $request->user()->id;
+        return response()->json($this->transactionRepository->updateTransaction($data));
     }
 
     public function transactionReport(): JsonResponse

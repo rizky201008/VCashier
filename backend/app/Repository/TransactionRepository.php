@@ -125,12 +125,17 @@ class TransactionRepository
 
     public function updateTransaction(array $data): array
     {
-        $productRepository = new ProductRepository();
+        $productLogRepository = new ProductLogsRepository();
         $transaction = Transaction::find($data['id']);
         if ($data['transaction_status'] == "canceled") {
             foreach ($transaction->items as $item) {
-                ProductVariation::find($item->product_variation_id)->update(['information' => 'Cancel transaksi', 'type' => 'increase', 'amount' => $item->quantity, 'product_variation_id' => $item->product_variation_id, 'user_id' => $data['user_id']]);
-                $productRepository->increaseStock($item->product_variation_id, $item->quantity);
+                $productLogRepository->addLog([
+                    'product_variation_id' => $item->product_variation_id,
+                    'amount' => $item->quantity,
+                    'type' => 'increase',
+                    'information' => 'Transaction canceled',
+                    'user_id' => $data['user_id']
+                ]);
             }
         }
 

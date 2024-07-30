@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Models\ProductVariation;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Exception;
@@ -89,7 +88,6 @@ class TransactionRepository
                 'profit' => $this->getProfit($capital, $item['quantity'], $price),
                 'created_at' => now(),
             ];
-            $productRepository->decreaseStock($item['id'], $item['quantity']);
         }
 
         return TransactionItem::insert($transactionItems);

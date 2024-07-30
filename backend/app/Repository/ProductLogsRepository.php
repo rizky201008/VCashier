@@ -37,6 +37,6 @@ class ProductLogsRepository
 
     private function validateStockAmount(int $amount, int $stock): bool
     {
-        return $stock > $amount;
+        return $stock >= $amount;
     }
 }

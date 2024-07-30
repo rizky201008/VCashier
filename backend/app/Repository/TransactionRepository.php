@@ -126,6 +126,7 @@ class TransactionRepository
         $productLogRepository = new ProductLogsRepository();
         $transaction = Transaction::find($data['id']);
         if ($data['transaction_status'] == "canceled") {
+            $data['payment_status'] = "canceled";
             foreach ($transaction->items as $item) {
                 $productLogRepository->addLog([
                     'product_variation_id' => $item->product_variation_id,

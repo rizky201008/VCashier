@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vixiloc.vcashiermobile.domain.model.getListDrawer
+import com.vixiloc.vcashiermobile.domain.model.screen.getListDrawer
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import com.vixiloc.vcashiermobile.utils.Resource
 import kotlinx.coroutines.flow.launchIn

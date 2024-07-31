@@ -1,6 +1,6 @@
 package com.vixiloc.vcashiermobile.presentation.navs.hosts.sidebar
 
-import com.vixiloc.vcashiermobile.domain.model.DrawerMenu
+import com.vixiloc.vcashiermobile.domain.model.screen.DrawerMenu
 
 data class SidebarState(
     val isLoading: Boolean = false,

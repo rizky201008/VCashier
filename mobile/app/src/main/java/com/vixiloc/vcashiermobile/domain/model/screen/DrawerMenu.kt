@@ -1,8 +1,7 @@
-package com.vixiloc.vcashiermobile.domain.model
+package com.vixiloc.vcashiermobile.domain.model.screen
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ViewList
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.PeopleOutline
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.ShoppingCart

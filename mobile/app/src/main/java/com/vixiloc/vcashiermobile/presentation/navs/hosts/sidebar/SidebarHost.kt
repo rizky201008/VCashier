@@ -1,6 +1,5 @@
 package com.vixiloc.vcashiermobile.presentation.navs.hosts.sidebar
 
-import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -48,7 +47,6 @@ import com.vixiloc.vcashiermobile.presentation.screens.employee.EmployeesScreen
 import com.vixiloc.vcashiermobile.presentation.screens.home.HomeScreen
 import com.vixiloc.vcashiermobile.presentation.screens.products.list_products.ProductsScreen
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.transactions.TransactionsScreen
-import com.vixiloc.vcashiermobile.utils.Strings.TAG
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -165,7 +163,10 @@ fun SidebarHost(
                     composable<MainRoutes.NavDrawerScreens.Home> {
                         HomeScreen(
                             modifier = screenModifier,
-                            navController = navHostController
+                            navController = navHostController,
+                            onTitleChange = {
+                                onEvent(SidebarEvent.ChangePageTitle(it))
+                            }
                         )
                     }
                     composable<MainRoutes.NavDrawerScreens.Transactions> {

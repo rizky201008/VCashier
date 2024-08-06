@@ -39,7 +39,7 @@ val listHomeMenus = listOf(
     HomeMenu(
         name = "Pegawai",
         icon = FaIcons.UserAlt,
-        route = MainRoutes.NavDrawerScreens.Customers,
+        route = MainRoutes.NavDrawerScreens.Employees,
         roles = listOf("admin")
     ),
 )

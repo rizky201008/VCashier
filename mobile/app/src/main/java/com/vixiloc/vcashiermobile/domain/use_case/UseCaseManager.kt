@@ -242,4 +242,6 @@ class UseCaseManager(
         token = getTokenUseCase(),
         httpHandler = httpHandler()
     )
+
+    fun validateMatchUseCase() = ValidateMatch()
 }

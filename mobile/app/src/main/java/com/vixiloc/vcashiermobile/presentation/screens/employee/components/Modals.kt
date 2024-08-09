@@ -18,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.guru.fontawesomecomposelib.FaIcons
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
 import com.vixiloc.vcashiermobile.presentation.components.IconButton
 import com.vixiloc.vcashiermobile.presentation.components.TextField
@@ -77,7 +79,7 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Nama",
                 placeHolder = "Masukkan name",
                 isError = state.nameError.isNotBlank(),
                 errorMessage = state.nameError
@@ -93,7 +95,7 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Email",
                 placeHolder = "Masukkan email",
                 isError = state.emailError.isNotBlank(),
                 errorMessage = state.emailError
@@ -109,11 +111,44 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                title = "",
+                title = "Password",
                 placeHolder = "Masukkan password",
-                visualTransformation = PasswordVisualTransformation(),
+                visualTransformation = if (state.passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
                 isError = state.passwordError.isNotBlank(),
-                errorMessage = state.passwordError
+                errorMessage = state.passwordError,
+                trailingIcon = {
+                    IconButton(
+                        onClick = {
+                            onEvent(EmployeesEvent.TogglePasswordVisibility(!state.passwordHidden))
+                        },
+                        icon = if (state.passwordHidden) FaIcons.Eye else FaIcons.EyeSlash
+                    )
+                }
+            )
+            TextField(
+                value = state.passwordConfirmation,
+                onValueChanged = {
+                    onEvent(
+                        EmployeesEvent.ChangeInput(
+                            InputName.PASSWORD_CONFIRMATION,
+                            it
+                        )
+                    )
+                },
+                modifier = Modifier.fillMaxWidth(),
+                title = "Konfirmasi Password",
+                placeHolder = "Masukkan ulang password",
+                visualTransformation = if (state.passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
+                isError = state.passwordConfirmationError.isNotBlank(),
+                errorMessage = state.passwordConfirmationError,
+                trailingIcon = {
+                    IconButton(
+                        onClick = {
+                            onEvent(EmployeesEvent.TogglePasswordVisibility(!state.passwordHidden))
+                        },
+                        icon = if (state.passwordHidden) FaIcons.Eye else FaIcons.EyeSlash
+                    )
+                }
             )
             VerticalSpacer(height = 12.dp)
 

@@ -20,6 +20,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     val registerUseCase = useCaseManager.registerUseCase()
     val resetPasswordUseCase = useCaseManager.resetPasswordUseCase()
     val validateNotBlankUseCase = useCaseManager.validateNotBlankUseCase()
+    val validateMatchUseCase = useCaseManager.validateMatchUseCase()
 
     fun onEvent(e: EmployeesEvent) {
         when (e) {
@@ -73,6 +74,12 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                             role = e.value
                         )
                     }
+
+                    InputName.PASSWORD_CONFIRMATION -> {
+                        _state.value = state.value.copy(
+                            passwordConfirmation = e.value
+                        )
+                    }
                 }
             }
 
@@ -95,6 +102,12 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
 
             is EmployeesEvent.SelectEmployee -> {
                 _state.value = _state.value.copy(selectedEmployee = e.id)
+            }
+
+            is EmployeesEvent.TogglePasswordVisibility -> {
+                _state.value = _state.value.copy(
+                    passwordHidden = e.show
+                )
             }
         }
     }
@@ -131,18 +144,22 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
         val validatedName = validateNotBlankUseCase(state.value.name)
         val validatedEmail = validateNotBlankUseCase(state.value.email)
         val validatedPassword = validateNotBlankUseCase(state.value.password)
+        val validatedPasswordConfirmation =
+            validateMatchUseCase(state.value.passwordConfirmation, state.value.password)
 
         val hasError = listOf(
             validatedName,
             validatedEmail,
-            validatedPassword
+            validatedPassword,
+            validatedPasswordConfirmation
         ).any { !it.successful }
 
         if (hasError) {
             _state.value = _state.value.copy(
                 nameError = validatedName.errorMessage ?: "",
                 emailError = validatedEmail.errorMessage ?: "",
-                passwordError = validatedPassword.errorMessage ?: ""
+                passwordError = validatedPassword.errorMessage ?: "",
+                passwordConfirmationError = validatedPasswordConfirmation.errorMessage ?: ""
             )
             return
         }

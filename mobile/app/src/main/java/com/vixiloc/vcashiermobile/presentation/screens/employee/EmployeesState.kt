@@ -17,6 +17,9 @@ data class EmployeesState(
     val emailError: String = "",
     val password: String = "",
     val passwordError: String = "",
+    val passwordConfirmation: String = "",
+    val passwordConfirmationError: String = "",
+    val passwordHidden: Boolean = true,
     val role: String = "cashier",
     val selectedEmployee: Int? = null
 )

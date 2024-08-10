@@ -24,5 +24,3 @@ fun provideRealm(): Realm {
 
     return Realm.open(config)
 }
-
-fun provideCartItemsDao(realm: Realm): CartItemsDao = CartItemsDaoImpl(realm)

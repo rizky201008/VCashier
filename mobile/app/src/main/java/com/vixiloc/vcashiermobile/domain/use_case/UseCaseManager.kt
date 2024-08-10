@@ -244,4 +244,5 @@ class UseCaseManager(
     )
 
     fun validateMatchUseCase() = ValidateMatch()
+    fun validateValueGreaterUseCase() = ValidateValueGreater()
 }

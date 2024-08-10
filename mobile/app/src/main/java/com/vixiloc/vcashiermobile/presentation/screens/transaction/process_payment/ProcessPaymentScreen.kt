@@ -1,6 +1,7 @@
 package com.vixiloc.vcashiermobile.presentation.screens.transaction.process_payment
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -30,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.core.text.isDigitsOnly
 import androidx.navigation.NavHostController
 import com.vixiloc.vcashiermobile.presentation.components.AlertType
 import com.vixiloc.vcashiermobile.presentation.components.FilledButton
@@ -41,6 +44,7 @@ import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.navs.routes.MainRoutes
 import com.vixiloc.vcashiermobile.presentation.screens.transaction.components.PaymentMethodItem
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
+import com.vixiloc.vcashiermobile.utils.CurrencyFormatter
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -96,42 +100,48 @@ fun TransactionPaymentScreen(
                         height = Dimension.matchParent
                     }
             ) {
-                TextField(
-                    modifier = Modifier,
-                    value = state.paymentAmount.toString(),
-                    onValueChanged = {
-                        onEvent(ProcessPaymentEvent.UpdatePaymentAmount(it))
-                    },
-                    title = "Nominal Pembayaran",
-                    textStyle = MaterialTheme.typography.titleMedium.copy(color = Color.Black),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                )
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(
-                        modifier = Modifier,
-                        checked = state.paymentAmount == state.transactionTotal,
-                        onCheckedChange = {
-                            if (it) {
-                                onEvent(ProcessPaymentEvent.UpdatePaymentAmount((state.transactionTotal).toString()))
-                            }
-                        })
+                Column(
+                    modifier = Modifier
+                        .padding(vertical = 12.dp)
+                        .fillMaxWidth()
+                        .shadow(elevation = 2.dp, shape = MaterialTheme.shapes.medium)
+                        .background(color = Color.White)
+                        .padding(10.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = "Total transaksi", style = MaterialTheme.typography.bodyMedium)
                     Text(
-                        text = "Uang Pas",
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight(500)
-                        )
+                        modifier = Modifier,
+                        text = CurrencyFormatter.formatCurrency(state.totalAmount),
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                     )
                 }
 
                 TextField(
-                    value = if (state.paymentAmount > state.transactionTotal) (state.paymentAmount - state.transactionTotal).toString() else "0",
-                    onValueChanged = {},
-                    modifier = Modifier.fillMaxWidth(),
-                    title = "Kembalian",
-                    enabled = false,
-                    textStyle = MaterialTheme.typography.titleMedium.copy(color = Color.Black),
+                    modifier = Modifier.padding(bottom = 12.dp),
+                    value = state.paymentAmount,
+                    onValueChanged = {
+                        if (it.isDigitsOnly()) {
+                            onEvent(ProcessPaymentEvent.UpdatePaymentAmount(it))
+                        }
+                    },
+                    title = "Nominal Pembayaran",
+                    placeHolder = "Masukkan nominal pembayaran",
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(color = Color.Black),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    isError = state.paymentAmountError.isNotEmpty(),
+                    errorMessage = state.paymentAmountError
+                )
+
+                Text(
+                    text = "Kembalian",
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                )
+
+                Text(
+                    text = CurrencyFormatter.formatCurrency(state.change),
+                    style = MaterialTheme.typography.bodyLarge
                 )
 
                 VerticalSpacer(height = 32.dp)

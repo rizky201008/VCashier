@@ -19,6 +19,9 @@ class ProcessPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     private val _state = mutableStateOf(ProcessPaymentState())
     val state: State<ProcessPaymentState> = _state
 
+    val validateNotBlankUseCase = useCaseManager.validateNotBlankUseCase()
+    val validateValueGreaterUseCase = useCaseManager.validateValueGreaterUseCase()
+
     fun onEvent(event: ProcessPaymentEvent) {
         when (event) {
 
@@ -31,9 +34,8 @@ class ProcessPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             }
 
             is ProcessPaymentEvent.UpdatePaymentAmount -> {
-                if (event.amount.isDigitsOnly() && event.amount.isNotBlank()) {
-                    _state.value = _state.value.copy(paymentAmount = event.amount.toInt())
-                }
+                _state.value = _state.value.copy(paymentAmount = event.amount)
+                updateChange()
             }
 
             is ProcessPaymentEvent.SelectPaymentMethod -> {
@@ -41,9 +43,36 @@ class ProcessPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             }
 
             is ProcessPaymentEvent.SubmitTransactionPayment -> {
-                makePayment()
+                validateInputs()
             }
         }
+    }
+
+    private fun validateInputs() {
+        val validatedPaymentAmount1 = validateNotBlankUseCase(state.value.paymentAmount)
+        val validatedPaymentAmount2 =validateValueGreaterUseCase(state.value.paymentAmount, state.value.transactionTotal)
+
+        val hasError = listOf(
+            validatedPaymentAmount1,
+            validatedPaymentAmount2
+        ).any { !it.successful }
+
+        if (hasError) {
+            _state.value = _state.value.copy(
+                paymentAmountError = validatedPaymentAmount1.errorMessage
+                    ?: validatedPaymentAmount2.errorMessage ?: "",
+            )
+            return
+        }
+        makePayment()
+    }
+
+    private fun updateChange() {
+        _state.value = state.value.copy(
+            change = if (state.value.paymentAmount
+                    .isNotBlank() && state.value.paymentAmount.toInt() > state.value.transactionTotal
+            ) (state.value.paymentAmount.toInt() - state.value.transactionTotal) else 0
+        )
     }
 
     private val getTransactionUseCase: GetTransaction = useCaseManager.getTransactionUseCase()
@@ -54,7 +83,7 @@ class ProcessPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     private fun makePayment() {
         val data = MakePaymentRequest(
             transactionId = state.value.selectedTransactionId,
-            paymentAmount = state.value.paymentAmount,
+            paymentAmount = state.value.paymentAmount.toInt(),
             paymentMethodId = state.value.paymentMethod?.id ?: 1
         )
         viewModelScope.launch {
@@ -94,7 +123,7 @@ class ProcessPaymentViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                     is Resource.Success -> {
                         _state.value = _state.value.copy(
                             transactionTotal = resource.data?.totalAmount ?: 0,
-                            paymentAmount = resource.data?.totalAmount ?: 0,
+                            totalAmount = resource.data?.totalAmount ?: 0,
                             isLoading = false,
                             selectedTransactionId = id
                         )

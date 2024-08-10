@@ -28,6 +28,23 @@ class UserController extends Controller
             'data' => User::all()
         ]);
     }
+
+    public function updateUser(Request $request): JsonResponse
+    {
+        try {
+            $data = $request->all();
+            $user = User::find($data['id']);
+            $user->update($data);
+            return response()->json([
+                'message' => 'User updated successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => "Failed to update user " . $e->getMessage()
+            ], 500);
+        }
+    }
+
     function resetPassword($id): JsonResponse
     {
         try {

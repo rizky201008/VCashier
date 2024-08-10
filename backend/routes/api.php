@@ -27,12 +27,6 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::group(['middleware' => 'role:admin,warehouse'], function () {
-    });
-    Route::group(['middleware' => 'role:admin,cashier'], function () {
-    });
-    Route::group(['middleware' => 'role:admin'], function () {
-    });
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'getCategories']);
         Route::get('{id}', [CategoryController::class, 'getCategory']);
@@ -68,7 +62,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('role', [UserController::class, 'getRole']);
         Route::get('validate', [UserController::class, 'validateToken']);
         Route::get('lists', [UserController::class, 'allUsers']);
-        Route::post("reset-password/{id}", [UserController::class, 'resetPassword'])->middleware('auth:sanctum');
+        Route::post("reset-password/{id}", [UserController::class, 'resetPassword']);
+        Route::put('update', [UserController::class, 'updateUser']);
     });
     Route::prefix('payment')->group(function () {
         Route::get('methods', [PaymentController::class, 'getPaymentMethods']);

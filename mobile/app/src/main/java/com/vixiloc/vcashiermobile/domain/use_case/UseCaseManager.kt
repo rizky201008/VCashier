@@ -245,4 +245,9 @@ class UseCaseManager(
 
     fun validateMatchUseCase() = ValidateMatch()
     fun validateValueGreaterUseCase() = ValidateValueGreater()
+    fun updateUserUseCase() = UpdateUser(
+        repository = userRepository,
+        token = getTokenUseCase(),
+        httpHandler = httpHandler()
+    )
 }

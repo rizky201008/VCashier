@@ -10,6 +10,8 @@ sealed class EmployeesEvent {
     data object ResetPassword : EmployeesEvent()
     data class SelectEmployee(val id: Int?) : EmployeesEvent()
     data class TogglePasswordVisibility(val show: Boolean) : EmployeesEvent()
+    class ShowEditDialog(val show: Boolean) : EmployeesEvent()
+    object UpdateEmployee : EmployeesEvent()
 }
 
 enum class InputName {

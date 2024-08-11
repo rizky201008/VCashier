@@ -29,6 +29,7 @@ import com.vixiloc.vcashiermobile.presentation.components.MessageAlert
 import com.vixiloc.vcashiermobile.presentation.components.VerticalSpacer
 import com.vixiloc.vcashiermobile.presentation.screens.employee.components.AddEmployeeDialog
 import com.vixiloc.vcashiermobile.presentation.screens.employee.components.EmployeeListItem
+import com.vixiloc.vcashiermobile.presentation.screens.employee.components.UpdateEmployeeDialog
 import com.vixiloc.vcashiermobile.presentation.ui.theme.VcashierMobileTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -63,7 +64,12 @@ fun EmployeesScreen(modifier: Modifier = Modifier) {
                         onReset = {
                             onEvent(EmployeesEvent.SelectEmployee(it.id))
                             onEvent(EmployeesEvent.ShowResetPasswordAlert(true))
+                        },
+                        onClick = {
+                            onEvent(EmployeesEvent.SelectEmployee(it.id))
+                            onEvent(EmployeesEvent.ShowEditDialog(true))
                         }
+
                     )
                     VerticalSpacer(12.dp)
                 }
@@ -147,6 +153,10 @@ fun EmployeesScreen(modifier: Modifier = Modifier) {
         )
         if (state.showAddDialog) {
             AddEmployeeDialog(viewModel = viewModel)
+        }
+
+        if (state.showEditDialog) {
+            UpdateEmployeeDialog(viewModel = viewModel)
         }
     }
 }

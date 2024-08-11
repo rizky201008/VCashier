@@ -22,6 +22,7 @@ import com.vixiloc.vcashiermobile.data.remote.Routes.REPORT_TRANSACTION
 import com.vixiloc.vcashiermobile.data.remote.Routes.RESET_PASSWORD
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_IMAGE
 import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_TRANSACTION
+import com.vixiloc.vcashiermobile.data.remote.Routes.UPDATE_USER
 import com.vixiloc.vcashiermobile.data.remote.Routes.USERS_LIST
 import com.vixiloc.vcashiermobile.data.remote.Routes.VARIATIONS
 import com.vixiloc.vcashiermobile.data.remote.dto.auth.LoginRequestDto
@@ -62,6 +63,8 @@ import com.vixiloc.vcashiermobile.data.remote.dto.transactions.TransactionsRespo
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionRequestDto
 import com.vixiloc.vcashiermobile.data.remote.dto.transactions.UpdateTransactionResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.users.GetRoleResponseDto
+import com.vixiloc.vcashiermobile.data.remote.dto.users.UpdateUserRequestDto
+import com.vixiloc.vcashiermobile.data.remote.dto.users.UpdateUserResponseDto
 import com.vixiloc.vcashiermobile.data.remote.dto.users.UsersResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -255,6 +258,13 @@ interface ApiService {
     suspend fun getUsers(
         @Header("Authorization") token: String,
     ): UsersResponseDto
+
+    @PUT(UPDATE_USER)
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    suspend fun updateUser(
+        @Header("Authorization") token: String,
+        @Body data: UpdateUserRequestDto
+    ): UpdateUserResponseDto
 
     @POST(RESET_PASSWORD)
     @Headers("Content-Type: application/json", "Accept: application/json")

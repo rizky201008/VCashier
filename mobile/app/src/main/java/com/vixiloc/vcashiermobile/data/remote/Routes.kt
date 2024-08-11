@@ -35,6 +35,7 @@ object Routes {
     private const val USERS = "users"
     const val USERS_LIST = "$USERS/lists"
     const val RESET_PASSWORD = "$USERS/reset-password/{id}"
+    const val UPDATE_USER = "$USERS/update"
     private const val PRODUCT_LOGS = "product-logs"
     const val PRODUCT_LOGS_ALL = "$PRODUCT_LOGS/all"
     const val PRODUCT_LOGS_ADD = "$PRODUCT_LOGS/add"

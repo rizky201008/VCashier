@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vixiloc.vcashiermobile.domain.model.auth.RegisterRequest
+import com.vixiloc.vcashiermobile.domain.model.user.UpdateUserRequest
 import com.vixiloc.vcashiermobile.domain.use_case.UseCaseManager
 import com.vixiloc.vcashiermobile.utils.Resource
 import kotlinx.coroutines.flow.launchIn
@@ -21,6 +22,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     val resetPasswordUseCase = useCaseManager.resetPasswordUseCase()
     val validateNotBlankUseCase = useCaseManager.validateNotBlankUseCase()
     val validateMatchUseCase = useCaseManager.validateMatchUseCase()
+    val updateEmployeeUseCase = useCaseManager.updateUserUseCase()
 
     fun onEvent(e: EmployeesEvent) {
         when (e) {
@@ -88,7 +90,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             }
 
             is EmployeesEvent.ShowResetPasswordAlert -> {
-                _state.value = _state.value.copy(
+                _state.value = state.value.copy(
                     showResetPasswordAlert = e.show
                 )
                 if (!e.show) {
@@ -101,15 +103,58 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             }
 
             is EmployeesEvent.SelectEmployee -> {
-                _state.value = _state.value.copy(selectedEmployee = e.id)
+                _state.value = state.value.copy(selectedEmployee = e.id)
             }
 
             is EmployeesEvent.TogglePasswordVisibility -> {
-                _state.value = _state.value.copy(
+                _state.value = state.value.copy(
                     passwordHidden = e.show
                 )
             }
+
+            is EmployeesEvent.ShowEditDialog -> {
+                _state.value = state.value.copy(
+                    showEditDialog = e.show
+                )
+            }
+
+            is EmployeesEvent.UpdateEmployee -> {
+                updateEmployee()
+            }
         }
+    }
+
+    private fun updateEmployee() {
+        val data = UpdateUserRequest(
+            id = state.value.selectedEmployee ?: 0,
+            role = state.value.role
+        )
+        updateEmployeeUseCase(data = data).onEach { res ->
+            when (res) {
+                is Resource.Loading -> {
+                    _state.value = state.value.copy(isLoading = true)
+                }
+
+                is Resource.Success -> {
+                    _state.value = state.value.copy(
+                        isLoading = false,
+                        success = res.data?.message ?: "Update user sukses",
+                        showSuccessAlert = true,
+                        selectedEmployee = null,
+                        showEditDialog = false
+                    )
+                    getUsers()
+                }
+
+                is Resource.Error -> {
+                    _state.value = state.value.copy(
+                        isLoading = false,
+                        error = res.message ?: "Error Unknowns",
+                        showErrorAlert = true
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun resetPassword() {
@@ -117,11 +162,11 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
             resetPasswordUseCase(state.value.selectedEmployee.toString()).onEach { res ->
                 when (res) {
                     is Resource.Loading -> {
-                        _state.value = _state.value.copy(isLoading = true)
+                        _state.value = state.value.copy(isLoading = true)
                     }
 
                     is Resource.Error -> {
-                        _state.value = _state.value.copy(
+                        _state.value = state.value.copy(
                             isLoading = false,
                             error = res.message ?: "Error Unknowns",
                             showErrorAlert = true
@@ -129,7 +174,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
                     }
 
                     is Resource.Success -> {
-                        _state.value = _state.value.copy(
+                        _state.value = state.value.copy(
                             isLoading = false,
                             success = res.data?.message ?: "Reset password sukses",
                             selectedEmployee = null
@@ -155,7 +200,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
         ).any { !it.successful }
 
         if (hasError) {
-            _state.value = _state.value.copy(
+            _state.value = state.value.copy(
                 nameError = validatedName.errorMessage ?: "",
                 emailError = validatedEmail.errorMessage ?: "",
                 passwordError = validatedPassword.errorMessage ?: "",
@@ -168,7 +213,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     }
 
     private fun clearErrors() {
-        _state.value = _state.value.copy(
+        _state.value = state.value.copy(
             nameError = "",
             emailError = "",
             passwordError = ""
@@ -176,7 +221,7 @@ class EmployeesViewModel(useCaseManager: UseCaseManager) : ViewModel() {
     }
 
     private fun clearInputs() {
-        _state.value = _state.value.copy(
+        _state.value = state.value.copy(
             name = "",
             email = "",
             password = ""

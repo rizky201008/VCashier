@@ -36,7 +36,7 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
     val onEvent = viewModel::onEvent
     Dialog(
         onDismissRequest = {
-            onEvent(EmployeesEvent.ShowAddDialog(false))
+            onEvent(EmployeesEvent.ShowEditDialog(false))
         }
     ) {
         Column(
@@ -64,7 +64,7 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
                 )
 
                 IconButton(onClick = {
-                    onEvent(EmployeesEvent.ShowAddDialog(false))
+                    onEvent(EmployeesEvent.ShowEditDialog(false))
                 }, icon = Icons.Outlined.Close)
             }
             VerticalSpacer(height = 10.dp)
@@ -183,6 +183,83 @@ fun AddEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewMod
                     onEvent(EmployeesEvent.AddEmployee)
                 },
                 text = "Tambah",
+                modifier = Modifier.fillMaxWidth(0.4f),
+                textStyle = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight(600))
+            )
+        }
+    }
+}
+
+@Composable
+fun UpdateEmployeeDialog(modifier: Modifier = Modifier, viewModel: EmployeesViewModel) {
+    val state = viewModel.state.value
+    val onEvent = viewModel::onEvent
+    Dialog(
+        onDismissRequest = {
+            onEvent(EmployeesEvent.ShowEditDialog(false))
+        }
+    ) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(
+                    color = MaterialTheme.colorScheme.background,
+                    shape = MaterialTheme.shapes.medium
+                )
+                .verticalScroll(state = rememberScrollState())
+                .padding(16.dp),
+            horizontalAlignment = Alignment.End
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Ubah Pegawai",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight(600)
+                    )
+                )
+
+                IconButton(onClick = {
+                    onEvent(EmployeesEvent.ShowEditDialog(false))
+                }, icon = Icons.Outlined.Close)
+            }
+            VerticalSpacer(height = 10.dp)
+
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "Role",
+                style = MaterialTheme.typography.bodySmall
+            )
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(
+                        selected = state.role == "cashier",
+                        onClick = {
+                            onEvent(EmployeesEvent.ChangeInput(InputName.ROLE, "cashier"))
+                        }
+                    )
+                    Text(text = "Kasir", style = MaterialTheme.typography.bodySmall)
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(
+                        selected = state.role == "warehouse",
+                        onClick = {
+                            onEvent(EmployeesEvent.ChangeInput(InputName.ROLE, "warehouse"))
+                        }
+                    )
+                    Text(text = "Gudang", style = MaterialTheme.typography.bodySmall)
+                }
+            }
+            VerticalSpacer(height = 32.dp)
+            FilledButton(
+                onClick = {
+                    onEvent(EmployeesEvent.UpdateEmployee)
+                },
+                text = "Ubah",
                 modifier = Modifier.fillMaxWidth(0.4f),
                 textStyle = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight(600))
             )
